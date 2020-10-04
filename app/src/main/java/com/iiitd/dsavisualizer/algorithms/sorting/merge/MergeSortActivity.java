@@ -72,8 +72,10 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("backward");
-                mergeSort.backward();
-                tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                if (mergeSort != null) {
+                    mergeSort.backward();
+                    tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                }
             }
         });
 
@@ -81,8 +83,11 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("forward");
-                mergeSort.forward();
-                tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                if (mergeSort != null) {
+                    mergeSort.forward();
+                    tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                }
+
             }
         });
 
@@ -185,6 +190,7 @@ public class MergeSortActivity extends AppCompatActivity {
                 System.out.println("clear");
                 mergeSort.linearLayout.removeAllViews();
                 mergeSort = null;
+                tv_seqno.setText("0");
             }
         });
 
