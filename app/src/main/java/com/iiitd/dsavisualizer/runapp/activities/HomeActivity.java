@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.runapp;
+package com.iiitd.dsavisualizer.runapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
