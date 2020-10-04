@@ -8,7 +8,7 @@ public class AnimateViews {
 
     private int oneh;
     private int onew;
-    Context context;
+    public Context context;
 
     public AnimateViews(int oneh, int onew) {
         this.oneh = oneh;
@@ -57,7 +57,7 @@ public class AnimateViews {
         view.animate().translationXBy(by);
     }
 
-    void animateInst(final View view, final int times, final String inst){
+    public void animateInst(final View view, final int times, final String inst){
         ((Activity)context).runOnUiThread(new Runnable() {
             @Override
             public void run() {

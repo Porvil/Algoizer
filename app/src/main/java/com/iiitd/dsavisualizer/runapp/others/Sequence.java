@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public abstract class Sequence {
 
-    int size;
-    int curSeqNo;
-    Context context;
-    View[] views;
-    AnimateViews animateViews;
-    ArrayList<AnimationState> animationStates;
+    public int size;
+    public int curSeqNo;
+    public Context context;
+    public View[] views;
+    public AnimateViews animateViews;
+    public ArrayList<AnimationState> animationStates;
 
     public abstract boolean backward();
     public abstract boolean forward();

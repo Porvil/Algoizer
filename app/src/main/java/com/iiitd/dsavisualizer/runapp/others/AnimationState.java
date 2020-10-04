@@ -3,8 +3,8 @@ package com.iiitd.dsavisualizer.runapp.others;
 import java.util.ArrayList;
 
 public class AnimationState {
-    String info;
-    ArrayList<ElementAnimationData> aldDatta;
+    public String info;
+    public ArrayList<ElementAnimationData> aldDatta;
 
     public AnimationState(String info, ArrayList<ElementAnimationData> aldDatta) {
         this.info = info;

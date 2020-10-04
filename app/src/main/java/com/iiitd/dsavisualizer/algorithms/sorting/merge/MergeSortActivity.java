@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -22,40 +23,57 @@ public class MergeSortActivity extends AppCompatActivity {
 
     DrawerLayout dl_main;
     View v_main;
+    View v_menu;
     ViewStub vs_main;
-    LinearLayout ll_menu;
+    ViewStub vs_menu;
+    LinearLayout ll_anim;
     LinearLayout ll_code;
     Button btn_backward;
     Button btn_forward;
     TextView tv_seqno;
     FloatingActionButton fab_menubutton;
 
-    SeekBar seekBar;
+    SeekBar sb_arraysize;
+    TextView tv_arraysize;
+    Button btn_generate;
+    Button btn_clear;
 
+    MergeSort mergeSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base);
 
-        seekBar = findViewById(R.id.seekBar);
+
         dl_main = findViewById(R.id.dl_main);
         vs_main = findViewById(R.id.vs_main);
+        vs_menu = findViewById(R.id.vs_menu);
         vs_main.setLayoutResource(R.layout.activity_merge_sort);
+        vs_menu.setLayoutResource(R.layout.controls_merge_sort);
+        vs_main.setBackgroundColor(Color.GREEN);
+        vs_menu.setBackgroundColor(Color.YELLOW);
         v_main = vs_main.inflate();
+        v_menu = vs_menu.inflate();
 
-        ll_menu = v_main.findViewById(R.id.ll_menu);
+        ll_anim = v_main.findViewById(R.id.ll_anim);
         ll_code = v_main.findViewById(R.id.ll_code);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
         fab_menubutton = v_main.findViewById(R.id.fab_menubutton);
 
+        sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
+        tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
+        btn_generate = v_menu.findViewById(R.id.btn_generate);
+        btn_clear = v_menu.findViewById(R.id.btn_clear);
 
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("backward");
+                mergeSort.backward();
+                tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
             }
         });
 
@@ -63,6 +81,8 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("forward");
+                mergeSort.forward();
+                tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
             }
         });
 
@@ -99,7 +119,7 @@ public class MergeSortActivity extends AppCompatActivity {
             }
         });
 
-        seekBar.setOnTouchListener(new SeekBar.OnTouchListener() {
+        sb_arraysize.setOnTouchListener(new SeekBar.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -125,10 +145,11 @@ public class MergeSortActivity extends AppCompatActivity {
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        sb_arraysize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 System.out.println(progress);
+                tv_arraysize.setText(String.valueOf(progress+1));
             }
 
             @Override
@@ -141,6 +162,33 @@ public class MergeSortActivity extends AppCompatActivity {
 
             }
         });
+
+        btn_generate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("generate");
+
+                int arraySize = sb_arraysize.getProgress() + 1;
+                boolean isRandomize = true;
+                if(mergeSort != null){
+                    mergeSort.linearLayout.removeAllViews();
+                    mergeSort = null;
+                }
+                mergeSort = new MergeSort(MergeSortActivity.this, arraySize, isRandomize, ll_anim);
+
+            }
+        });
+
+        btn_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("clear");
+                mergeSort.linearLayout.removeAllViews();
+                mergeSort = null;
+            }
+        });
+
+
 
     }
 }

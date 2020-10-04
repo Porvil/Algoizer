@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class ElementAnimationData {
 
-    int index;
-    ArrayList<Pair<String, Integer>> instructions;
+    public int index;
+    public ArrayList<Pair<String, Integer>> instructions;
 
     public ElementAnimationData(int index, ArrayList<Pair<String, Integer>> instructions) {
         this.index = index;
