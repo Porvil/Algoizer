@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -31,6 +32,10 @@ public class MergeSortActivity extends AppCompatActivity {
     Button btn_backward;
     Button btn_forward;
     TextView tv_seqno;
+    TextView tv_curinst;
+    TextView tv_nextinst;
+    ScrollView sv_psuedocode;
+    LinearLayout ll_psuedocode;
     FloatingActionButton fab_menubutton;
 
     SeekBar sb_arraysize;
@@ -39,6 +44,7 @@ public class MergeSortActivity extends AppCompatActivity {
     Button btn_clear;
 
     MergeSort mergeSort;
+    TextView[] textViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,10 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
+        tv_curinst = v_main.findViewById(R.id.tv_curinst);
+        tv_nextinst = v_main.findViewById(R.id.tv_nextinst);
+        sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
+        ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         fab_menubutton = v_main.findViewById(R.id.fab_menubutton);
 
         sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
@@ -68,13 +78,37 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_generate = v_menu.findViewById(R.id.btn_generate);
         btn_clear = v_menu.findViewById(R.id.btn_clear);
 
+        tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
+
+        int sizeOfPseudocode = MergeSortInfo.psuedocode.length;
+        if (sizeOfPseudocode == 0) throw new AssertionError();
+        textViews = new TextView[sizeOfPseudocode];
+        for(int i=0;i<sizeOfPseudocode;i++){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView textView = new TextView(this);
+            textView.setLayoutParams(lparams);
+            textView.setText(MergeSortInfo.psuedocode[i]);
+            textViews[i] = textView;
+            ll_psuedocode.addView(textView);
+
+        }
+
+
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("backward");
                 if (mergeSort != null) {
                     mergeSort.backward();
-                    tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                    int curSeqNo = mergeSort.sequence.curSeqNo;
+                    tv_seqno.setText(String.valueOf(curSeqNo));
+                    if(curSeqNo >= 1)
+                        tv_curinst.setText(mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                    else{
+                        tv_curinst.setText("Started");
+                    }
+                    tv_nextinst.setText(mergeSort.sequence.animationStates.get(curSeqNo).info);
                 }
             }
         });
@@ -85,7 +119,14 @@ public class MergeSortActivity extends AppCompatActivity {
                 System.out.println("forward");
                 if (mergeSort != null) {
                     mergeSort.forward();
-                    tv_seqno.setText(String.valueOf(mergeSort.sequence.curSeqNo));
+                    int curSeqNo = mergeSort.sequence.curSeqNo;
+                    tv_seqno.setText(String.valueOf(curSeqNo));
+                    tv_curinst.setText(mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                    if(curSeqNo < mergeSort.sequence.size)
+                        tv_nextinst.setText(mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    else{
+                        tv_nextinst.setText("Finished");
+                    }
                 }
 
             }
@@ -94,15 +135,23 @@ public class MergeSortActivity extends AppCompatActivity {
         fab_menubutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!dl_main.isOpen()) {
-                    dl_main.openDrawer(Gravity.RIGHT);
-                }
+            if(!dl_main.isOpen()) {
+                dl_main.openDrawer(Gravity.RIGHT);
+            }
             }
         });
 
         dl_main.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset){}
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
+                System.out.println(slideOffset);
+                if(slideOffset <= 0.40){
+                    fab_menubutton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    fab_menubutton.setVisibility(View.INVISIBLE);
+                }
+            }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView){}
@@ -111,17 +160,7 @@ public class MergeSortActivity extends AppCompatActivity {
             public void onDrawerClosed(@NonNull View drawerView){}
 
             @Override
-            public void onDrawerStateChanged(int newState) {
-                if (newState == DrawerLayout.STATE_SETTLING) {
-                    if (!dl_main.isDrawerOpen(Gravity.RIGHT)) {
-                        // Drawer started opening
-                        fab_menubutton.setVisibility(View.INVISIBLE);
-                    } else {
-                        // Drawer started closing
-                        fab_menubutton.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
+            public void onDrawerStateChanged(int newState) {}
         });
 
         sb_arraysize.setOnTouchListener(new SeekBar.OnTouchListener() {
@@ -178,6 +217,7 @@ public class MergeSortActivity extends AppCompatActivity {
                 if(mergeSort != null){
                     mergeSort.linearLayout.removeAllViews();
                     mergeSort = null;
+                    tv_seqno.setText("0");
                 }
                 mergeSort = new MergeSort(MergeSortActivity.this, arraySize, isRandomize, ll_anim);
 
@@ -194,7 +234,12 @@ public class MergeSortActivity extends AppCompatActivity {
             }
         });
 
-
+        int childCount = ll_psuedocode.getChildCount();
+        System.out.println("================");
+        System.out.println(childCount);
+        for(int i=0;i<childCount;i++){
+            System.out.println(ll_psuedocode.getChildAt(i));
+        }
 
     }
 }
