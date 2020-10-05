@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.utility.Util;
 
 
 public class MergeSortActivity extends AppCompatActivity {
@@ -104,11 +105,11 @@ public class MergeSortActivity extends AppCompatActivity {
                     int curSeqNo = mergeSort.sequence.curSeqNo;
                     tv_seqno.setText(String.valueOf(curSeqNo));
                     if(curSeqNo >= 1)
-                        tv_curinst.setText(mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                        Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).info);
                     else{
-                        tv_curinst.setText("Started");
+                        Util.setText(tv_curinst, "Last Inst", "Started");
                     }
-                    tv_nextinst.setText(mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).info);
                 }
             }
         });
@@ -121,11 +122,12 @@ public class MergeSortActivity extends AppCompatActivity {
                     mergeSort.forward();
                     int curSeqNo = mergeSort.sequence.curSeqNo;
                     tv_seqno.setText(String.valueOf(curSeqNo));
-                    tv_curinst.setText(mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                    Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+//                    tv_curinst.setText();
                     if(curSeqNo < mergeSort.sequence.size)
-                        tv_nextinst.setText(mergeSort.sequence.animationStates.get(curSeqNo).info);
+                        Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).info);
                     else{
-                        tv_nextinst.setText("Finished");
+                        Util.setText(tv_nextinst, "Next Inst", "Finished");
                     }
                 }
 
