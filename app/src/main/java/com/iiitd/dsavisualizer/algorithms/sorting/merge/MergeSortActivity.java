@@ -33,6 +33,7 @@ public class MergeSortActivity extends AppCompatActivity {
     Button btn_backward;
     Button btn_forward;
     TextView tv_seqno;
+    TextView tv_info;
     TextView tv_curinst;
     TextView tv_nextinst;
     ScrollView sv_psuedocode;
@@ -68,6 +69,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
+        tv_info = v_main.findViewById(R.id.tv_info);
         tv_curinst = v_main.findViewById(R.id.tv_curinst);
         tv_nextinst = v_main.findViewById(R.id.tv_nextinst);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
@@ -105,12 +107,19 @@ public class MergeSortActivity extends AppCompatActivity {
                     int curSeqNo = mergeSort.sequence.curSeqNo;
                     tv_seqno.setText(String.valueOf(curSeqNo));
                     if(curSeqNo >= 1)
-                        Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                        Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).state);
                     else{
                         Util.setText(tv_curinst, "Last Inst", "Started");
                     }
-                    Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).state);
+                    Util.setText(tv_info, "info", mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
+                    if(MergeSortInfo.map.containsKey(state)){
+                        Integer[] integers = MergeSortInfo.map.get(state);
+                        Util.changeTextViewsColors(textViews, Color.GREEN, Color.YELLOW, integers);
+                    }
                 }
+
             }
         });
 
@@ -122,13 +131,21 @@ public class MergeSortActivity extends AppCompatActivity {
                     mergeSort.forward();
                     int curSeqNo = mergeSort.sequence.curSeqNo;
                     tv_seqno.setText(String.valueOf(curSeqNo));
-                    Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).info);
+                    Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).state);
 //                    tv_curinst.setText();
-                    if(curSeqNo < mergeSort.sequence.size)
-                        Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    if(curSeqNo < mergeSort.sequence.size) {
+                        String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
+                        Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).state);
+                        if(MergeSortInfo.map.containsKey(state)){
+                            Integer[] integers = MergeSortInfo.map.get(state);
+                            Util.changeTextViewsColors(textViews, Color.GREEN, Color.YELLOW, integers);
+                        }
+                        Util.setText(tv_info, "info", mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    }
                     else{
                         Util.setText(tv_nextinst, "Next Inst", "Finished");
                     }
+
                 }
 
             }

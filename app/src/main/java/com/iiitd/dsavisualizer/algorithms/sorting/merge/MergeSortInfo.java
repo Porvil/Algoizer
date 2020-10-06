@@ -1,5 +1,10 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
+
 //HARDCODED INFORMATION, Handle with care
 public class MergeSortInfo {
 
@@ -13,6 +18,21 @@ public class MergeSortInfo {
     /*13*/ public static final String R_EXTRAS = "Right Extras";
     /*9*/  public static final String MERGE_STARTED = "Array copy for merging";
     /*1*/  public static final String SINGLE_MERGE = "Single element is already sorted";
+
+    public static HashMap<String, Integer[]> map = new HashMap<>();
+
+    static {
+        map.put(LS, new Integer[]{4});
+        map.put(LS_U, new Integer[]{14});
+        map.put(RS, new Integer[]{5});
+        map.put(RS_U, new Integer[]{14});
+        map.put(L_LESSEQUAL_R, new Integer[]{11});
+        map.put(L_GREATER_R, new Integer[]{13});
+        map.put(L_EXTRAS, new Integer[]{11});
+        map.put(R_EXTRAS, new Integer[]{13});
+        map.put(MERGE_STARTED, new Integer[]{9});
+        map.put(SINGLE_MERGE, new Integer[]{1});
+    }
 
            public static final String[] psuedocode = new String[]{
     /*0*/         "MergeSort(data, start, end):",
@@ -31,4 +51,7 @@ public class MergeSortInfo {
     /*13*/        "    else:",
     /*14*/        "        copy right array's element to final sorted array"
     };
+
+
+
 }
