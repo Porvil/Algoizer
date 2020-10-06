@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class MergeSort {
         this.width = totalWidth / arraySize;
         this.height =  totalHeight / log;
 
+        int MAX = 0;
 
         System.out.println(totalWidth +"x"+totalHeight);
         System.out.println(width +"x"+height);
@@ -57,6 +59,7 @@ public class MergeSort {
         if(isRandomize){
             for (int i = 0; i < data.length; i++) {
                 data[i] = random.nextInt(20) + 1;
+                MAX = Math.max(data[i], MAX);
             }
         }
         else{
@@ -64,18 +67,29 @@ public class MergeSort {
         }
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-        LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        layoutParams.setMargins();
 
+//        ViewGroup.MarginLayoutParams layoutParams1 = new ViewGroup.MarginLayoutParams(width, height);
+//        layoutParams1.setMargins(5,5,5,5);
+
+        LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        linearLayout.setBackgroundColor(Color.RED);
         for(int i=0;i<data.length;i++){
+            float h = (float)data[i] / (float)MAX;
+            System.out.println("-------------------------------------");
+            System.out.println(h);
+
             View myView = vi.inflate(R.layout.element_merge_sort, null);
             myView.setLayoutParams(layoutParams);
-            myView.setBackgroundColor(Color.GREEN);
+//            myView.setBackgroundColor(Color.GREEN);
+            myView.setPadding(5,5,5,5);
             TextView tv = myView.findViewById(R.id.tv_elementvalue);
-            TextView tv2 = myView.findViewById(R.id.tv_elementindex);
             tv.setText(String.valueOf(data[i]));
             tv.setTextColor(Color.RED);
             tv.setTextSize(16);
-            tv2.setText(i+"");
+            tv.setBackgroundColor(Color.GREEN);
+//            tv.setHeight(10);
+            tv.getLayoutParams().height = (int) (height * h);
             linearLayout.addView(myView);
 
             MergeSortData mergeSortData1 = new MergeSortData();
