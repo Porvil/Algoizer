@@ -7,24 +7,24 @@ import java.util.ArrayList;
 public class ElementAnimationData {
 
     public int index;
-    public ArrayList<Pair<String, Integer>> instructions;
+    public ArrayList<Pair<AnimationDirection, Integer>> instructions;
 
-    public ElementAnimationData(int index, ArrayList<Pair<String, Integer>> instructions) {
+    public ElementAnimationData(int index, ArrayList<Pair<AnimationDirection, Integer>> instructions) {
         this.index = index;
         this.instructions = instructions;
     }
 
-    public ElementAnimationData(int index, Pair<String, Integer> ... inst){
+    public ElementAnimationData(int index, Pair<AnimationDirection, Integer> ... inst){
         this.index = index;
         this.instructions = new ArrayList<>();
 
-        for (Pair<String, Integer> s:inst) {
+        for (Pair<AnimationDirection, Integer> s:inst) {
             instructions.add(s);
         }
     }
 
-    public void add(Pair<String, Integer>... inst){
-        for (Pair<String, Integer> s:inst) {
+    public void add(Pair<AnimationDirection, Integer>... inst){
+        for (Pair<AnimationDirection, Integer> s:inst) {
             instructions.add(s);
         }
     }
@@ -37,32 +37,35 @@ public class ElementAnimationData {
 
     // MUST TAKE CARE OF THIS FUNCTION
     public static ElementAnimationData reverse(ElementAnimationData normal){
-        ArrayList<Pair<String, Integer>> insts = new ArrayList<>();
+        ArrayList<Pair<AnimationDirection, Integer>> insts = new ArrayList<>();
 
         int index = normal.index;
 
         for(int i=normal.instructions.size()-1;i>=0;i--){
-            Pair<String, Integer> s = normal.instructions.get(i);
-            if(s.first.equals("L")){
-                insts.add(new Pair<>("R", s.second));
-            }
-            else if(s.first.equals("R")){
-                insts.add(new Pair<>("L", s.second));
-            }
-            else if(s.first.equals("U")){
-                insts.add(new Pair<>("B", s.second));
-            }
-            else if(s.first.equals("B")){
-                insts.add(new Pair<>("U", s.second));
-            }
-            else {
-                insts.add(s);
+            Pair<AnimationDirection, Integer> s = normal.instructions.get(i);
+            switch (s.first){
+                case NULL:
+                    insts.add(s);
+                    break;
+                case UP:
+                    insts.add(new Pair<>(AnimationDirection.DOWN, s.second));
+                    break;
+                case RIGHT:
+                    insts.add(new Pair<>(AnimationDirection.LEFT, s.second));
+                    break;
+                case DOWN:
+                    insts.add(new Pair<>(AnimationDirection.UP, s.second));
+                    break;
+                case LEFT:
+                    insts.add(new Pair<>(AnimationDirection.RIGHT, s.second));
+                    break;
+                default:
+                    System.out.println("NO ANIMATION STATE FOUND -__-");
+                    break;
             }
         }
 
-
         ElementAnimationData elementAnimationData = new ElementAnimationData(index, insts);
-
         return elementAnimationData;
     }
 

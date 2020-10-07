@@ -5,6 +5,7 @@ import android.util.Pair;
 import android.view.View;
 
 import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
+import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
 import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
 import com.iiitd.dsavisualizer.runapp.others.Sequence;
@@ -72,7 +73,7 @@ public class MergeSortSequence extends Sequence {
         System.out.println("----------------------");
         for(ElementAnimationData elementAnimationData : old.aldDatta){
             ElementAnimationData inverse = ElementAnimationData.reverse(elementAnimationData);
-            for(Pair<String, Integer> inst : inverse.instructions){
+            for(Pair<AnimationDirection, Integer> inst : inverse.instructions){
                 int index = inverse.index;
                 System.out.println(index + " | " + inst);
 
@@ -96,7 +97,7 @@ public class MergeSortSequence extends Sequence {
         AnimationState now = animationStates.get(curSeqNo);
         System.out.println("----------------------");
         for(ElementAnimationData elementAnimationData : now.aldDatta){
-            for(Pair<String, Integer> inst : elementAnimationData.instructions){
+            for(Pair<AnimationDirection, Integer> inst : elementAnimationData.instructions){
                 int index = elementAnimationData.index;
                 System.out.println( index + " | " + inst);
 

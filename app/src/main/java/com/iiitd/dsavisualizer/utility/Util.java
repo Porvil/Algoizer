@@ -2,6 +2,8 @@ package com.iiitd.dsavisualizer.utility;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class Util {
@@ -20,10 +22,12 @@ public class Util {
         }
     }
 
-    public static void changeTextViewsColors(TextView[] textViews, int normal, int highlight, Integer[] indexes){
+    public static void changeTextViewsColors(ScrollView scrollView, TextView[] textViews, int normal, int highlight, Integer[] indexes){
         for(TextView textView : textViews){
             textView.setBackgroundColor(normal);
         }
+
+        scrollView.scrollTo(0, (int) textViews[indexes[0]].getY());
 
         for(int i:indexes){
             textViews[i].setBackgroundColor(highlight);
