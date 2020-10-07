@@ -9,34 +9,33 @@
     tools:context=".algorithms.sorting.merge.MergeSortActivity"
     tools:ignore="MissingDefaultResource">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/ll_maincontainer"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_weight="2">
 
         <LinearLayout
             android:id="@+id/ll_anim"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/ll_animcontrols"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorDivider" />
 
         <LinearLayout
             android:id="@+id/ll_animcontrols"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_anim">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_backward"
@@ -57,15 +56,27 @@
                 android:layout_height="match_parent"
                 android:text="Forward" />
 
+            <Button
+                android:id="@+id/btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Play" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_menubutton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp" />
+
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDivider" />
 
     <LinearLayout
         android:id="@+id/ll_code"
@@ -99,6 +110,10 @@
             android:gravity="center"
             android:text="TextView" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorDivider" />
 
         <ScrollView
             android:id="@+id/sv_psuedocode"

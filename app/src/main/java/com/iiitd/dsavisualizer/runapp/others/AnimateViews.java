@@ -58,6 +58,7 @@ public class AnimateViews {
     }
 
     public void animateInst(final View view, final int times, final String inst){
+        view.animate().setDuration(0);
         ((Activity)context).runOnUiThread(new Runnable() {
             @Override
             public void run() {

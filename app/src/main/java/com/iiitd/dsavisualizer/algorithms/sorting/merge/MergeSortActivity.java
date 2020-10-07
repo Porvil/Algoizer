@@ -20,6 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.Util;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 
 public class MergeSortActivity extends AppCompatActivity {
 
@@ -30,6 +38,7 @@ public class MergeSortActivity extends AppCompatActivity {
     ViewStub vs_menu;
     LinearLayout ll_anim;
     LinearLayout ll_code;
+    Button btn_play;
     Button btn_backward;
     Button btn_forward;
     TextView tv_seqno;
@@ -47,6 +56,11 @@ public class MergeSortActivity extends AppCompatActivity {
 
     MergeSort mergeSort;
     TextView[] textViews;
+
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    Timer timer = new Timer();
+
+    ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +80,7 @@ public class MergeSortActivity extends AppCompatActivity {
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         ll_code = v_main.findViewById(R.id.ll_code);
+        btn_play = v_main.findViewById(R.id.btn_play);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
@@ -97,6 +112,49 @@ public class MergeSortActivity extends AppCompatActivity {
 
         }
 
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mergeSort != null){
+//                    executorService.execute(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            onForwardClick();
+//                            System.out.println("auto button clicked");
+//                        }
+//                    });
+//                    scheduledExecutorService.scheduleAtFixedRate()
+//
+//                    scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
+//                                onForwardClick();
+//                            else{
+//                                scheduledExecutorService.
+//                            }
+//                        }
+//                    },0,1000, TimeUnit.MILLISECONDS);
+
+                    int begin = 0;
+                    int timeInterval = 1000;
+                    timer.schedule(new TimerTask() {
+                        int counter = 0;
+                        @Override
+                        public void run() {
+                            //call the method
+                            if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
+                                onForwardClick();
+                            else{
+                                timer.cancel();
+                                timer = new Timer();
+                            }
+                        }
+                    }, begin, timeInterval);
+
+                }
+            }
+        });
 
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,28 +184,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("forward");
-                if (mergeSort != null) {
-                    mergeSort.forward();
-                    int curSeqNo = mergeSort.sequence.curSeqNo;
-                    tv_seqno.setText(String.valueOf(curSeqNo));
-                    Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).state);
-//                    tv_curinst.setText();
-                    if(curSeqNo < mergeSort.sequence.size) {
-                        String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
-                        Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).state);
-                        if(MergeSortInfo.map.containsKey(state)){
-                            Integer[] integers = MergeSortInfo.map.get(state);
-                            Util.changeTextViewsColors(textViews, Color.GREEN, Color.YELLOW, integers);
-                        }
-                        Util.setText(tv_info, "info", mergeSort.sequence.animationStates.get(curSeqNo).info);
-                    }
-                    else{
-                        Util.setText(tv_nextinst, "Next Inst", "Finished");
-                    }
-
-                }
-
+                onForwardClick();
             }
         });
 
@@ -260,5 +297,36 @@ public class MergeSortActivity extends AppCompatActivity {
             System.out.println(ll_psuedocode.getChildAt(i));
         }
 
+    }
+
+    private void onForwardClick(){
+        System.out.println("forward");
+        if (mergeSort != null) {
+            mergeSort.forward();
+            final int curSeqNo = mergeSort.sequence.curSeqNo;
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_seqno.setText(String.valueOf(curSeqNo));
+                    Util.setText(tv_curinst, "Last Inst", mergeSort.sequence.animationStates.get(curSeqNo-1).state);
+//                    tv_curinst.setText();
+                    if(curSeqNo < mergeSort.sequence.size) {
+                        String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
+                        Util.setText(tv_nextinst, "Next Inst", mergeSort.sequence.animationStates.get(curSeqNo).state);
+                        if(MergeSortInfo.map.containsKey(state)){
+                            Integer[] integers = MergeSortInfo.map.get(state);
+                            Util.changeTextViewsColors(textViews, Color.GREEN, Color.YELLOW, integers);
+                        }
+                        Util.setText(tv_info, "info", mergeSort.sequence.animationStates.get(curSeqNo).info);
+                    }
+                    else{
+                        Util.setText(tv_nextinst, "Next Inst", "Finished");
+                    }
+                }
+            });
+
+
+        }
     }
 }
