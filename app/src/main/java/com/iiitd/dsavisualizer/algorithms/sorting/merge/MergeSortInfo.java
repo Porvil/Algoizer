@@ -1,9 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Map;
 
 //HARDCODED INFORMATION, Handle with care
 public class MergeSortInfo {
@@ -17,7 +14,7 @@ public class MergeSortInfo {
     /*11*/ public static final String L_EXTRAS = "Left Extras";
     /*13*/ public static final String R_EXTRAS = "Right Extras";
     /*9*/  public static final String MERGE_STARTED = "Array copy for merging";
-    /*1*/  public static final String SINGLE_MERGE = "Single element is already sorted";
+    /*1*/  public static final String SINGLE_MERGE = "Single element is always sorted";
 
     public static HashMap<String, Integer[]> map = new HashMap<>();
 
@@ -26,16 +23,18 @@ public class MergeSortInfo {
         map.put(LS_U, new Integer[]{14});
         map.put(RS, new Integer[]{5});
         map.put(RS_U, new Integer[]{14});
-        map.put(L_LESSEQUAL_R, new Integer[]{11});
-        map.put(L_GREATER_R, new Integer[]{13});
-        map.put(L_EXTRAS, new Integer[]{11});
-        map.put(R_EXTRAS, new Integer[]{13});
+        map.put(L_LESSEQUAL_R, new Integer[]{11, 12});
+        map.put(L_GREATER_R, new Integer[]{13, 14});
+        map.put(L_EXTRAS, new Integer[]{15, 16});
+        map.put(R_EXTRAS, new Integer[]{17, 18});
         map.put(MERGE_STARTED, new Integer[]{9});
-        map.put(SINGLE_MERGE, new Integer[]{1});
+        map.put(SINGLE_MERGE, new Integer[]{1, 2});
     }
 
+    public static final int[] boldIndexes = new int[]{0, 8};
+
            public static final String[] psuedocode = new String[]{
-    /*0*/         "MergeSort(data, start, end):",
+    /*0*/         "mergeSort(data, start, end):",
     /*1*/         "    if start > end",
     /*2*/         "        return",
     /*3*/         "    mid = (start+end)/2",
@@ -45,11 +44,15 @@ public class MergeSortInfo {
     /*7*/         "",
     /*8*/         "merge(data, start, mid, end)",
     /*9*/         "Copy both arrays into 2 temporary arrays",
-    /*10*/        "While(any element is left in any array):",
+    /*10*/        "while(both arrays are not empty):",
     /*11*/        "    if(left array's element <= right array's element):",
     /*12*/        "        copy left array's element to final sorted array",
     /*13*/        "    else:",
-    /*14*/        "        copy right array's element to final sorted array"
+    /*14*/        "        copy right array's element to final sorted array",
+    /*15*/        "while(left array is not empty):",
+    /*16*/        "    copy left array's element to final sorted array",
+    /*17*/        "while(right array is not empty):",
+    /*18*/        "    copy right array's element to final sorted array",
     };
 
 

@@ -23,7 +23,6 @@ public class MergeSortSequence extends Sequence {
         this.animationStates = anims;
         this.curSeqNo = curSeqNo;
         size = 0;
-
     }
 
     public MergeSortSequence(int curSeqNo) {
@@ -70,18 +69,13 @@ public class MergeSortSequence extends Sequence {
 
         AnimationState old = animationStates.get(curSeqNo-1);
 
-        System.out.println("----------------------");
         for(ElementAnimationData elementAnimationData : old.aldDatta){
             ElementAnimationData inverse = ElementAnimationData.reverse(elementAnimationData);
             for(Pair<AnimationDirection, Integer> inst : inverse.instructions){
                 int index = inverse.index;
-                System.out.println(index + " | " + inst);
-
                 animateViews.animateInst(views[index], inst.second, inst.first);
-
             }
         }
-        System.out.println("----------------------");
         curSeqNo--;
         return true;
     }
@@ -95,17 +89,12 @@ public class MergeSortSequence extends Sequence {
             return false;
 
         AnimationState now = animationStates.get(curSeqNo);
-        System.out.println("----------------------");
         for(ElementAnimationData elementAnimationData : now.aldDatta){
             for(Pair<AnimationDirection, Integer> inst : elementAnimationData.instructions){
                 int index = elementAnimationData.index;
-                System.out.println( index + " | " + inst);
-
                 animateViews.animateInst(views[index], inst.second, inst.first);
-
             }
         }
-        System.out.println("----------------------");
         curSeqNo++;
         return true;
     }

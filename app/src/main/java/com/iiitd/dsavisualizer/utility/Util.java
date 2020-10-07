@@ -12,6 +12,10 @@ public class Util {
         textView.setText(label + " : " + data);
     }
 
+    public static void setText(TextView textView, String data){
+        textView.setText(data);
+    }
+
     public static void changeTextViewsColors(TextView[] textViews, int normal, int highlight, int... indexes){
         for(TextView textView : textViews){
             textView.setBackgroundColor(normal);
@@ -27,10 +31,12 @@ public class Util {
             textView.setBackgroundColor(normal);
         }
 
-        scrollView.scrollTo(0, (int) textViews[indexes[0]].getY());
+        if(indexes != null) {
+            scrollView.scrollTo(0, (int) textViews[indexes[0]].getY());
 
-        for(int i:indexes){
-            textViews[i].setBackgroundColor(highlight);
+            for (int i : indexes) {
+                textViews[i].setBackgroundColor(highlight);
+            }
         }
     }
 

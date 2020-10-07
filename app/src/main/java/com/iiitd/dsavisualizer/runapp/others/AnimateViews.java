@@ -3,7 +3,6 @@ package com.iiitd.dsavisualizer.runapp.others;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 
 public class AnimateViews {
 
