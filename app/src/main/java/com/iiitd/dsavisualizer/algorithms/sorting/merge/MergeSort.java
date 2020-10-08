@@ -28,14 +28,31 @@ public class MergeSort {
     int width;
     int height;
     boolean isRandomize;
+    int[] rawInput;
 
-    public MergeSort(Context context, int arraySize, boolean isRandomize, LinearLayout linearLayout) {
+    public MergeSort(Context context, LinearLayout linearLayout, int arraySize) {
         this.context = context;
         this.random = new Random();
         this.arraySize = arraySize;
-        this.isRandomize = isRandomize;
+        this.isRandomize = true;
         this.linearLayout = linearLayout;
+        rawInput = null;
 
+        init();
+    }
+
+    public MergeSort(Context context, LinearLayout linearLayout, int[] rawInput) {
+        this.context = context;
+        this.random = new Random();
+        this.arraySize = rawInput.length;
+        this.isRandomize = false;
+        this.linearLayout = linearLayout;
+        this.rawInput = rawInput;
+
+        init();
+    }
+
+    private void init() {
         int log = (int)(Math.log(arraySize) / Math.log(2));
         if((arraySize & (arraySize - 1)) == 0){
             log++;
@@ -60,7 +77,10 @@ public class MergeSort {
             }
         }
         else{
-            //Get Data, Unimplemented
+            for (int i = 0; i < data.length; i++) {
+                data[i] = rawInput[i];
+                MAX = Math.max(data[i], MAX);
+            }
         }
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);

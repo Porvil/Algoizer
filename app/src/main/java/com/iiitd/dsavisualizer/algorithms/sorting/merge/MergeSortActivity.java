@@ -8,16 +8,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iiitd.dsavisualizer.R;
@@ -50,6 +56,8 @@ public class MergeSortActivity extends AppCompatActivity {
     TextView tv_arraysize;
     Button btn_generate;
     Button btn_clear;
+    Switch sw_randomarray;
+    EditText et_customarray;
 
     MergeSort mergeSort;
     TextView[] textViews;
@@ -57,6 +65,7 @@ public class MergeSortActivity extends AppCompatActivity {
     Timer timer = new Timer();
 
     boolean isAutoPlay = false;
+    boolean isRandomArray = true;
     int autoAnimSpeed = 1000;
 
 
@@ -92,11 +101,74 @@ public class MergeSortActivity extends AppCompatActivity {
         tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
         btn_generate = v_menu.findViewById(R.id.btn_generate);
         btn_clear = v_menu.findViewById(R.id.btn_clear);
+        sw_randomarray = v_menu.findViewById(R.id.sw_randomarray);
+        et_customarray = v_menu.findViewById(R.id.et_customarray);
 
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
         addPseudocode();
         initViews();
+
+        sw_randomarray.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    isRandomArray = true;
+                    sw_randomarray.setText(sw_randomarray.getTextOn());
+                    tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress()+1));
+
+                }
+                else {
+                    isRandomArray = false;
+                    sw_randomarray.setText(sw_randomarray.getTextOff());
+                    String customArray = et_customarray.getText().toString();
+                    if(customArray != null || !customArray.isEmpty()){
+                        String[] customInput = customArray.split(",");
+                        int[] data = new int[customInput.length];
+                        try {
+                            for (int i = 0; i < data.length; i++) {
+                                data[i] = Integer.parseInt(customInput[i]);
+                            }
+                            tv_arraysize.setText(String.valueOf(customInput.length));
+                        }
+                        catch (NumberFormatException e){
+                            et_customarray.setError("Bad Input");
+                            tv_arraysize.setText("0");
+                        }
+                    }
+                }
+            }
+        });
+
+        et_customarray.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null || !s.toString().isEmpty()){
+                    String[] customInput = s.toString().split(",");
+                    int[] data = new int[customInput.length];
+                    try {
+                        for (int i = 0; i < data.length; i++) {
+                            data[i] = Integer.parseInt(customInput[i]);
+                        }
+                        tv_arraysize.setText(String.valueOf(customInput.length));
+                    }
+                    catch (NumberFormatException e){
+                        et_customarray.setError("Bad Input");
+                        tv_arraysize.setText("0");
+                    }
+                }
+            }
+        });
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -136,6 +208,8 @@ public class MergeSortActivity extends AppCompatActivity {
                                 if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
                                     onForwardClick();
                                 else {
+                                    isAutoPlay = false;
+                                    btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
                                     timer.cancel();
                                 }
                             }
@@ -185,6 +259,9 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
                 if(slideOffset <= 0.40){
+                    isAutoPlay = false;
+                    btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                    timer.cancel();
                     fab_menubutton.setVisibility(View.VISIBLE);
                 }
                 else{
@@ -226,7 +303,8 @@ public class MergeSortActivity extends AppCompatActivity {
         sb_arraysize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tv_arraysize.setText(String.valueOf(progress+1));
+                if(isRandomArray)
+                    tv_arraysize.setText(String.valueOf(progress+1));
             }
 
             @Override
@@ -241,12 +319,31 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int arraySize = sb_arraysize.getProgress() + 1;
-                boolean isRandomize = true;
                 if(mergeSort != null){
                     mergeSort.linearLayout.removeAllViews();
                     mergeSort = null;
                 }
-                mergeSort = new MergeSort(MergeSortActivity.this, arraySize, isRandomize, ll_anim);
+
+                if(isRandomArray){
+                    mergeSort = new MergeSort(MergeSortActivity.this, ll_anim, arraySize);
+                }
+                else {
+                    String customArray = et_customarray.getText().toString();
+                    if(customArray != null || !customArray.isEmpty()){
+                        String[] customInput = customArray.split(",");
+                        int[] data = new int[customInput.length];
+                        try {
+                            for (int i = 0; i < data.length; i++) {
+                                data[i] = Integer.parseInt(customInput[i]);
+                            }
+                            mergeSort = new MergeSort(MergeSortActivity.this, ll_anim, data);
+                        }
+                        catch (NumberFormatException e){
+                            Toast.makeText(MergeSortActivity.this, "Bad Input", Toast.LENGTH_LONG).show();
+                            mergeSort = null;
+                        }
+                    }
+                }
                 initViews();
             }
         });

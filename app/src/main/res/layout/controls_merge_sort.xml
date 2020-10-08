@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="@color/colorAccent"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:divider="?android:listDivider"
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <SeekBar
         android:id="@+id/sb_arraysize"
@@ -11,14 +14,73 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:max="15"
-        android:progress="3" />
+        android:progress="3"
+        android:progressTint="#FD0000"
+        android:progressTintMode="add"
+        android:secondaryProgressTint="#0735DC" />
 
     <TextView
-        android:id="@+id/tv_arraysize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="1" />
+        android:text="OR"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_customarray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Add comma separated elements (Max 16)" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/sw_randomarray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:checked="true"
+            android:gravity="center|center_vertical"
+            android:showText="false"
+            android:text="Random Array"
+            android:textAllCaps="false"
+            android:textOff="Custom Array"
+            android:textOn="Random Array" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Array Size"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/tv_arraysize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_generate"
