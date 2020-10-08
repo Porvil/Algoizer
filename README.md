@@ -3,6 +3,11 @@
 ### What is DSA Visualizer?
 DSA Visualizer is an android application for learning and visualizing the data structures and algorithms visually step by step.
 
+### Features:
+- MergeSort[Done]
+- QuickSort
+- BubbleSort
+
 ### Installation:
 
 - Download the "DSA-Visualizer.apk" from [here](https://github.com/Porvil/DSA_Visualizer_Android).
