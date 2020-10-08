@@ -15,7 +15,7 @@
         android:layout_margin="10dp"
         android:max="15"
         android:progress="3"
-        android:progressTint="#FD0000"
+        android:progressTint="#FFFFFF"
         android:progressTintMode="add"
         android:secondaryProgressTint="#0735DC" />
 
