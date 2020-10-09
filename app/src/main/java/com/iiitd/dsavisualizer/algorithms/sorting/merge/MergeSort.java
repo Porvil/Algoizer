@@ -86,7 +86,7 @@ public class MergeSort {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        linearLayout.setBackgroundColor(Color.RED);
+//        linearLayout.setBackgroundColor(Color.RED);
         for(int i=0;i<data.length;i++){
             float h = (float)data[i] / (float)MAX;
 
