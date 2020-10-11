@@ -11,6 +11,7 @@ public abstract class Sequence {
     public int curSeqNo;
     public Context context;
     public View[] views;
+    public int[] positions;
     public AnimateViews animateViews;
     public ArrayList<AnimationState> animationStates;
 

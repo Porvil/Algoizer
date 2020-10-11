@@ -1,7 +1,9 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -41,7 +43,12 @@ public class MergeSortActivity extends AppCompatActivity {
     ViewStub vs_main;
     ViewStub vs_menu;
     LinearLayout ll_anim;
+    ConstraintLayout cl_info;
+//    ConstraintLayout cl_code;
     ImageButton btn_play;
+    ImageButton btn_back;
+    ImageButton btn_menu;
+    ImageButton btn_code;
     ImageButton btn_backward;
     ImageButton btn_forward;
     SeekBar sb_animspeed;
@@ -50,7 +57,6 @@ public class MergeSortActivity extends AppCompatActivity {
     TextView tv_nextinst;
     ScrollView sv_psuedocode;
     LinearLayout ll_psuedocode;
-    FloatingActionButton fab_menubutton;
 
     SeekBar sb_arraysize;
     TextView tv_arraysize;
@@ -66,7 +72,9 @@ public class MergeSortActivity extends AppCompatActivity {
 
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
+    boolean isPseudocode = true;
     int autoAnimSpeed = 1000;
+    int height = 10;
 
 
     @Override
@@ -88,6 +96,9 @@ public class MergeSortActivity extends AppCompatActivity {
         ll_anim = v_main.findViewById(R.id.ll_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_play = v_main.findViewById(R.id.btn_play);
+        btn_menu = v_main.findViewById(R.id.btn_menu);
+        btn_code = v_main.findViewById(R.id.btn_code);
+        btn_back = v_main.findViewById(R.id.btn_back);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
@@ -95,7 +106,7 @@ public class MergeSortActivity extends AppCompatActivity {
         tv_nextinst = v_main.findViewById(R.id.tv_value_next);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
-        fab_menubutton = v_main.findViewById(R.id.fab_menubutton);
+        cl_info = v_main.findViewById(R.id.cl_info);
 
         sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
         tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
@@ -242,7 +253,7 @@ public class MergeSortActivity extends AppCompatActivity {
         });
 
         // Floating Menu Button
-        fab_menubutton.setOnClickListener(new View.OnClickListener() {
+        btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
@@ -262,10 +273,10 @@ public class MergeSortActivity extends AppCompatActivity {
                     isAutoPlay = false;
                     btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
                     timer.cancel();
-                    fab_menubutton.setVisibility(View.VISIBLE);
+                    btn_menu.setVisibility(View.VISIBLE);
                 }
                 else{
-                    fab_menubutton.setVisibility(View.INVISIBLE);
+                    btn_menu.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -357,6 +368,65 @@ public class MergeSortActivity extends AppCompatActivity {
             }
         });
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ADD ALERT DIALOG BOX FOR CONFIRMING
+                finish();
+            }
+        });
+
+        btn_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("-----------------------------**");
+                if(isPseudocode) {
+                    sv_psuedocode.setVisibility(View.GONE);
+                    sv_psuedocode.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(mergeSort != null){
+                                int width = ll_anim.getWidth();
+                                int div = width / mergeSort.arraySize;
+
+                                for(int i=0;i<mergeSort.arraySize;i++){
+                                    int position = mergeSort.positions[i];
+                                    int x = position*div;
+                                    System.out.println("x="+x);
+//                                    mergeSort.views[i].setX(x);
+                                    float v1 = x - mergeSort.views[i].getX();
+                                    mergeSort.views[i].animate().translationXBy(v1).start();
+                                }
+                            }
+                        }
+                    }, 0);
+                }
+                else {
+                    sv_psuedocode.setVisibility(View.VISIBLE);
+                    sv_psuedocode.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(mergeSort != null){
+                                int width = ll_anim.getWidth();
+                                int div = width / mergeSort.arraySize;
+
+                                for(int i=0;i<mergeSort.arraySize;i++){
+                                    int position = mergeSort.positions[i];
+                                    int x = position*div;
+                                    System.out.println("x="+x);
+//                                    mergeSort.views[i].setX(x);
+                                    float v1 = x - mergeSort.views[i].getX();
+                                    mergeSort.views[i].animate().translationXBy(v1).start();
+                                }
+                            }
+                        }
+                    }, 0);
+
+                }
+                isPseudocode = !isPseudocode;
+            }
+        });
+
     }
 
     private void initViews() {
@@ -366,6 +436,9 @@ public class MergeSortActivity extends AppCompatActivity {
         if(mergeSort != null){
             Util.setText(tv_nextinst, mergeSort.sequence.animationStates.get(0).state);
             Util.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
+        }
+        for(TextView textView : textViews){
+            textView.setBackgroundColor(Color.GREEN);
         }
     }
 

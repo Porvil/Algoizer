@@ -21,6 +21,14 @@ public class AnimateViews {
         this.context = context;
     }
 
+    public void updateHeight(int oneh) {
+        this.oneh = oneh;
+    }
+
+    public void updateWidth(int onew) {
+        this.onew = onew;
+    }
+
     void animateBottom(View view){
         view.animate().translationYBy(oneh).start();
     }
@@ -58,6 +66,7 @@ public class AnimateViews {
     }
 
     public void animateInst(final View view, final int times, final AnimationDirection animationDirection) {
+        onew = view.getWidth();
         view.animate().setDuration(0);
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override

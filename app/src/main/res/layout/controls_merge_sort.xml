@@ -14,10 +14,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:max="15"
-        android:progress="3"
-        android:progressTint="#FFFFFF"
-        android:progressTintMode="add"
-        android:secondaryProgressTint="#0735DC" />
+        android:progress="3" />
 
     <TextView
         android:layout_width="match_parent"
@@ -54,7 +51,7 @@
             android:textOn="Random Array" />
 
         <View
-            android:layout_width="5dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="?android:attr/listDivider" />
@@ -68,7 +65,7 @@
             android:textStyle="bold" />
 
         <View
-            android:layout_width="5dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="?android:attr/listDivider" />

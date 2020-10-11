@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
@@ -22,6 +24,7 @@ public class MergeSort {
     int[] data;
     MergeSortData[] mergeSortData;
     View[] views;
+    int[] positions;
     LinearLayout linearLayout;
     MergeSortSequence sequence;
     Random random;
@@ -70,6 +73,7 @@ public class MergeSort {
         this.data = new int[arraySize];
         this.mergeSortData = new MergeSortData[arraySize];
         this.views = new View[arraySize];
+        this.positions = new int[arraySize];
         if(isRandomize){
             for (int i = 0; i < data.length; i++) {
                 data[i] = random.nextInt(20) + 1;
@@ -83,12 +87,14 @@ public class MergeSort {
             }
         }
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, height, 1);
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 //        linearLayout.setBackgroundColor(Color.RED);
         for(int i=0;i<data.length;i++){
-            float h = (float)data[i] / (float)MAX;
+            float x = (float)data[i] / (float)MAX;
+            float h = (x * .8f) + .20f;
+            System.out.println("val = " + h);
 
             View myView = vi.inflate(R.layout.element_merge_sort, null);
             myView.setLayoutParams(layoutParams);
@@ -99,17 +105,20 @@ public class MergeSort {
             tv.setTextSize(16);
             tv.setBackgroundColor(Color.GREEN);
             tv.getLayoutParams().height = (int) (height * h);
+            tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle));
             linearLayout.addView(myView);
 
             MergeSortData mergeSortData1 = new MergeSortData();
             mergeSortData1.data = data[i];
             mergeSortData1.index = i;
             views[i] = myView;
+            positions[i] = i;
             mergeSortData[i] = mergeSortData1;
         }
 
         this.sequence = new MergeSortSequence(0);
         this.sequence.setViews(views);
+        this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);
 
         mergesort();
@@ -167,7 +176,8 @@ public class MergeSort {
 
                 AnimationState animationState1 = new AnimationState(MergeSortInfo.L_LESSEQUAL_R,L[i].data + " <= " + R[j].data);
                 ElementAnimationData u = new ElementAnimationData(L[finalI].index, new Pair<>(AnimationDirection.UP, 1));
-                u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
+                if(Math.abs(diff) != 0)
+                    u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
                 animationState1.add(u);
                 sequence.addAnimSeq(animationState1);
                 arr[k] = L[i];
@@ -179,7 +189,8 @@ public class MergeSort {
                 final int diff = start - end;
                 AnimationState animationState2 = new AnimationState(MergeSortInfo.L_GREATER_R, L[i].data + " > " + R[j].data);
                 ElementAnimationData u1 = new ElementAnimationData(R[finalJ].index, new Pair<>(AnimationDirection.UP, 1));
-                u1.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
+                if(Math.abs(diff) != 0)
+                    u1.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
                 animationState2.add(u1);
                 sequence.addAnimSeq(animationState2);
                 arr[k] = R[j];
@@ -198,7 +209,8 @@ public class MergeSort {
             final int diff = start - end;
             AnimationState animationState1 = new AnimationState(MergeSortInfo.L_EXTRAS, L[i].data + " copied to final array");
             ElementAnimationData u = new ElementAnimationData(L[finalI].index, new Pair<>(AnimationDirection.UP, 1));
-            u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
+            if(Math.abs(diff) != 0)
+                u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
             animationState1.add(u);
             sequence.addAnimSeq(animationState1);
             arr[k] = L[i];
@@ -216,7 +228,8 @@ public class MergeSort {
             final int diff = start - end;
             AnimationState animationState1 = new AnimationState(MergeSortInfo.R_EXTRAS, R[j].data + " copied to final array");
             ElementAnimationData u = new ElementAnimationData(R[finalJ].index, new Pair<>(AnimationDirection.UP, 1));
-            u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
+            if(Math.abs(diff) != 0)
+                u.add(new Pair<>(diff < 0 ? AnimationDirection.LEFT : AnimationDirection.RIGHT, Math.abs(diff)));
             animationState1.add(u);
             sequence.addAnimSeq(animationState1);
             arr[k] = R[j];

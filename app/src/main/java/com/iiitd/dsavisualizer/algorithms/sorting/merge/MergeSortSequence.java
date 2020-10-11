@@ -44,6 +44,10 @@ public class MergeSortSequence extends Sequence {
         this.views = views;
     }
 
+    public void setPositions(int[] positions) {
+        this.positions = positions;
+    }
+
     @Override
     public String toString() {
         return curSeqNo + "\n" + call();
@@ -73,6 +77,12 @@ public class MergeSortSequence extends Sequence {
             ElementAnimationData inverse = ElementAnimationData.reverse(elementAnimationData);
             for(Pair<AnimationDirection, Integer> inst : inverse.instructions){
                 int index = inverse.index;
+                if(inst.first == AnimationDirection.LEFT){
+                    positions[index] -= inst.second;
+                }
+                else if(inst.first == AnimationDirection.RIGHT){
+                    positions[index] += inst.second;
+                }
                 animateViews.animateInst(views[index], inst.second, inst.first);
             }
         }
@@ -92,6 +102,12 @@ public class MergeSortSequence extends Sequence {
         for(ElementAnimationData elementAnimationData : now.aldDatta){
             for(Pair<AnimationDirection, Integer> inst : elementAnimationData.instructions){
                 int index = elementAnimationData.index;
+                if(inst.first == AnimationDirection.LEFT){
+                    positions[index] -= inst.second;
+                }
+                else if(inst.first == AnimationDirection.RIGHT){
+                    positions[index] += inst.second;
+                }
                 animateViews.animateInst(views[index], inst.second, inst.first);
             }
         }

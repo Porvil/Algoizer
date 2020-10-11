@@ -1,124 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:verticalScrollbarPosition="left"
-    tools:context=".algorithms.sorting.merge.MergeSortActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_maincontainer"
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cl_animcontrols"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/ll_anim"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/ll_animcontrols"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sv_psuedocode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_animcontrols"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:orientation="horizontal"
+        <View
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ll_anim"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/sv_psuedocode"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="10dp"
+            android:scrollbarStyle="outsideInset"
+            android:verticalScrollbarPosition="left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <SeekBar
-                android:id="@+id/sb_animspeed"
-                android:layout_width="120dp"
+            <LinearLayout
+                android:id="@+id/ll_pseudocode"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:progress="50" />
+                android:divider="?android:listDivider"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
-            <ImageButton
-                android:id="@+id/btn_backward"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
-
-
-            <ImageButton
-                android:id="@+id/btn_play"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
-
-            <ImageButton
-                android:id="@+id/btn_forward"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
-
-            <TextView
-                android:id="@+id/tv_seqno"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="0" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_menubutton"
-                android:src="@drawable/ic_baseline_menu_open_24"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:fabCustomSize="50dp"
-                android:layout_margin="20dp" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            app:layout_constraintBottom_toTopOf="@+id/ll_animcontrols"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorDivider" />
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_weight="1"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_code"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:id="@+id/cl_animcontrols"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cl_info"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:id="@+id/cl_info"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
+            app:layout_constraintStart_toEndOf="@+id/btn_back"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <LinearLayout
                 android:id="@+id/ll_2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -146,13 +133,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="normal" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_3"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -180,44 +171,108 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="normal" />
             </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <ScrollView
-            android:id="@+id/sv_psuedocode"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_menu"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="60dp"
             android:layout_height="0dp"
-            android:fadeScrollbars="false"
-            android:scrollbarSize="10dp"
-            android:scrollbarStyle="outsideInset"
-            android:verticalScrollbarPosition="left"
+
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_menu_open_24" />
 
-            <LinearLayout
-                android:id="@+id/ll_pseudocode"
-                android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_code"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_code_24" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <SeekBar
+                android:id="@+id/sb_animspeed"
+                style="@style/Widget.AppCompat.SeekBar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:divider="?android:listDivider"
-                android:orientation="vertical"
-                android:showDividers="middle">
+                android:layout_weight="1"
+                android:progress="50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
-        </ScrollView>
+            <ImageButton
+                android:id="@+id/btn_backward"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+
+            <ImageButton
+                android:id="@+id/btn_forward"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+            <ImageButton
+                android:id="@+id/btn_play"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_forward"
+                app:layout_constraintStart_toEndOf="@+id/btn_backward"
+                app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
+                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_seqno"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
