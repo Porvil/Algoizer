@@ -90,11 +90,12 @@ public class MergeSort {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, height, 1);
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        System.out.println(height);
 //        linearLayout.setBackgroundColor(Color.RED);
         for(int i=0;i<data.length;i++){
             float x = (float)data[i] / (float)MAX;
-            float h = (x * .8f) + .20f;
-            System.out.println("val = " + h);
+            float h = (x * .75f) + .20f;
+            System.out.println("val = " + h + " | " + (int) (height * h));
 
             View myView = vi.inflate(R.layout.element_merge_sort, null);
             myView.setLayoutParams(layoutParams);
