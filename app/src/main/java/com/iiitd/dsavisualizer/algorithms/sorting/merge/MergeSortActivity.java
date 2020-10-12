@@ -1,12 +1,5 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,12 +18,19 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.Util;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,7 +44,6 @@ public class MergeSortActivity extends AppCompatActivity {
     ViewStub vs_menu;
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
-//    ConstraintLayout cl_code;
     ImageButton btn_play;
     ImageButton btn_back;
     ImageButton btn_menu;
@@ -54,7 +53,6 @@ public class MergeSortActivity extends AppCompatActivity {
     SeekBar sb_animspeed;
     TextView tv_seqno;
     TextView tv_info;
-    TextView tv_nextinst;
     ScrollView sv_psuedocode;
     LinearLayout ll_psuedocode;
 
@@ -74,7 +72,6 @@ public class MergeSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = 1000;
-    int height = 10;
 
 
     @Override
@@ -103,7 +100,6 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
         tv_info = v_main.findViewById(R.id.tv_value_info);
-        tv_nextinst = v_main.findViewById(R.id.tv_value_next);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         cl_info = v_main.findViewById(R.id.cl_info);
@@ -125,9 +121,9 @@ public class MergeSortActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     isRandomArray = true;
+                    et_customarray.setError(null);
                     sw_randomarray.setText(sw_randomarray.getTextOn());
                     tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress()+1));
-
                 }
                 else {
                     isRandomArray = false;
@@ -350,7 +346,7 @@ public class MergeSortActivity extends AppCompatActivity {
                             mergeSort = new MergeSort(MergeSortActivity.this, ll_anim, data);
                         }
                         catch (NumberFormatException e){
-                            Toast.makeText(MergeSortActivity.this, "Bad Input", Toast.LENGTH_LONG).show();
+                            et_customarray.setError("Bad Input");
                             mergeSort = null;
                         }
                     }
@@ -431,11 +427,11 @@ public class MergeSortActivity extends AppCompatActivity {
 
     private void initViews() {
         tv_seqno.setText("0");
-        tv_nextinst.setText("-");
         tv_info.setText("-");
         if(mergeSort != null){
-            Util.setText(tv_nextinst, mergeSort.sequence.animationStates.get(0).state);
             Util.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
+            Util.highlightViews(mergeSort.sequence.views, Color.BLUE, Color.GREEN,
+                    mergeSort.sequence.animationStates.get(0).highlightIndexes);
         }
         for(TextView textView : textViews){
             textView.setBackgroundColor(Color.GREEN);
@@ -473,16 +469,19 @@ public class MergeSortActivity extends AppCompatActivity {
                     tv_seqno.setText(String.valueOf(curSeqNo));
                     if(curSeqNo < mergeSort.sequence.size) {
                         String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
-                        Util.setText(tv_nextinst, mergeSort.sequence.animationStates.get(curSeqNo).state);
                         if(MergeSortInfo.map.containsKey(state)){
                             Integer[] integers = MergeSortInfo.map.get(state);
                             Util.changeTextViewsColors(sv_psuedocode, textViews, Color.GREEN, Color.YELLOW, integers);
                         }
                         Util.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
+                        Util.highlightViews(mergeSort.sequence.views, Color.BLUE, Color.GREEN,
+                                mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                        System.out.println();
                     }
                     else{
                         Util.changeTextViewsColors(sv_psuedocode, textViews, Color.GREEN, Color.YELLOW, null);
-                        Util.setText(tv_nextinst, "Array Sorted");
+                        Util.highlightViews(mergeSort.sequence.views, Color.BLUE, Color.GREEN,
+                                null);
                         Util.setText(tv_info, "-");
                     }
                 }
@@ -499,17 +498,19 @@ public class MergeSortActivity extends AppCompatActivity {
                 public void run() {
                     tv_seqno.setText(String.valueOf(curSeqNo));
                     if(curSeqNo > 0) {
-                        Util.setText(tv_nextinst, mergeSort.sequence.animationStates.get(curSeqNo).state);
                         Util.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
                         String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
                         if (MergeSortInfo.map.containsKey(state)) {
                             Integer[] integers = MergeSortInfo.map.get(state);
                             Util.changeTextViewsColors(sv_psuedocode, textViews, Color.GREEN, Color.YELLOW, integers);
                         }
+                        Util.highlightViews(mergeSort.sequence.views, Color.BLUE, Color.GREEN,
+                                mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
-                        Util.setText(tv_nextinst, mergeSort.sequence.animationStates.get(0).state);
                         Util.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
+                        Util.highlightViews(mergeSort.sequence.views, Color.BLUE, Color.GREEN,
+                                mergeSort.sequence.animationStates.get(0).highlightIndexes);
                     }
                 }
             });

@@ -13,7 +13,7 @@ public class MergeSortInfo {
     /*13*/ public static final String L_GREATER_R = "Left > Right";
     /*11*/ public static final String L_EXTRAS = "Left Extras";
     /*13*/ public static final String R_EXTRAS = "Right Extras";
-    /*9*/  public static final String MERGE_STARTED = "Array copy for merging";
+    /*9*/  public static final String MERGE_STARTED = "Merge arrays, Array copy for merging";
     /*1*/  public static final String SINGLE_MERGE = "Single element is always sorted";
 
     public static HashMap<String, Integer[]> map = new HashMap<>();
@@ -56,5 +56,28 @@ public class MergeSortInfo {
     };
 
 
+       public static String getComparedString(int a, int b){
+           if(a <= b){
+               return a + " <= " + b + ", copy left array's element(" + a + ") to final array";
+           }
+
+           return a + " > " + b + ", copy right array's element(" + b + ") to final array";
+       }
+
+       public static String getRemainingElementString(int element, boolean isLeftSide){
+           if(isLeftSide){
+               return "copy remaining left array's elements(" + element + ") to final array";
+           }
+
+           return "copy remaining right array's elements(" + element + ") to final array";
+       }
+
+       public static String getMergeSortString(int left, int right){
+           return "mergeSort(data, " + left + ", " + right + ")";
+       }
+
+       public static String getMergeString(int left, int mid, int right){
+           return "merge(data, " + left + ", " + mid + ", " + right + ")";
+       }
 
 }

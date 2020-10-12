@@ -73,7 +73,7 @@ public class MergeSortSequence extends Sequence {
 
         AnimationState old = animationStates.get(curSeqNo-1);
 
-        for(ElementAnimationData elementAnimationData : old.aldDatta){
+        for(ElementAnimationData elementAnimationData : old.aldData){
             ElementAnimationData inverse = ElementAnimationData.reverse(elementAnimationData);
             for(Pair<AnimationDirection, Integer> inst : inverse.instructions){
                 int index = inverse.index;
@@ -99,7 +99,7 @@ public class MergeSortSequence extends Sequence {
             return false;
 
         AnimationState now = animationStates.get(curSeqNo);
-        for(ElementAnimationData elementAnimationData : now.aldDatta){
+        for(ElementAnimationData elementAnimationData : now.aldData){
             for(Pair<AnimationDirection, Integer> inst : elementAnimationData.instructions){
                 int index = elementAnimationData.index;
                 if(inst.first == AnimationDirection.LEFT){

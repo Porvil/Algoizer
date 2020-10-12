@@ -2,9 +2,12 @@ package com.iiitd.dsavisualizer.utility;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class Util {
 
@@ -36,6 +39,18 @@ public class Util {
 
             for (int i : indexes) {
                 textViews[i].setBackgroundColor(highlight);
+            }
+        }
+    }
+
+    public static void highlightViews(View[] views, int normal, int highlight, ArrayList<Integer> indexes){
+        for(View view : views){
+            view.setBackgroundColor(normal);
+        }
+
+        if(indexes != null) {
+            for (int i : indexes) {
+                views[i].setBackgroundColor(highlight);
             }
         }
     }
