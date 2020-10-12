@@ -84,7 +84,7 @@
         <ImageButton
             android:id="@+id/btn_back"
             style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
@@ -161,7 +161,7 @@
 
             <TextView
                 android:id="@+id/tv_seqno"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="0"
@@ -256,7 +256,7 @@
         <ImageButton
             android:id="@+id/btn_menu"
             style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
@@ -269,7 +269,7 @@
         <ImageButton
             android:id="@+id/btn_code"
             style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
