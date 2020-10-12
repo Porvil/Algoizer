@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DSA Visualizer</string>
     <string name="splash_image">Splash Image</string>
+    <string name="array_size">Array Size</string>
 </resources>

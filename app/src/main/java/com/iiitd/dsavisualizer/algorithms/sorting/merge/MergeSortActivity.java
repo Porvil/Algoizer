@@ -150,18 +150,19 @@ public class MergeSortActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s != null || !s.toString().isEmpty()){
-                    String[] customInput = s.toString().split(",");
-                    int[] data = new int[customInput.length];
-                    try {
-                        for (int i = 0; i < data.length; i++) {
-                            data[i] = Integer.parseInt(customInput[i]);
+                if(!isRandomArray) {
+                    if (s != null || !s.toString().isEmpty()) {
+                        String[] customInput = s.toString().split(",");
+                        int[] data = new int[customInput.length];
+                        try {
+                            for (int i = 0; i < data.length; i++) {
+                                data[i] = Integer.parseInt(customInput[i]);
+                            }
+                            tv_arraysize.setText(String.valueOf(customInput.length));
+                        } catch (NumberFormatException e) {
+                            et_customarray.setError("Bad Input");
+                            tv_arraysize.setText("0");
                         }
-                        tv_arraysize.setText(String.valueOf(customInput.length));
-                    }
-                    catch (NumberFormatException e){
-                        et_customarray.setError("Bad Input");
-                        tv_arraysize.setText("0");
                     }
                 }
             }
