@@ -6,74 +6,68 @@ import android.view.View;
 
 public class AnimateViews {
 
-    private int oneh;
-    private int onew;
+    private int height;
+    private int width;
     public Context context;
 
-    public AnimateViews(int oneh, int onew) {
-        this.oneh = oneh;
-        this.onew = onew;
-    }
-
-    public AnimateViews(int oneh, int onew, Context context) {
-        this.oneh = oneh;
-        this.onew = onew;
+    public AnimateViews(int height, int width, Context context) {
+        this.height = height;
+        this.width = width;
         this.context = context;
     }
 
-    public void updateHeight(int oneh) {
-        this.oneh = oneh;
+    public void updateHeight(int height) {
+        this.height = height;
     }
 
-    public void updateWidth(int onew) {
-        this.onew = onew;
+    public void updateWidth(int width) {
+        this.width = width;
     }
 
-    void animateBottom(View view){
-        view.animate().translationYBy(oneh).start();
+    private void animateBottom(View view){
+        view.animate().translationYBy(height).start();
     }
 
-    void animateBottom(View view, int times){
-        int by = times * oneh;
+    private void animateBottom(View view, int times){
+        int by = times * height;
         view.animate().translationYBy(by);
     }
 
-    void animateUp(View view){
-        view.animate().translationYBy(-oneh).start();
+    private void animateUp(View view){
+        view.animate().translationYBy(-height).start();
     }
 
-    void animateUp(View view, int times){
-        int by = times * oneh;
+    private void animateUp(View view, int times){
+        int by = times * height;
         view.animate().translationYBy(-by);
     }
 
-    void animateLeft(View view){
-        view.animate().translationXBy(-onew).start();
+    private void animateLeft(View view){
+        view.animate().translationXBy(-width).start();
     }
 
-    void animateLeft(View view, int times){
-        int by = times * onew;
+    private void animateLeft(View view, int times){
+        int by = times * width;
         view.animate().translationXBy(-by);
     }
 
-    void animateRight(View view){
-        view.animate().translationXBy(onew).start();
+    private void animateRight(View view){
+        view.animate().translationXBy(width).start();
     }
 
-    void animateRight(View view, int times){
-        int by = times * onew;
+    private void animateRight(View view, int times){
+        int by = times * width;
         view.animate().translationXBy(by);
     }
 
     public void animateInst(final View view, final int times, final AnimationDirection animationDirection) {
-        onew = view.getWidth();
+        width = view.getWidth();
         view.animate().setDuration(0);
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 switch (animationDirection){
                     case NULL:
-                        System.out.println("NO ANIM INST.");
                         break;
                     case UP:
                         animateUp(view, times);
@@ -88,52 +82,10 @@ public class AnimateViews {
                         animateLeft(view, times);
                         break;
                     default:
-                        System.out.println("NO ANIMATION STATE FOUND -__-");
                         break;
                 }
             }
         });
-    }
-
-    public void animateInst(final View view, final int times, final String inst){
-        view.animate().setDuration(0);
-        ((Activity)context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                if(inst.equals("U")){
-                    animateUp(view, times);
-                }
-                else if(inst.equals("B")){
-                    animateBottom(view, times);
-                }
-                else if(inst.equals("L")){
-                    animateLeft(view, times);
-                }
-                else if(inst.equals("R")){
-                    animateRight(view, times);
-                }
-                else{
-                    System.out.println("NO ANIM INST.");
-                }
-            }
-        });
-
-//        if(inst.equals("U")){
-//            animateUp(view, times);
-//        }
-//        else if(inst.equals("B")){
-//            animateBottom(view, times);
-//        }
-//        else if(inst.equals("L")){
-//            animateLeft(view, times);
-//        }
-//        else if(inst.equals("R")){
-//            animateRight(view, times);
-//        }
-//        else{
-//            System.out.println("NO ANIM INST.");
-//        }
     }
 
 }

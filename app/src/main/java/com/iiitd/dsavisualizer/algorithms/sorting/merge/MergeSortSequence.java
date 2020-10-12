@@ -14,25 +14,14 @@ import java.util.ArrayList;
 
 public class MergeSortSequence extends Sequence {
 
-    public MergeSortSequence(ArrayList<AnimationState> anims, int curSeqNo) {
-        this.animationStates = anims;
-        this.curSeqNo = curSeqNo;
-        size = 0;
-    }
-    public MergeSortSequence(ArrayList<AnimationState> anims, Context context) {
-        this.animationStates = anims;
-        this.curSeqNo = curSeqNo;
-        size = 0;
-    }
-
     public MergeSortSequence(int curSeqNo) {
         this.curSeqNo = curSeqNo;
         size = 0;
         this.animationStates = new ArrayList<>();
     }
 
-    public void setAnimateViews(int oneh, int onew, Context context) {
-        this.animateViews = new AnimateViews(oneh, onew, context);
+    public void setAnimateViews(int height, int width, Context context) {
+        this.animateViews = new AnimateViews(height, width, context);
     }
 
     public void addAnimSeq(AnimationState animationState){

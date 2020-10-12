@@ -5,6 +5,7 @@ import java.util.HashMap;
 //HARDCODED INFORMATION, Handle with care
 public class MergeSortInfo {
 
+    /*0*/  public static final String MS = "Merge Sort";
     /*4*/  public static final String LS = "Sorting Left Half";
     /*14*/ public static final String LS_U = "Sorting Left Half Done";
     /*5*/  public static final String RS = "Sorting Right Half";
@@ -19,10 +20,11 @@ public class MergeSortInfo {
     public static HashMap<String, Integer[]> map = new HashMap<>();
 
     static {
+        map.put(MS, new Integer[]{0});
         map.put(LS, new Integer[]{4});
-        map.put(LS_U, new Integer[]{14});
+        map.put(LS_U, new Integer[]{19});
         map.put(RS, new Integer[]{5});
-        map.put(RS_U, new Integer[]{14});
+        map.put(RS_U, new Integer[]{19});
         map.put(L_LESSEQUAL_R, new Integer[]{11, 12});
         map.put(L_GREATER_R, new Integer[]{13, 14});
         map.put(L_EXTRAS, new Integer[]{15, 16});
@@ -53,6 +55,7 @@ public class MergeSortInfo {
     /*16*/        "    copy left array's element to final sorted array",
     /*17*/        "while(right array is not empty):",
     /*18*/        "    copy right array's element to final sorted array",
+    /*19*/        "return"
     };
 
 

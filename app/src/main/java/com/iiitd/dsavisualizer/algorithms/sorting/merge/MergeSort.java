@@ -30,6 +30,7 @@ public class MergeSort {
     Random random;
     int width;
     int height;
+    int textSize;
     boolean isRandomize;
     int[] rawInput;
 
@@ -56,6 +57,12 @@ public class MergeSort {
     }
 
     private void init() {
+        if(arraySize > 8){
+            textSize = 12;
+        }
+        else{
+            textSize = 14;
+        }
         int log = (int)(Math.log(arraySize) / Math.log(2));
         if((arraySize & (arraySize - 1)) == 0){
             log++;
@@ -90,12 +97,9 @@ public class MergeSort {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, height, 1);
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        System.out.println(height);
-//        linearLayout.setBackgroundColor(Color.RED);
         for(int i=0;i<data.length;i++){
             float x = (float)data[i] / (float)MAX;
             float h = (x * .75f) + .20f;
-            System.out.println("val = " + h + " | " + (int) (height * h));
 
             View myView = vi.inflate(R.layout.element_merge_sort, null);
             myView.setLayoutParams(layoutParams);
@@ -103,7 +107,7 @@ public class MergeSort {
             TextView tv = myView.findViewById(R.id.tv_elementvalue);
             tv.setText(String.valueOf(data[i]));
             tv.setTextColor(Color.WHITE);
-            tv.setTextSize(16);
+            tv.setTextSize(textSize);
             tv.setBackgroundColor(Color.GREEN);
             tv.getLayoutParams().height = (int) (height * h);
             tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle));
@@ -134,6 +138,12 @@ public class MergeSort {
     }
 
     private void mergesort(){
+        final AnimationState animationState = new AnimationState(MergeSortInfo.MS, MergeSortInfo.getMergeSortString(0, mergeSortData.length-1));
+        for(int i=0;i<mergeSortData.length;i++){
+            animationState.addElementAnimationData(new ElementAnimationData(mergeSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
+            animationState.addHighlightIndexes(mergeSortData[i].index);
+        }
+        sequence.addAnimSeq(animationState);
         sort(mergeSortData, 0, mergeSortData.length-1);
     }
 
@@ -276,7 +286,7 @@ public class MergeSort {
             merge(data, l, m, r);
         }
         else{
-            AnimationState animationState = new AnimationState(MergeSortInfo.SINGLE_MERGE, data[l].data + " is always sorted");
+            AnimationState animationState = new AnimationState(MergeSortInfo.SINGLE_MERGE, MergeSortInfo.SINGLE_MERGE);
             animationState.addElementAnimationData(new ElementAnimationData(l, new Pair<>(AnimationDirection.NULL, 1)));
             animationState.addHighlightIndexes(data[l].index);
             sequence.addAnimSeq(animationState);
