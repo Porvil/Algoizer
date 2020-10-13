@@ -1,6 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,10 +22,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.Util;
 
 import java.util.Timer;
@@ -33,6 +33,8 @@ import java.util.TimerTask;
 
 
 public class MergeSortActivity extends AppCompatActivity {
+
+    Context context;
 
     DrawerLayout dl_main;
     View v_main;
@@ -74,6 +76,7 @@ public class MergeSortActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base);
+        context = this;
 
         // findViewById
         dl_main = findViewById(R.id.dl_main);
@@ -172,18 +175,33 @@ public class MergeSortActivity extends AppCompatActivity {
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int speed = (1000 - progress * 10) + 500;
+                // 2500ms to 500ms
+                int speed = (2000 - seekBar.getProgress() * 20) + 500;
                 autoAnimSpeed = speed;
-                isAutoPlay = false;
-                btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
-                timer.cancel();
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+               if (mergeSort != null) {
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
+                                onForwardClick();
+                            else {
+                                isAutoPlay = false;
+                                btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
+                                timer.cancel();
+                            }
+                        }
+                    }, 0, autoAnimSpeed);
+                }
+            }
         });
 
         // Auto Animation Play/Pause Button
@@ -193,12 +211,12 @@ public class MergeSortActivity extends AppCompatActivity {
                 if(mergeSort != null){
                     if(isAutoPlay){
                         isAutoPlay = false;
-                        btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                        btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                         timer.cancel();
                     }
                     else{
                         isAutoPlay = true;
-                        btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_pause_24));
+                        btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PAUSE_BUTTON));
                         timer = new Timer();
                         timer.schedule(new TimerTask() {
                             @Override
@@ -207,7 +225,7 @@ public class MergeSortActivity extends AppCompatActivity {
                                     onForwardClick();
                                 else {
                                     isAutoPlay = false;
-                                    btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                                    btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                                     timer.cancel();
                                 }
                             }
@@ -222,7 +240,7 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isAutoPlay = false;
-                btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this,R.drawable.ic_baseline_play_arrow_24));
+                btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                 timer.cancel();
                 onBackwardClick();
             }
@@ -233,7 +251,7 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isAutoPlay = false;
-                btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                 timer.cancel();
                 onForwardClick();
             }
@@ -245,7 +263,7 @@ public class MergeSortActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
                     isAutoPlay = false;
-                    btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                    btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                     timer.cancel();
                     dl_main.openDrawer(Gravity.RIGHT);
                 }
@@ -258,7 +276,7 @@ public class MergeSortActivity extends AppCompatActivity {
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
                 if(slideOffset <= 0.40){
                     isAutoPlay = false;
-                    btn_play.setImageDrawable(ContextCompat.getDrawable(MergeSortActivity.this, R.drawable.ic_baseline_play_arrow_24));
+                    btn_play.setImageDrawable(Util.getDrawable(context, AppSettings.PLAY_BUTTON));
                     timer.cancel();
                 }
             }
@@ -319,7 +337,7 @@ public class MergeSortActivity extends AppCompatActivity {
                 }
 
                 if(isRandomArray){
-                    mergeSort = new MergeSort(MergeSortActivity.this, ll_anim, arraySize);
+                    mergeSort = new MergeSort(context, ll_anim, arraySize);
                 }
                 else {
                     String customArray = et_customarray.getText().toString();
@@ -330,7 +348,7 @@ public class MergeSortActivity extends AppCompatActivity {
                             for (int i = 0; i < data.length; i++) {
                                 data[i] = Integer.parseInt(customInput[i]);
                             }
-                            mergeSort = new MergeSort(MergeSortActivity.this, ll_anim, data);
+                            mergeSort = new MergeSort(context, ll_anim, data);
                         }
                         catch (NumberFormatException e){
                             et_customarray.setError("Bad Input");
@@ -413,18 +431,18 @@ public class MergeSortActivity extends AppCompatActivity {
         if(mergeSort != null){
             tv_seqno.setText("0 / " + mergeSort.sequence.animationStates.size());
             Util.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
-            Util.highlightViews(MergeSortActivity.this, mergeSort.sequence.views,
+            Util.highlightViews(context, mergeSort.sequence.views,
                     mergeSort.sequence.animationStates.get(0).highlightIndexes);
             String state = mergeSort.sequence.animationStates.get(0).state;
             if(MergeSortInfo.map.containsKey(state)){
                 Integer[] integers = MergeSortInfo.map.get(state);
-                Util.changeTextViewsColors(MergeSortActivity.this, sv_psuedocode, textViews, integers);
+                Util.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
             }
         }
         else{
             tv_seqno.setText("0 / 0");
             Util.setText(tv_info, "-");
-            Util.changeTextViewsColors(MergeSortActivity.this, sv_psuedocode, textViews, null);
+            Util.changeTextViewsColors(context, sv_psuedocode, textViews, null);
         }
 
     }
@@ -456,20 +474,20 @@ public class MergeSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(String.valueOf(curSeqNo) + " / " + mergeSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
                     if(curSeqNo < mergeSort.sequence.size) {
                         String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
                         if(MergeSortInfo.map.containsKey(state)){
                             Integer[] integers = MergeSortInfo.map.get(state);
-                            Util.changeTextViewsColors(MergeSortActivity.this, sv_psuedocode, textViews, integers);
+                            Util.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
                         Util.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
-                        Util.highlightViews(MergeSortActivity.this, mergeSort.sequence.views,
+                        Util.highlightViews(context, mergeSort.sequence.views,
                                 mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
-                        Util.changeTextViewsColors(MergeSortActivity.this, sv_psuedocode, textViews, null);
-                        Util.highlightViews(MergeSortActivity.this, mergeSort.sequence.views,null);
+                        Util.changeTextViewsColors(context, sv_psuedocode, textViews, null);
+                        Util.highlightViews(context, mergeSort.sequence.views,null);
                         Util.setText(tv_info, "Array is sorted");
                     }
                 }
@@ -484,14 +502,14 @@ public class MergeSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(String.valueOf(curSeqNo) + " / " + mergeSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
                     Util.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
                     String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
                     if (MergeSortInfo.map.containsKey(state)) {
                         Integer[] integers = MergeSortInfo.map.get(state);
-                        Util.changeTextViewsColors(MergeSortActivity.this, sv_psuedocode, textViews, integers);
+                        Util.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
-                    Util.highlightViews(MergeSortActivity.this, mergeSort.sequence.views,
+                    Util.highlightViews(context, mergeSort.sequence.views,
                             mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                 }
             });

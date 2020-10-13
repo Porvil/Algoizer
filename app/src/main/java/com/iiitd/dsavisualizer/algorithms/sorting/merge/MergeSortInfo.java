@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.HashMap;
 
 //HARDCODED INFORMATION, Handle with care
@@ -29,7 +31,7 @@ public class MergeSortInfo {
         map.put(L_GREATER_R, new Integer[]{13, 14});
         map.put(L_EXTRAS, new Integer[]{15, 16});
         map.put(R_EXTRAS, new Integer[]{17, 18});
-        map.put(MERGE_STARTED, new Integer[]{9});
+        map.put(MERGE_STARTED, new Integer[]{8, 9});
         map.put(SINGLE_MERGE, new Integer[]{1, 2});
     }
 

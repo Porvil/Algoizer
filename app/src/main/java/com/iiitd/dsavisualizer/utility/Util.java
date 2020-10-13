@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.utility;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -46,6 +47,10 @@ public class Util {
                 views[i].findViewById(R.id.tv_elementvalue).setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_highlighted));
             }
         }
+    }
+
+    public static Drawable getDrawable(Context context, int id){
+        return ContextCompat.getDrawable(context, id);
     }
 
 }

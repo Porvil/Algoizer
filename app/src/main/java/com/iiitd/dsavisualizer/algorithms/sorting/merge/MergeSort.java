@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
 import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
+import com.iiitd.dsavisualizer.utility.Util;
 
 import java.util.Random;
 
@@ -108,9 +108,8 @@ public class MergeSort {
             tv.setText(String.valueOf(data[i]));
             tv.setTextColor(Color.WHITE);
             tv.setTextSize(textSize);
-            tv.setBackgroundColor(Color.GREEN);
             tv.getLayoutParams().height = (int) (height * h);
-            tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle));
+            tv.setBackground(Util.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
             linearLayout.addView(myView);
 
             MergeSortData mergeSortData1 = new MergeSortData();
