@@ -185,7 +185,7 @@ public class MergeSortActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               if (mergeSort != null) {
+               if (mergeSort != null && isAutoPlay) {
                     timer.cancel();
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
