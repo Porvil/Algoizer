@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -496,6 +498,16 @@ public class QuickSortActivity extends AppCompatActivity {
                         UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
                         UtilUI.highlightViews(context, quickSort.sequence.views,
                                 quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+
+                        ArrayList<Pair<Integer, String>> pointers = quickSort.sequence.animationStates.get(curSeqNo).pointers;
+//                        for(int i=0;i<quickSort.arraySize;i++){
+//                            TextView viewById = quickSort.views[i].findViewById(R.id.tv_pointer);
+//                            viewById.setText("");
+//                        }
+                        for(Pair<Integer, String> pair : pointers){
+                            TextView viewById = quickSort.views[pair.first].findViewById(R.id.tv_pointer);
+                            viewById.setText(pair.second);
+                        }
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
