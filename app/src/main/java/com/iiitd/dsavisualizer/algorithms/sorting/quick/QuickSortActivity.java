@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.algorithms.sorting.merge;
+package com.iiitd.dsavisualizer.algorithms.sorting.quick;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -32,7 +32,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MergeSortActivity extends AppCompatActivity {
+public class QuickSortActivity extends AppCompatActivity {
 
     Context context;
 
@@ -62,7 +62,7 @@ public class MergeSortActivity extends AppCompatActivity {
     Switch sw_randomarray;
     EditText et_customarray;
 
-    MergeSort mergeSort;
+    QuickSort quickSort;
     TextView[] textViews;
 
     Timer timer = new Timer();
@@ -71,7 +71,7 @@ public class MergeSortActivity extends AppCompatActivity {
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     int LAYOUT = R.layout.activity_merge_sort;
-    int CONTROL = R.layout.controls_merge_sort;
+    int CONTROL = R.layout.controls_quick_sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,13 +186,13 @@ public class MergeSortActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               if (mergeSort != null && isAutoPlay) {
+               if (quickSort != null && isAutoPlay) {
                     timer.cancel();
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
+                            if (quickSort.sequence.curSeqNo < quickSort.sequence.size)
                                 onForwardClick();
                             else {
                                 isAutoPlay = false;
@@ -209,7 +209,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mergeSort != null){
+                if(quickSort != null){
                     if(isAutoPlay){
                         isAutoPlay = false;
                         btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
@@ -222,7 +222,7 @@ public class MergeSortActivity extends AppCompatActivity {
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (mergeSort.sequence.curSeqNo < mergeSort.sequence.size)
+                                if (quickSort.sequence.curSeqNo < quickSort.sequence.size)
                                     onForwardClick();
                                 else {
                                     isAutoPlay = false;
@@ -332,16 +332,17 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int arraySize = sb_arraysize.getProgress() + 1;
-                if(mergeSort != null){
-                    mergeSort.linearLayout.removeAllViews();
-                    mergeSort = null;
+                if(quickSort != null){
+                    quickSort.linearLayout.removeAllViews();
+                    quickSort = null;
                 }
 
                 if(isRandomArray){
-                    mergeSort = new MergeSort(context, ll_anim, arraySize);
+                    quickSort = new QuickSort(context, ll_anim, arraySize);
                 }
                 else {
-                    String customArray = et_customarray.getText().toString();
+//                    String customArray = et_customarray.getText().toString();
+                    String customArray = "3,8,2,5,1,4,7,6";
                     if(customArray != null || !customArray.isEmpty()){
                         String[] customInput = customArray.split(",");
                         int[] data = new int[customInput.length];
@@ -349,11 +350,11 @@ public class MergeSortActivity extends AppCompatActivity {
                             for (int i = 0; i < data.length; i++) {
                                 data[i] = Integer.parseInt(customInput[i]);
                             }
-                            mergeSort = new MergeSort(context, ll_anim, data);
+                            quickSort = new QuickSort(context, ll_anim, data);
                         }
                         catch (NumberFormatException e){
                             et_customarray.setError("Bad Input");
-                            mergeSort = null;
+                            quickSort = null;
                         }
                     }
                 }
@@ -364,9 +365,9 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mergeSort != null) {
-                    mergeSort.linearLayout.removeAllViews();
-                    mergeSort = null;
+                if(quickSort != null) {
+                    quickSort.linearLayout.removeAllViews();
+                    quickSort = null;
                 }
                 initViews();
             }
@@ -388,15 +389,15 @@ public class MergeSortActivity extends AppCompatActivity {
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(mergeSort != null){
+                            if(quickSort != null){
                                 int width = ll_anim.getWidth();
-                                int div = width / mergeSort.arraySize;
+                                int div = width / quickSort.arraySize;
 
-                                for(int i=0;i<mergeSort.arraySize;i++){
-                                    int position = mergeSort.positions[i];
+                                for(int i = 0; i< quickSort.arraySize; i++){
+                                    int position = quickSort.positions[i];
                                     int x = position*div;
-                                    float v1 = x - mergeSort.views[i].getX();
-                                    mergeSort.views[i].animate().translationXBy(v1).start();
+                                    float v1 = x - quickSort.views[i].getX();
+                                    quickSort.views[i].animate().translationXBy(v1).start();
                                 }
                             }
                         }
@@ -407,15 +408,15 @@ public class MergeSortActivity extends AppCompatActivity {
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(mergeSort != null){
+                            if(quickSort != null){
                                 int width = ll_anim.getWidth();
-                                int div = width / mergeSort.arraySize;
+                                int div = width / quickSort.arraySize;
 
-                                for(int i=0;i<mergeSort.arraySize;i++){
-                                    int position = mergeSort.positions[i];
+                                for(int i = 0; i< quickSort.arraySize; i++){
+                                    int position = quickSort.positions[i];
                                     int x = position*div;
-                                    float v1 = x - mergeSort.views[i].getX();
-                                    mergeSort.views[i].animate().translationXBy(v1).start();
+                                    float v1 = x - quickSort.views[i].getX();
+                                    quickSort.views[i].animate().translationXBy(v1).start();
                                 }
                             }
                         }
@@ -426,17 +427,27 @@ public class MergeSortActivity extends AppCompatActivity {
             }
         });
 
+        Button button = v_menu.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(quickSort != null){
+
+                }
+            }
+        });
+
     }
 
     private void initViews() {
-        if(mergeSort != null){
-            tv_seqno.setText("0 / " + mergeSort.sequence.animationStates.size());
-            UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
-            UtilUI.highlightViews(context, mergeSort.sequence.views,
-                    mergeSort.sequence.animationStates.get(0).highlightIndexes);
-            String state = mergeSort.sequence.animationStates.get(0).state;
-            if(MergeSortInfo.map.containsKey(state)){
-                Integer[] integers = MergeSortInfo.map.get(state);
+        if(quickSort != null){
+            tv_seqno.setText("0 / " + quickSort.sequence.animationStates.size());
+            UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(0).info);
+            UtilUI.highlightViews(context, quickSort.sequence.views,
+                    quickSort.sequence.animationStates.get(0).highlightIndexes);
+            String state = quickSort.sequence.animationStates.get(0).state;
+            if(QuickSortInfo.map.containsKey(state)){
+                Integer[] integers = QuickSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
             }
         }
@@ -449,46 +460,46 @@ public class MergeSortActivity extends AppCompatActivity {
     }
 
     private void addPseudocode(){
-        int sizeOfPseudocode = MergeSortInfo.psuedocode.length;
+        int sizeOfPseudocode = QuickSortInfo.psuedocode.length;
         textViews = new TextView[sizeOfPseudocode];
         for(int i=0;i<sizeOfPseudocode;i++){
             LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setText(MergeSortInfo.psuedocode[i]);
+            textView.setText(QuickSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;
             ll_psuedocode.addView(textView);
         }
 
-        for(int i : MergeSortInfo.boldIndexes){
+        for(int i : QuickSortInfo.boldIndexes){
             textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
         }
     }
 
     private void onForwardClick(){
-        if (mergeSort != null) {
-            mergeSort.forward();
-            final int curSeqNo = mergeSort.sequence.curSeqNo;
+        if (quickSort != null) {
+            quickSort.forward();
+            final int curSeqNo = quickSort.sequence.curSeqNo;
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
-                    if(curSeqNo < mergeSort.sequence.size) {
-                        String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
-                        if(MergeSortInfo.map.containsKey(state)){
-                            Integer[] integers = MergeSortInfo.map.get(state);
+                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.animationStates.size());
+                    if(curSeqNo < quickSort.sequence.size) {
+                        String state = quickSort.sequence.animationStates.get(curSeqNo).state;
+                        if(QuickSortInfo.map.containsKey(state)){
+                            Integer[] integers = QuickSortInfo.map.get(state);
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
-                        UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
-                        UtilUI.highlightViews(context, mergeSort.sequence.views,
-                                mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                        UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
+                        UtilUI.highlightViews(context, quickSort.sequence.views,
+                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
-                        UtilUI.highlightViews(context, mergeSort.sequence.views,null);
+                        UtilUI.highlightViews(context, quickSort.sequence.views,null);
                         UtilUI.setText(tv_info, "Array is sorted");
                     }
                 }
@@ -497,21 +508,21 @@ public class MergeSortActivity extends AppCompatActivity {
     }
 
     private void onBackwardClick(){
-        if (mergeSort != null) {
-            mergeSort.backward();
-            final int curSeqNo = mergeSort.sequence.curSeqNo;
+        if (quickSort != null) {
+            quickSort.backward();
+            final int curSeqNo = quickSort.sequence.curSeqNo;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
-                    UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
-                    String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
-                    if (MergeSortInfo.map.containsKey(state)) {
-                        Integer[] integers = MergeSortInfo.map.get(state);
+                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.animationStates.size());
+                    UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
+                    String state = quickSort.sequence.animationStates.get(curSeqNo).state;
+                    if (QuickSortInfo.map.containsKey(state)) {
+                        Integer[] integers = QuickSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
-                    UtilUI.highlightViews(context, mergeSort.sequence.views,
-                            mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                    UtilUI.highlightViews(context, quickSort.sequence.views,
+                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                 }
             });
         }

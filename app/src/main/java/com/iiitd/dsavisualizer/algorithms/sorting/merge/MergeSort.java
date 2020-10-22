@@ -13,7 +13,7 @@ import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
 import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
-import com.iiitd.dsavisualizer.utility.Util;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Random;
 
@@ -58,10 +58,10 @@ public class MergeSort {
 
     private void init() {
         if(arraySize > 8){
-            textSize = 12;
+            textSize = AppSettings.TEXT_SMALL;
         }
         else{
-            textSize = 14;
+            textSize = AppSettings.TEXT_MEDIUM;
         }
         int log = (int)(Math.log(arraySize) / Math.log(2));
         if((arraySize & (arraySize - 1)) == 0){
@@ -109,7 +109,7 @@ public class MergeSort {
             tv.setTextColor(Color.WHITE);
             tv.setTextSize(textSize);
             tv.getLayoutParams().height = (int) (height * h);
-            tv.setBackground(Util.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+            tv.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
             linearLayout.addView(myView);
 
             MergeSortData mergeSortData1 = new MergeSortData();
