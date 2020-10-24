@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortInfo;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
@@ -16,6 +17,7 @@ import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QuickSort {
@@ -34,6 +36,7 @@ public class QuickSort {
     int textSize;
     boolean isRandomize;
     int[] rawInput;
+    ArrayList<Pair<Integer, Integer>> sortedIndexes;
 
     public QuickSort(Context context, LinearLayout linearLayout, int arraySize) {
         this.context = context;
@@ -41,6 +44,7 @@ public class QuickSort {
         this.arraySize = arraySize;
         this.isRandomize = true;
         this.linearLayout = linearLayout;
+        this.sortedIndexes = new ArrayList<>();
         rawInput = null;
 
         init();
@@ -52,6 +56,7 @@ public class QuickSort {
         this.arraySize = rawInput.length;
         this.isRandomize = false;
         this.linearLayout = linearLayout;
+        this.sortedIndexes = new ArrayList<>();
         this.rawInput = rawInput;
 
         init();
@@ -64,17 +69,11 @@ public class QuickSort {
         else{
             textSize = AppSettings.TEXT_MEDIUM;
         }
-        int log = (int)(Math.log(arraySize) / Math.log(2));
-        if((arraySize & (arraySize - 1)) == 0){
-            log++;
-        }
-        else{
-            log += 2;
-        }
+
         int totalWidth = linearLayout.getWidth();
         int totalHeight = linearLayout.getHeight();
         this.width = totalWidth / arraySize;
-        this.height =  totalHeight / log;
+        this.height =  totalHeight / 2;
 
         int MAX = 0;
 
@@ -138,7 +137,8 @@ public class QuickSort {
     }
 
     private void quicksort(){
-        AnimationState animationState = new AnimationState("start", "start");
+        AnimationState animationState = new AnimationState(QuickSortInfo.QS,
+                QuickSortInfo.getQuickSortString(0, quickSortData.length-1));
         sequence.addAnimSeq(animationState);
         sort(quickSortData, 0, quickSortData.length-1);
     }
@@ -146,56 +146,74 @@ public class QuickSort {
     private int partition(QuickSortData arr[], int low, int high){
         int i = low+1;
         QuickSortData pivotElement = arr[low];
-        int pivot = arr[low].data;
-        AnimationState animationState = new AnimationState("pivot", "pivot = " + pivot);
-        animationState.addElementAnimationData(new ElementAnimationData(pivotElement.index, new Pair<>(AnimationDirection.DOWN, 1)));
-        animationState.addPointers(new Pair<>(pivotElement.index, "PIVOT"));
+
+        AnimationState animationState5 = new AnimationState(QuickSortInfo.PA, QuickSortInfo.getPartitionString(low, high));
+        for(int z=low;z<=high;z++){
+            animationState5.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.DOWN, 1)));
+        }
+        sequence.addAnimSeq(animationState5);
+
+        AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivot(pivotElement.data));
+        animationState.addPointers(new Pair<>(pivotElement.index, "P"));
         sequence.addAnimSeq(animationState);
-        System.out.println("pivot = " + pivot + " | " + low);
 
         for (int j=low+1; j<=high; j++){
-            AnimationState animationState1 = new AnimationState("compare", "compare = " + pivot + " | " + arr[j].data);
-//            animationState1.addHighlightIndexes(arr[j].index, pivotElement.index);
-            sequence.addAnimSeq(animationState1);
-            System.out.println("compare " + arr[j].data + "|" + pivot);
-            if (arr[j].data < pivot){
+            Pair<Integer, String> pairP = new Pair<>(pivotElement.index, "P");
+            Pair<Integer, String> pairI = new Pair<>(arr[i].index, "I");
+            Pair<Integer, String> pairJ = new Pair<>(arr[j].index, "J");
+            AnimationState animationState1;
+            if (arr[j].data < pivotElement.data){
                 int val = j-i;
-                AnimationState animationState2 = new AnimationState("swap", "!swap = " + arr[i].data + " | " + arr[j].data);
-                animationState2.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.RIGHT, val)));
-                animationState2.addElementAnimationData(new ElementAnimationData(arr[j].index, new Pair<>(AnimationDirection.LEFT, val)));
-                sequence.addAnimSeq(animationState2);
+                animationState1 = new AnimationState(QuickSortInfo.E_LESSER_P,
+                        QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
+                animationState1.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.RIGHT, val)));
+                animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index, new Pair<>(AnimationDirection.LEFT, val)));
                 Util.swap(arr[i], arr[j]);
                 i++;
             }
-
+            else{
+                animationState1 = new AnimationState(QuickSortInfo.E_GREATEREQUAL_P,
+                        QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
+            }
+            animationState1.addPointers(pairP, pairI, pairJ);
+            sequence.addAnimSeq(animationState1);
         }
 
         int val2 = i-1-low;
-        AnimationState animationState2 = new AnimationState("end swap", "swap = " + arr[low].data + " | " + arr[i-1].data);
+        AnimationState animationState2 = new AnimationState(QuickSortInfo.SWAP_END, QuickSortInfo.getEndSwap(low, i-1));
         animationState2.addElementAnimationData(new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val2)));
         animationState2.addElementAnimationData(new ElementAnimationData(arr[i-1].index, new Pair<>(AnimationDirection.LEFT, val2)));
-//        animationState2.addHighlightIndexes(arr[i-1].index);
-        animationState2.addElementAnimationData(new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.UP, 1)));
-        animationState2.addPointers(new Pair<>(arr[low].index, "SORTED"));
+        animationState2.addPointers(new Pair<>(pivotElement.index, "P"), new Pair<>(arr[i-1].index, "I-1"));
         sequence.addAnimSeq(animationState2);
-        System.out.println("swap end|" + arr[low].data + "|" + arr[i-1].data);
         Util.swap(arr[low], arr[i-1]);
+
+        AnimationState animationState6 = new AnimationState(QuickSortInfo.PA_U, QuickSortInfo.PA_U);
+        animationState6.addHighlightIndexes(arr[i-1].index);
+        for(int z=low;z<=high;z++){
+            animationState6.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.UP, 1)));
+        }
+        sequence.addAnimSeq(animationState6);
+
+        sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[i-1].index));
         return i-1;
     }
 
     private void sort(QuickSortData arr[], int low, int high){
         if (low < high) {
             int pi = partition(arr, low, high);
-            System.out.println("sorting left");
+
+            AnimationState animationState = new AnimationState(QuickSortInfo.LS, QuickSortInfo.getQuickSortString(low, pi-1));
+            sequence.addAnimSeq(animationState);
             sort(arr, low, pi-1);
-            System.out.println("sorting right");
+
+            AnimationState animationState1 = new AnimationState(QuickSortInfo.RS, QuickSortInfo.getQuickSortString(pi+1, high));
+            sequence.addAnimSeq(animationState1);
             sort(arr, pi+1, high);
         }
         else if (low >=0 && low < arr.length && high >=0 && high <arr.length){
-            AnimationState animationState = new AnimationState("1 element", "1 elementn" + arr[low].data);
-            animationState.addPointers(new Pair<>(arr[low].index, "SORTED"));
+            AnimationState animationState = new AnimationState(QuickSortInfo.SINGLE_PARTITION, QuickSortInfo.SINGLE_PARTITION);
             sequence.addAnimSeq(animationState);
-            System.out.println("else" + low + " |" + high);
+            sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[low].index));
         }
     }
 

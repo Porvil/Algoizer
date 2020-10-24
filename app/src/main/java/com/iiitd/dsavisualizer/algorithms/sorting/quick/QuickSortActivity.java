@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +28,6 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -49,6 +47,7 @@ public class QuickSortActivity extends AppCompatActivity {
     ImageButton btn_back;
     ImageButton btn_menu;
     ImageButton btn_code;
+    ImageButton btn_info;
     ImageButton btn_backward;
     ImageButton btn_forward;
     SeekBar sb_animspeed;
@@ -72,7 +71,7 @@ public class QuickSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    int LAYOUT = R.layout.activity_merge_sort;
+    int LAYOUT = R.layout.activity_base;
     int CONTROL = R.layout.controls_quick_sort;
 
     @Override
@@ -95,6 +94,7 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_play = v_main.findViewById(R.id.btn_play);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_code = v_main.findViewById(R.id.btn_code);
+        btn_info = v_main.findViewById(R.id.btn_info);
         btn_back = v_main.findViewById(R.id.btn_back);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
@@ -260,6 +260,14 @@ public class QuickSortActivity extends AppCompatActivity {
             }
         });
 
+        // Info Button
+        btn_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         // Menu Button
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,7 +352,7 @@ public class QuickSortActivity extends AppCompatActivity {
                 }
                 else {
 //                    String customArray = et_customarray.getText().toString();
-                    String customArray = "3,8,2,5,1,4,7,6";
+                    String customArray = "3,8,2,5,1,4";
                     if(customArray != null || !customArray.isEmpty()){
                         String[] customInput = customArray.split(",");
                         int[] data = new int[customInput.length];
@@ -429,16 +437,6 @@ public class QuickSortActivity extends AppCompatActivity {
             }
         });
 
-        Button button = v_menu.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(quickSort != null){
-
-                }
-            }
-        });
-
     }
 
     private void initViews() {
@@ -452,6 +450,12 @@ public class QuickSortActivity extends AppCompatActivity {
                 Integer[] integers = QuickSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
             }
+
+            UtilUI.changePointers(quickSort.sequence.animationStates.get(0).pointers,
+                    quickSort.views);
+
+            UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+                    quickSort.views, 0);
         }
         else{
             tv_seqno.setText("0 / 0");
@@ -499,19 +503,18 @@ public class QuickSortActivity extends AppCompatActivity {
                         UtilUI.highlightViews(context, quickSort.sequence.views,
                                 quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
 
-                        ArrayList<Pair<Integer, String>> pointers = quickSort.sequence.animationStates.get(curSeqNo).pointers;
-//                        for(int i=0;i<quickSort.arraySize;i++){
-//                            TextView viewById = quickSort.views[i].findViewById(R.id.tv_pointer);
-//                            viewById.setText("");
-//                        }
-                        for(Pair<Integer, String> pair : pointers){
-                            TextView viewById = quickSort.views[pair.first].findViewById(R.id.tv_pointer);
-                            viewById.setText(pair.second);
-                        }
+                        UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
+                                quickSort.views);
+
+                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+                                quickSort.views, curSeqNo);
+
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
                         UtilUI.highlightViews(context, quickSort.sequence.views,null);
+                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+                                quickSort.views, -1);
                         UtilUI.setText(tv_info, "Array is sorted");
                     }
                 }
@@ -535,6 +538,10 @@ public class QuickSortActivity extends AppCompatActivity {
                     }
                     UtilUI.highlightViews(context, quickSort.sequence.views,
                             quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                    UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
+                            quickSort.views);
+                    UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+                            quickSort.views, curSeqNo);
                 }
             });
         }

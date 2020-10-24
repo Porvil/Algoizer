@@ -47,6 +47,7 @@ public class MergeSortActivity extends AppCompatActivity {
     ImageButton btn_back;
     ImageButton btn_menu;
     ImageButton btn_code;
+    ImageButton btn_info;
     ImageButton btn_backward;
     ImageButton btn_forward;
     SeekBar sb_animspeed;
@@ -70,7 +71,7 @@ public class MergeSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    int LAYOUT = R.layout.activity_merge_sort;
+    int LAYOUT = R.layout.activity_base;
     int CONTROL = R.layout.controls_merge_sort;
 
     @Override
@@ -93,6 +94,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_play = v_main.findViewById(R.id.btn_play);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_code = v_main.findViewById(R.id.btn_code);
+        btn_info = v_main.findViewById(R.id.btn_info);
         btn_back = v_main.findViewById(R.id.btn_back);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
@@ -255,6 +257,14 @@ public class MergeSortActivity extends AppCompatActivity {
                 btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
                 timer.cancel();
                 onForwardClick();
+            }
+        });
+
+        // Info Button
+        btn_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

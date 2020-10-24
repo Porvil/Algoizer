@@ -13,13 +13,25 @@
         android:background="@drawable/rounded_rectangle"
         android:gravity="center"
         android:text="1"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_pointer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom|center"
-        android:text="pointer" />
+        android:gravity="bottom|left"
+        android:paddingStart="10dp"
+        android:text="l"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tv_pointer2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
+        android:paddingRight="10dp"
+        android:text="r"
+        android:textColor="#FFFFFF" />
 
 </FrameLayout>

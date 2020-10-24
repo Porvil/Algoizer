@@ -124,7 +124,7 @@
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
                 android:paddingStart="5dp"
-                android:text="Next Step : "
+                android:text="Next : "
                 android:textColor="@color/mainColorDarkerShade"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -170,27 +170,18 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/horizontalDiv3"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_animcontrols"
             android:layout_width="150dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
+            app:layout_constraintEnd_toStartOf="@+id/btn_info"
             app:layout_constraintTop_toTopOf="parent">
 
             <SeekBar
@@ -250,7 +241,7 @@
             android:layout_margin="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintEnd_toStartOf="@+id/btn_info"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -278,6 +269,29 @@
             app:layout_constraintEnd_toStartOf="@+id/btn_menu"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_code_24" />
+
+        <ImageButton
+            android:id="@+id/btn_info"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+
+            android:background="?android:selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_baseline_info_24" />
+
+        <View
+            android:id="@+id/horizontalDiv3"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
+            tools:layout_editor_absoluteY="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

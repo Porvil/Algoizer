@@ -5,82 +5,78 @@ import java.util.HashMap;
 //HARDCODED INFORMATION, Handle with care
 public class QuickSortInfo {
 
-    /*0*/  public static final String MS = "Merge Sort";
+    /*0*/  public static final String QS = "Quick Sort";
     /*4*/  public static final String LS = "Sorting Left Half";
-    /*14*/ public static final String LS_U = "Sorting Left Half Done";
     /*5*/  public static final String RS = "Sorting Right Half";
-    /*14*/ public static final String RS_U = "Sorting Right Half Done";
-    /*11*/ public static final String L_LESSEQUAL_R = "Left <= Right";
-    /*13*/ public static final String L_GREATER_R = "Left > Right";
-    /*11*/ public static final String L_EXTRAS = "Left Extras";
-    /*13*/ public static final String R_EXTRAS = "Right Extras";
-    /*9*/  public static final String MERGE_STARTED = "Merge arrays, Array copy for merging";
-    /*1*/  public static final String SINGLE_MERGE = "Single element is always sorted";
+    /*7*/  public static final String PA = "Partition";
+    /*7*/  public static final String PA_U = "Partition Done";
+    /*8*/  public static final String PI = "Pivot";
+    /*  */ public static final String E_GREATEREQUAL_P = "Element > Pivot";
+    /*11*/ public static final String E_LESSER_P = "Element <= Pivot";
+    /*2*/  public static final String SINGLE_PARTITION = "Single element is always sorted";
+    /*2*/  public static final String SWAP_END = "Swap";
 
     public static HashMap<String, Integer[]> map = new HashMap<>();
 
     static {
-        map.put(MS, new Integer[]{0});
+        map.put(QS, new Integer[]{0});
         map.put(LS, new Integer[]{4});
-        map.put(LS_U, new Integer[]{19});
         map.put(RS, new Integer[]{5});
-        map.put(RS_U, new Integer[]{19});
-        map.put(L_LESSEQUAL_R, new Integer[]{11, 12});
-        map.put(L_GREATER_R, new Integer[]{13, 14});
-        map.put(L_EXTRAS, new Integer[]{15, 16});
-        map.put(R_EXTRAS, new Integer[]{17, 18});
-        map.put(MERGE_STARTED, new Integer[]{8, 9});
-        map.put(SINGLE_MERGE, new Integer[]{1, 2});
+        map.put(PA, new Integer[]{7});
+        map.put(PI, new Integer[]{8});
+        map.put(E_GREATEREQUAL_P, new Integer[]{14, 15});
+        map.put(E_LESSER_P, new Integer[]{11, 12, 13});
+        map.put(SINGLE_PARTITION, new Integer[]{1, 2});
+        map.put(SWAP_END, new Integer[]{16});
+        map.put(PA_U, new Integer[]{17});
     }
 
-    public static final int[] boldIndexes = new int[]{0, 8};
+    public static final int[] boldIndexes = new int[]{0, 7};
 
            public static final String[] psuedocode = new String[]{
-    /*0*/         "mergeSort(data, start, end):",
-    /*1*/         "    if start > end",
-    /*2*/         "        return",
-    /*3*/         "    mid = (start+end)/2",
-    /*4*/         "    mergeSort(data, start, mid)",
-    /*5*/         "    mergeSort(data, mid+1, end)",
-    /*6*/         "    merge(data, start, mid, end)",
-    /*7*/         "",
-    /*8*/         "merge(data, start, mid, end)",
-    /*9*/         "Copy both arrays into 2 temporary arrays",
-    /*10*/        "while(both arrays are not empty):",
-    /*11*/        "    if(left array's element <= right array's element):",
-    /*12*/        "        copy left array's element to final sorted array",
-    /*13*/        "    else:",
-    /*14*/        "        copy right array's element to final sorted array",
-    /*15*/        "while(left array is not empty):",
-    /*16*/        "    copy left array's element to final sorted array",
-    /*17*/        "while(right array is not empty):",
-    /*18*/        "    copy right array's element to final sorted array",
-    /*19*/        "return"
+       /*0*/         "quickSort(data, start, end):",
+       /*1*/         "    if start > end",
+       /*2*/         "        return",
+       /*3*/         "    pivot = partition(data, start, end)",
+       /*4*/         "    quickSort(data, start, pivot-1)",
+       /*5*/         "    quickSort(data, pivot+1, end)",
+       /*6*/         "",
+       /*7*/         "partition(data, start, end)",
+       /*8*/         "pivot = data[start]",
+       /*9*/         "i = start+1",
+       /*10*/        "for(j = start+1 to end)",
+       /*11*/        "    if(data[j] < pivot)",
+       /*12*/        "        swap data[i] and arr[j]",
+       /*13*/        "        i++",
+       /*14*/        "    else",
+       /*15*/        "        continue",
+       /*16*/        "swap data[start] and data[i-1]",
+       /*17*/        "return i-1"
     };
 
 
-       public static String getComparedString(int a, int b){
-           if(a <= b){
-               return a + " <= " + b + ", copy left array's element(" + a + ") to final array";
+       public static String getComparedString(int e, int p, int eIndex, int iIndex){
+           if(e < p){
+               return e + " < " + p + ", swap data[" + eIndex + "] and data[" + iIndex +"], i++" ;
            }
 
-           return a + " > " + b + ", copy right array's element(" + b + ") to final array";
+           return e + " >= " + p + ", continue";
        }
 
-       public static String getRemainingElementString(int element, boolean isLeftSide){
-           if(isLeftSide){
-               return "copy remaining left array's elements(" + element + ") to final array";
-           }
-
-           return "copy remaining right array's elements(" + element + ") to final array";
+       public static String getPivot(int pivot){
+           return "Pivot : " + pivot;
        }
 
-       public static String getMergeSortString(int left, int right){
-           return "mergeSort(data, " + left + ", " + right + ")";
+       public static String getEndSwap(int start, int end){
+           return "swap data[" + start + "] and data[" + end + "]";
        }
 
-       public static String getMergeString(int left, int mid, int right){
-           return "merge(data, " + left + ", " + mid + ", " + right + ")";
+       public static String getQuickSortString(int left, int right){
+           return "quickSort(data, " + left + ", " + right + ")";
+       }
+
+       public static String getPartitionString(int left, int right){
+           return "partition(data, " + left + ", " + right + ")";
        }
 
 }
