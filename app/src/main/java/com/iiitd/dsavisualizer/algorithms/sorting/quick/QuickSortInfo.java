@@ -22,7 +22,7 @@ public class QuickSortInfo {
         map.put(QS, new Integer[]{0});
         map.put(LS, new Integer[]{4});
         map.put(RS, new Integer[]{5});
-        map.put(PA, new Integer[]{7});
+        map.put(PA, new Integer[]{3, 7});
         map.put(PI, new Integer[]{8});
         map.put(E_GREATEREQUAL_P, new Integer[]{14, 15});
         map.put(E_LESSER_P, new Integer[]{11, 12, 13});

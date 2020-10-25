@@ -33,6 +33,7 @@ public class MergeSort {
     int textSize;
     boolean isRandomize;
     int[] rawInput;
+    int comparisons;
 
     public MergeSort(Context context, LinearLayout linearLayout, int arraySize) {
         this.context = context;
@@ -40,6 +41,7 @@ public class MergeSort {
         this.arraySize = arraySize;
         this.isRandomize = true;
         this.linearLayout = linearLayout;
+        this.comparisons = 0;
         rawInput = null;
 
         init();
@@ -51,6 +53,7 @@ public class MergeSort {
         this.arraySize = rawInput.length;
         this.isRandomize = false;
         this.linearLayout = linearLayout;
+        this.comparisons = 0;
         this.rawInput = rawInput;
 
         init();
@@ -146,7 +149,7 @@ public class MergeSort {
         sort(mergeSortData, 0, mergeSortData.length-1);
     }
 
-    private void merge(final MergeSortData[] arr, final int l, final int m, final int r) {
+    private void merge(MergeSortData[] arr, int l, int m, int r) {
         AnimationState animationState = new AnimationState(MergeSortInfo.MERGE_STARTED, MergeSortInfo.getMergeString(l, m, r));
         for(int i=l;i<=r;i++){
             animationState.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.DOWN, 1)));
@@ -157,8 +160,8 @@ public class MergeSort {
         final int n1 = m - l + 1;
         final int n2 = r - m;
 
-        final MergeSortData[] L = new MergeSortData[n1];
-        final MergeSortData[] R = new MergeSortData[n2];
+        MergeSortData[] L = new MergeSortData[n1];
+        MergeSortData[] R = new MergeSortData[n2];
 
         for (int i = 0; i < n1; ++i)
             L[i] = arr[l + i];
@@ -170,6 +173,7 @@ public class MergeSort {
         int k = l;
 
         while (i < n1 && j < n2) {
+            comparisons++;
             final int finalI = i;
             final int finalJ = j;
             final int finalK = k-l;
@@ -246,11 +250,11 @@ public class MergeSort {
 
     }
 
-    private void sort(final MergeSortData[] data, final int l, final int r) {
+    private void sort(final MergeSortData[] data, int l, int r) {
         if (l < r) {
-            final int m = (l + r) / 2;
+            int m = (l + r) / 2;
 
-            final AnimationState animationState1 = new AnimationState(MergeSortInfo.LS,MergeSortInfo.getMergeSortString(l, m));
+            AnimationState animationState1 = new AnimationState(MergeSortInfo.LS,MergeSortInfo.getMergeSortString(l, m));
             for(int i=l;i<=m;i++){
                 animationState1.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.DOWN, 1)));
                 animationState1.addHighlightIndexes(data[i].index);
@@ -259,28 +263,28 @@ public class MergeSort {
 
             sort(data, l, m);
 
-            final AnimationState animationState4 = new AnimationState(MergeSortInfo.LS_U, MergeSortInfo.getMergeSortString(l, m) + " done");
+            AnimationState animationState2 = new AnimationState(MergeSortInfo.LS_U, MergeSortInfo.getMergeSortString(l, m) + " done");
             for(int i=l;i<=m;i++){
-                animationState4.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.UP, 1)));
-                animationState4.addHighlightIndexes(data[i].index);
-            }
-            sequence.addAnimSeq(animationState4);
-
-            final AnimationState animationState2 = new AnimationState(MergeSortInfo.RS, MergeSortInfo.getMergeSortString(m+1, r));
-            for(int i=m+1;i<=r;i++){
-                animationState2.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.DOWN, 1)));
+                animationState2.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.UP, 1)));
                 animationState2.addHighlightIndexes(data[i].index);
             }
             sequence.addAnimSeq(animationState2);
 
-            sort(data, m + 1, r);
-
-            final AnimationState animationState3 = new AnimationState(MergeSortInfo.RS_U, MergeSortInfo.getMergeSortString(m+1, r) + " done");
+            AnimationState animationState3 = new AnimationState(MergeSortInfo.RS, MergeSortInfo.getMergeSortString(m+1, r));
             for(int i=m+1;i<=r;i++){
-                animationState3.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.UP, 1)));
+                animationState3.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.DOWN, 1)));
                 animationState3.addHighlightIndexes(data[i].index);
             }
             sequence.addAnimSeq(animationState3);
+
+            sort(data, m + 1, r);
+
+            AnimationState animationState4 = new AnimationState(MergeSortInfo.RS_U, MergeSortInfo.getMergeSortString(m+1, r) + " done");
+            for(int i=m+1;i<=r;i++){
+                animationState4.addElementAnimationData(new ElementAnimationData(data[i].index, new Pair<>(AnimationDirection.UP, 1)));
+                animationState4.addHighlightIndexes(data[i].index);
+            }
+            sequence.addAnimSeq(animationState4);
 
             merge(data, l, m, r);
         }

@@ -36,6 +36,7 @@ public class QuickSort {
     int textSize;
     boolean isRandomize;
     int[] rawInput;
+    int comparisons;
     ArrayList<Pair<Integer, Integer>> sortedIndexes;
 
     public QuickSort(Context context, LinearLayout linearLayout, int arraySize) {
@@ -44,6 +45,7 @@ public class QuickSort {
         this.arraySize = arraySize;
         this.isRandomize = true;
         this.linearLayout = linearLayout;
+        this.comparisons = 0;
         this.sortedIndexes = new ArrayList<>();
         rawInput = null;
 
@@ -56,6 +58,7 @@ public class QuickSort {
         this.arraySize = rawInput.length;
         this.isRandomize = false;
         this.linearLayout = linearLayout;
+        this.comparisons = 0;
         this.sortedIndexes = new ArrayList<>();
         this.rawInput = rawInput;
 
@@ -158,6 +161,7 @@ public class QuickSort {
         sequence.addAnimSeq(animationState);
 
         for (int j=low+1; j<=high; j++){
+            comparisons++;
             Pair<Integer, String> pairP = new Pair<>(pivotElement.index, "P");
             Pair<Integer, String> pairI = new Pair<>(arr[i].index, "I");
             Pair<Integer, String> pairJ = new Pair<>(arr[j].index, "J");
