@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortStats;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -264,7 +266,38 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(mergeSort.comparisons);
+                View view = getLayoutInflater().inflate(R.layout.layout_info, null);
+                TextView tv_name = view.findViewById(R.id.tv_name);
+                TextView tv_avg = view.findViewById(R.id.tv_avg);
+                TextView tv_worst = view.findViewById(R.id.tv_worst);
+                TextView tv_best = view.findViewById(R.id.tv_best);
+                TextView tv_space = view.findViewById(R.id.tv_space);
+                TextView tv_stable = view.findViewById(R.id.tv_stable);
+                TextView tv_comparisons = view.findViewById(R.id.tv_comparisons);
+                ImageButton btn_close = view.findViewById(R.id.btn_close);
+
+                String comparisons = "-";
+                if(mergeSort != null)
+                    comparisons = String.valueOf(mergeSort.comparisons);
+
+                tv_name.setText(MergeSortStats.name);
+                tv_avg.setText(MergeSortStats.avg);
+                tv_worst.setText(MergeSortStats.worst);
+                tv_best.setText(MergeSortStats.best);
+                tv_space.setText(MergeSortStats.space);
+                tv_stable.setText(MergeSortStats.stable);
+                tv_comparisons.setText(comparisons);
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(view);
+                dialog.show();
+
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
