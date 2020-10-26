@@ -11,7 +11,7 @@ DSA Visualizer is an android application for learning and visualizing the data s
 
 ### Installation:
 
-- Download the "DSA-Visualizer.apk" from [here](https://github.com/Porvil/DSA_Visualizer_Android).
+- Download the "DSA-Visualizer.apk"(Pre-release) from [here](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.0-alpha/v1.0-alpha.apk).
 - Install the APK.
 
 ### Usage:
