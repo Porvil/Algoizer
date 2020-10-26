@@ -276,8 +276,12 @@ public class MergeSortActivity extends AppCompatActivity {
                 ImageButton btn_close = view.findViewById(R.id.btn_close);
 
                 String comparisons = "-";
-                if(mergeSort != null)
+                if(mergeSort != null) {
+                    isAutoPlay = false;
+                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                    timer.cancel();
                     comparisons = String.valueOf(mergeSort.comparisons);
+                }
 
                 tv_name.setText(MergeSortStats.name);
                 tv_avg.setText(MergeSortStats.avg);

@@ -277,8 +277,12 @@ public class QuickSortActivity extends AppCompatActivity {
                 ImageButton btn_close = view.findViewById(R.id.btn_close);
 
                 String comparisons = "-";
-                if(quickSort != null)
+                if(quickSort != null) {
+                    isAutoPlay = false;
+                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                    timer.cancel();
                     comparisons = String.valueOf(quickSort.comparisons);
+                }
 
                 tv_name.setText(QuickSortStats.name);
                 tv_avg.setText(QuickSortStats.avg);
