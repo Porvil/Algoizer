@@ -206,8 +206,10 @@ public class QuickSort {
         if (low < high) {
             int pi = partition(arr, low, high);
 
-            AnimationState animationState = new AnimationState(QuickSortInfo.LS, QuickSortInfo.getQuickSortString(low, pi-1));
-            sequence.addAnimSeq(animationState);
+            if(low <= pi-1) {
+                AnimationState animationState = new AnimationState(QuickSortInfo.LS, QuickSortInfo.getQuickSortString(low, pi - 1));
+                sequence.addAnimSeq(animationState);
+            }
             sort(arr, low, pi-1);
 
             if(pi+1 <= high) {
