@@ -31,8 +31,8 @@ public class QuickSort {
     LinearLayout linearLayout;
     QuickSortSequence sequence;
     Random random;
-    int width;
-    int height;
+    float width;
+    float height;
     int textSize;
     boolean isRandomize;
     int[] rawInput;
@@ -97,7 +97,7 @@ public class QuickSort {
             }
         }
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, height, 1);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, (int) height, 1);
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for(int i=0;i<data.length;i++){

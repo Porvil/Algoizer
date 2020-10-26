@@ -46,7 +46,7 @@ public class QuickSortInfo {
        /*9*/         "i = start+1",
        /*10*/        "for(j = start+1 to end)",
        /*11*/        "    if(data[j] < pivot)",
-       /*12*/        "        swap data[i] and arr[j]",
+       /*12*/        "        swap data[i] and data[j]",
        /*13*/        "        i++",
        /*14*/        "    else",
        /*15*/        "        continue",

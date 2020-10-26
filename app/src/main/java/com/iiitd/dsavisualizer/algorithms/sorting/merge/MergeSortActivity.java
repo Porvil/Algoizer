@@ -181,8 +181,7 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 2500ms to 500ms
-                int speed = (2000 - seekBar.getProgress() * 20) + 500;
-                autoAnimSpeed = speed;
+                autoAnimSpeed = (2000 - seekBar.getProgress() * 20) + 500;
             }
 
             @Override

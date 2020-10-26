@@ -20,7 +20,7 @@ public class MergeSortSequence extends Sequence {
         this.animationStates = new ArrayList<>();
     }
 
-    public void setAnimateViews(int height, int width, Context context) {
+    public void setAnimateViews(float height, float width, Context context) {
         this.animateViews = new AnimateViews(height, width, context);
     }
 

@@ -182,8 +182,7 @@ public class QuickSortActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 2500ms to 500ms
-                int speed = (2000 - seekBar.getProgress() * 20) + 500;
-                autoAnimSpeed = speed;
+                autoAnimSpeed = (2000 - seekBar.getProgress() * 20) + 500;
             }
 
             @Override
@@ -387,7 +386,6 @@ public class QuickSortActivity extends AppCompatActivity {
                 }
                 else {
                     String customArray = et_customarray.getText().toString();
-//                    String customArray = "3,8,2,5,1,4";
                     if(customArray != null || !customArray.isEmpty()){
                         String[] customInput = customArray.split(",");
                         int[] data = new int[customInput.length];

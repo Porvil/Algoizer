@@ -6,21 +6,21 @@ import android.view.View;
 
 public class AnimateViews {
 
-    private int height;
-    private int width;
+    private float height;
+    private float width;
     public Context context;
 
-    public AnimateViews(int height, int width, Context context) {
+    public AnimateViews(float height, float width, Context context) {
         this.height = height;
         this.width = width;
         this.context = context;
     }
 
-    public void updateHeight(int height) {
+    public void updateHeight(float height) {
         this.height = height;
     }
 
-    public void updateWidth(int width) {
+    public void updateWidth(float width) {
         this.width = width;
     }
 
@@ -29,7 +29,7 @@ public class AnimateViews {
     }
 
     private void animateBottom(View view, int times){
-        int by = times * height;
+        int by = (int) (times * height);
         view.animate().translationYBy(by);
     }
 
@@ -38,7 +38,7 @@ public class AnimateViews {
     }
 
     private void animateUp(View view, int times){
-        int by = times * height;
+        int by = (int) (times * height);
         view.animate().translationYBy(-by);
     }
 
@@ -47,7 +47,7 @@ public class AnimateViews {
     }
 
     private void animateLeft(View view, int times){
-        int by = times * width;
+        int by = (int) (times * width);
         view.animate().translationXBy(-by);
     }
 
@@ -56,7 +56,7 @@ public class AnimateViews {
     }
 
     private void animateRight(View view, int times){
-        int by = times * width;
+        int by = (int) (times * width);
         view.animate().translationXBy(by);
     }
 
