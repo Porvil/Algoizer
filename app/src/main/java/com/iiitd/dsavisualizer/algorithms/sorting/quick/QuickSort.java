@@ -111,7 +111,7 @@ public class QuickSort {
             tv.setText(String.valueOf(data[i]));
             tv.setTextColor(Color.WHITE);
             tv.setTextSize(textSize);
-            tv.getLayoutParams().height = (int) (height * h);
+            tv.getLayoutParams().height = (int) (height * h * .75f);
             tv.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
             linearLayout.addView(myView);
 
