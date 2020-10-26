@@ -210,9 +210,12 @@ public class QuickSort {
             sequence.addAnimSeq(animationState);
             sort(arr, low, pi-1);
 
-            AnimationState animationState1 = new AnimationState(QuickSortInfo.RS, QuickSortInfo.getQuickSortString(pi+1, high));
-            sequence.addAnimSeq(animationState1);
-            sort(arr, pi+1, high);
+            if(pi+1 <= high) {
+                AnimationState animationState1 = new AnimationState(QuickSortInfo.RS, QuickSortInfo.getQuickSortString(pi + 1, high));
+                sequence.addAnimSeq(animationState1);
+            }
+            sort(arr, pi + 1, high);
+
         }
         else if (low >=0 && low < arr.length && high >=0 && high <arr.length){
             AnimationState animationState = new AnimationState(QuickSortInfo.SINGLE_PARTITION, QuickSortInfo.SINGLE_PARTITION);
