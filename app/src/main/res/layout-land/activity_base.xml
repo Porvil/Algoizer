@@ -181,7 +181,7 @@
             android:layout_width="150dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_info"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
             app:layout_constraintTop_toTopOf="parent">
 
             <SeekBar
