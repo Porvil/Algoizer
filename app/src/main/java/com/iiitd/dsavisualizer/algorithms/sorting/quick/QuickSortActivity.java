@@ -440,6 +440,10 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isAutoPlay = false;
+                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                timer.cancel();
+
                 View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
 
                 Button btn_cancel = view.findViewById(R.id.btn_cancel);

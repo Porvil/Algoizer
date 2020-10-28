@@ -12,6 +12,8 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="TextView"
+        android:textColor="@color/mainColor"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
