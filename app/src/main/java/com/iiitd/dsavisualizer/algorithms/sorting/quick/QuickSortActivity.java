@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -28,6 +29,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.runapp.others.PivotType;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Timer;
@@ -64,6 +66,7 @@ public class QuickSortActivity extends AppCompatActivity {
     Button btn_clear;
     Switch sw_randomarray;
     EditText et_customarray;
+    RadioGroup rg_pivot;
 
     QuickSort quickSort;
     TextView[] textViews;
@@ -113,6 +116,7 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_clear = v_menu.findViewById(R.id.btn_clear);
         sw_randomarray = v_menu.findViewById(R.id.sw_randomarray);
         et_customarray = v_menu.findViewById(R.id.et_customarray);
+        rg_pivot = v_menu.findViewById(R.id.rg_pivot);
 
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
@@ -385,8 +389,21 @@ public class QuickSortActivity extends AppCompatActivity {
                     quickSort = null;
                 }
 
+                PivotType pivotType = PivotType.FIRST;
+                int checkedRadioButtonId = rg_pivot.getCheckedRadioButtonId();
+                if(checkedRadioButtonId != -1){
+                    if(checkedRadioButtonId == R.id.rb_first){
+                        pivotType = PivotType.FIRST;
+                    }
+                    else if(checkedRadioButtonId == R.id.rb_mid){
+                        pivotType = PivotType.MIDDLE;
+                    }
+                    else if(checkedRadioButtonId == R.id.rb_end){
+                        pivotType = PivotType.END;
+                    }
+                }
                 if(isRandomArray){
-                    quickSort = new QuickSort(context, ll_anim, arraySize);
+                    quickSort = new QuickSort(context, ll_anim, arraySize, pivotType);
                 }
                 else {
                     String customArray = et_customarray.getText().toString();
@@ -397,7 +414,7 @@ public class QuickSortActivity extends AppCompatActivity {
                             for (int i = 0; i < data.length; i++) {
                                 data[i] = Integer.parseInt(customInput[i]);
                             }
-                            quickSort = new QuickSort(context, ll_anim, data);
+                            quickSort = new QuickSort(context, ll_anim, data, pivotType);
                         }
                         catch (NumberFormatException e){
                             et_customarray.setError("Bad Input");
@@ -423,8 +440,28 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ADD ALERT DIALOG BOX FOR CONFIRMING
-                finish();
+                View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+                Button btn_cancel = view.findViewById(R.id.btn_cancel);
+                Button btn_yes = view.findViewById(R.id.btn_yes);
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(view);
+                dialog.show();
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
             }
         });
 

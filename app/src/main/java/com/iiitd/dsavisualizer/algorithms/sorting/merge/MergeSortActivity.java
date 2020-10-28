@@ -421,8 +421,28 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ADD ALERT DIALOG BOX FOR CONFIRMING
-                finish();
+                View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+                Button btn_cancel = view.findViewById(R.id.btn_cancel);
+                Button btn_yes = view.findViewById(R.id.btn_yes);
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(view);
+                dialog.show();
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
             }
         });
 

@@ -14,6 +14,7 @@ import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
 import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
+import com.iiitd.dsavisualizer.runapp.others.PivotType;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -37,14 +38,16 @@ public class QuickSort {
     boolean isRandomize;
     int[] rawInput;
     int comparisons;
+    PivotType pivotType;
     ArrayList<Pair<Integer, Integer>> sortedIndexes;
 
-    public QuickSort(Context context, LinearLayout linearLayout, int arraySize) {
+    public QuickSort(Context context, LinearLayout linearLayout, int arraySize, PivotType pivotType) {
         this.context = context;
         this.random = new Random();
         this.arraySize = arraySize;
         this.isRandomize = true;
         this.linearLayout = linearLayout;
+        this.pivotType = pivotType;
         this.comparisons = 0;
         this.sortedIndexes = new ArrayList<>();
         rawInput = null;
@@ -52,12 +55,13 @@ public class QuickSort {
         init();
     }
 
-    public QuickSort(Context context, LinearLayout linearLayout, int[] rawInput) {
+    public QuickSort(Context context, LinearLayout linearLayout, int[] rawInput, PivotType pivotType) {
         this.context = context;
         this.random = new Random();
         this.arraySize = rawInput.length;
         this.isRandomize = false;
         this.linearLayout = linearLayout;
+        this.pivotType = pivotType;
         this.comparisons = 0;
         this.sortedIndexes = new ArrayList<>();
         this.rawInput = rawInput;
@@ -146,15 +150,40 @@ public class QuickSort {
         sort(quickSortData, 0, quickSortData.length-1);
     }
 
-    private int partition(QuickSortData arr[], int low, int high){
-        int i = low+1;
-        QuickSortData pivotElement = arr[low];
-
+    private int partition(QuickSortData[] arr, int low, int high){
         AnimationState animationState5 = new AnimationState(QuickSortInfo.PA, QuickSortInfo.getPartitionString(low, high));
         for(int z=low;z<=high;z++){
-            animationState5.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.DOWN, 1)));
+            animationState5.addElementAnimationData(new ElementAnimationData(arr[z].index, new Pair<>(AnimationDirection.DOWN, 1)));
         }
         sequence.addAnimSeq(animationState5);
+
+        if(this.pivotType == PivotType.END){
+            if(low != high){
+                AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
+                int val = Math.abs(high - low);
+                ElementAnimationData elementAnimationData1 = new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val));
+                ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[high].index, new Pair<>(AnimationDirection.LEFT, val));
+                animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
+                animationState.addPointers(new Pair<>(arr[high].index, "P"));
+                sequence.addAnimSeq(animationState);
+                Util.swap(arr[low], arr[high]);
+            }
+        }else if(this.pivotType == PivotType.MIDDLE){
+            int mid = (low + high)/2;
+            if(mid != low){
+                AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
+                int val = Math.abs(mid - low);
+                ElementAnimationData elementAnimationData1 = new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val));
+                ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[mid].index, new Pair<>(AnimationDirection.LEFT, val));
+                animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
+                animationState.addPointers(new Pair<>(arr[mid].index, "P"));
+                sequence.addAnimSeq(animationState);
+                Util.swap(arr[low], arr[mid]);
+            }
+        }
+
+        int i = low+1;
+        QuickSortData pivotElement = arr[low];
 
         AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivot(pivotElement.data));
         animationState.addPointers(new Pair<>(pivotElement.index, "P"));

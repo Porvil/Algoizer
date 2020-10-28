@@ -42,7 +42,7 @@ public class QuickSortInfo {
        /*5*/         "    quickSort(data, pivot+1, end)",
        /*6*/         "",
        /*7*/         "partition(data, start, end)",
-       /*8*/         "pivot = data[start]",
+       /*8*/         "pivot = select pivot(first, last or middle)",
        /*9*/         "i = start+1",
        /*10*/        "for(j = start+1 to end)",
        /*11*/        "    if(data[j] < pivot)",
@@ -66,6 +66,10 @@ public class QuickSortInfo {
        public static String getPivot(int pivot){
            return "Pivot : " + pivot;
        }
+
+        public static String getPivotSwap(){
+            return "Pivot element swapped to first index";
+        }
 
        public static String getEndSwap(int start, int end){
            return "swap data[" + start + "] and data[" + end + "]";

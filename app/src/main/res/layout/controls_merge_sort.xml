@@ -1,115 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="?android:colorBackground"
-    android:orientation="vertical"
-    android:showDividers="middle">
+    android:fadeScrollbars="false"
+    android:scrollbarSize="5dp"
+    android:scrollbarStyle="outsideInset"
+    android:verticalScrollbarPosition="left">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/sw_randomarray"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="2"
-            android:checked="true"
-            android:gravity="center|center_vertical"
-            android:showText="false"
-            android:text="Random Array"
-            android:textAllCaps="false"
-            android:textColor="@color/mainColor"
-            android:textColorLink="#FFFFFF"
-            android:textOff="Custom Array"
-            android:textOn="Random Array" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:background="?android:attr/listDivider" />
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="?android:colorBackground"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/array_size"
+            android:paddingBottom="10dp"
+            android:text="Merge Sort"
             android:textColor="@color/mainColor"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
+            android:id="@+id/horizontalDiv7"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
             android:background="?android:attr/listDivider" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_randomarray"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:checked="true"
+                android:gravity="center|center_vertical"
+                android:showText="false"
+                android:text="Random Array"
+                android:textAllCaps="false"
+                android:textColor="@color/mainColor"
+                android:textColorLink="#FFFFFF"
+                android:textOff="Custom Array"
+                android:textOn="Random Array" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/array_size"
+                android:textColor="@color/mainColor"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/tv_arraysize"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/mainColor" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sb_arraysize"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:max="15"
+            android:progress="3" />
+
         <TextView
-            android:id="@+id/tv_arraysize"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="1"
+            android:text="OR"
+            android:textColor="@color/mainColor"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_customarray"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Add comma separated elements (Max 16)"
+            android:textColor="@color/mainColor"
+            android:textColorHint="@color/mainColor"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/horizontalDiv"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/btn_generate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:selectableItemBackground"
+            android:text="Generate"
             android:textColor="@color/mainColor" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:selectableItemBackground"
+            android:text="Clear"
+            android:textColor="@color/mainColor" />
+
     </LinearLayout>
 
-    <SeekBar
-        android:id="@+id/sb_arraysize"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:max="15"
-        android:progress="3" />
+</ScrollView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="OR"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_customarray"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Add comma separated elements (Max 16)"
-        android:textColor="@color/mainColor"
-        android:textColorHint="@color/mainColor"
-        android:textSize="14sp" />
-
-    <View
-        android:id="@+id/horizontalDiv"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="?android:attr/listDivider" />
-
-    <Button
-        android:id="@+id/btn_generate"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="?android:selectableItemBackground"
-        android:text="Generate"
-        android:textColor="@color/mainColor" />
-
-    <Button
-        android:id="@+id/btn_clear"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="?android:selectableItemBackground"
-        android:text="Clear"
-        android:textColor="@color/mainColor" />
-
-</LinearLayout>
