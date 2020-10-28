@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -76,8 +75,8 @@ public class QuickSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    int LAYOUT = R.layout.activity_base;
-    int CONTROL = R.layout.controls_quick_sort;
+    final int LAYOUT = R.layout.activity_base;
+    final int CONTROL = R.layout.controls_quick_sort;
 
 
     @Override

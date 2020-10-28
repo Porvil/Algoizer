@@ -8,7 +8,7 @@ public class AnimateViews {
 
     private float height;
     private float width;
-    public Context context;
+    public final Context context;
 
     public AnimateViews(float height, float width, Context context) {
         this.height = height;

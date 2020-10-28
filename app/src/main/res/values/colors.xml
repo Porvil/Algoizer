@@ -5,7 +5,6 @@
     <color name="mainColorDarkerShade">#01a9e6</color>
 <!--    <color name="colorPrimary">#6200EE</color>-->
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
 
     <color name="colorDivider">#03DAC5</color>
 </resources>

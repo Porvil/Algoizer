@@ -3,9 +3,10 @@ package com.iiitd.dsavisualizer.runapp.others;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AnimationState {
-    public String state;
+    public final String state;
     public String info;
     public ArrayList<ElementAnimationData> elementAnimationData;
     public ArrayList<Integer> highlightIndexes;
@@ -20,8 +21,7 @@ public class AnimationState {
     }
 
     public void addElementAnimationData(ElementAnimationData... elementAnimationDatas) {
-        for(ElementAnimationData elementAnimationData : elementAnimationDatas)
-            this.elementAnimationData.add(elementAnimationData);
+        this.elementAnimationData.addAll(Arrays.asList(elementAnimationDatas));
     }
 
     public void addHighlightIndexes(int... indexes) {
@@ -29,9 +29,9 @@ public class AnimationState {
             this.highlightIndexes.add(i);
     }
 
-    public void addPointers(Pair... pairs){
-        for(Pair<Integer, String> pair : pairs)
-            this.pointers.add(pair);
+    @SafeVarargs
+    public final void addPointers(Pair<Integer, String>... pairs){
+        this.pointers.addAll(Arrays.asList(pairs));
     }
 
     @Override

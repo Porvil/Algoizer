@@ -16,7 +16,7 @@ public class QuickSortInfo {
     /*2*/  public static final String SINGLE_PARTITION = "Single element is always sorted";
     /*2*/  public static final String SWAP_END = "Swap";
 
-    public static HashMap<String, Integer[]> map = new HashMap<>();
+    public static final HashMap<String, Integer[]> map = new HashMap<>();
 
     static {
         map.put(QS, new Integer[]{0});

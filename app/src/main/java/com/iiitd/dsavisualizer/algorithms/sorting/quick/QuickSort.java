@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortInfo;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
@@ -23,23 +22,23 @@ import java.util.Random;
 
 public class QuickSort {
 
-    Context context;
-    int arraySize;
+    final Context context;
+    final int arraySize;
     int[] data;
     QuickSortData[] quickSortData;
     View[] views;
     int[] positions;
-    LinearLayout linearLayout;
+    final LinearLayout linearLayout;
     QuickSortSequence sequence;
-    Random random;
+    final Random random;
     float width;
     float height;
     int textSize;
-    boolean isRandomize;
-    int[] rawInput;
+    final boolean isRandomize;
+    final int[] rawInput;
     int comparisons;
-    PivotType pivotType;
-    ArrayList<Pair<Integer, Integer>> sortedIndexes;
+    final PivotType pivotType;
+    final ArrayList<Pair<Integer, Integer>> sortedIndexes;
 
     public QuickSort(Context context, LinearLayout linearLayout, int arraySize, PivotType pivotType) {
         this.context = context;
@@ -79,8 +78,8 @@ public class QuickSort {
 
         int totalWidth = linearLayout.getWidth();
         int totalHeight = linearLayout.getHeight();
-        this.width = totalWidth / arraySize;
-        this.height =  totalHeight / 2;
+        this.width = (float) totalWidth / arraySize;
+        this.height =  (float) totalHeight / 2;
 
         int MAX = 0;
 
@@ -231,7 +230,7 @@ public class QuickSort {
         return i-1;
     }
 
-    private void sort(QuickSortData arr[], int low, int high){
+    private void sort(QuickSortData[] arr, int low, int high){
         if (low < high) {
             int pi = partition(arr, low, high);
 

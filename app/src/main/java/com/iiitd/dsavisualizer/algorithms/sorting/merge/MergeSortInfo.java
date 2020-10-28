@@ -1,7 +1,5 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
-import android.graphics.drawable.Drawable;
-
 import java.util.HashMap;
 
 //HARDCODED INFORMATION, Handle with care
@@ -19,7 +17,7 @@ public class MergeSortInfo {
     /*9*/  public static final String MERGE_STARTED = "Merge arrays, Array copy for merging";
     /*1*/  public static final String SINGLE_MERGE = "Single element is always sorted";
 
-    public static HashMap<String, Integer[]> map = new HashMap<>();
+    public static final HashMap<String, Integer[]> map = new HashMap<>();
 
     static {
         map.put(MS, new Integer[]{0});

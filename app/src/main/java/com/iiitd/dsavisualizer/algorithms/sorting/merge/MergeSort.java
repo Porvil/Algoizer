@@ -19,20 +19,20 @@ import java.util.Random;
 
 public class MergeSort {
 
-    Context context;
-    int arraySize;
+    final Context context;
+    final int arraySize;
     int[] data;
     MergeSortData[] mergeSortData;
     View[] views;
     int[] positions;
-    LinearLayout linearLayout;
+    final LinearLayout linearLayout;
     MergeSortSequence sequence;
-    Random random;
+    final Random random;
     float width;
     float height;
     int textSize;
-    boolean isRandomize;
-    int[] rawInput;
+    final boolean isRandomize;
+    final int[] rawInput;
     int comparisons;
 
     public MergeSort(Context context, LinearLayout linearLayout, int arraySize) {
@@ -75,8 +75,8 @@ public class MergeSort {
         }
         int totalWidth = linearLayout.getWidth();
         int totalHeight = linearLayout.getHeight();
-        this.width = totalWidth / arraySize;
-        this.height =  totalHeight / log;
+        this.width = (float) totalWidth / arraySize;
+        this.height =  (float) totalHeight / log;
 
         int MAX = 0;
 

@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class ElementAnimationData {
 
-    public int index;
-    public ArrayList<Pair<AnimationDirection, Integer>> instructions;
+    public final int index;
+    public final ArrayList<Pair<AnimationDirection, Integer>> instructions;
 
     public ElementAnimationData(int index, ArrayList<Pair<AnimationDirection, Integer>> instructions) {
         this.index = index;
@@ -23,7 +23,8 @@ public class ElementAnimationData {
         instructions.addAll(Arrays.asList(inst));
     }
 
-    public void add(Pair<AnimationDirection, Integer>... inst){
+    @SafeVarargs
+    public final void add(Pair<AnimationDirection, Integer>... inst){
         instructions.addAll(Arrays.asList(inst));
     }
 

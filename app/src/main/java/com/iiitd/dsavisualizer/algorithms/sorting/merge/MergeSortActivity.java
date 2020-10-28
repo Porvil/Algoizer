@@ -26,7 +26,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortStats;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -73,8 +72,8 @@ public class MergeSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    int LAYOUT = R.layout.activity_base;
-    int CONTROL = R.layout.controls_merge_sort;
+    final int LAYOUT = R.layout.activity_base;
+    final int CONTROL = R.layout.controls_merge_sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
