@@ -24,17 +24,9 @@ public class AnimateViews {
         this.width = width;
     }
 
-    private void animateBottom(View view){
-        view.animate().translationYBy(height).start();
-    }
-
     private void animateBottom(View view, int times){
         int by = (int) (times * height);
         view.animate().translationYBy(by);
-    }
-
-    private void animateUp(View view){
-        view.animate().translationYBy(-height).start();
     }
 
     private void animateUp(View view, int times){
@@ -42,17 +34,9 @@ public class AnimateViews {
         view.animate().translationYBy(-by);
     }
 
-    private void animateLeft(View view){
-        view.animate().translationXBy(-width).start();
-    }
-
     private void animateLeft(View view, int times){
         int by = (int) (times * width);
         view.animate().translationXBy(-by);
-    }
-
-    private void animateRight(View view){
-        view.animate().translationXBy(width).start();
     }
 
     private void animateRight(View view, int times){
