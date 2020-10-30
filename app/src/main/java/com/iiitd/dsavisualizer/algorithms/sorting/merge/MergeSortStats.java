@@ -4,7 +4,7 @@ import android.text.Html;
 import android.text.Spanned;
 
 public class MergeSortStats {
-    static final String name = "MergeSort";
+    static final String name = "Merge Sort";
     static final Spanned avg = Html.fromHtml("nlog(n)");
     static final Spanned worst = Html.fromHtml("nlog(n)");
     static final Spanned best = Html.fromHtml("nlog(n)");
