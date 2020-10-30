@@ -150,83 +150,89 @@ public class QuickSort {
     }
 
     private int partition(QuickSortData[] arr, int low, int high){
-        AnimationState animationState5 = new AnimationState(QuickSortInfo.PA, QuickSortInfo.getPartitionString(low, high));
+        AnimationState animationState = new AnimationState(QuickSortInfo.PA, QuickSortInfo.getPartitionString(low, high));
         for(int z=low;z<=high;z++){
-            animationState5.addElementAnimationData(new ElementAnimationData(arr[z].index, new Pair<>(AnimationDirection.DOWN, 1)));
+            animationState.addElementAnimationData(new ElementAnimationData(arr[z].index, new Pair<>(AnimationDirection.DOWN, 1)));
         }
-        sequence.addAnimSeq(animationState5);
+        sequence.addAnimSeq(animationState);
 
         if(this.pivotType == PivotType.END){
             if(low != high){
-                AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
+                AnimationState animationState1 = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
                 int val = Math.abs(high - low);
                 ElementAnimationData elementAnimationData1 = new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val));
                 ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[high].index, new Pair<>(AnimationDirection.LEFT, val));
-                animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
-                animationState.addPointers(new Pair<>(arr[high].index, "P"));
+                animationState1.addElementAnimationData(elementAnimationData1, elementAnimationData2);
+                animationState1.addPointers(new Pair<>(arr[high].index, "P"));
                 sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[high].index));
-                sequence.addAnimSeq(animationState);
+                sequence.addAnimSeq(animationState1);
                 Util.swap(arr[low], arr[high]);
             }
         }else if(this.pivotType == PivotType.MIDDLE){
             int mid = (low + high)/2;
             if(mid != low){
-                AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
+                AnimationState animationState2 = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivotSwap());
                 int val = Math.abs(mid - low);
                 ElementAnimationData elementAnimationData1 = new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val));
                 ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[mid].index, new Pair<>(AnimationDirection.LEFT, val));
-                animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
-                animationState.addPointers(new Pair<>(arr[mid].index, "P"));
+                animationState2.addElementAnimationData(elementAnimationData1, elementAnimationData2);
+                animationState2.addPointers(new Pair<>(arr[mid].index, "P"));
                 sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[mid].index));
-                sequence.addAnimSeq(animationState);
+                sequence.addAnimSeq(animationState2);
                 Util.swap(arr[low], arr[mid]);
             }
         }
 
         int i = low+1;
+        int j = low+1;
         QuickSortData pivotElement = arr[low];
 
-        AnimationState animationState = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivot(pivotElement.data));
-        animationState.addPointers(new Pair<>(pivotElement.index, "P"));
-        sequence.addAnimSeq(animationState);
+        AnimationState animationState3 = new AnimationState(QuickSortInfo.PI, QuickSortInfo.getPivot(pivotElement.data));
+        animationState3.addPointers(new Pair<>(pivotElement.index, "P"));
+        sequence.addAnimSeq(animationState3);
 
-        for (int j=low+1; j<=high; j++){
+        AnimationState animationState4 = new AnimationState(QuickSortInfo.PA_START, QuickSortInfo.getPartitionStart());
+        animationState4.addPointers(new Pair<>(pivotElement.index, "P"),
+                new Pair<>(arr[i].index, "I"), new Pair<>(arr[j].index, "J"));
+        sequence.addAnimSeq(animationState4);
+
+        for (; j<=high; j++){
             comparisons++;
             Pair<Integer, String> pairP = new Pair<>(pivotElement.index, "P");
             Pair<Integer, String> pairI = new Pair<>(arr[i].index, "I");
             Pair<Integer, String> pairJ = new Pair<>(arr[j].index, "J");
-            AnimationState animationState1;
+            AnimationState animationState5;
             if (arr[j].data < pivotElement.data){
                 int val = j-i;
-                animationState1 = new AnimationState(QuickSortInfo.E_LESSER_P,
+                animationState5 = new AnimationState(QuickSortInfo.E_LESSER_P,
                         QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
-                animationState1.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.RIGHT, val)));
-                animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index, new Pair<>(AnimationDirection.LEFT, val)));
+                animationState5.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.RIGHT, val)));
+                animationState5.addElementAnimationData(new ElementAnimationData(arr[j].index, new Pair<>(AnimationDirection.LEFT, val)));
                 Util.swap(arr[i], arr[j]);
                 i++;
             }
             else{
-                animationState1 = new AnimationState(QuickSortInfo.E_GREATEREQUAL_P,
+                animationState5 = new AnimationState(QuickSortInfo.E_GREATEREQUAL_P,
                         QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
             }
-            animationState1.addPointers(pairP, pairI, pairJ);
-            sequence.addAnimSeq(animationState1);
+            animationState5.addPointers(pairP, pairI, pairJ);
+            sequence.addAnimSeq(animationState5);
         }
 
         int val2 = i-1-low;
-        AnimationState animationState2 = new AnimationState(QuickSortInfo.SWAP_END, QuickSortInfo.getEndSwap(low, i-1));
-        animationState2.addElementAnimationData(new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val2)));
-        animationState2.addElementAnimationData(new ElementAnimationData(arr[i-1].index, new Pair<>(AnimationDirection.LEFT, val2)));
-        animationState2.addPointers(new Pair<>(pivotElement.index, "P"), new Pair<>(arr[i-1].index, "I-1"));
-        sequence.addAnimSeq(animationState2);
+        AnimationState animationState6 = new AnimationState(QuickSortInfo.SWAP_END, QuickSortInfo.getEndSwap(low, i-1));
+        animationState6.addElementAnimationData(new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val2)));
+        animationState6.addElementAnimationData(new ElementAnimationData(arr[i-1].index, new Pair<>(AnimationDirection.LEFT, val2)));
+        animationState6.addPointers(new Pair<>(pivotElement.index, "P"), new Pair<>(arr[i-1].index, "I-1"));
+        sequence.addAnimSeq(animationState6);
         Util.swap(arr[low], arr[i-1]);
 
-        AnimationState animationState6 = new AnimationState(QuickSortInfo.PA_U, QuickSortInfo.PA_U);
-        animationState6.addHighlightIndexes(arr[i-1].index);
+        AnimationState animationState7 = new AnimationState(QuickSortInfo.PA_U, QuickSortInfo.PA_U);
+        animationState7.addHighlightIndexes(arr[i-1].index);
         for(int z=low;z<=high;z++){
-            animationState6.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.UP, 1)));
+            animationState7.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.UP, 1)));
         }
-        sequence.addAnimSeq(animationState6);
+        sequence.addAnimSeq(animationState7);
 
         return i-1;
     }
@@ -249,8 +255,8 @@ public class QuickSort {
 
         }
         else if (low >=0 && low < arr.length && high >=0 && high <arr.length){
-            AnimationState animationState = new AnimationState(QuickSortInfo.SINGLE_PARTITION, QuickSortInfo.SINGLE_PARTITION);
-            sequence.addAnimSeq(animationState);
+            AnimationState animationState2 = new AnimationState(QuickSortInfo.SINGLE_PARTITION, QuickSortInfo.SINGLE_PARTITION);
+            sequence.addAnimSeq(animationState2);
             sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[low].index));
         }
     }

@@ -9,6 +9,7 @@ public class QuickSortInfo {
     /*4*/  public static final String LS = "Sorting Left Half";
     /*5*/  public static final String RS = "Sorting Right Half";
     /*7*/  public static final String PA = "Partition";
+    /*7*/  public static final String PA_START = "Partition Start";
     /*7*/  public static final String PA_U = "Partition Done";
     /*8*/  public static final String PI = "Pivot";
     /*  */ public static final String E_GREATEREQUAL_P = "Element > Pivot";
@@ -23,6 +24,7 @@ public class QuickSortInfo {
         map.put(LS, new Integer[]{4});
         map.put(RS, new Integer[]{5});
         map.put(PA, new Integer[]{3, 7});
+        map.put(PA_START, new Integer[]{9, 10});
         map.put(PI, new Integer[]{8});
         map.put(E_GREATEREQUAL_P, new Integer[]{14, 15});
         map.put(E_LESSER_P, new Integer[]{11, 12, 13});
@@ -55,32 +57,36 @@ public class QuickSortInfo {
     };
 
 
-       public static String getComparedString(int e, int p, int eIndex, int iIndex){
-           if(e < p){
-               return e + " < " + p + ", swap data[" + eIndex + "] and data[" + iIndex +"], i++" ;
-           }
-
-           return e + " >= " + p + ", continue";
+    public static String getComparedString(int e, int p, int eIndex, int iIndex){
+       if(e < p){
+           return e + " < " + p + ", swap data[" + eIndex + "] and data[" + iIndex +"], i++" ;
        }
 
-       public static String getPivot(int pivot){
-           return "Pivot : " + pivot;
-       }
+       return e + " >= " + p + ", continue";
+    }
 
-        public static String getPivotSwap(){
-            return "Pivot element swapped to first index";
-        }
+    public static String getPivot(int pivot){
+       return "Pivot : " + pivot;
+    }
 
-       public static String getEndSwap(int start, int end){
-           return "swap data[" + start + "] and data[" + end + "]";
-       }
+    public static String getPivotSwap(){
+       return "Pivot element swapped to first index";
+    }
 
-       public static String getQuickSortString(int left, int right){
-           return "quickSort(data, " + left + ", " + right + ")";
-       }
+    public static String getPartitionStart(){
+        return "Set i and j pointers";
+    }
 
-       public static String getPartitionString(int left, int right){
-           return "partition(data, " + left + ", " + right + ")";
-       }
+    public static String getEndSwap(int start, int end){
+       return "swap data[" + start + "] and data[" + end + "]";
+    }
+
+    public static String getQuickSortString(int left, int right){
+       return "quickSort(data, " + left + ", " + right + ")";
+    }
+
+    public static String getPartitionString(int left, int right){
+       return "partition(data, " + left + ", " + right + ")";
+    }
 
 }
