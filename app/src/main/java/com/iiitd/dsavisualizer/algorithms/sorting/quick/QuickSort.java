@@ -164,6 +164,7 @@ public class QuickSort {
                 ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[high].index, new Pair<>(AnimationDirection.LEFT, val));
                 animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
                 animationState.addPointers(new Pair<>(arr[high].index, "P"));
+                sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[high].index));
                 sequence.addAnimSeq(animationState);
                 Util.swap(arr[low], arr[high]);
             }
@@ -176,6 +177,7 @@ public class QuickSort {
                 ElementAnimationData elementAnimationData2 = new ElementAnimationData(arr[mid].index, new Pair<>(AnimationDirection.LEFT, val));
                 animationState.addElementAnimationData(elementAnimationData1, elementAnimationData2);
                 animationState.addPointers(new Pair<>(arr[mid].index, "P"));
+                sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[mid].index));
                 sequence.addAnimSeq(animationState);
                 Util.swap(arr[low], arr[mid]);
             }
@@ -226,7 +228,6 @@ public class QuickSort {
         }
         sequence.addAnimSeq(animationState6);
 
-        sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[i-1].index));
         return i-1;
     }
 
