@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -95,4 +97,18 @@ public class UtilUI {
         }
 
     }
+
+    public static View getBSTView(LayoutInflater layoutInflater, int layout, int visibility, int weight){
+        View myView = layoutInflater.inflate(layout, null);
+        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
+        myView.setPadding(5,5,5,5);
+
+        if(layout == R.layout.element_bst_arrow)
+            visibility = View.INVISIBLE;
+
+        myView.setVisibility(visibility);
+
+        return myView;
+    }
+
 }
