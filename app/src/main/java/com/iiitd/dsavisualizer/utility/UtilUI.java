@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -112,10 +113,10 @@ public class UtilUI {
         return myView;
     }
 
-    public static View getBSTView(LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement){
+    public static View getBSTView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int row, int col){
         int layout = 0;
         int weight = treeLayoutElement.weight;
-        int visibility = View.VISIBLE;
+        int visibility = View.INVISIBLE;
         switch (treeLayoutElement.type){
             case EMPTY:
                 layout = R.layout.element_bst_empty;
@@ -131,6 +132,27 @@ public class UtilUI {
         myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
         myView.setPadding(5,5,5,5);
 
+        if(row > 0 && layout == R.layout.element_bst_arrow){
+            int arrowLayout = R.drawable.arrow_4;
+            if(row == 1){
+                arrowLayout = R.drawable.arrow_4;
+            }
+            else if(row == 3){
+                arrowLayout = R.drawable.arrow_2;
+            }
+            else if(row == 5){
+                arrowLayout = R.drawable.arrow_1;
+            }
+
+            //if last arrow row, then mod is reversed, hence ++
+            if(row == 5)
+                col++;
+            if(((col-1)/2) % 2 == 1)
+                myView.setRotationY(180);
+
+            FrameLayout frameLayout = myView.findViewById(R.id.fl_arrow);
+            frameLayout.setBackground(getDrawable(context, arrowLayout));
+        }
 //        if(layout == R.layout.element_bst_arrow)
 //            visibility = View.INVISIBLE;
 

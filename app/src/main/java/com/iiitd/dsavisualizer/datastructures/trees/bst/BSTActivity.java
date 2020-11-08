@@ -32,14 +32,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
-import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -69,22 +66,21 @@ public class BSTActivity extends AppCompatActivity {
     ScrollView sv_psuedocode;
     LinearLayout ll_psuedocode;
 
-    SeekBar sb_arraysize;
-    TextView tv_arraysize;
-    Button btn_generate;
-    Button btn_clear;
     Button btn_insert;
-    Switch sw_randomarray;
-    EditText et_customarray;
+    Button btn_search;
+    Button btn_delete;
+    EditText et_insert;
+    EditText et_search;
+    EditText et_delete;
 
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
 
     ArrayList<List<TreeLayoutElement>> treeLayout = TreeLayout.treeLayout;
     BST bst;
-    BST_old bstOld;
     TextView[] textViews;
 
+    Random random = new Random();
     Timer timer = new Timer();
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
@@ -123,76 +119,15 @@ public class BSTActivity extends AppCompatActivity {
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         cl_info = v_main.findViewById(R.id.cl_info);
 
-        sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
-        tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
-        btn_generate = v_menu.findViewById(R.id.btn_generate);
         btn_insert = v_menu.findViewById(R.id.btn_insert);
-        btn_clear = v_menu.findViewById(R.id.btn_clear);
-        sw_randomarray = v_menu.findViewById(R.id.sw_randomarray);
-        et_customarray = v_menu.findViewById(R.id.et_customarray);
-
-        tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
+        btn_search = v_menu.findViewById(R.id.btn_search);
+        btn_delete = v_menu.findViewById(R.id.btn_delete);
+        et_insert = v_menu.findViewById(R.id.et_insert);
+        et_search = v_menu.findViewById(R.id.et_search);
+        et_delete = v_menu.findViewById(R.id.et_delete);
 
         addPseudocode();
         initViews();
-
-        sw_randomarray.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    isRandomArray = true;
-                    et_customarray.setError(null);
-                    sw_randomarray.setText(sw_randomarray.getTextOn());
-                    tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress()+1));
-                }
-                else {
-                    isRandomArray = false;
-                    sw_randomarray.setText(sw_randomarray.getTextOff());
-                    String customArray = et_customarray.getText().toString();
-                    if(customArray != null || !customArray.isEmpty()){
-                        String[] customInput = customArray.split(",");
-                        int[] data = new int[customInput.length];
-                        try {
-                            for (int i = 0; i < data.length; i++) {
-                                data[i] = Integer.parseInt(customInput[i]);
-                            }
-                            tv_arraysize.setText(String.valueOf(customInput.length));
-                        }
-                        catch (NumberFormatException e){
-                            et_customarray.setError("Bad Input");
-                            tv_arraysize.setText("0");
-                        }
-                    }
-                }
-            }
-        });
-
-        et_customarray.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!isRandomArray) {
-                    if (s != null || !s.toString().isEmpty()) {
-                        String[] customInput = s.toString().split(",");
-                        int[] data = new int[customInput.length];
-                        try {
-                            for (int i = 0; i < data.length; i++) {
-                                data[i] = Integer.parseInt(customInput[i]);
-                            }
-                            tv_arraysize.setText(String.valueOf(customInput.length));
-                        } catch (NumberFormatException e) {
-                            et_customarray.setError("Bad Input");
-                            tv_arraysize.setText("0");
-                        }
-                    }
-                }
-            }
-        });
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -356,114 +291,6 @@ public class BSTActivity extends AppCompatActivity {
             public void onDrawerStateChanged(int newState) {}
         });
 
-        // Array Size Slider for generation of random numbers
-        sb_arraysize.setOnTouchListener(new SeekBar.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
-                        break;
-                }
-
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
-
-        // Array Size Slider for changing size of array
-        sb_arraysize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(isRandomArray)
-                    tv_arraysize.setText(String.valueOf(progress+1));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-
-        // Generates Random Numbers
-        btn_generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                int arraySize = sb_arraysize.getProgress() + 1;
-//                if(bst != null){
-//                    bst.linearLayout.removeAllViews();
-//                    bst = null;
-//                }
-//
-//                if(isRandomArray){
-//                    bst = new BST(context, ll_anim, arraySize);
-//                }
-//                else {
-//                    String customArray = et_customarray.getText().toString();
-//                    if(customArray != null || !customArray.isEmpty()){
-//                        String[] customInput = customArray.split(",");
-//                        int[] data = new int[customInput.length];
-//                        try {
-//                            for (int i = 0; i < data.length; i++) {
-//                                data[i] = Integer.parseInt(customInput[i]);
-//                            }
-//                            bst = new BST(context, ll_anim, data);
-//                        }
-//                        catch (NumberFormatException e){
-//                            et_customarray.setError("Bad Input");
-//                            bst = null;
-//                        }
-//                    }
-//                }
-//                initViews();
-
-
-                Random random = new Random();
-                int u = random.nextInt(20);
-                bst.insert(u);
-                int lastElementIndex = bst.lastElementIndex;
-                if(lastElementIndex!=-1){
-                    System.out.println("Ele = " + u);
-                    System.out.println(lastElementIndex);
-                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
-                    TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-                    textView.setText(String.valueOf(u));
-                    System.out.println(pair.first + ", " + pair.second);
-//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
-                }
-                else {
-                    System.out.println("-_-");
-                }
-
-            }
-        });
-
-        btn_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if(bst != null) {
-//                    bst.linearLayout.removeAllViews();
-//                    bst = null;
-//                }
-//                initViews();
-
-                bst.inorder();
-            }
-        });
-
-        btn_insert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bstOld.addElement();
-            }
-        });
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -504,17 +331,7 @@ public class BSTActivity extends AppCompatActivity {
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-//                            if(bst != null){
-//                                int width = ll_anim.getWidth();
-//                                int div = width / bst.arraySize;
-//
-//                                for(int i=0;i<bst.arraySize;i++){
-//                                    int position = bst.positions[i];
-//                                    int x = position*div;
-//                                    float v1 = x - bst.views[i].getX();
-//                                    bst.views[i].animate().translationXBy(v1).start();
-//                                }
-//                            }
+
                         }
                     }, 0);
                 }
@@ -523,17 +340,7 @@ public class BSTActivity extends AppCompatActivity {
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(bstOld != null){
-//                                int width = ll_anim.getWidth();
-//                                int div = width / bst.arraySize;
-//
-//                                for(int i=0;i<bst.arraySize;i++){
-//                                    int position = bst.positions[i];
-//                                    int x = position*div;
-//                                    float v1 = x - bst.views[i].getX();
-//                                    bst.views[i].animate().translationXBy(v1).start();
-//                                }
-                            }
+
                         }
                     }, 0);
 
@@ -545,6 +352,48 @@ public class BSTActivity extends AppCompatActivity {
                 else
                     treeLayout.get(2).get(3).state = NodeState.ELEMENT_HIDDEN;
                 tableRows.get(2).getChildAt(3).setVisibility(treeLayout.get(2).get(3).getVisibility());
+
+            }
+        });
+
+
+        btn_insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = et_insert.getText().toString();
+                int data = random.nextInt(100);
+                if(!s.isEmpty()){
+                    data = Integer.parseInt(s.trim());
+                }
+
+                System.out.println("Data ----------> " + data);
+
+                int lastElementIndex = bst.insert(data);
+                System.out.println(lastElementIndex);
+                if(lastElementIndex!=-1){
+                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
+                    TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+                    textView.setText(String.valueOf(data));
+                    System.out.println(pair.first + ", " + pair.second);
+                }
+                else {
+                    System.out.println("-_-");
+                }
+
+            }
+        });
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -579,28 +428,22 @@ public class BSTActivity extends AppCompatActivity {
         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        int row = 0;
+        int col = 0;
         for(List<TreeLayoutElement> treeLayout : treeLayout){
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(layoutParams);
 
+            col = 0;
             for(TreeLayoutElement layoutElement : treeLayout){
-                tableRow.addView(UtilUI.getBSTView(layoutInflater, layoutElement));
+                tableRow.addView(UtilUI.getBSTView(context, layoutInflater, layoutElement, row, col));
+                col++;
             }
 
             tableRows.add(tableRow);
             tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
+            row++;
         }
-
-
-//        treeLayout.add(Arrays.asList(new TreeLayoutElement(1, NodeType.ARROW)));
-//        TableRow tableRow = new TableRow(context);
-//        tableRow.setLayoutParams(layoutParams);
-//
-//        for(TreeLayoutElement layoutElement : treeLayout.get(treeLayout.size()-1)){
-//            tableRow.addView(UtilUI.getBSTView(layoutInflater, layoutElement));
-//        }
-//        tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-
 
     }
 

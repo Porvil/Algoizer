@@ -4,5 +4,5 @@
     android:layout_width="300dp"
     android:layout_height="300dp"
     android:layout_gravity="center"
-    android:background="@drawable/arrow"
+    android:background="@drawable/arrow_4"
     android:orientation="vertical" />

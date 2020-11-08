@@ -39,20 +39,15 @@
             android:layout_height="50dp"
             android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/sw_randomarray"
+            <EditText
+                android:id="@+id/et_insert"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:checked="true"
-                android:gravity="center|center_vertical"
-                android:showText="false"
-                android:text="Random Array"
-                android:textAllCaps="false"
-                android:textColor="@color/mainColor"
-                android:textColorLink="#FFFFFF"
-                android:textOff="Custom Array"
-                android:textOn="Random Array" />
+                android:ems="10"
+                android:hint="Enter number to insert"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
 
             <View
                 android:layout_width="2dp"
@@ -60,96 +55,86 @@
                 android:layout_margin="3dp"
                 android:background="?android:attr/listDivider" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_insert"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/array_size"
-                android:textColor="@color/mainColor"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:id="@+id/tv_arraysize"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="1"
+                android:background="?android:selectableItemBackground"
+                android:text="Insert"
                 android:textColor="@color/mainColor" />
+
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/sb_arraysize"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:max="15"
-            android:progress="3" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="OR"
-            android:textColor="@color/mainColor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:ems="10"
+                android:hint="Enter number to search"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
 
-        <EditText
-            android:id="@+id/et_customarray"
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackground"
+                android:text="Search"
+                android:textColor="@color/mainColor" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="Add comma separated  +ve elements (Max 16)"
-            android:textColor="@color/mainColor"
-            android:textColorHint="@color/mainColor"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:ems="10"
+                android:hint="Enter number to delete"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackground"
+                android:text="Delete"
+                android:textColor="@color/mainColor" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/horizontalDiv"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:background="?android:attr/listDivider" />
-
-        <Button
-            android:id="@+id/btn_generate"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:selectableItemBackground"
-            android:text="Generate"
-            android:textColor="@color/mainColor" />
-
-        <Button
-            android:id="@+id/btn_clear"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:selectableItemBackground"
-            android:text="Clear"
-            android:textColor="@color/mainColor" />
-
-        <Button
-            android:id="@+id/btn_insert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
 
     </LinearLayout>
 
