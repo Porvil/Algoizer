@@ -11,7 +11,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/rounded_rectangle"
         android:gravity="center"
-        android:text="1"
+        android:text="-"
         android:textStyle="bold" />
 
 </FrameLayout>

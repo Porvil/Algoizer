@@ -1,8 +1,7 @@
-package com.iiitd.dsavisualizer.datastructures.bst;
+package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,17 +9,13 @@ import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortData;
-import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortInfo;
 import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortSequence;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.runapp.others.AnimationState;
-import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Random;
 
-public class BST {
+public class BST_old {
 
     final Context context;
     final int arraySize;
@@ -40,7 +35,7 @@ public class BST {
 
 
 
-    public BST(Context context, LinearLayout linearLayout, int arraySize) {
+    public BST_old(Context context, LinearLayout linearLayout, int arraySize) {
         this.context = context;
         this.random = new Random();
         this.arraySize = arraySize;
@@ -52,7 +47,7 @@ public class BST {
         init();
     }
 
-    public BST(Context context, LinearLayout linearLayout, int[] rawInput) {
+    public BST_old(Context context, LinearLayout linearLayout, int[] rawInput) {
         this.context = context;
         this.random = new Random();
         this.arraySize = rawInput.length;

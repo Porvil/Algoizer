@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
 import java.util.ArrayList;
 
@@ -105,6 +106,33 @@ public class UtilUI {
 
         if(layout == R.layout.element_bst_arrow)
             visibility = View.INVISIBLE;
+
+        myView.setVisibility(visibility);
+
+        return myView;
+    }
+
+    public static View getBSTView(LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement){
+        int layout = 0;
+        int weight = treeLayoutElement.weight;
+        int visibility = View.VISIBLE;
+        switch (treeLayoutElement.type){
+            case EMPTY:
+                layout = R.layout.element_bst_empty;
+                break;
+            case ARROW:
+                layout = R.layout.element_bst_arrow;
+                break;
+            case ELEMENT:
+                layout = R.layout.element_bst_element;
+                break;
+        }
+        View myView = layoutInflater.inflate(layout, null);
+        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
+        myView.setPadding(5,5,5,5);
+
+//        if(layout == R.layout.element_bst_arrow)
+//            visibility = View.INVISIBLE;
 
         myView.setVisibility(visibility);
 

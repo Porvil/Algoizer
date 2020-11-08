@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.datastructures.bst;
+package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.text.Html;
 import android.text.Spanned;

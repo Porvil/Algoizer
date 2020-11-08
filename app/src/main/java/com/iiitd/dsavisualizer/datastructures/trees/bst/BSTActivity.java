@@ -1,16 +1,16 @@
-package com.iiitd.dsavisualizer.datastructures.bst;
+package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -31,11 +31,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
+import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class BSTActivity extends AppCompatActivity {
@@ -73,7 +80,9 @@ public class BSTActivity extends AppCompatActivity {
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
 
+    ArrayList<List<TreeLayoutElement>> treeLayout = TreeLayout.treeLayout;
     BST bst;
+    BST_old bstOld;
     TextView[] textViews;
 
     Timer timer = new Timer();
@@ -413,6 +422,25 @@ public class BSTActivity extends AppCompatActivity {
 //                    }
 //                }
 //                initViews();
+
+
+                Random random = new Random();
+                int u = random.nextInt(20);
+                bst.insert(u);
+                int lastElementIndex = bst.lastElementIndex;
+                if(lastElementIndex!=-1){
+                    System.out.println("Ele = " + u);
+                    System.out.println(lastElementIndex);
+                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
+                    TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+                    textView.setText(String.valueOf(u));
+                    System.out.println(pair.first + ", " + pair.second);
+//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
+                }
+                else {
+                    System.out.println("-_-");
+                }
+
             }
         });
 
@@ -424,13 +452,15 @@ public class BSTActivity extends AppCompatActivity {
 //                    bst = null;
 //                }
 //                initViews();
+
+                bst.inorder();
             }
         });
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bst.addElement();
+                bstOld.addElement();
             }
         });
 
@@ -493,7 +523,7 @@ public class BSTActivity extends AppCompatActivity {
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(bst != null){
+                            if(bstOld != null){
 //                                int width = ll_anim.getWidth();
 //                                int div = width / bst.arraySize;
 //
@@ -509,6 +539,13 @@ public class BSTActivity extends AppCompatActivity {
 
                 }
                 isPseudocode = !isPseudocode;
+
+                if(isPseudocode)
+                    treeLayout.get(2).get(3).state = NodeState.ELEMENT_SHOWN;
+                else
+                    treeLayout.get(2).get(3).state = NodeState.ELEMENT_HIDDEN;
+                tableRows.get(2).getChildAt(3).setVisibility(treeLayout.get(2).get(3).getVisibility());
+
             }
         });
 
@@ -532,146 +569,37 @@ public class BSTActivity extends AppCompatActivity {
 //            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
 //        }
 
+        bst = new BST();
+
         tableLayout = new TableLayout(context);
         tableLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         ll_anim.addView(tableLayout);
 
-        int height = tableLayout.getHeight();
-        int h = height / 7;
-        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(0, h, 1);
+
+        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
-
-        int element = R.layout.element_bst;
-        int empty = R.layout.element_bst_empty;
-        int arrow = R.layout.element_bst_arrow;
-
-        //Row 0
-        {
+        for(List<TreeLayoutElement> treeLayout : treeLayout){
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(layoutParams);
 
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 7));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 7));
+            for(TreeLayoutElement layoutElement : treeLayout){
+                tableRow.addView(UtilUI.getBSTView(layoutInflater, layoutElement));
+            }
 
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 1
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 4));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 4));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 2
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 7));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 3
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 2));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 2));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 2));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 2));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 4
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 3));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 5
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, arrow, View.VISIBLE, 1));
-
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-        }
-
-        //Row 6
-        {
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
-
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, empty, View.VISIBLE, 1));
-            tableRow.addView(UtilUI.getBSTView(layoutInflater, element, View.VISIBLE, 1));
-
+            tableRows.add(tableRow);
             tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
         }
 
 
+//        treeLayout.add(Arrays.asList(new TreeLayoutElement(1, NodeType.ARROW)));
+//        TableRow tableRow = new TableRow(context);
+//        tableRow.setLayoutParams(layoutParams);
+//
+//        for(TreeLayoutElement layoutElement : treeLayout.get(treeLayout.size()-1)){
+//            tableRow.addView(UtilUI.getBSTView(layoutInflater, layoutElement));
+//        }
+//        tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
 
 
     }
@@ -722,6 +650,23 @@ public class BSTActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
+
+        Random random = new Random();
+        int u = random.nextInt();
+        int lastElementIndex = bst.insert(u);
+        System.out.println("Ele =========================== " + u);
+        System.out.println(lastElementIndex);
+        if(lastElementIndex!=-1){
+            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
+            TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+            textView.setText(String.valueOf(u));
+            System.out.println(pair.first + ", " + pair.second);
+//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
+        }
+        else {
+            System.out.println("-_-");
+        }
+
     }
 
     private void onBackwardClick(){

@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.datastructures.bst;
+package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import java.util.HashMap;
 

@@ -28,7 +28,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.runapp.others.PivotType;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Timer;

@@ -29,7 +29,7 @@
 <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".datastructures.bst.BSTActivity"
+            android:name=".datastructures.trees.bst.BSTActivity"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

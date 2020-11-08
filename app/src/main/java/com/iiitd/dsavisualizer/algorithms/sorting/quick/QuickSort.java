@@ -13,7 +13,6 @@ import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.runapp.others.AnimationState;
 import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
-import com.iiitd.dsavisualizer.runapp.others.PivotType;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 

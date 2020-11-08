@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -133,7 +132,7 @@ public class TestActivity extends AppCompatActivity {
             tableRow.setLayoutParams(layoutParams);
 
             for(int c=0;c<15;c++){
-                View myView = vi.inflate(R.layout.element_bst, null);
+                View myView = vi.inflate(R.layout.element_bst_element, null);
                 myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT,1));
 //                myView.setLayoutParams(new LinearLayout.LayoutParams(0, (int) 100, 1));
                 myView.setPadding(5,5,5,5);
