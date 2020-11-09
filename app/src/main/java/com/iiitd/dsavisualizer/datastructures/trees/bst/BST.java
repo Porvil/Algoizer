@@ -1,18 +1,22 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
+import com.iiitd.dsavisualizer.datastructures.trees.OperationReturn;
+
 public class BST {
 
     private BSTNode root;
     public int lastElementIndex;
+    int s;
 
     public BST() {
         root = null;
         lastElementIndex = -1;
     }
 
-    public int insert(int key){
+    public OperationReturn insert(int key){
+        s = 0;
         root = _insert(root, key, 8, 4);
-        return lastElementIndex;
+        return new OperationReturn(key, s, lastElementIndex);
     }
 
     public void inorder(){
@@ -35,6 +39,7 @@ public class BST {
         System.out.println("index = "+index+"   level = ="+ level);
 
         if (bstNode == null){
+            s = 1;
             lastElementIndex = index;
             return new BSTNode(key);
         }
@@ -42,6 +47,7 @@ public class BST {
         if (key == bstNode.key){
             lastElementIndex = index;
             bstNode.count++;
+            s = bstNode.count;
             return bstNode;
         }
 

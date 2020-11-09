@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TableRow;
@@ -103,7 +104,7 @@ public class UtilUI {
     public static View getBSTView(LayoutInflater layoutInflater, int layout, int visibility, int weight){
         View myView = layoutInflater.inflate(layout, null);
         myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
-        myView.setPadding(5,5,5,5);
+//        myView.setPadding(5,5,5,5);
 
         if(layout == R.layout.element_bst_arrow)
             visibility = View.INVISIBLE;
@@ -113,7 +114,7 @@ public class UtilUI {
         return myView;
     }
 
-    public static View getBSTView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int row, int col){
+    public static View getBSTView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int height, int row, int col){
         int layout = 0;
         int weight = treeLayoutElement.weight;
         int visibility = View.INVISIBLE;
@@ -129,8 +130,10 @@ public class UtilUI {
                 break;
         }
         View myView = layoutInflater.inflate(layout, null);
-        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
-        myView.setPadding(5,5,5,5);
+        myView.setLayoutParams(new TableRow.LayoutParams(0, height, weight));
+//        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
+//        myView.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight));
+//        myView.setPadding(5,5,5,5);
 
         if(row > 0 && layout == R.layout.element_bst_arrow){
             int arrowLayout = R.drawable.arrow_4;

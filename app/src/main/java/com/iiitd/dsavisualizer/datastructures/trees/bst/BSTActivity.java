@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,8 +33,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
+import com.iiitd.dsavisualizer.datastructures.trees.OperationReturn;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
+import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
@@ -368,13 +371,19 @@ public class BSTActivity extends AppCompatActivity {
 
                 System.out.println("Data ----------> " + data);
 
-                int lastElementIndex = bst.insert(data);
+                OperationReturn lastElementIndex = bst.insert(data);
                 System.out.println(lastElementIndex);
-                if(lastElementIndex!=-1){
-                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
-                    TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-                    textView.setText(String.valueOf(data));
+                if(lastElementIndex.index != -1){
+                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
+                    TextView value = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+                    TextView count = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementcount);
+                    value.setText(String.valueOf(data));
+                    count.setText(String.valueOf(lastElementIndex.count));
                     System.out.println(pair.first + ", " + pair.second);
+                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(View.VISIBLE);
+                    if(pair.first>0){
+                        tableRows.get(pair.first-1).getChildAt(pair.second).setVisibility(View.VISIBLE);
+                    }
                 }
                 else {
                     System.out.println("-_-");
@@ -424,26 +433,33 @@ public class BSTActivity extends AppCompatActivity {
         tableLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         ll_anim.addView(tableLayout);
 
+        tableLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = tableLayout.getHeight() / TreeLayout.treeLayout.size();
 
-        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-        LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        int row = 0;
-        int col = 0;
-        for(List<TreeLayoutElement> treeLayout : treeLayout){
-            TableRow tableRow = new TableRow(context);
-            tableRow.setLayoutParams(layoutParams);
+                int row = 0;
+                int col = 0;
+                for(List<TreeLayoutElement> treeLayout : treeLayout){
+                    TableRow tableRow = new TableRow(context);
+//                    int color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+//                    tableRow.setBackgroundColor(color);
+                    col = 0;
+                    for(TreeLayoutElement layoutElement : treeLayout){
+                        tableRow.addView(UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col));
+                        col++;
+                    }
 
-            col = 0;
-            for(TreeLayoutElement layoutElement : treeLayout){
-                tableRow.addView(UtilUI.getBSTView(context, layoutInflater, layoutElement, row, col));
-                col++;
+                    tableRows.add(tableRow);
+                    tableLayout.addView(tableRow);
+                    row++;
+                }
+
             }
+        });
 
-            tableRows.add(tableRow);
-            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0,1));
-            row++;
-        }
 
     }
 
@@ -496,11 +512,11 @@ public class BSTActivity extends AppCompatActivity {
 
         Random random = new Random();
         int u = random.nextInt();
-        int lastElementIndex = bst.insert(u);
+        OperationReturn lastElementIndex = bst.insert(u);
         System.out.println("Ele =========================== " + u);
         System.out.println(lastElementIndex);
-        if(lastElementIndex!=-1){
-            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex);
+        if(lastElementIndex.index != -1){
+            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
             TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
             textView.setText(String.valueOf(u));
             System.out.println(pair.first + ", " + pair.second);
