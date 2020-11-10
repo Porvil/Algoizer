@@ -1,22 +1,31 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
-import com.iiitd.dsavisualizer.datastructures.trees.OperationReturn;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeSequence;
+
+import java.util.ArrayList;
 
 public class BST {
 
     private BSTNode root;
     public int lastElementIndex;
     int s;
+    TreeSequence treeSequence;
+    ArrayList<TreeAnimationState> animationStates;
 
     public BST() {
         root = null;
+        treeSequence = new TreeSequence();
         lastElementIndex = -1;
     }
 
-    public OperationReturn insert(int key){
+    public ArrayList<TreeAnimationState> insert(int key){
         s = 0;
+        animationStates = new ArrayList<>();
+//        treeSequence = new TreeSequence();
         root = _insert(root, key, 8, 4);
-        return new OperationReturn(key, s, lastElementIndex);
+        treeSequence = new TreeSequence(animationStates);
+        return animationStates;
     }
 
     public void inorder(){
@@ -36,11 +45,14 @@ public class BST {
     }
 
     private BSTNode _insert(BSTNode bstNode, int key, int index, int level){
-        System.out.println("index = "+index+"   level = ="+ level);
+//        System.out.println("index = "+index+"   level = ="+ level);
 
         if (bstNode == null){
             s = 1;
             lastElementIndex = index;
+            TreeAnimationState treeAnimationState = new TreeAnimationState(key, 1, lastElementIndex);
+            System.out.println("==++ "  + treeAnimationState);
+            animationStates.add(treeAnimationState);
             return new BSTNode(key);
         }
 
@@ -48,18 +60,27 @@ public class BST {
             lastElementIndex = index;
             bstNode.count++;
             s = bstNode.count;
+            animationStates.add(new TreeAnimationState(bstNode.key, bstNode.count, lastElementIndex));
             return bstNode;
         }
 
         if(level == 0){
             lastElementIndex = -1;
+            animationStates.clear();
+//            sequence.add()
+            animationStates.add(new TreeAnimationState(-1, -1, lastElementIndex));
             return bstNode;
         }
 
-        if (key < bstNode.key)
-            bstNode.left = _insert(bstNode.left, key, index-level, level/2);
-        else
-            bstNode.right = _insert(bstNode.right, key, index+level, level/2);
+        animationStates.add(new TreeAnimationState(bstNode.key, bstNode.count, index));
+        if (key < bstNode.key) {
+
+            bstNode.left = _insert(bstNode.left, key, index - level, level / 2);
+        }
+        else {
+//            animationStates.add(new TreeAnimationState(bstNode.key, bstNode.count, index));
+            bstNode.right = _insert(bstNode.right, key, index + level, level / 2);
+        }
 
         return bstNode;
     }
@@ -102,6 +123,14 @@ public class BST {
         }
 
         return bstNode;
+    }
+
+    public void forward(){
+        treeSequence.forward();
+    }
+
+    public void backward(){
+        treeSequence.backward();
     }
 
 }

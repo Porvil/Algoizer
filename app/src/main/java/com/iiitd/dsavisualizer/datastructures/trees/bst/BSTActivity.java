@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,10 +31,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortInfo;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.OperationReturn;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.utility.Util;
@@ -43,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class BSTActivity extends AppCompatActivity {
@@ -330,31 +335,32 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isPseudocode) {
-                    sv_psuedocode.setVisibility(View.GONE);
+//                    ViewAnimator.animate(sv_psuedocode).slideRightIn().duration(100).start();
+
+
+
+                    ViewAnimator.animate(sv_psuedocode).duration(1000).translationX(sv_psuedocode.getWidth()).start();
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
+                            sv_psuedocode.setVisibility(View.GONE);
                         }
-                    }, 0);
+                    }, 1000);
                 }
                 else {
                     sv_psuedocode.setVisibility(View.VISIBLE);
+                    ViewAnimator.animate(sv_psuedocode).duration(1).translationX(sv_psuedocode.getWidth()).start();
+
+                    ViewAnimator.animate(sv_psuedocode).duration(1000).translationX(-sv_psuedocode.getWidth()).start();
                     sv_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
 
                         }
-                    }, 0);
+                    }, 1000);
 
                 }
                 isPseudocode = !isPseudocode;
-
-                if(isPseudocode)
-                    treeLayout.get(2).get(3).state = NodeState.ELEMENT_SHOWN;
-                else
-                    treeLayout.get(2).get(3).state = NodeState.ELEMENT_HIDDEN;
-                tableRows.get(2).getChildAt(3).setVisibility(treeLayout.get(2).get(3).getVisibility());
 
             }
         });
@@ -370,24 +376,80 @@ public class BSTActivity extends AppCompatActivity {
                 }
 
                 System.out.println("Data ----------> " + data);
+                ArrayList<TreeAnimationState> animationStates = bst.insert(data);
 
-                OperationReturn lastElementIndex = bst.insert(data);
-                System.out.println(lastElementIndex);
-                if(lastElementIndex.index != -1){
-                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
-                    TextView value = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-                    TextView count = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementcount);
-                    value.setText(String.valueOf(data));
-                    count.setText(String.valueOf(lastElementIndex.count));
-                    System.out.println(pair.first + ", " + pair.second);
-                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(View.VISIBLE);
-                    if(pair.first>0){
-                        tableRows.get(pair.first-1).getChildAt(pair.second).setVisibility(View.VISIBLE);
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (bst.treeSequence.curSeqNo < bst.treeSequence.size)
+                            task();
+                        else {
+//                            isAutoPlay = false;
+//                            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                            timer.cancel();
+                        }
                     }
+                },1000, 1000);
+
+
+                for(TreeAnimationState treeAnimationState : animationStates){
+//                    System.out.println(treeAnimationState);
+//                    if(treeAnimationState.elementIndex != -1){
+//                        int first = treeAnimationState.row;
+//                        int second = treeAnimationState.col;
+//                        View view = tableRows.get(first).getChildAt(second);
+//                        TextView value = view.findViewById(R.id.tv_elementvalue);
+//                        TextView count = view.findViewById(R.id.tv_elementcount);
+//                        ViewAnimator.animate(view).bounceIn().duration(500).start();
+//                        try {
+//                            Thread.currentThread().sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+//                        if(layoutElement.state == NodeState.ELEMENT_HIDDEN){
+//                            value.setText(String.valueOf(data));
+////                        count.setText(String.valueOf(lastElementIndex.count));
+//                            System.out.println(first + ", " + second);
+//                            tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+//                            treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+//                        }
+//                        else if(layoutElement.state == NodeState.ELEMENT_SHOWN){
+//                            System.out.println("Shown");
+//
+//                        }
+//
+////                        value.setText(String.valueOf(data));
+//////                        count.setText(String.valueOf(lastElementIndex.count));
+////                        System.out.println(first + ", " + second);
+////                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+//                        if(first>0){
+//                            tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                    else{
+//                        System.out.println("No space in tree");
+//                    }
                 }
-                else {
-                    System.out.println("-_-");
-                }
+
+                System.out.println("---------------------------------------");
+//                System.out.println(lastElementIndex);
+//                if(lastElementIndex.index != -1){
+//                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
+//                    TextView value = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+//                    TextView count = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementcount);
+//                    value.setText(String.valueOf(data));
+//                    count.setText(String.valueOf(lastElementIndex.count));
+//                    System.out.println(pair.first + ", " + pair.second);
+//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(View.VISIBLE);
+//                    if(pair.first>0){
+//                        tableRows.get(pair.first-1).getChildAt(pair.second).setVisibility(View.VISIBLE);
+//                    }
+//                }
+//                else {
+//                    System.out.println("-_-");
+//                }
 
             }
         });
@@ -407,6 +469,67 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void task() {
+        if (bst != null) {
+            bst.forward();
+            final int curSeqNo = bst.treeSequence.curSeqNo;
+            System.out.println("SEQ = "  + curSeqNo);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+//                    tv_seqno.setText(curSeqNo + " / " + bst.treeSequence.animationStates.size());
+                    if(curSeqNo < bst.treeSequence.size) {
+                        TreeAnimationState treeAnimationState = bst.treeSequence.animationStates.get(curSeqNo);
+                        System.out.println(treeAnimationState);
+                        if(treeAnimationState.elementIndex != -1){
+                            int first = treeAnimationState.row;
+                            int second = treeAnimationState.col;
+                            View view = tableRows.get(first).getChildAt(second);
+                            TextView value = view.findViewById(R.id.tv_elementvalue);
+                            TextView count = view.findViewById(R.id.tv_elementcount);
+                            ViewAnimator.animate(view).bounceIn().duration(500).start();
+                            int data = treeAnimationState.data;
+                            int count1 = treeAnimationState.count;
+                            TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+                            value.setText(String.valueOf(data));
+                            count.setText(String.valueOf(count1));
+                            System.out.println("COINT -> ========================  " + count1);
+                            if(layoutElement.state == NodeState.ELEMENT_HIDDEN){
+                                value.setText(String.valueOf(data));
+                                count.setText(String.valueOf(count1));
+                                System.out.println(first + ", " + second);
+                                tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                                treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+                            }
+                            else if(layoutElement.state == NodeState.ELEMENT_SHOWN){
+                                System.out.println("Shown");
+
+                            }
+
+//                        value.setText(String.valueOf(data));
+////                        count.setText(String.valueOf(lastElementIndex.count));
+//                        System.out.println(first + ", " + second);
+//                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                            if(first>0){
+                                tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else{
+                            System.out.println("No space in tree");
+                        }
+//                        ViewAnimator.animate()
+
+                    }
+                    else{
+
+
+                    }
+                }
+            });
+        }
     }
 
     private void initViews() {
@@ -464,22 +587,22 @@ public class BSTActivity extends AppCompatActivity {
     }
 
     private void addPseudocode(){
-//        int sizeOfPseudocode = BSTInfo.psuedocode.length;
-//        textViews = new TextView[sizeOfPseudocode];
-//        for(int i=0;i<sizeOfPseudocode;i++){
-//            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            TextView textView = new TextView(this);
-//            textView.setLayoutParams(lparams);
-//            textView.setText(BSTInfo.psuedocode[i]);
-//            textView.setPadding(5, 0,0,0);
-//            textViews[i] = textView;
-//            ll_psuedocode.addView(textView);
-//        }
-//
-//        for(int i : BSTInfo.boldIndexes){
-//            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
-//        }
+        int sizeOfPseudocode = QuickSortInfo.psuedocode.length;
+        textViews = new TextView[sizeOfPseudocode];
+        for(int i=0;i<sizeOfPseudocode;i++){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView textView = new TextView(this);
+            textView.setLayoutParams(lparams);
+            textView.setText(BSTInfo.psuedocode[i]);
+            textView.setPadding(5, 0,0,0);
+            textViews[i] = textView;
+            ll_psuedocode.addView(textView);
+        }
+
+        for(int i : BSTInfo.boldIndexes){
+            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
+        }
     }
 
     private void onForwardClick(){
@@ -510,21 +633,21 @@ public class BSTActivity extends AppCompatActivity {
 //            });
 //        }
 
-        Random random = new Random();
-        int u = random.nextInt();
-        OperationReturn lastElementIndex = bst.insert(u);
-        System.out.println("Ele =========================== " + u);
-        System.out.println(lastElementIndex);
-        if(lastElementIndex.index != -1){
-            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
-            TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-            textView.setText(String.valueOf(u));
-            System.out.println(pair.first + ", " + pair.second);
-//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
-        }
-        else {
-            System.out.println("-_-");
-        }
+//        Random random = new Random();
+//        int u = random.nextInt();
+//        OperationReturn lastElementIndex = bst.insert(u);
+//        System.out.println("Ele =========================== " + u);
+//        System.out.println(lastElementIndex);
+//        if(lastElementIndex.index != -1){
+//            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
+//            TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
+//            textView.setText(String.valueOf(u));
+//            System.out.println(pair.first + ", " + pair.second);
+////                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
+//        }
+//        else {
+//            System.out.println("-_-");
+//        }
 
     }
 
