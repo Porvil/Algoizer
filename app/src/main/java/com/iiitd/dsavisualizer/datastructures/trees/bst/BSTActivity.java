@@ -89,7 +89,8 @@ public class BSTActivity extends AppCompatActivity {
     TextView[] textViews;
 
     Random random = new Random();
-    Timer timer = new Timer();
+    Timer timer = null;
+//    Timer timer = new Timer();
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
     boolean isPseudocode = true;
@@ -236,21 +237,22 @@ public class BSTActivity extends AppCompatActivity {
                 TextView tv_comparisons = view.findViewById(R.id.tv_comparisons);
                 ImageButton btn_close = view.findViewById(R.id.btn_close);
 
-//                String comparisons = "-";
-//                if(bst != null) {
-//                    isAutoPlay = false;
-//                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                    timer.cancel();
+                String comparisons = "-";
+                if(bst != null) {
+                    isAutoPlay = false;
+                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                    timer.cancel();
+                    comparisons = String.valueOf(1);
 //                    comparisons = String.valueOf(bst.comparisons);
-//                }
-//
-//                tv_name.setText(BSTStats.name);
-//                tv_avg.setText(BSTStats.avg);
-//                tv_worst.setText(BSTStats.worst);
-//                tv_best.setText(BSTStats.best);
-//                tv_space.setText(BSTStats.space);
-//                tv_stable.setText(BSTStats.stable);
-//                tv_comparisons.setText(comparisons);
+                }
+
+                tv_name.setText(BSTStats.name);
+                tv_avg.setText(BSTStats.avg);
+                tv_worst.setText(BSTStats.worst);
+                tv_best.setText(BSTStats.best);
+                tv_space.setText(BSTStats.space);
+                tv_stable.setText(BSTStats.stable);
+                tv_comparisons.setText(comparisons);
 
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(view);
@@ -272,7 +274,7 @@ public class BSTActivity extends AppCompatActivity {
                 if(!dl_main.isOpen()) {
                     isAutoPlay = false;
                     btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                    timer.cancel();
+//                    timer.cancel();
                     dl_main.openDrawer(Gravity.RIGHT);
                 }
             }
@@ -285,7 +287,7 @@ public class BSTActivity extends AppCompatActivity {
                 if(slideOffset <= 0.40){
                     isAutoPlay = false;
                     btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                    timer.cancel();
+//                    timer.cancel();
                 }
             }
 
@@ -369,31 +371,102 @@ public class BSTActivity extends AppCompatActivity {
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = et_insert.getText().toString();
-                int data = random.nextInt(100);
-                if(!s.isEmpty()){
-                    data = Integer.parseInt(s.trim());
-                }
+                insert();
+            }
+        });
 
-                System.out.println("Data ----------> " + data);
-                ArrayList<TreeAnimationState> animationStates = bst.insert(data);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (bst.treeSequence.curSeqNo < bst.treeSequence.size)
-                            task();
-                        else {
+            }
+        });
+
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+
+    private void insert() {
+
+//                dl_main.closeDrawer(Gravity.RIGHT);
+//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                dl_main.set
+
+        System.out.println("DAMN//////////////////////////////////////////////////");
+
+        String s = et_insert.getText().toString();
+        int data = random.nextInt(100);
+        if(!s.isEmpty()){
+            data = Integer.parseInt(s.trim());
+        }
+
+//        System.out.println("Data ----------> " + data);
+//        ArrayList<TreeAnimationState> animationStates = bst.insert(data);
+//        System.out.println("size " + bst.treeSequence.animationStates.size());
+
+        if(!dl_main.isOpen()) {
+            System.out.println("OPEN");
+//                    dl_main.hie
+//                    dl_main.closeDrawer(Gravity.RIGHT);
+            dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            btn_menu.setEnabled(false);
+        }
+        else{
+            System.out.println("Close");
+        }
+
+        if(timer == null) {
+
+            System.out.println("Data ----------> " + data);
+            ArrayList<TreeAnimationState> animationStates = bst.insert(data);
+            System.out.println("size " + bst.treeSequence.animationStates.size());
+
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+
+//                if(!dl_main.isOpen()) {
+//                    System.out.println("OPEN");
+////                    dl_main.hie
+////                    dl_main.closeDrawer(Gravity.RIGHT);
+//                    dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                }
+//                else{
+//                    System.out.println("Close");
+//                }
+
+                    if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
+                        System.out.println("TASK =  " + bst.treeSequence.curSeqNo);
+                        task();
+                    } else {
 //                            isAutoPlay = false;
 //                            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                            timer.cancel();
-                        }
+                        System.out.println("Canceled");
+//                        this.cancel();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btn_menu.setEnabled(true);
+                            }
+                        });
+
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        timer.cancel();
+                        timer = null;
                     }
-                },1000, 1000);
+                }
+            }, 1000, 2000);
 
+//                dl_main.closeDrawer(Gravity.RIGHT);
 
-                for(TreeAnimationState treeAnimationState : animationStates){
+            for (TreeAnimationState treeAnimationState : animationStates) {
 //                    System.out.println(treeAnimationState);
 //                    if(treeAnimationState.elementIndex != -1){
 //                        int first = treeAnimationState.row;
@@ -431,9 +504,9 @@ public class BSTActivity extends AppCompatActivity {
 //                    else{
 //                        System.out.println("No space in tree");
 //                    }
-                }
+            }
 
-                System.out.println("---------------------------------------");
+            System.out.println("---------------------------------------");
 //                System.out.println(lastElementIndex);
 //                if(lastElementIndex.index != -1){
 //                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
@@ -450,30 +523,12 @@ public class BSTActivity extends AppCompatActivity {
 //                else {
 //                    System.out.println("-_-");
 //                }
-
-            }
-        });
-
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+        }
     }
 
     private void task() {
         if (bst != null) {
-            bst.forward();
+
             final int curSeqNo = bst.treeSequence.curSeqNo;
             System.out.println("SEQ = "  + curSeqNo);
 
@@ -490,23 +545,25 @@ public class BSTActivity extends AppCompatActivity {
                             View view = tableRows.get(first).getChildAt(second);
                             TextView value = view.findViewById(R.id.tv_elementvalue);
                             TextView count = view.findViewById(R.id.tv_elementcount);
-                            ViewAnimator.animate(view).bounceIn().duration(500).start();
+
                             int data = treeAnimationState.data;
                             int count1 = treeAnimationState.count;
                             TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+
                             value.setText(String.valueOf(data));
                             count.setText(String.valueOf(count1));
-                            System.out.println("COINT -> ========================  " + count1);
+//                            System.out.println("COINT -> ========================  " + count1);
                             if(layoutElement.state == NodeState.ELEMENT_HIDDEN){
                                 value.setText(String.valueOf(data));
                                 count.setText(String.valueOf(count1));
-                                System.out.println(first + ", " + second);
+//                                System.out.println(first + ", " + second);
                                 tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
                                 treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+                                ViewAnimator.animate(view).bounceIn().duration(500).start();
                             }
                             else if(layoutElement.state == NodeState.ELEMENT_SHOWN){
                                 System.out.println("Shown");
-
+                                ViewAnimator.animate(view).flash().duration(500).start();
                             }
 
 //                        value.setText(String.valueOf(data));
@@ -514,7 +571,21 @@ public class BSTActivity extends AppCompatActivity {
 //                        System.out.println(first + ", " + second);
 //                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
                             if(first>0){
-                                tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
+                                View view1 = tableRows.get(first-1).getChildAt(second);
+                                TreeLayoutElement layoutElement1 = treeLayout.get(first-1).get(second);
+                                if(layoutElement1.state == NodeState.ARROW_HIDDEN){
+//                                    value.setText(String.valueOf(data));
+//                                    count.setText(String.valueOf(count1));
+//                                    System.out.println(first + ", " + second);
+                                    tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
+                                    treeLayout.get(first-1).get(second).state = NodeState.ARROW_SHOWN;
+                                    ViewAnimator.animate(view1).bounceIn().duration(500).start();
+                                }
+                                else if(layoutElement1.state == NodeState.ARROW_SHOWN){
+                                    System.out.println("Shown");
+                                    ViewAnimator.animate(view1).flash().duration(500).start();
+                                }
+//                                tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
                             }
                         }
                         else{
@@ -529,6 +600,8 @@ public class BSTActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            bst.forward();
         }
     }
 

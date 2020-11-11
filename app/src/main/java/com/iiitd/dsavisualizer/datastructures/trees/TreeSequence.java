@@ -9,7 +9,7 @@ public class TreeSequence {
     public ArrayList<TreeAnimationState> animationStates;
 
     public TreeSequence(ArrayList<TreeAnimationState> animationStates) {
-        this.curSeqNo = -1;
+        this.curSeqNo = 0;
         this.size = animationStates.size();
         this.animationStates = animationStates;
     }
