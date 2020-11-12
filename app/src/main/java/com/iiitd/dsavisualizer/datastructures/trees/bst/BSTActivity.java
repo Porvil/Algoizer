@@ -401,6 +401,7 @@ public class BSTActivity extends AppCompatActivity {
 
     private void delete() {
         String s = et_delete.getText().toString();
+        System.out.println("del : " + s);
         if(s.isEmpty()){
             Toast.makeText(context, "Empty", Toast.LENGTH_SHORT).show();
         }
@@ -461,7 +462,7 @@ public class BSTActivity extends AppCompatActivity {
                         timer = null;
                     }
                 }
-            }, 1000, 2000);
+            }, 1000, 500);
 
 
             System.out.println("---------------------------------------");

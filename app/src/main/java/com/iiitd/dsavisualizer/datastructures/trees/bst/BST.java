@@ -35,6 +35,8 @@ public class BST {
         animationStates = new ArrayList<>();
         root = _delete(root, key, 8, 4);
         treeSequence = new TreeSequence(animationStates);
+
+        _inorder(root);
         return animationStates;
     }
 
@@ -99,7 +101,7 @@ public class BST {
     private BSTNode _delete(BSTNode bstNode, int key, int index, int level){
 
         if (bstNode == null) {
-            System.out.println("NULL Node");
+            System.out.println("NULL Node, Not found");
             return bstNode;
         }
 
@@ -118,6 +120,7 @@ public class BST {
                 return bstNode;
             }
 
+            System.out.println(bstNode.key +"  = " + bstNode.count);
             if (bstNode.left == null){
                 System.out.println("LEFT CHILD NULL = ");
                 BSTNode temp = bstNode.right;
@@ -131,7 +134,10 @@ public class BST {
 
             System.out.println("END CODE");
             BSTNode temp = _minValueNode(bstNode.right);
+            System.out.println("Right suc :: " + temp.key);
             bstNode.key = temp.key;
+            bstNode.count = temp.count;
+            temp.count = 1;
             bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
         }
 
