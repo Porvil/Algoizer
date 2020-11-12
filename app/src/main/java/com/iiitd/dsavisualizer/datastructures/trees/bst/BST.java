@@ -9,8 +9,8 @@ public class BST {
 
     private BSTNode root;
     public int lastElementIndex;
-    int s;
     TreeSequence treeSequence;
+    int s;
     ArrayList<TreeAnimationState> animationStates;
 
     public BST() {
@@ -22,7 +22,6 @@ public class BST {
     public ArrayList<TreeAnimationState> insert(int key){
         s = 0;
         animationStates = new ArrayList<>();
-//        treeSequence = new TreeSequence();
         root = _insert(root, key, 8, 4);
         treeSequence = new TreeSequence(animationStates);
         return animationStates;
@@ -32,8 +31,11 @@ public class BST {
         _inorder(root);
     }
 
-    public void delete(int key){
-        root = _delete(root, key);
+    public ArrayList<TreeAnimationState> delete(int key){
+        animationStates = new ArrayList<>();
+        root = _delete(root, key, 8, 4);
+        treeSequence = new TreeSequence(animationStates);
+        return animationStates;
     }
 
     private void _inorder(BSTNode bstNode){
@@ -94,32 +96,43 @@ public class BST {
         return current;
     }
 
-    private BSTNode _delete(BSTNode bstNode, int key){
-        if (bstNode == null)
-            return bstNode;
+    private BSTNode _delete(BSTNode bstNode, int key, int index, int level){
 
-        if (key < bstNode.key)
-            bstNode.left = _delete(bstNode.left, key);
-        else if (key > bstNode.key)
-            bstNode.right = _delete(bstNode.right, key);
+        if (bstNode == null) {
+            System.out.println("NULL Node");
+            return bstNode;
+        }
+
+        if (key < bstNode.key) {
+            System.out.println("LESS KEY = " + bstNode.key);
+            bstNode.left = _delete(bstNode.left, key, index - level, level / 2);
+        }
+        else if (key > bstNode.key) {
+            System.out.println("More KEY = " + bstNode.key);
+            bstNode.right = _delete(bstNode.right, key, index + level, level / 2);
+        }
         else{
             if (bstNode.count > 1){
                 bstNode.count--;
+                System.out.println("Count decreased = " + bstNode.key + " : " + bstNode.count);
                 return bstNode;
             }
 
             if (bstNode.left == null){
+                System.out.println("LEFT CHILD NULL = ");
                 BSTNode temp = bstNode.right;
                 return temp;
             }
             else if (bstNode.right == null){
+                System.out.println("RIGHT CHILD NULL = ");
                 BSTNode temp = bstNode.left;
                 return temp;
             }
 
+            System.out.println("END CODE");
             BSTNode temp = _minValueNode(bstNode.right);
             bstNode.key = temp.key;
-            bstNode.right = _delete(bstNode.right, temp.key);
+            bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
         }
 
         return bstNode;

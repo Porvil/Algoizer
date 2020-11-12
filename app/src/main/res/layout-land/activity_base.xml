@@ -22,42 +22,54 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sv_psuedocode"
+            app:layout_constraintEnd_toStartOf="@+id/cl_psuedocode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="0dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/ll_anim"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ScrollView
-            android:id="@+id/sv_psuedocode"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_psuedocode"
             android:layout_width="250dp"
             android:layout_height="match_parent"
-            android:fadeScrollbars="false"
-            android:scrollbarSize="5dp"
-            android:scrollbarStyle="outsideInset"
-            android:verticalScrollbarPosition="left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/ll_pseudocode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="?android:listDivider"
-                android:orientation="vertical"
-                android:showDividers="middle">
+            <View
+                android:id="@+id/view"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-            </LinearLayout>
-        </ScrollView>
+            <ScrollView
+                android:id="@+id/sv_psuedocode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbarSize="5dp"
+                android:scrollbarStyle="outsideInset"
+                android:verticalScrollbarPosition="left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_pseudocode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="?android:listDivider"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

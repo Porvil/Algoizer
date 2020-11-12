@@ -25,12 +25,14 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortInfo;
@@ -73,6 +75,7 @@ public class BSTActivity extends AppCompatActivity {
     TextView tv_info;
     ScrollView sv_psuedocode;
     LinearLayout ll_psuedocode;
+    ConstraintLayout cl_psuedocode;
 
     Button btn_insert;
     Button btn_search;
@@ -126,6 +129,7 @@ public class BSTActivity extends AppCompatActivity {
         tv_info = v_main.findViewById(R.id.tv_info);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
+        cl_psuedocode = v_main.findViewById(R.id.cl_psuedocode);
         cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_insert = v_menu.findViewById(R.id.btn_insert);
@@ -137,6 +141,12 @@ public class BSTActivity extends AppCompatActivity {
 
         addPseudocode();
         initViews();
+
+        btn_play.setVisibility(View.GONE);
+        btn_forward.setVisibility(View.GONE);
+        btn_backward.setVisibility(View.GONE);
+        tv_seqno.setVisibility(View.GONE);
+
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -337,29 +347,26 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isPseudocode) {
-//                    ViewAnimator.animate(sv_psuedocode).slideRightIn().duration(100).start();
 
+                    ViewAnimator.animate(cl_psuedocode)
+                            .duration(1000)
+                            .translationX(cl_psuedocode.getWidth())
+                            .start()
+                            .onStop(new AnimationListener.Stop() {
+                                @Override
+                                public void onStop() {
+                                    cl_psuedocode.setVisibility(View.GONE);
+                                }
+                            });
 
-
-                    ViewAnimator.animate(sv_psuedocode).duration(1000).translationX(sv_psuedocode.getWidth()).start();
-                    sv_psuedocode.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            sv_psuedocode.setVisibility(View.GONE);
-                        }
-                    }, 1000);
                 }
                 else {
-                    sv_psuedocode.setVisibility(View.VISIBLE);
-                    ViewAnimator.animate(sv_psuedocode).duration(1).translationX(sv_psuedocode.getWidth()).start();
 
-                    ViewAnimator.animate(sv_psuedocode).duration(1000).translationX(-sv_psuedocode.getWidth()).start();
-                    sv_psuedocode.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                        }
-                    }, 1000);
+                    cl_psuedocode.setVisibility(View.VISIBLE);
+                    ViewAnimator.animate(cl_psuedocode)
+                            .duration(1000)
+                            .translationX(0)
+                            .start();
 
                 }
                 isPseudocode = !isPseudocode;
@@ -386,17 +393,24 @@ public class BSTActivity extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                delete();
             }
         });
 
     }
 
-    private void insert() {
+    private void delete() {
+        String s = et_delete.getText().toString();
+        if(s.isEmpty()){
+            Toast.makeText(context, "Empty", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            ArrayList<TreeAnimationState> delete = bst.delete(Integer.parseInt(s));
 
-//                dl_main.closeDrawer(Gravity.RIGHT);
-//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                dl_main.set
+        }
+    }
+
+    private void insert() {
 
         System.out.println("DAMN//////////////////////////////////////////////////");
 
@@ -406,14 +420,8 @@ public class BSTActivity extends AppCompatActivity {
             data = Integer.parseInt(s.trim());
         }
 
-//        System.out.println("Data ----------> " + data);
-//        ArrayList<TreeAnimationState> animationStates = bst.insert(data);
-//        System.out.println("size " + bst.treeSequence.animationStates.size());
-
         if(!dl_main.isOpen()) {
             System.out.println("OPEN");
-//                    dl_main.hie
-//                    dl_main.closeDrawer(Gravity.RIGHT);
             dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             btn_menu.setEnabled(false);
         }
@@ -432,16 +440,6 @@ public class BSTActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
-//                if(!dl_main.isOpen()) {
-//                    System.out.println("OPEN");
-////                    dl_main.hie
-////                    dl_main.closeDrawer(Gravity.RIGHT);
-//                    dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                }
-//                else{
-//                    System.out.println("Close");
-//                }
-
                     if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
                         System.out.println("TASK =  " + bst.treeSequence.curSeqNo);
                         task();
@@ -454,6 +452,7 @@ public class BSTActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 btn_menu.setEnabled(true);
+                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -464,65 +463,9 @@ public class BSTActivity extends AppCompatActivity {
                 }
             }, 1000, 2000);
 
-//                dl_main.closeDrawer(Gravity.RIGHT);
-
-            for (TreeAnimationState treeAnimationState : animationStates) {
-//                    System.out.println(treeAnimationState);
-//                    if(treeAnimationState.elementIndex != -1){
-//                        int first = treeAnimationState.row;
-//                        int second = treeAnimationState.col;
-//                        View view = tableRows.get(first).getChildAt(second);
-//                        TextView value = view.findViewById(R.id.tv_elementvalue);
-//                        TextView count = view.findViewById(R.id.tv_elementcount);
-//                        ViewAnimator.animate(view).bounceIn().duration(500).start();
-//                        try {
-//                            Thread.currentThread().sleep(1000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                        TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
-//                        if(layoutElement.state == NodeState.ELEMENT_HIDDEN){
-//                            value.setText(String.valueOf(data));
-////                        count.setText(String.valueOf(lastElementIndex.count));
-//                            System.out.println(first + ", " + second);
-//                            tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
-//                            treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
-//                        }
-//                        else if(layoutElement.state == NodeState.ELEMENT_SHOWN){
-//                            System.out.println("Shown");
-//
-//                        }
-//
-////                        value.setText(String.valueOf(data));
-//////                        count.setText(String.valueOf(lastElementIndex.count));
-////                        System.out.println(first + ", " + second);
-////                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
-//                        if(first>0){
-//                            tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//                    else{
-//                        System.out.println("No space in tree");
-//                    }
-            }
 
             System.out.println("---------------------------------------");
-//                System.out.println(lastElementIndex);
-//                if(lastElementIndex.index != -1){
-//                    Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
-//                    TextView value = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-//                    TextView count = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementcount);
-//                    value.setText(String.valueOf(data));
-//                    count.setText(String.valueOf(lastElementIndex.count));
-//                    System.out.println(pair.first + ", " + pair.second);
-//                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(View.VISIBLE);
-//                    if(pair.first>0){
-//                        tableRows.get(pair.first-1).getChildAt(pair.second).setVisibility(View.VISIBLE);
-//                    }
-//                }
-//                else {
-//                    System.out.println("-_-");
-//                }
+
         }
     }
 
@@ -589,6 +532,7 @@ public class BSTActivity extends AppCompatActivity {
                             }
                         }
                         else{
+                            Toast.makeText(context, "No space in tree", Toast.LENGTH_SHORT).show();
                             System.out.println("No space in tree");
                         }
 //                        ViewAnimator.animate()
