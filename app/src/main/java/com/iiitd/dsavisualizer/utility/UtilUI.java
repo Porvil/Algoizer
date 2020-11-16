@@ -117,7 +117,8 @@ public class UtilUI {
     public static View getBSTView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int height, int row, int col){
         int layout = 0;
         int weight = treeLayoutElement.weight;
-        int visibility = View.INVISIBLE;
+        int visibility = View.VISIBLE;
+//        int visibility = View.INVISIBLE;
         switch (treeLayoutElement.type){
             case EMPTY:
                 layout = R.layout.element_bst_empty;

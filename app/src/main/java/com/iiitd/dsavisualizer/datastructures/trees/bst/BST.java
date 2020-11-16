@@ -36,7 +36,7 @@ public class BST {
         root = _delete(root, key, 8, 4);
         treeSequence = new TreeSequence(animationStates);
 
-        _inorder(this.root);
+//        _inorder(this.root);
         return animationStates;
     }
 
@@ -121,9 +121,21 @@ public class BST {
                 return bstNode;
             }
 
-//            if (bstNode.left == null && bstNode.right )
+            System.out.println(bstNode.key +"  ---===== " + bstNode.count);
 
-            System.out.println(bstNode.key +"  = " + bstNode.count);
+            if (bstNode.left == null && bstNode.right == null){
+                System.out.println("Simple delete");
+            }
+            else if(bstNode.left == null && bstNode.right != null){
+                System.out.println("Right copy");
+            }
+            else if(bstNode.left != null && bstNode.right == null){
+                System.out.println("Left copy");
+            }
+            else if(bstNode.left != null && bstNode.right != null){
+                System.out.println("Right min element");
+            }
+
             if (bstNode.left == null){
                 System.out.println("LEFT CHILD NULL = ");
                 BSTNode temp = bstNode.right;

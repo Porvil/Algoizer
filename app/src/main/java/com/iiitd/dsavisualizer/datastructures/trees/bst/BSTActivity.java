@@ -386,7 +386,70 @@ public class BSTActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<ArrayList<TreeAnimationState>> ch = new ArrayList<>();
+                ch.add(bst.insert(100));
+                ch.add(bst.insert(50));
+                ch.add(bst.insert(150));
+                ch.add(bst.insert(20));
+                ch.add(bst.insert(70));
+                ch.add(bst.insert(120));
+                ch.add(bst.insert(200));
+                ch.add(bst.insert(220));
+                ch.add(bst.insert(110));
+                ch.add(bst.insert(130));
+                for(ArrayList<TreeAnimationState> insert : ch){
+                for(TreeAnimationState treeAnimationState : insert) {
 
+                System.out.println(treeAnimationState);
+                if (treeAnimationState.elementIndex != -1) {
+                    int first = treeAnimationState.row;
+                    int second = treeAnimationState.col;
+                    View view = tableRows.get(first).getChildAt(second);
+                    TextView value = view.findViewById(R.id.tv_elementvalue);
+                    TextView count = view.findViewById(R.id.tv_elementcount);
+
+                    int data = treeAnimationState.data;
+                    int count1 = treeAnimationState.count;
+                    TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+
+                    value.setText(String.valueOf(data));
+                    count.setText(String.valueOf(count1));
+//                            System.out.println("COINT -> ========================  " + count1);
+                    if (layoutElement.state == NodeState.ELEMENT_HIDDEN) {
+                        value.setText(String.valueOf(data));
+                        count.setText(String.valueOf(count1));
+//                                System.out.println(first + ", " + second);
+                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                        treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+                        ViewAnimator.animate(view).bounceIn().duration(1000).start();
+                    } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
+                        System.out.println("Shown");
+                        ViewAnimator.animate(view).flash().duration(1000).start();
+                    }
+
+//                        value.setText(String.valueOf(data));
+////                        count.setText(String.valueOf(lastElementIndex.count));
+//                        System.out.println(first + ", " + second);
+//                        tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                    if (first > 0) {
+                        View view1 = tableRows.get(first - 1).getChildAt(second);
+                        TreeLayoutElement layoutElement1 = treeLayout.get(first - 1).get(second);
+                        if (layoutElement1.state == NodeState.ARROW_HIDDEN) {
+//                                    value.setText(String.valueOf(data));
+//                                    count.setText(String.valueOf(count1));
+//                                    System.out.println(first + ", " + second);
+                            tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
+                            treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
+                            ViewAnimator.animate(view1).bounceIn().duration(1000).start();
+                        } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
+                            System.out.println("Shown");
+                            ViewAnimator.animate(view1).flash().duration(1000).start();
+                        }
+//                                tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
+                    }
+                }
+                }
+                }
             }
         });
 
@@ -395,6 +458,34 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 delete();
+            }
+        });
+
+        Button button = v_menu.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View top = tableRows.get(2).getChildAt(1);
+                View down = tableRows.get(4).getChildAt(3);
+                float x = top.getX();
+                float y = tableRows.get(2).getY();
+                float xo = down.getX();
+                float yo = tableRows.get(4).getY();
+
+                float X = xo - x;
+                float Y = yo - y;
+
+                ViewAnimator.animate(top).duration(1000).zoomIn().start();
+                ViewAnimator.animate(down).duration(1000).translationX(-X).start();
+                ViewAnimator.animate(down).duration(1000).translationY(-Y).start();
+            }
+        });
+
+        Button button2 = v_menu.findViewById(R.id.button4);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
             }
         });
 
@@ -572,6 +663,7 @@ public class BSTActivity extends AppCompatActivity {
         bst = new BST();
 
         tableLayout = new TableLayout(context);
+        tableLayout.setClipChildren(false);
         tableLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         ll_anim.addView(tableLayout);
 
@@ -689,5 +781,29 @@ public class BSTActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
+    }
+
+    private void reset(){
+        int row = 0;
+        for(TableRow tableRow : tableRows){
+            int old = 0;
+            for(int i=0;i<tableRow.getChildCount();i++){
+                int weight = treeLayout.get(row).get(i).weight;
+                float v = ((float) tableRow.getWidth() / 15) * old;
+                tableRow.getChildAt(i).setX(v);
+                tableRow.getChildAt(i).setY(0);
+                NodeState state = treeLayout.get(row).get(i).state;
+                if(state == NodeState.ELEMENT_SHOWN){
+                    tableRow.getChildAt(i).setVisibility(View.VISIBLE);
+                }
+                else{
+                    tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
+                }
+
+                old += weight;
+            }
+            row++;
+        }
+
     }
 }

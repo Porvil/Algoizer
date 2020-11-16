@@ -130,6 +130,18 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
         <View
             android:id="@+id/horizontalDiv"
             android:layout_width="match_parent"
