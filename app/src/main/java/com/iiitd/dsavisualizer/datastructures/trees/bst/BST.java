@@ -36,11 +36,12 @@ public class BST {
         root = _delete(root, key, 8, 4);
         treeSequence = new TreeSequence(animationStates);
 
-        _inorder(root);
+        _inorder(this.root);
         return animationStates;
     }
 
     private void _inorder(BSTNode bstNode){
+        System.out.println("inorder");
         if (bstNode != null){
             _inorder(bstNode.left);
             System.out.print(bstNode.key + "(" + bstNode.count + ") ");
@@ -119,6 +120,8 @@ public class BST {
                 System.out.println("Count decreased = " + bstNode.key + " : " + bstNode.count);
                 return bstNode;
             }
+
+//            if (bstNode.left == null && bstNode.right )
 
             System.out.println(bstNode.key +"  = " + bstNode.count);
             if (bstNode.left == null){

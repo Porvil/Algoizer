@@ -97,7 +97,8 @@ public class BSTActivity extends AppCompatActivity {
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
     boolean isPseudocode = true;
-    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
+    int autoAnimSpeed = 500;
+//    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     final int LAYOUT = R.layout.activity_base;
     final int CONTROL = R.layout.controls_bst;
 
@@ -349,7 +350,7 @@ public class BSTActivity extends AppCompatActivity {
                 if(isPseudocode) {
 
                     ViewAnimator.animate(cl_psuedocode)
-                            .duration(1000)
+                            .duration(autoAnimSpeed)
                             .translationX(cl_psuedocode.getWidth())
                             .start()
                             .onStop(new AnimationListener.Stop() {
@@ -364,7 +365,7 @@ public class BSTActivity extends AppCompatActivity {
 
                     cl_psuedocode.setVisibility(View.VISIBLE);
                     ViewAnimator.animate(cl_psuedocode)
-                            .duration(1000)
+                            .duration(autoAnimSpeed)
                             .translationX(0)
                             .start();
 
@@ -462,7 +463,7 @@ public class BSTActivity extends AppCompatActivity {
                         timer = null;
                     }
                 }
-            }, 1000, 500);
+            }, autoAnimSpeed, autoAnimSpeed);
 
 
             System.out.println("---------------------------------------");
@@ -503,11 +504,11 @@ public class BSTActivity extends AppCompatActivity {
 //                                System.out.println(first + ", " + second);
                                 tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
                                 treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
-                                ViewAnimator.animate(view).bounceIn().duration(500).start();
+                                ViewAnimator.animate(view).bounceIn().duration(1000).start();
                             }
                             else if(layoutElement.state == NodeState.ELEMENT_SHOWN){
                                 System.out.println("Shown");
-                                ViewAnimator.animate(view).flash().duration(500).start();
+                                ViewAnimator.animate(view).flash().duration(1000).start();
                             }
 
 //                        value.setText(String.valueOf(data));
@@ -523,11 +524,11 @@ public class BSTActivity extends AppCompatActivity {
 //                                    System.out.println(first + ", " + second);
                                     tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
                                     treeLayout.get(first-1).get(second).state = NodeState.ARROW_SHOWN;
-                                    ViewAnimator.animate(view1).bounceIn().duration(500).start();
+                                    ViewAnimator.animate(view1).bounceIn().duration(1000).start();
                                 }
                                 else if(layoutElement1.state == NodeState.ARROW_SHOWN){
                                     System.out.println("Shown");
-                                    ViewAnimator.animate(view1).flash().duration(500).start();
+                                    ViewAnimator.animate(view1).flash().duration(1000).start();
                                 }
 //                                tableRows.get(first-1).getChildAt(second).setVisibility(View.VISIBLE);
                             }
@@ -605,22 +606,22 @@ public class BSTActivity extends AppCompatActivity {
     }
 
     private void addPseudocode(){
-        int sizeOfPseudocode = QuickSortInfo.psuedocode.length;
-        textViews = new TextView[sizeOfPseudocode];
-        for(int i=0;i<sizeOfPseudocode;i++){
-            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(lparams);
-            textView.setText(BSTInfo.psuedocode[i]);
-            textView.setPadding(5, 0,0,0);
-            textViews[i] = textView;
-            ll_psuedocode.addView(textView);
-        }
-
-        for(int i : BSTInfo.boldIndexes){
-            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
-        }
+//        int sizeOfPseudocode = QuickSortInfo.psuedocode.length;
+//        textViews = new TextView[sizeOfPseudocode];
+//        for(int i=0;i<sizeOfPseudocode;i++){
+//            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            TextView textView = new TextView(this);
+//            textView.setLayoutParams(lparams);
+//            textView.setText(BSTInfo.psuedocode[i]);
+//            textView.setPadding(5, 0,0,0);
+//            textViews[i] = textView;
+//            ll_psuedocode.addView(textView);
+//        }
+//
+//        for(int i : BSTInfo.boldIndexes){
+//            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
+//        }
     }
 
     private void onForwardClick(){
