@@ -6,16 +6,26 @@ public class TreeSequence {
 
     public int size;
     public int curSeqNo;
+    public ArrayList<TreeElementAnimationData> elementAnimationData;
     public ArrayList<TreeAnimationState> animationStates;
 
-    public TreeSequence(ArrayList<TreeAnimationState> animationStates) {
-        this.curSeqNo = 0;
-        this.size = animationStates.size();
-        this.animationStates = animationStates;
-    }
+//    public TreeSequence(ArrayList<TreeElementAnimationData> elementAnimationData) {
+//        this.curSeqNo = 0;
+//        this.size = elementAnimationData.size();
+//        this.elementAnimationData = elementAnimationData;
+//        this.animationStates = new ArrayList<>();
+//    }
 
     public TreeSequence() {
+        this.elementAnimationData = new ArrayList<>();
         this.animationStates = new ArrayList<>();
+    }
+
+    public TreeSequence(ArrayList<TreeAnimationState> animationStates) {
+        this.animationStates = animationStates;
+        this.curSeqNo = 0;
+        this.size = animationStates.size();
+        this.elementAnimationData = new ArrayList<>();
     }
 
     @Override
@@ -23,7 +33,7 @@ public class TreeSequence {
         return "TreeSequence{" +
                 "size=" + size +
                 ", curSeqNo=" + curSeqNo +
-                ", animationStates=" + animationStates +
+                ", animationStates=" + elementAnimationData +
                 '}';
     }
 

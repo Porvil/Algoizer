@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.iiitd.dsavisualizer.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         context = this;
-        final TableLayout tableLayout = findViewById(R.id.ll_anim);
+        final LinearLayout tableLayout = findViewById(R.id.ll_anim);
         ImageButton btn_code = findViewById(R.id.btn_code);
         final ScrollView sv_psuedocode = findViewById(R.id.sv_psuedocode);
 

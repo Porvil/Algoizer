@@ -1,6 +1,8 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
+import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeSequence;
 
 import java.util.ArrayList;
@@ -11,20 +13,104 @@ public class BST {
     public int lastElementIndex;
     TreeSequence treeSequence;
     int s;
-    ArrayList<TreeAnimationState> animationStates;
+    ArrayList<TreeElementAnimationData> elementAnimationData;
+    ArrayList<TreeAnimationState> treeAnimationStates;
+    BSTData[] data;
+
 
     public BST() {
         root = null;
         treeSequence = new TreeSequence();
         lastElementIndex = -1;
+        data = new BSTData[16];
+        for(int i=0;i<16;i++){
+            data[i] = new BSTData();
+        }
     }
 
     public ArrayList<TreeAnimationState> insert(int key){
         s = 0;
-        animationStates = new ArrayList<>();
+        treeAnimationStates = new ArrayList<>();
         root = _insert(root, key, 8, 4);
-        treeSequence = new TreeSequence(animationStates);
-        return animationStates;
+        treeSequence = new TreeSequence(treeAnimationStates);
+        return treeAnimationStates;
+    }
+
+    public void ins(int val){
+
+        int index = 8;
+        int level = 4;
+
+        while(level >= 0){
+            if(!data[index].occupied){
+                data[index].occupied = true;
+                data[index].data = val;
+                data[index].state = NodeState.ELEMENT_SHOWN;
+                level = -1;
+            }else{
+                if(val < data[index].data){
+                    index -= level;
+                    if(level == level/2)
+                        level = -1;
+                    else
+                        level /= 2;
+                }
+                else if(val > data[index].data){
+                    index += level;
+                    if(level == level/2)
+                        level = -1;
+                    else
+                        level /= 2;
+                }
+                else{
+                    // Same element
+                    level = -1;
+                }
+            }
+        }
+    }
+
+    public void del(int val){
+
+        int index = 8;
+        int level = 4;
+
+        while(level >= 0){
+            if(!data[index].occupied){
+                data[index].occupied = true;
+                data[index].data = val;
+                data[index].state = NodeState.ELEMENT_SHOWN;
+                level = -1;
+            }else{
+                if(val < data[index].data){
+                    index -= level;
+                    if(level == level/2)
+                        level = -1;
+                    else
+                        level /= 2;
+                }
+                else if(val > data[index].data){
+                    index += level;
+                    if(level == level/2)
+                        level = -1;
+                    else
+                        level /= 2;
+                }
+                else{
+                    // Same element
+                    level = -1;
+                }
+            }
+        }
+    }
+
+
+    public void print(){
+        System.out.println("       " + data[8] + "       ");
+        System.out.println("   " + data[4] + "       " + data[12] + "   ");
+        System.out.println(" " + data[2] + "   " + data[6] + "   " + data[10] + "   " + data[14] + " ");
+        System.out.println(data[1] + " " + data[3] + " " + data[5] + " " + data[7] + " " + data[9] + " " + data[11]
+        + " " + data[13] + " " + data[15]);
     }
 
     public void inorder(){
@@ -32,12 +118,12 @@ public class BST {
     }
 
     public ArrayList<TreeAnimationState> delete(int key){
-        animationStates = new ArrayList<>();
+        treeAnimationStates = new ArrayList<>();
         root = _delete(root, key, 8, 4);
-        treeSequence = new TreeSequence(animationStates);
+        treeSequence = new TreeSequence(treeAnimationStates);
 
 //        _inorder(this.root);
-        return animationStates;
+        return treeAnimationStates;
     }
 
     private void _inorder(BSTNode bstNode){
@@ -55,9 +141,9 @@ public class BST {
         if (bstNode == null){
             s = 1;
             lastElementIndex = index;
-            TreeAnimationState treeAnimationState = new TreeAnimationState(key, 1, lastElementIndex);
-            System.out.println("==++ "  + treeAnimationState);
-            animationStates.add(treeAnimationState);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            treeAnimationState.add(new TreeElementAnimationData(key, 1, lastElementIndex));
+            treeAnimationStates.add(treeAnimationState);
             return new BSTNode(key);
         }
 
@@ -65,19 +151,25 @@ public class BST {
             lastElementIndex = index;
             bstNode.count++;
             s = bstNode.count;
-            animationStates.add(new TreeAnimationState(bstNode.key, bstNode.count, lastElementIndex));
+            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, lastElementIndex));
+            treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
 
         if(level == 0){
             lastElementIndex = -1;
-            animationStates.clear();
-//            sequence.add()
-            animationStates.add(new TreeAnimationState(-1, -1, lastElementIndex));
+            treeAnimationStates.clear();
+            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            treeAnimationState.add(new TreeElementAnimationData(-1, -1, lastElementIndex));
+            treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
 
-        animationStates.add(new TreeAnimationState(bstNode.key, bstNode.count, index));
+        TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+        treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+        treeAnimationStates.add(treeAnimationState);
+
         if (key < bstNode.key) {
 
             bstNode.left = _insert(bstNode.left, key, index - level, level / 2);
@@ -108,15 +200,25 @@ public class BST {
 
         if (key < bstNode.key) {
             System.out.println("LESS KEY = " + bstNode.key);
+
+            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
             bstNode.left = _delete(bstNode.left, key, index - level, level / 2);
         }
         else if (key > bstNode.key) {
             System.out.println("More KEY = " + bstNode.key);
+            TreeAnimationState treeAnimationState = new TreeAnimationState(">");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
             bstNode.right = _delete(bstNode.right, key, index + level, level / 2);
         }
         else{
             if (bstNode.count > 1){
                 bstNode.count--;
+                TreeAnimationState treeAnimationState = new TreeAnimationState(">");
+                treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+                treeAnimationStates.add(treeAnimationState);
                 System.out.println("Count decreased = " + bstNode.key + " : " + bstNode.count);
                 return bstNode;
             }
@@ -125,35 +227,31 @@ public class BST {
 
             if (bstNode.left == null && bstNode.right == null){
                 System.out.println("Simple delete");
+                TreeAnimationState treeAnimationState = new TreeAnimationState("simple");
+                treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+                treeAnimationStates.add(treeAnimationState);
+                return null;
             }
             else if(bstNode.left == null && bstNode.right != null){
                 System.out.println("Right copy");
+                elementAnimationData.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
+                elementAnimationData.add(new TreeElementAnimationData(bstNode.right.key, bstNode.right.count, index+level, "Mov up recur"));
+                return bstNode.right;
             }
             else if(bstNode.left != null && bstNode.right == null){
                 System.out.println("Left copy");
+                return bstNode.left;
             }
             else if(bstNode.left != null && bstNode.right != null){
                 System.out.println("Right min element");
+                BSTNode temp = _minValueNode(bstNode.right);
+                System.out.println("Right suc :: " + temp.key);
+                bstNode.key = temp.key;
+                bstNode.count = temp.count;
+                temp.count = 1;
+                bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
             }
 
-            if (bstNode.left == null){
-                System.out.println("LEFT CHILD NULL = ");
-                BSTNode temp = bstNode.right;
-                return temp;
-            }
-            else if (bstNode.right == null){
-                System.out.println("RIGHT CHILD NULL = ");
-                BSTNode temp = bstNode.left;
-                return temp;
-            }
-
-            System.out.println("END CODE");
-            BSTNode temp = _minValueNode(bstNode.right);
-            System.out.println("Right suc :: " + temp.key);
-            bstNode.key = temp.key;
-            bstNode.count = temp.count;
-            temp.count = 1;
-            bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
         }
 
         return bstNode;
