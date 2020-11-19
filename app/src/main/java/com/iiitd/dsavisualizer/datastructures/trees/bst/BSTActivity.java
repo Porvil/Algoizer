@@ -379,8 +379,10 @@ public class BSTActivity extends AppCompatActivity {
                 ch.add(bst.insert(100));
                 ch.add(bst.insert(50));
                 ch.add(bst.insert(150));
-                ch.add(bst.insert(20));
+//                ch.add(bst.insert(20));
                 ch.add(bst.insert(70));
+                ch.add(bst.insert(60));
+                ch.add(bst.insert(80));
                 ch.add(bst.insert(120));
                 ch.add(bst.insert(200));
                 ch.add(bst.insert(220));

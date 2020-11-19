@@ -236,6 +236,21 @@ public class BST {
                 System.out.println("Right copy");
                 elementAnimationData.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
                 elementAnimationData.add(new TreeElementAnimationData(bstNode.right.key, bstNode.right.count, index+level, "Mov up recur"));
+
+                TreeAnimationState treeAnimationState = new TreeAnimationState("Move to top");
+                treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
+                //Recurse on child to move up 1 level
+
+                int parent = index;
+                BSTNode temp = bstNode.right;
+                while(temp != null){
+
+                }
+
+
+                treeAnimationStates.add(treeAnimationState);
+
+
                 return bstNode.right;
             }
             else if(bstNode.left != null && bstNode.right == null){
