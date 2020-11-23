@@ -117,4 +117,43 @@ public class TreeLayout {
         map.put(15, new Pair<>(6, 14));
     }
 
+    // 0 is redundant and -1 == no child
+    public static Pair<Integer, Integer>[] childs = new Pair[]{
+        new Pair(0,0),
+        new Pair(-1,-1),
+        new Pair(1,3),
+        new Pair(-1,-1),
+        new Pair(2,6),
+        new Pair(-1,-1),
+        new Pair(5,7),
+        new Pair(-1,-1),
+        new Pair(4,12),
+        new Pair(-1,-1),
+        new Pair(9,11),
+        new Pair(-1,-1),
+        new Pair(10,14),
+        new Pair(-1,-1),
+        new Pair(13,15),
+        new Pair(-1,-1)
+    };
+
+    public static int[] parents = new int[]{
+            0,
+            2,
+            4,
+            2,
+            8,
+            6,
+            4,
+            6,
+            -1,
+            10,
+            12,
+            10,
+            8,
+            14,
+            12,
+            14
+    };
+
 }

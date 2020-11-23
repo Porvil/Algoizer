@@ -15,4 +15,11 @@ public class TreeAnimationState {
         for(TreeElementAnimationData treeElementAnimationData : treeElementAnimationDatas)
             elementAnimationData.add(treeElementAnimationData);
     }
+
+    @Override
+    public String toString() {
+        return "TreeAnimationState{" +
+                "info='" + info + '\'' +
+                '}';
+    }
 }

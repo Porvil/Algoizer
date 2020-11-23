@@ -1,11 +1,16 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
+import android.util.Pair;
+
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeSequence;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BST {
 
@@ -234,8 +239,8 @@ public class BST {
             }
             else if(bstNode.left == null && bstNode.right != null){
                 System.out.println("Right copy");
-                elementAnimationData.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
-                elementAnimationData.add(new TreeElementAnimationData(bstNode.right.key, bstNode.right.count, index+level, "Mov up recur"));
+//                elementAnimationData.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
+//                elementAnimationData.add(new TreeElementAnimationData(bstNode.right.key, bstNode.right.count, index+level, "Mov up recur"));
 
                 TreeAnimationState treeAnimationState = new TreeAnimationState("Move to top");
                 treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
@@ -243,8 +248,30 @@ public class BST {
 
                 int parent = index;
                 BSTNode temp = bstNode.right;
-                while(temp != null){
+                Queue<BSTNode> queue = new LinkedList<>();
+                Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+                //         myIndex, parentIndex
 
+                System.out.println("in = " + (index+level));
+                queue.add(temp);
+                queue2.add(new Pair(index+level, index));
+
+                while(queue.size() > 0 ){
+                    BSTNode node = queue.remove();
+                    Pair<Integer, Integer> pair = queue2.remove();
+                    int currentIndex = pair.first;
+                    int parentIndex = pair.second;
+                    System.out.println(node.key + " | " + pair);
+
+                    if(node.left != null){
+                        queue.add(node.left);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                    }
+                    if(node.right != null){
+                        queue.add(node.right);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                    }
                 }
 
 

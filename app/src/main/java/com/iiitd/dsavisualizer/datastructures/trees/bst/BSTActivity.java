@@ -376,18 +376,36 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<ArrayList<TreeAnimationState>> ch = new ArrayList<>();
+
+
+//                ch.add(bst.insert(100));
+//                ch.add(bst.insert(50));
+//                ch.add(bst.insert(150));
+////                ch.add(bst.insert(20));
+//                ch.add(bst.insert(70));
+//                ch.add(bst.insert(60));
+//                ch.add(bst.insert(80));
+//                ch.add(bst.insert(120));
+//                ch.add(bst.insert(200));
+//                ch.add(bst.insert(220));
+//                ch.add(bst.insert(110));
+//                ch.add(bst.insert(130));
+
+
                 ch.add(bst.insert(100));
-                ch.add(bst.insert(50));
+//                ch.add(bst.insert(50));
                 ch.add(bst.insert(150));
 //                ch.add(bst.insert(20));
-                ch.add(bst.insert(70));
-                ch.add(bst.insert(60));
-                ch.add(bst.insert(80));
+//                ch.add(bst.insert(70));
+//                ch.add(bst.insert(60));
+//                ch.add(bst.insert(80));
                 ch.add(bst.insert(120));
                 ch.add(bst.insert(200));
                 ch.add(bst.insert(220));
                 ch.add(bst.insert(110));
                 ch.add(bst.insert(130));
+
+
                 for(ArrayList<TreeAnimationState> insert : ch){
                 for(TreeAnimationState treeAnimationState: insert) {
                     for(TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
@@ -717,6 +735,7 @@ public class BSTActivity extends AppCompatActivity {
 //                    tv_seqno.setText(curSeqNo + " / " + bst.treeSequence.animationStates.size());
                     if(curSeqNo < bst.treeSequence.size) {
                         TreeAnimationState treeAnimationState = bst.treeSequence.animationStates.get(curSeqNo);
+                        System.out.println(treeAnimationState);
                         for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                             System.out.println(treeElementAnimationData);
                             if (treeElementAnimationData.elementIndex != -1) {

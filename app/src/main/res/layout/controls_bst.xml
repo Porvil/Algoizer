@@ -111,7 +111,8 @@
                 android:ems="10"
                 android:hint="Enter number to delete"
                 android:imeOptions="actionDone"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="50" />
 
             <View
                 android:layout_width="2dp"
