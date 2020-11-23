@@ -263,6 +263,8 @@ public class BST {
                     int parentIndex = pair.second;
                     System.out.println(node.key + " | " + pair);
 
+//                    treeAnimationState.add(new TreeElementAnimationData(node.key, node.count, ));
+
                     if(node.left != null){
                         queue.add(node.left);
                         queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));

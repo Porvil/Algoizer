@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
 import java.util.ArrayList;
@@ -160,6 +161,48 @@ public class UtilUI {
 //        if(layout == R.layout.element_bst_arrow)
 //            visibility = View.INVISIBLE;
 
+        int in = 0;
+        if(row == 0)
+            in = 8;
+        else if(row == 2){
+            if(col == 1)
+                in = 4;
+            if(col == 3)
+                in = 12;
+        }
+        else if(row == 4){
+            if(col == 1)
+                in = 2;
+            if(col == 3)
+                in = 6;
+            if(col == 5)
+                in = 10;
+            if(col == 7)
+                in = 14;
+        }
+        else if(row == 6){
+            if(col == 0)
+                in = 1;
+            if(col == 2)
+                in = 3;
+            if(col == 4)
+                in = 5;
+            if(col == 6)
+                in = 7;
+            if(col == 8)
+                in = 9;
+            if(col == 10)
+                in = 11;
+            if(col == 12)
+                in = 13;
+            if(col == 14)
+                in = 15;
+        }
+
+        if(treeLayoutElement.type == NodeType.ELEMENT) {
+            TextView viewById = myView.findViewById(R.id.tv_index);
+            viewById.setText(in+"");
+        }
         myView.setVisibility(visibility);
 
         return myView;
