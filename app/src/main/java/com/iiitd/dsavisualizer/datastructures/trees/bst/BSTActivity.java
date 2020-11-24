@@ -379,32 +379,32 @@ public class BSTActivity extends AppCompatActivity {
                 ArrayList<ArrayList<TreeAnimationState>> ch = new ArrayList<>();
 
 
-//                ch.add(bst.insert(100));
-//                ch.add(bst.insert(50));
-//                ch.add(bst.insert(150));
-////                ch.add(bst.insert(20));
-//                ch.add(bst.insert(70));
-//                ch.add(bst.insert(60));
-//                ch.add(bst.insert(80));
-//                ch.add(bst.insert(120));
-//                ch.add(bst.insert(200));
-//                ch.add(bst.insert(220));
-//                ch.add(bst.insert(110));
-//                ch.add(bst.insert(130));
-
-
                 ch.add(bst.insert(100));
-//                ch.add(bst.insert(50));
+                ch.add(bst.insert(50));
                 ch.add(bst.insert(150));
-//                ch.add(bst.insert(20));
-//                ch.add(bst.insert(70));
-//                ch.add(bst.insert(60));
-//                ch.add(bst.insert(80));
+                ch.add(bst.insert(20));
+                ch.add(bst.insert(70));
+                ch.add(bst.insert(60));
+                ch.add(bst.insert(80));
                 ch.add(bst.insert(120));
                 ch.add(bst.insert(200));
                 ch.add(bst.insert(220));
                 ch.add(bst.insert(110));
                 ch.add(bst.insert(130));
+
+
+//                ch.add(bst.insert(100));
+////                ch.add(bst.insert(50));
+//                ch.add(bst.insert(150));
+////                ch.add(bst.insert(20));
+////                ch.add(bst.insert(70));
+////                ch.add(bst.insert(60));
+////                ch.add(bst.insert(80));
+//                ch.add(bst.insert(120));
+//                ch.add(bst.insert(200));
+//                ch.add(bst.insert(220));
+//                ch.add(bst.insert(110));
+//                ch.add(bst.insert(130));
 
 
                 for(ArrayList<TreeAnimationState> insert : ch){
@@ -834,6 +834,54 @@ public class BSTActivity extends AppCompatActivity {
 //                                    nextView.animate().setDuration(0).translationX(X).start();
 //                                    nextView.animate().setDuration(0).translationY(Y).start();
                                 }
+                                break;
+
+                            case "S":
+                                for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+
+                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+
+                                    value.setText(treeElementAnimationData.data+"");
+                                    count.setText(treeElementAnimationData.count+"");
+
+                                    ViewAnimator.animate(currentView).duration(500).bounce().start();
+                                }
+                                break;
+                            case "C":
+                                for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+
+                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+
+                                    value.setText(treeElementAnimationData.data+"");
+                                    count.setText(treeElementAnimationData.count+"");
+
+                                    ViewAnimator.animate(currentView).duration(500).flash().start();
+                                }
+                                break;
+                            case "1":
+                                for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    final TreeLayoutElement curElement = treeLayout.get(curPair.first).get(curPair.second);
+
+
+                                    ViewAnimator.animate(currentView).duration(500).flash().start().onStop(new AnimationListener.Stop() {
+                                        @Override
+                                        public void onStop() {
+                                            curElement.state = NodeState.ELEMENT_HIDDEN;
+                                            currentView.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
+                                }
+                                break;
+                            case "NF":
+                                Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
                                 break;
                         }
 
