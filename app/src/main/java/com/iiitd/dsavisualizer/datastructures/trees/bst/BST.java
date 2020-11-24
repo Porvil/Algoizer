@@ -126,8 +126,14 @@ public class BST {
         treeAnimationStates = new ArrayList<>();
         root = _delete(root, key, 8, 4);
         treeSequence = new TreeSequence(treeAnimationStates);
+        return treeAnimationStates;
+    }
 
-//        _inorder(this.root);
+    public ArrayList<TreeAnimationState> search(int key){
+        treeAnimationStates = new ArrayList<>();
+        _search(root, key, 8, 4);
+        treeSequence = new TreeSequence(treeAnimationStates);
+
         return treeAnimationStates;
     }
 
@@ -370,12 +376,45 @@ public class BST {
                 bstNode.key = temp.key;
                 bstNode.count = temp.count;
                 temp.count = 1;
-                bstNode.right = __delete(bstNode.right, temp.key, index + level, level / 2);
+                bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
             }
 
         }
 
         return bstNode;
+    }
+
+    private void  _search(BSTNode bstNode, int key, int index, int level){
+
+        if (bstNode == null) {
+            System.out.println("NULL Node, Not found");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+//            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            return;
+        }
+
+        if (key < bstNode.key) {
+            System.out.println("LESS KEY = " + bstNode.key);
+
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            _search(bstNode.left, key, index - level, level / 2);
+        }
+        else if (key > bstNode.key) {
+            System.out.println("More KEY = " + bstNode.key);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            _search(bstNode.right, key, index + level, level / 2);
+        }
+        else{
+            TreeAnimationState treeAnimationState = new TreeAnimationState("F");
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+        }
+
     }
 
     private BSTNode __delete(BSTNode bstNode, int key, int index, int level){
