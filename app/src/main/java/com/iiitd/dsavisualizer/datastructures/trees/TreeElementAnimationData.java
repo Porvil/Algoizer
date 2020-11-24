@@ -6,6 +6,7 @@ public class TreeElementAnimationData {
     public int data;
     public int count;
     public int elementIndex;
+    public int newElementIndex;
     public int row;
     public int col;
     public String info;
@@ -14,6 +15,18 @@ public class TreeElementAnimationData {
         this.data = data;
         this.count = count;
         this.elementIndex = elementIndex;
+        if(elementIndex != -1) {
+            Pair<Integer, Integer> pair = TreeLayout.map.get(elementIndex);
+            this.row = pair.first;
+            this.col = pair.second;
+        }
+    }
+
+    public TreeElementAnimationData(int data, int count, int elementIndex, int newElementIndex) {
+        this.data = data;
+        this.count = count;
+        this.elementIndex = elementIndex;
+        this.newElementIndex = newElementIndex;
         if(elementIndex != -1) {
             Pair<Integer, Integer> pair = TreeLayout.map.get(elementIndex);
             this.row = pair.first;
@@ -50,6 +63,7 @@ public class TreeElementAnimationData {
                 "data=" + data +
                 ", count=" + count +
                 ", elementIndex=" + elementIndex +
+                ", newElementIndex=" + newElementIndex +
                 ", row=" + row +
                 ", col=" + col +
                 ", info='" + info + '\'' +

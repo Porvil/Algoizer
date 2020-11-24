@@ -242,8 +242,10 @@ public class BST {
 //                elementAnimationData.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
 //                elementAnimationData.add(new TreeElementAnimationData(bstNode.right.key, bstNode.right.count, index+level, "Mov up recur"));
 
-                TreeAnimationState treeAnimationState = new TreeAnimationState("Move to top");
-                treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
+                TreeAnimationState step1 = new TreeAnimationState("D");
+                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step3 = new TreeAnimationState("MB");
+                step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
                 //Recurse on child to move up 1 level
 
                 int parent = index;
@@ -262,7 +264,8 @@ public class BST {
                     int currentIndex = pair.first;
                     int parentIndex = pair.second;
                     System.out.println(node.key + " | " + pair);
-
+                    step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                    step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
 //                    treeAnimationState.add(new TreeElementAnimationData(node.key, node.count, ));
 
                     if(node.left != null){
@@ -277,7 +280,9 @@ public class BST {
                 }
 
 
-                treeAnimationStates.add(treeAnimationState);
+                treeAnimationStates.add(step1);
+                treeAnimationStates.add(step2);
+                treeAnimationStates.add(step3);
 
 
                 return bstNode.right;
