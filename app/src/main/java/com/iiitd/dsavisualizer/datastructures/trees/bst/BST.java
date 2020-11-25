@@ -350,10 +350,11 @@ public class BST {
                 BSTNode current = bstNode.right;
                 System.out.println("index == " + index);
                 int curIndex = index+level;
+                int curLevel = level;
                 while (current.left != null) {
                     current = current.left;
-                    level /= 2;
-                    curIndex = curIndex - level;
+                    curLevel /= 2;
+                    curIndex = curIndex - curLevel;
                 }
 
 
@@ -373,6 +374,7 @@ public class BST {
                 treeAnimationStates.add(step2);
                 treeAnimationStates.add(step3);
 
+                System.out.println("IN = " + index + " | lev = " + level);
                 bstNode.key = temp.key;
                 bstNode.count = temp.count;
                 temp.count = 1;
