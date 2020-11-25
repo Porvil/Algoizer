@@ -379,6 +379,9 @@ public class BST {
                 bstNode.count = temp.count;
                 temp.count = 1;
                 bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
+
+//                treeAnimationStates.add(step2);
+//                treeAnimationStates.add(step3);
             }
 
         }

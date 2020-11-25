@@ -892,6 +892,7 @@ public class BSTActivity extends AppCompatActivity {
 
                             case "S":
                                 for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    System.out.println(treeElementAnimationData);
                                     Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                     final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
@@ -906,6 +907,7 @@ public class BSTActivity extends AppCompatActivity {
                                 break;
                             case "C":
                                 for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    System.out.println(treeElementAnimationData);
                                     Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                     final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
@@ -920,6 +922,7 @@ public class BSTActivity extends AppCompatActivity {
                                 break;
                             case "1":
                                 for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                    System.out.println(treeElementAnimationData);
                                     Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                     final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
                                     final TreeLayoutElement curElement = treeLayout.get(curPair.first).get(curPair.second);
