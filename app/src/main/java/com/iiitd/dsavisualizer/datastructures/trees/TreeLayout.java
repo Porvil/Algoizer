@@ -137,6 +137,7 @@ public class TreeLayout {
         new Pair(-1,-1)
     };
 
+    // 0 is redundant, -1 = no parent(root)
     public static int[] parents = new int[]{
             0,
             2,

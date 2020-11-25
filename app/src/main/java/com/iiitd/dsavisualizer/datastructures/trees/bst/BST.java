@@ -351,6 +351,7 @@ public class BST {
                 System.out.println("index == " + index);
                 int curIndex = index+level;
                 int curLevel = level;
+
                 while (current.left != null) {
                     current = current.left;
                     curLevel /= 2;
@@ -380,6 +381,7 @@ public class BST {
                 temp.count = 1;
                 bstNode.right = _delete(bstNode.right, temp.key, index + level, level / 2);
 
+//                treeAnimationStates.add(step1);
 //                treeAnimationStates.add(step2);
 //                treeAnimationStates.add(step3);
             }
