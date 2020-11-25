@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.runapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,26 +14,34 @@ import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 
 public class SortingActivity extends AppCompatActivity {
 
+    Button btn_mergesort;
+    Button btn_quicksort;
+
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sorting);
 
-        Button quick = findViewById(R.id.button2);
-        Button merge = findViewById(R.id.button3);
+        context = this;
 
-        quick.setOnClickListener(new View.OnClickListener() {
+        btn_mergesort = findViewById(R.id.btn_mergesort);
+        btn_quicksort = findViewById(R.id.btn_quicksort);
+
+        btn_mergesort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SortingActivity.this, QuickSortActivity.class));
+                startActivity(new Intent(context, MergeSortActivity.class));
             }
         });
 
-        merge.setOnClickListener(new View.OnClickListener() {
+        btn_quicksort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SortingActivity.this, MergeSortActivity.class));
+                startActivity(new Intent(context, QuickSortActivity.class));
             }
         });
+
+
     }
 }
