@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:gravity="center"
+        android:gravity="center|top"
         android:text="-"
         android:textStyle="bold" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/tv_elementcount"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom|right"
+        android:gravity="bottom|center"
         android:text="0" />
 
     <TextView
@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|left"
-        android:text="0" />
+        android:text="0"
+        android:visibility="invisible" />
 
 </FrameLayout>

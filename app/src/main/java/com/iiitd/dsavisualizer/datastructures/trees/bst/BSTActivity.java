@@ -383,31 +383,10 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delete();
-            }
-        });
-
-        Button button = v_menu.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View top = tableRows.get(2).getChildAt(1);
-                View down = tableRows.get(4).getChildAt(3);
-                float x = top.getX();
-                float y = tableRows.get(2).getY();
-                float xo = down.getX();
-                float yo = tableRows.get(4).getY();
-
-                float X = xo - x;
-                float Y = yo - y;
-
-                ViewAnimator.animate(top).duration(1000).zoomIn().start();
-                ViewAnimator.animate(down).duration(1000).translationX(-X).start();
-                ViewAnimator.animate(down).duration(1000).translationY(-Y).start();
             }
         });
 
@@ -504,32 +483,6 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-        Button button3 = v_menu.findViewById(R.id.button5);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bst.print();
-            }
-        });
-
-        Button button4 = v_menu.findViewById(R.id.button6);
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bst.ins(random.nextInt(100));
-            }
-        });
-
-        Button button5 = v_menu.findViewById(R.id.button7);
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                reset();
-
-            }
-        });
-
     }
 
     private void search() {
@@ -559,7 +512,7 @@ public class BSTActivity extends AppCompatActivity {
 
                     if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
                         System.out.println("TASK =  " + bst.treeSequence.curSeqNo);
-                        task3();
+                        bstSearchTask();
                     } else {
 //                            isAutoPlay = false;
 //                            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
@@ -619,7 +572,7 @@ public class BSTActivity extends AppCompatActivity {
 
                     if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
                         System.out.println("TASK =  " + bst.treeSequence.curSeqNo);
-                        task2();
+                        bstDeleteTask();
                     } else {
 //                            isAutoPlay = false;
 //                            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
@@ -677,7 +630,7 @@ public class BSTActivity extends AppCompatActivity {
 
                     if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
                         System.out.println("TASK =  " + bst.treeSequence.curSeqNo);
-                        task();
+                        bstInsertTask();
                     } else {
 //                            isAutoPlay = false;
 //                            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
@@ -704,7 +657,7 @@ public class BSTActivity extends AppCompatActivity {
         }
     }
 
-    private void task() {
+    private void bstInsertTask() {
         if (bst != null) {
 
             final int curSeqNo = bst.treeSequence.curSeqNo;
@@ -713,7 +666,6 @@ public class BSTActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-//                    tv_seqno.setText(curSeqNo + " / " + bst.treeSequence.animationStates.size());
                     if(curSeqNo < bst.treeSequence.size) {
                         TreeAnimationState treeAnimationState = bst.treeSequence.animationStates.get(curSeqNo);
                         for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
@@ -768,7 +720,7 @@ public class BSTActivity extends AppCompatActivity {
         }
     }
 
-    private void task2() {
+    private void bstDeleteTask() {
         if (bst != null) {
 
             final int curSeqNo = bst.treeSequence.curSeqNo;
@@ -957,28 +909,6 @@ public class BSTActivity extends AppCompatActivity {
                                 break;
                         }
 
-//                        for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
-//                            System.out.println(treeElementAnimationData);
-//                            if (treeElementAnimationData.elementIndex != -1) {
-//                                int first = treeElementAnimationData.row;
-//                                int second = treeElementAnimationData.col;
-//                                String info = treeElementAnimationData.info;
-//                                final View view = tableRows.get(first).getChildAt(second);
-//                                TextView value = view.findViewById(R.id.tv_elementvalue);
-//                                TextView count = view.findViewById(R.id.tv_elementcount);
-//
-//                                int data = treeElementAnimationData.data;
-//                                int count1 = treeElementAnimationData.count;
-//                                TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
-//
-//                                value.setText(String.valueOf(data));
-//                                count.setText(String.valueOf(count1));
-//                                ViewAnimator.animate(view).duration(1000).bounce().start();
-//                            } else {
-//                                Toast.makeText(context, "No space in tree", Toast.LENGTH_SHORT).show();
-//                                System.out.println("No space in tree");
-//                            }
-//                        }
                     }
                 }
             });
@@ -987,7 +917,7 @@ public class BSTActivity extends AppCompatActivity {
         }
     }
 
-    private void task3() {
+    private void bstSearchTask() {
         if (bst != null) {
 
             final int curSeqNo = bst.treeSequence.curSeqNo;
@@ -996,7 +926,6 @@ public class BSTActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-//                    tv_seqno.setText(curSeqNo + " / " + bst.treeSequence.animationStates.size());
                     if(curSeqNo < bst.treeSequence.size) {
                         TreeAnimationState treeAnimationState = bst.treeSequence.animationStates.get(curSeqNo);
                         System.out.println("----------------------------------");
@@ -1010,8 +939,8 @@ public class BSTActivity extends AppCompatActivity {
                                     TextView value = currentView.findViewById(R.id.tv_elementvalue);
                                     TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(treeElementAnimationData.data+"");
-                                    count.setText(treeElementAnimationData.count+"");
+                                    value.setText(String.valueOf(treeElementAnimationData.data));
+                                    count.setText(String.valueOf(treeElementAnimationData.count));
 
                                     ViewAnimator.animate(currentView).duration(500).bounce().start();
                                 }
@@ -1027,36 +956,14 @@ public class BSTActivity extends AppCompatActivity {
                                     TextView value = currentView.findViewById(R.id.tv_elementvalue);
                                     TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(treeElementAnimationData.data+"");
-                                    count.setText(treeElementAnimationData.count+"");
+                                    value.setText(String.valueOf(treeElementAnimationData.data));
+                                    count.setText(String.valueOf(treeElementAnimationData.count));
 
                                     ViewAnimator.animate(currentView).duration(500).wobble().start();
                                 }
                                 break;
                         }
 
-//                        for (TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
-//                            System.out.println(treeElementAnimationData);
-//                            if (treeElementAnimationData.elementIndex != -1) {
-//                                int first = treeElementAnimationData.row;
-//                                int second = treeElementAnimationData.col;
-//                                String info = treeElementAnimationData.info;
-//                                final View view = tableRows.get(first).getChildAt(second);
-//                                TextView value = view.findViewById(R.id.tv_elementvalue);
-//                                TextView count = view.findViewById(R.id.tv_elementcount);
-//
-//                                int data = treeElementAnimationData.data;
-//                                int count1 = treeElementAnimationData.count;
-//                                TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
-//
-//                                value.setText(String.valueOf(data));
-//                                count.setText(String.valueOf(count1));
-//                                ViewAnimator.animate(view).duration(1000).bounce().start();
-//                            } else {
-//                                Toast.makeText(context, "No space in tree", Toast.LENGTH_SHORT).show();
-//                                System.out.println("No space in tree");
-//                            }
-//                        }
                     }
                 }
             });
