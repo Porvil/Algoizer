@@ -90,7 +90,7 @@ public class BSTActivity extends AppCompatActivity {
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
     boolean isPseudocode = true;
-    int autoAnimSpeed = 500;
+    int autoAnimSpeed = 2000;
 //    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     final int LAYOUT = R.layout.activity_base;
     final int CONTROL = R.layout.controls_bst;
@@ -543,7 +543,7 @@ public class BSTActivity extends AppCompatActivity {
                         timer = null;
                     }
                 }
-            }, autoAnimSpeed, 2000);
+            }, autoAnimSpeed, autoAnimSpeed);
 
 
             System.out.println("---------------------------------------");
@@ -602,7 +602,7 @@ public class BSTActivity extends AppCompatActivity {
                         timer = null;
                     }
                 }
-            }, autoAnimSpeed, 2000);
+            }, autoAnimSpeed, autoAnimSpeed);
 
 
             System.out.println("---------------------------------------");

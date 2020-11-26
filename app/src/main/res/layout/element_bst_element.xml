@@ -12,6 +12,8 @@
         android:layout_gravity="bottom"
         android:gravity="center|top"
         android:text="-"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
@@ -19,7 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|center"
-        android:text="0" />
+        android:text="0"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_index"
