@@ -71,6 +71,7 @@ public class BSTActivity extends AppCompatActivity {
     Button btn_insert;
     Button btn_search;
     Button btn_delete;
+    Button btn_inorder;
     EditText et_insert;
     EditText et_search;
     EditText et_delete;
@@ -128,6 +129,7 @@ public class BSTActivity extends AppCompatActivity {
         btn_insert = v_menu.findViewById(R.id.btn_insert);
         btn_search = v_menu.findViewById(R.id.btn_search);
         btn_delete = v_menu.findViewById(R.id.btn_delete);
+        btn_inorder = v_menu.findViewById(R.id.btn_inorder);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
         et_delete = v_menu.findViewById(R.id.et_delete);
@@ -390,6 +392,13 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
+        btn_inorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inorder();
+            }
+        });
+
         Button button2 = v_menu.findViewById(R.id.button4);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,6 +494,10 @@ public class BSTActivity extends AppCompatActivity {
 
     }
 
+    private void inorder() {
+        bst.inorder();
+    }
+
     private void search() {
         String s = et_search.getText().toString();
         int data = Integer.parseInt(s);
@@ -503,7 +516,6 @@ public class BSTActivity extends AppCompatActivity {
 
             System.out.println("Data ----------> " + data);
             ArrayList<TreeAnimationState> animationStates = bst.search(data);
-            System.out.println("size " + bst.treeSequence.elementAnimationData.size());
 
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -563,7 +575,6 @@ public class BSTActivity extends AppCompatActivity {
 
             System.out.println("Data ----------> " + data);
             ArrayList<TreeAnimationState> animationStates = bst.delete(data);
-            System.out.println("size " + bst.treeSequence.elementAnimationData.size());
 
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -621,7 +632,6 @@ public class BSTActivity extends AppCompatActivity {
 
             System.out.println("Data ----------> " + data);
             ArrayList<TreeAnimationState> animationStates = bst.insert(data);
-            System.out.println("size " + bst.treeSequence.elementAnimationData.size());
 
             timer = new Timer();
             timer.schedule(new TimerTask() {

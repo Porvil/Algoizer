@@ -2,7 +2,6 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.util.Pair;
 
-import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
@@ -17,15 +16,12 @@ public class BST {
     private BSTNode root;
     private int baseIndex = 8;
     private int baseLevel = 4;
-    public int lastElementIndex;
-    TreeSequence treeSequence;
-    ArrayList<TreeAnimationState> treeAnimationStates;
-
+    public TreeSequence treeSequence;
+    private ArrayList<TreeAnimationState> treeAnimationStates;
 
     public BST() {
         root = null;
         treeSequence = new TreeSequence();
-        lastElementIndex = -1;
     }
 
     public ArrayList<TreeAnimationState> insert(int key){
@@ -67,27 +63,24 @@ public class BST {
 //        System.out.println("index = "+index+"   level = ="+ level);
 
         if (bstNode == null){
-            lastElementIndex = index;
             TreeAnimationState treeAnimationState = new TreeAnimationState("<");
-            treeAnimationState.add(new TreeElementAnimationData(key, 1, lastElementIndex));
+            treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
             treeAnimationStates.add(treeAnimationState);
             return new BSTNode(key);
         }
 
         if (key == bstNode.key){
-            lastElementIndex = index;
             bstNode.count++;
             TreeAnimationState treeAnimationState = new TreeAnimationState("<");
-            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, lastElementIndex));
+            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
 
         if(level == 0){
-            lastElementIndex = -1;
             treeAnimationStates.clear();
             TreeAnimationState treeAnimationState = new TreeAnimationState("NS");
-            treeAnimationState.add(new TreeElementAnimationData(-1, -1, lastElementIndex));
+            treeAnimationState.add(new TreeElementAnimationData(-1, -1, -1));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
@@ -120,7 +113,6 @@ public class BST {
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
             TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
-//            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
@@ -165,8 +157,7 @@ public class BST {
                 TreeAnimationState step1 = new TreeAnimationState("D");
                 TreeAnimationState step2 = new TreeAnimationState("CM");
                 TreeAnimationState step3 = new TreeAnimationState("MB");
-                step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
-                //Recurse on child to move up 1 level
+                step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
                 int parent = index;
                 BSTNode temp = bstNode.right;
@@ -186,7 +177,6 @@ public class BST {
                     System.out.println(node.key + " | " + pair);
                     step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
                     step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
-//                    treeAnimationState.add(new TreeElementAnimationData(node.key, node.count, ));
 
                     if(node.left != null){
                         queue.add(node.left);
@@ -213,8 +203,7 @@ public class BST {
                 TreeAnimationState step1 = new TreeAnimationState("D");
                 TreeAnimationState step2 = new TreeAnimationState("CM");
                 TreeAnimationState step3 = new TreeAnimationState("MB");
-                step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index, "DEL"));
-                //Recurse on child to move up 1 level
+                step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
                 int parent = index;
                 BSTNode temp = bstNode.left;
@@ -234,7 +223,6 @@ public class BST {
                     System.out.println(node.key + " | " + pair);
                     step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
                     step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
-//                    treeAnimationState.add(new TreeElementAnimationData(node.key, node.count, ));
 
                     if(node.left != null){
                         queue.add(node.left);
@@ -307,7 +295,6 @@ public class BST {
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
             TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
-//            treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return;
         }

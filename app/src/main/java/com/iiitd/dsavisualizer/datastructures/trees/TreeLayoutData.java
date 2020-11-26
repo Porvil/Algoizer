@@ -11,7 +11,6 @@ import java.util.List;
 public class TreeLayoutData {
 
     Context context;
-
     ArrayList<List<TreeLayoutElement>> treeLayout;
     ArrayList<TableRow> tableRows;
 
