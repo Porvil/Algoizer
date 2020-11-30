@@ -141,6 +141,24 @@
             android:textColor="@color/mainColor" />
 
         <Button
+            android:id="@+id/btn_preorder"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:text="Preorder"
+            android:textColor="@color/mainColor" />
+
+        <Button
+            android:id="@+id/btn_postorder"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:text="Postorder"
+            android:textColor="@color/mainColor" />
+
+        <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
