@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -28,7 +27,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
@@ -42,7 +40,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class BSTActivity extends AppCompatActivity {
 
@@ -82,10 +79,6 @@ public class BSTActivity extends AppCompatActivity {
 
     Random random = new Random();
     Timer timer = null;
-//    Timer timer = new Timer();
-    boolean isAutoPlay = false;
-    boolean isRandomArray = true;
-    boolean isPseudocode = true;
     int autoAnimSpeed = 600;
 //    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     final int LAYOUT = R.layout.activity_tree;
@@ -140,24 +133,8 @@ public class BSTActivity extends AppCompatActivity {
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-//               if (bst != null && isAutoPlay) {
-//                    timer.cancel();
-//                    timer = new Timer();
-//                    timer.schedule(new TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            if (bst.sequence.curSeqNo < bst.sequence.size)
-//                                onForwardClick();
-//                            else {
-//                                isAutoPlay = false;
-//                                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                                timer.cancel();
-//                            }
-//                        }
-//                    }, 0, autoAnimSpeed);
-//               }
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+
         });
 
         // Info Button
@@ -176,10 +153,12 @@ public class BSTActivity extends AppCompatActivity {
 
                 String comparisons = "-";
                 if(bst != null) {
-                    isAutoPlay = false;
-                    timer.cancel();
+                    if(timer != null){
+                        timer.cancel();
+                        timer = null;
+                    }
+
                     comparisons = String.valueOf(1);
-//                    comparisons = String.valueOf(bst.comparisons);
                 }
 
                 tv_name.setText(BSTStats.name);
@@ -208,8 +187,6 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
-                    isAutoPlay = false;
-//                    timer.cancel();
                     dl_main.openDrawer(Gravity.RIGHT);
                 }
             }
@@ -220,7 +197,6 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
                 if(slideOffset <= 0.40){
-                    isAutoPlay = false;
 //                    timer.cancel();
                 }
             }
@@ -238,7 +214,6 @@ public class BSTActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAutoPlay = false;
                 if(timer != null) {
                     timer.cancel();
                     timer = null;
@@ -564,7 +539,7 @@ public class BSTActivity extends AppCompatActivity {
         if(timer == null) {
 
             System.out.println("Data ----------> " + data);
-            ArrayList<TreeAnimationState> animationStates = bst.search(data);
+            bst.search(data);
 
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -623,7 +598,7 @@ public class BSTActivity extends AppCompatActivity {
         if(timer == null) {
 
             System.out.println("Data ----------> " + data);
-            ArrayList<TreeAnimationState> animationStates = bst.delete(data);
+            bst.delete(data);
 
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -678,7 +653,7 @@ public class BSTActivity extends AppCompatActivity {
         if(timer == null) {
 
             System.out.println("Data ----------> " + data);
-            ArrayList<TreeAnimationState> animationStates = bst.insert(data);
+            bst.insert(data);
 
             timer = new Timer();
             timer.schedule(new TimerTask() {
