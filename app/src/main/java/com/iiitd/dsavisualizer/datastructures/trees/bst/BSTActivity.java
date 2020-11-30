@@ -68,6 +68,7 @@ public class BSTActivity extends AppCompatActivity {
     LinearLayout ll_psuedocode;
     ConstraintLayout cl_psuedocode;
 
+    ImageButton btn_insertrandom;
     Button btn_insert;
     Button btn_search;
     Button btn_delete;
@@ -84,7 +85,6 @@ public class BSTActivity extends AppCompatActivity {
     ArrayList<List<TreeLayoutElement>> treeLayout = TreeLayout.treeLayout;
     BST bst;
     TreeLayoutData treeLayoutData;
-    TextView[] textViews;
 
     Random random = new Random();
     Timer timer = null;
@@ -94,7 +94,7 @@ public class BSTActivity extends AppCompatActivity {
     boolean isPseudocode = true;
     int autoAnimSpeed = 600;
 //    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    final int LAYOUT = R.layout.activity_base;
+    final int LAYOUT = R.layout.activity_tree;
     final int CONTROL = R.layout.controls_bst;
 
     @Override
@@ -129,6 +129,7 @@ public class BSTActivity extends AppCompatActivity {
         cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_insert = v_menu.findViewById(R.id.btn_insert);
+        btn_insertrandom = v_menu.findViewById(R.id.btn_insertrandom);
         btn_search = v_menu.findViewById(R.id.btn_search);
         btn_delete = v_menu.findViewById(R.id.btn_delete);
         btn_inorder = v_menu.findViewById(R.id.btn_inorder);
@@ -373,6 +374,14 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
+
+        btn_insertrandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int data = random.nextInt(100);
+                et_insert.setText(String.valueOf(data));
+            }
+        });
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -735,8 +744,6 @@ public class BSTActivity extends AppCompatActivity {
     }
 
     private void insert() {
-
-        System.out.println("DAMN//////////////////////////////////////////////////");
 
         String s = et_insert.getText().toString();
         int data = random.nextInt(100);

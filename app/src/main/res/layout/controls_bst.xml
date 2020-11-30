@@ -1,176 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fadeScrollbars="false"
-    android:scrollbarSize="5dp"
-    android:scrollbarStyle="outsideInset"
-    android:verticalScrollbarPosition="left">
+    android:background="?android:colorBackground">
 
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="?android:colorBackground"
-        android:orientation="vertical"
-        android:showDividers="middle">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:text="Binary Search Tree"
+        android:textColor="@color/mainColor"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:text="Binary Search Tree"
-            android:textColor="@color/mainColor"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+    <View
+        android:id="@+id/horizontalDiv7"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <View
-            android:id="@+id/horizontalDiv7"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="?android:attr/listDivider" />
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="5dp"
+        android:scrollbarStyle="outsideInset"
+        android:verticalScrollbarPosition="left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_insert"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ems="10"
-                android:hint="Enter number to insert"
-                android:imeOptions="actionDone"
-                android:inputType="number" />
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="?android:attr/listDivider" />
-
-            <Button
-                android:id="@+id/btn_insert"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:text="Insert"
-                android:textColor="@color/mainColor" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="?android:colorBackground"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ems="10"
-                android:hint="Enter number to search"
-                android:imeOptions="actionDone"
-                android:inputType="number" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="?android:attr/listDivider" />
+                <EditText
+                    android:id="@+id/et_insert"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Enter number"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+
+                <ImageButton
+                    android:id="@+id/btn_insertrandom"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:selectableItemBackground"
+                    android:src="@drawable/ic_random_icon" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/btn_insert"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Insert"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Enter number"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Search"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Enter number"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Delete"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/btn_search"
-                android:layout_width="0dp"
+                android:id="@+id/btn_inorder"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="?android:selectableItemBackground"
-                android:text="Search"
+                android:text="Inorder"
                 android:textColor="@color/mainColor" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_delete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ems="10"
-                android:hint="Enter number to delete"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:text="50" />
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="?android:attr/listDivider" />
-
             <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="0dp"
+                android:id="@+id/btn_preorder"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="?android:selectableItemBackground"
-                android:text="Delete"
+                android:text="Preorder"
                 android:textColor="@color/mainColor" />
+
+            <Button
+                android:id="@+id/btn_postorder"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackground"
+                android:text="Postorder"
+                android:textColor="@color/mainColor" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Debug Tree" />
+
+            <View
+                android:id="@+id/horizontalDiv"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_inorder"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackground"
-            android:text="Inorder"
-            android:textColor="@color/mainColor" />
+    </ScrollView>
 
-        <Button
-            android:id="@+id/btn_preorder"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackground"
-            android:text="Preorder"
-            android:textColor="@color/mainColor" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btn_postorder"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackground"
-            android:text="Postorder"
-            android:textColor="@color/mainColor" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Debug Tree" />
-
-        <View
-            android:id="@+id/horizontalDiv"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="?android:attr/listDivider" />
-
-    </LinearLayout>
-
-</ScrollView>
 
