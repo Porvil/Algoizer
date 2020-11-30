@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Gravity;
@@ -54,20 +55,13 @@ public class BSTActivity extends AppCompatActivity {
     ViewStub vs_menu;
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
-    ImageButton btn_play;
     ImageButton btn_back;
     ImageButton btn_menu;
-    ImageButton btn_code;
     ImageButton btn_info;
-    ImageButton btn_backward;
-    ImageButton btn_forward;
     SeekBar sb_animspeed;
-    TextView tv_seqno;
     TextView tv_info;
-    ScrollView sv_psuedocode;
-    LinearLayout ll_psuedocode;
-    ConstraintLayout cl_psuedocode;
 
+    ImageButton btn_closemenu;
     ImageButton btn_insertrandom;
     Button btn_insert;
     Button btn_search;
@@ -114,20 +108,13 @@ public class BSTActivity extends AppCompatActivity {
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
-        btn_play = v_main.findViewById(R.id.btn_play);
         btn_menu = v_main.findViewById(R.id.btn_menu);
-        btn_code = v_main.findViewById(R.id.btn_code);
         btn_info = v_main.findViewById(R.id.btn_info);
         btn_back = v_main.findViewById(R.id.btn_back);
-        btn_backward = v_main.findViewById(R.id.btn_backward);
-        btn_forward = v_main.findViewById(R.id.btn_forward);
-        tv_seqno = v_main.findViewById(R.id.tv_seqno);
         tv_info = v_main.findViewById(R.id.tv_info);
-        sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
-        ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
-        cl_psuedocode = v_main.findViewById(R.id.cl_psuedocode);
         cl_info = v_main.findViewById(R.id.cl_info);
 
+        btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
         btn_insert = v_menu.findViewById(R.id.btn_insert);
         btn_insertrandom = v_menu.findViewById(R.id.btn_insertrandom);
         btn_search = v_menu.findViewById(R.id.btn_search);
@@ -139,14 +126,7 @@ public class BSTActivity extends AppCompatActivity {
         et_search = v_menu.findViewById(R.id.et_search);
         et_delete = v_menu.findViewById(R.id.et_delete);
 
-        addPseudocode();
         initViews();
-
-        btn_play.setVisibility(View.GONE);
-        btn_forward.setVisibility(View.GONE);
-        btn_backward.setVisibility(View.GONE);
-        tv_seqno.setVisibility(View.GONE);
-
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -180,59 +160,6 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-        // Auto Animation Play/Pause Button
-        btn_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if(bst != null){
-//                    if(isAutoPlay){
-//                        isAutoPlay = false;
-//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                        timer.cancel();
-//                    }
-//                    else{
-//                        isAutoPlay = true;
-//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PAUSE_BUTTON));
-//                        timer = new Timer();
-//                        timer.schedule(new TimerTask() {
-//                            @Override
-//                            public void run() {
-//                                if (bst.sequence.curSeqNo < bst.sequence.size)
-//                                    onForwardClick();
-//                                else {
-//                                    isAutoPlay = false;
-//                                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                                    timer.cancel();
-//                                }
-//                            }
-//                        }, 0, autoAnimSpeed);
-//                    }
-//                }
-            }
-        });
-
-        // One Animation Step-Back
-        btn_backward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
-                onBackwardClick();
-            }
-        });
-
-        // One Animation Step-Forward
-        btn_forward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
-                onForwardClick();
-            }
-        });
-
         // Info Button
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,7 +177,6 @@ public class BSTActivity extends AppCompatActivity {
                 String comparisons = "-";
                 if(bst != null) {
                     isAutoPlay = false;
-                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
                     timer.cancel();
                     comparisons = String.valueOf(1);
 //                    comparisons = String.valueOf(bst.comparisons);
@@ -283,7 +209,6 @@ public class BSTActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
                     isAutoPlay = false;
-                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
 //                    timer.cancel();
                     dl_main.openDrawer(Gravity.RIGHT);
                 }
@@ -296,7 +221,6 @@ public class BSTActivity extends AppCompatActivity {
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
                 if(slideOffset <= 0.40){
                     isAutoPlay = false;
-                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
 //                    timer.cancel();
                 }
             }
@@ -315,8 +239,10 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
+                if(timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
 
                 View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
 
@@ -330,9 +256,12 @@ public class BSTActivity extends AppCompatActivity {
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        btn_menu.setEnabled(true);
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         dialog.dismiss();
                     }
                 });
+
                 btn_yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -340,40 +269,26 @@ public class BSTActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        System.out.println("Dismmised");
+                        btn_menu.setEnabled(true);
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    }
+                });
+
             }
+
         });
 
-        btn_code.setOnClickListener(new View.OnClickListener() {
+        btn_closemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPseudocode) {
-
-                    ViewAnimator.animate(cl_psuedocode)
-                            .duration(autoAnimSpeed)
-                            .translationX(cl_psuedocode.getWidth())
-                            .start()
-                            .onStop(new AnimationListener.Stop() {
-                                @Override
-                                public void onStop() {
-                                    cl_psuedocode.setVisibility(View.GONE);
-                                }
-                            });
-
-                }
-                else {
-
-                    cl_psuedocode.setVisibility(View.VISIBLE);
-                    ViewAnimator.animate(cl_psuedocode)
-                            .duration(autoAnimSpeed)
-                            .translationX(0)
-                            .start();
-
-                }
-                isPseudocode = !isPseudocode;
-
+                dl_main.closeDrawer(Gravity.RIGHT);
             }
         });
-
 
         btn_insertrandom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1263,8 +1178,6 @@ public class BSTActivity extends AppCompatActivity {
                 int col = 0;
                 for(List<TreeLayoutElement> treeLayout : treeLayout){
                     TableRow tableRow = new TableRow(context);
-//                    int color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-//                    tableRow.setBackgroundColor(color);
                     col = 0;
                     for(TreeLayoutElement layoutElement : treeLayout){
                         tableRow.addView(UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col));
@@ -1281,93 +1194,6 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    private void addPseudocode(){
-//        int sizeOfPseudocode = QuickSortInfo.psuedocode.length;
-//        textViews = new TextView[sizeOfPseudocode];
-//        for(int i=0;i<sizeOfPseudocode;i++){
-//            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            TextView textView = new TextView(this);
-//            textView.setLayoutParams(lparams);
-//            textView.setText(BSTInfo.psuedocode[i]);
-//            textView.setPadding(5, 0,0,0);
-//            textViews[i] = textView;
-//            ll_psuedocode.addView(textView);
-//        }
-//
-//        for(int i : BSTInfo.boldIndexes){
-//            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
-//        }
-    }
-
-    private void onForwardClick(){
-//        if (bst != null) {
-//            bst.forward();
-//            final int curSeqNo = bst.sequence.curSeqNo;
-//
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_seqno.setText(curSeqNo + " / " + bst.sequence.animationStates.size());
-//                    if(curSeqNo < bst.sequence.size) {
-//                        String state = bst.sequence.animationStates.get(curSeqNo).state;
-//                        if(BSTInfo.map.containsKey(state)){
-//                            Integer[] integers = BSTInfo.map.get(state);
-//                            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
-//                        }
-//                        UtilUI.setText(tv_info, bst.sequence.animationStates.get(curSeqNo).info);
-//                        UtilUI.highlightViews(context, bst.sequence.views,
-//                                bst.sequence.animationStates.get(curSeqNo).highlightIndexes);
-//                    }
-//                    else{
-//                        UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
-//                        UtilUI.highlightViews(context, bst.sequence.views,null);
-//                        UtilUI.setText(tv_info, "Array is sorted");
-//                    }
-//                }
-//            });
-//        }
-
-//        Random random = new Random();
-//        int u = random.nextInt();
-//        OperationReturn lastElementIndex = bst.insert(u);
-//        System.out.println("Ele =========================== " + u);
-//        System.out.println(lastElementIndex);
-//        if(lastElementIndex.index != -1){
-//            Pair<Integer, Integer> pair = TreeLayout.map.get(lastElementIndex.index);
-//            TextView textView = tableRows.get(pair.first).getChildAt(pair.second).findViewById(R.id.tv_elementvalue);
-//            textView.setText(String.valueOf(u));
-//            System.out.println(pair.first + ", " + pair.second);
-////                    tableRows.get(pair.first).getChildAt(pair.second).setVisibility(treeLayout.get(2).get(3).getVisibility());
-//        }
-//        else {
-//            System.out.println("-_-");
-//        }
-
-    }
-
-    private void onBackwardClick(){
-//        if (bst != null) {
-//            bst.backward();
-//            final int curSeqNo = bst.sequence.curSeqNo;
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_seqno.setText(curSeqNo + " / " + bst.sequence.animationStates.size());
-//                    UtilUI.setText(tv_info, bst.sequence.animationStates.get(curSeqNo).info);
-//                    String state = bst.sequence.animationStates.get(curSeqNo).state;
-//                    if (BSTInfo.map.containsKey(state)) {
-//                        Integer[] integers = BSTInfo.map.get(state);
-//                        UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
-//                    }
-//                    UtilUI.highlightViews(context, bst.sequence.views,
-//                            bst.sequence.animationStates.get(curSeqNo).highlightIndexes);
-//                }
-//            });
-//        }
     }
 
     private void reset(){

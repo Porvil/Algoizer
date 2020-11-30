@@ -59,6 +59,7 @@ public class MergeSortActivity extends AppCompatActivity {
 
     SeekBar sb_arraysize;
     TextView tv_arraysize;
+    ImageButton btn_closemenu;
     Button btn_generate;
     Button btn_clear;
     Switch sw_randomarray;
@@ -105,6 +106,7 @@ public class MergeSortActivity extends AppCompatActivity {
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         cl_info = v_main.findViewById(R.id.cl_info);
 
+        btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
         sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
         tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
         btn_generate = v_menu.findViewById(R.id.btn_generate);
@@ -370,6 +372,14 @@ public class MergeSortActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        // Close Menu Control
+        btn_closemenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dl_main.closeDrawer(Gravity.RIGHT);
+            }
         });
 
         // Generates Random Numbers

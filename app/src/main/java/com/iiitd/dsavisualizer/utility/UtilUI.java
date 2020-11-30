@@ -19,6 +19,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class UtilUI {
 
@@ -28,6 +29,11 @@ public class UtilUI {
 
     public static void setText(TextView textView, String data){
         textView.setText(data);
+    }
+
+    public int getRandomColor(){
+        Random random = new Random();
+        return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 
     public static void changeTextViewsColors(Context context, ScrollView scrollView, TextView[] textViews, Integer[] indexes){
