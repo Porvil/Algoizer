@@ -19,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
@@ -66,6 +66,10 @@ public class BSTActivity extends AppCompatActivity {
     Button btn_inorder;
     Button btn_preorder;
     Button btn_postorder;
+    Button btn_cleartree;
+    Button btn_tree1;
+    Button btn_tree2;
+    Button btn_tree3;
     EditText et_insert;
     EditText et_search;
     EditText et_delete;
@@ -79,9 +83,8 @@ public class BSTActivity extends AppCompatActivity {
 
     Random random = new Random();
     Timer timer = null;
-    int autoAnimSpeed = 600;
-    int animDuration = 300;
-//    int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
+    int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
+    int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT = R.layout.activity_tree;
     final int CONTROL = R.layout.controls_bst;
 
@@ -116,6 +119,10 @@ public class BSTActivity extends AppCompatActivity {
         btn_inorder = v_menu.findViewById(R.id.btn_inorder);
         btn_preorder = v_menu.findViewById(R.id.btn_preorder);
         btn_postorder = v_menu.findViewById(R.id.btn_postorder);
+        btn_cleartree = v_menu.findViewById(R.id.btn_cleartree);
+        btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
+        btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
+        btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
         et_delete = v_menu.findViewById(R.id.et_delete);
@@ -127,7 +134,8 @@ public class BSTActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 2500ms to 500ms
-                autoAnimSpeed = (2000 - seekBar.getProgress() * 20) + 500;
+                animStepDuration = (2000 - seekBar.getProgress() * 20) + 500;
+                animDuration = animStepDuration/2;
             }
 
             @Override
@@ -191,25 +199,6 @@ public class BSTActivity extends AppCompatActivity {
                     dl_main.openDrawer(Gravity.RIGHT);
                 }
             }
-        });
-
-        // Stop auto animation on drawer open
-        dl_main.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
-                if(slideOffset <= 0.40){
-//                    timer.cancel();
-                }
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView){}
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView){}
-
-            @Override
-            public void onDrawerStateChanged(int newState) {}
         });
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -303,7 +292,7 @@ public class BSTActivity extends AppCompatActivity {
                     data = Integer.parseInt(s.trim());
                 }
                 else{
-                    et_insert.setError("Cant be empty");
+                    et_search.setError("Cant be empty");
                     return;
                 }
 
@@ -320,7 +309,7 @@ public class BSTActivity extends AppCompatActivity {
                     data = Integer.parseInt(s.trim());
                 }
                 else{
-                    et_insert.setError("Cant be empty");
+                    et_delete.setError("Cant be empty");
                     return;
                 }
 
@@ -349,86 +338,105 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-        Button button2 = v_menu.findViewById(R.id.button4);
-        button2.setOnClickListener(new View.OnClickListener() {
+        btn_cleartree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<ArrayList<TreeAnimationState>> ch = new ArrayList<>();
+                clearTree();
+            }
+        });
 
-                ch.add(bst.insert(100));
-                ch.add(bst.insert(50));
-                ch.add(bst.insert(150));
-                ch.add(bst.insert(20));
-                ch.add(bst.insert(70));
-                ch.add(bst.insert(60));
-                ch.add(bst.insert(80));
-                ch.add(bst.insert(120));
-                ch.add(bst.insert(200));
-                ch.add(bst.insert(220));
-                ch.add(bst.insert(110));
-                ch.add(bst.insert(130));
+        btn_tree1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createExampleTree(BSTInfo.tree1);
+            }
+        });
 
-//                ch.add(bst.insert(100));
-////                ch.add(bst.insert(50));
-//                ch.add(bst.insert(150));
-////                ch.add(bst.insert(20));
-////                ch.add(bst.insert(70));
-////                ch.add(bst.insert(60));
-////                ch.add(bst.insert(80));
-//                ch.add(bst.insert(120));
-//                ch.add(bst.insert(200));
-//                ch.add(bst.insert(220));
-//                ch.add(bst.insert(110));
-//                ch.add(bst.insert(130));
+        btn_tree2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createExampleTree(BSTInfo.tree2);
+            }
+        });
 
-                for(ArrayList<TreeAnimationState> insert : ch){
-                    for(TreeAnimationState treeAnimationState: insert) {
-                        for(TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+        btn_tree3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createExampleTree(BSTInfo.tree3);
+            }
+        });
 
-                            System.out.println(treeElementAnimationData);
-                            if (treeElementAnimationData.elementIndex != -1) {
-                                int first = treeElementAnimationData.row;
-                                int second = treeElementAnimationData.col;
-                                View view = tableRows.get(first).getChildAt(second);
-                                TextView value = view.findViewById(R.id.tv_elementvalue);
-                                TextView count = view.findViewById(R.id.tv_elementcount);
+    }
 
-                                int data = treeElementAnimationData.data;
-                                int count1 = treeElementAnimationData.count;
-                                TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+    private void createExampleTree(List<Integer> tree) {
 
-                                value.setText(String.valueOf(data));
-                                count.setText(String.valueOf(count1));
-                                if (layoutElement.state == NodeState.ELEMENT_HIDDEN) {
-                                    value.setText(String.valueOf(data));
-                                    count.setText(String.valueOf(count1));
-                                    tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
-                                    treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
-                                    ViewAnimator.animate(view).bounceIn().duration(1000).start();
-                                } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
-                                    System.out.println("Shown");
-                                    ViewAnimator.animate(view).flash().duration(1000).start();
-                                }
+        // Clear the Tree
+        clearTree();
 
-                                if (first > 0) {
-                                    View view1 = tableRows.get(first - 1).getChildAt(second);
-                                    TreeLayoutElement layoutElement1 = treeLayout.get(first - 1).get(second);
-                                    if (layoutElement1.state == NodeState.ARROW_HIDDEN) {
-                                        tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
-                                        treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
-                                        ViewAnimator.animate(view1).bounceIn().duration(1000).start();
-                                    } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
-                                        System.out.println("Shown");
-                                        ViewAnimator.animate(view1).flash().duration(1000).start();
-                                    }
-                                }
+        ArrayList<ArrayList<TreeAnimationState>> list = new ArrayList<>();
+
+        for(Integer data : tree){
+            list.add(bst.insert(data));
+        }
+
+        for(ArrayList<TreeAnimationState> insert : list){
+            for(TreeAnimationState treeAnimationState : insert) {
+                for(TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                    if (treeElementAnimationData.elementIndex != -1) {
+                        int first = treeElementAnimationData.row;
+                        int second = treeElementAnimationData.col;
+                        View view = tableRows.get(first).getChildAt(second);
+                        view.setVisibility(View.VISIBLE);
+
+                        TextView value = view.findViewById(R.id.tv_elementvalue);
+                        TextView count = view.findViewById(R.id.tv_elementcount);
+
+                        int data = treeElementAnimationData.data;
+                        int count1 = treeElementAnimationData.count;
+                        TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+
+                        value.setText(String.valueOf(data));
+                        count.setText(String.valueOf(count1));
+
+                        if (layoutElement.state == NodeState.ELEMENT_HIDDEN) {
+                            value.setText(String.valueOf(data));
+                            count.setText(String.valueOf(count1));
+                            tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                            treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+                            ViewAnimator.animate(view).bounceIn().duration(animDuration).start();
+                        } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
+                            System.out.println("Shown");
+                            ViewAnimator.animate(view).flash().duration(animDuration).start();
+                        }
+
+                        if (first > 0) {
+                            View view1 = tableRows.get(first - 1).getChildAt(second);
+                            view1.setVisibility(View.VISIBLE);
+                            TreeLayoutElement layoutElement1 = treeLayout.get(first - 1).get(second);
+                            if (layoutElement1.state == NodeState.ARROW_HIDDEN) {
+                                tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
+                                treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
+                                ViewAnimator.animate(view1).bounceIn().duration(animDuration).start();
+                            } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
+                                System.out.println("Shown");
+                                ViewAnimator.animate(view1).flash().duration(animDuration).start();
                             }
                         }
                     }
                 }
             }
-        });
+        }
+    }
 
+    private void clearTree() {
+        bst = new BST();
+        treeLayout = TreeLayout.treeLayout;
+        for(TableRow tableRow : tableRows){
+            for(int i=0;i<tableRow.getChildCount();i++){
+                tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
+            }
+        }
+        treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
     }
 
     private void startTimer(String operation, int data){
@@ -462,12 +470,13 @@ public class BSTActivity extends AppCompatActivity {
                     break;
             }
 
+            final int animDurationTemp = this.animDuration;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
-                        task();
+                        task(animDurationTemp);
                     } else {
                         System.out.println("Canceled");
                         runOnUiThread(new Runnable() {
@@ -485,12 +494,12 @@ public class BSTActivity extends AppCompatActivity {
                         timer = null;
                     }
                 }
-            }, autoAnimSpeed, autoAnimSpeed);
+            }, animStepDuration, animStepDuration);
 
         }
     }
 
-    private void task() {
+    private void task(final int animDurationTemp) {
         if (bst != null) {
             final int curSeqNo = bst.treeSequence.curSeqNo;
             System.out.println("SEQ = "  + curSeqNo);
@@ -511,6 +520,7 @@ public class BSTActivity extends AppCompatActivity {
                                 }
                                 case "NF": {
                                     Toast.makeText(context, "Element not found :(", Toast.LENGTH_SHORT).show();
+                                    System.out.println("Element not found :(");
                                     break;
                                 }
                                 case "F": {
@@ -523,10 +533,10 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(treeElementAnimationData.data));
                                     count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDuration).wobble().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
                                     if(curPair.first > 0){
                                         final View currentView1 = tableRows.get(curPair.first-1).getChildAt(curPair.second);
-                                        ViewAnimator.animate(currentView1).duration(animDuration).fall().start();
+                                        ViewAnimator.animate(currentView1).duration(animDurationTemp).flash().start();
                                     }
                                     break;
                                 }
@@ -540,7 +550,7 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(treeElementAnimationData.data));
                                     count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDuration).bounce().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).bounce().start();
                                     break;
                                 }
                                 case "S": {
@@ -553,10 +563,10 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(treeElementAnimationData.data));
                                     count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDuration).bounce().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).swing().start();
                                     if(curPair.first > 0){
                                         final View currentView1 = tableRows.get(curPair.first-1).getChildAt(curPair.second);
-                                        ViewAnimator.animate(currentView1).duration(animDuration).fall().start();
+                                        ViewAnimator.animate(currentView1).duration(animDurationTemp).swing().start();
                                     }
                                     break;
                                 }
@@ -575,27 +585,28 @@ public class BSTActivity extends AppCompatActivity {
                                         TreeLayoutElement layoutElement = treeLayout.get(curPair.first-1).get(curPair.second);
                                         if(layoutElement.state == NodeState.ARROW_HIDDEN){
                                             layoutElement.state = NodeState.ARROW_SHOWN;
-                                            ViewAnimator.animate(currentView1).duration(animDuration).fall().start();
+                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
                                         }else if(layoutElement.state == NodeState.ARROW_SHOWN){
-                                            ViewAnimator.animate(currentView1).duration(animDuration).bounce().start();
+                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
                                         }
                                     }
 
                                     treeLayoutData.showElement(treeElementAnimationData.elementIndex);
-                                    ViewAnimator.animate(currentView).duration(animDuration).wobble().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).bounceIn().start();
                                     break;
                                 }
                                 case "D": {
                                     System.out.println("DEL");
-                                    final int first = treeElementAnimationData.row;
-                                    final int second = treeElementAnimationData.col;
-                                    final View view = tableRows.get(first).getChildAt(second);
-                                    ViewAnimator.animate(view).duration(animDuration).bounce().start().onStop(new AnimationListener.Stop() {
-                                        @Override
-                                        public void onStop() {
-                                            treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
-                                        }
-                                    });
+                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start()
+                                            .onStop(new AnimationListener.Stop() {
+                                                @Override
+                                                public void onStop() {
+                                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+                                                }
+                                            });
                                     break;
                                 }
                                 case "C": {
@@ -608,14 +619,14 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(treeElementAnimationData.data));
                                     count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDuration).flash().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
                                     break;
                                 }
                                 case "1": {
                                     Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                     final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    ViewAnimator.animate(currentView).duration(animDuration).flash().start().onStop(new AnimationListener.Stop() {
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start().onStop(new AnimationListener.Stop() {
                                         @Override
                                         public void onStop() {
                                             treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
@@ -677,7 +688,7 @@ public class BSTActivity extends AppCompatActivity {
                                     nextElement.state = NodeState.ELEMENT_SHOWN;
 
                                     ViewAnimator.animate(nextView)
-                                            .duration(animDuration)
+                                            .duration(animDurationTemp)
                                             .translationX(0)
                                             .translationY(0)
                                             .start()
@@ -698,7 +709,7 @@ public class BSTActivity extends AppCompatActivity {
                 }
             });
 
-            bst.forward();
+            bst.treeSequence.forward();
         }
 
     }

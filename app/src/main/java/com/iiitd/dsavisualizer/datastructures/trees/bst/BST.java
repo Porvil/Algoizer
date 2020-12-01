@@ -79,6 +79,7 @@ public class BST {
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
             TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
@@ -259,6 +260,7 @@ public class BST {
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
             TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return;
         }
@@ -338,14 +340,6 @@ public class BST {
             treeAnimationStates.add(treeAnimationState);
             System.out.print(bstNode.key + "(" + bstNode.count + ") ");
         }
-    }
-
-    public void forward(){
-        treeSequence.forward();
-    }
-
-    public void backward(){
-        treeSequence.backward();
     }
 
 }

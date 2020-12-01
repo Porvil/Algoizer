@@ -1,6 +1,10 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 //HARDCODED INFORMATION, Handle with care
 public class BSTInfo {
@@ -33,54 +37,8 @@ public class BSTInfo {
         map.put(SINGLE_MERGE, new Integer[]{1, 2});
     }
 
-    public static final int[] boldIndexes = new int[]{0, 8};
-
-           public static final String[] psuedocode = new String[]{
-    /*0*/         "mergeSort(data, start, end):",
-    /*1*/         "    if start > end",
-    /*2*/         "        return",
-    /*3*/         "    mid = (start+end)/2",
-    /*4*/         "    mergeSort(data, start, mid)",
-    /*5*/         "    mergeSort(data, mid+1, end)",
-    /*6*/         "    merge(data, start, mid, end)",
-    /*7*/         "",
-    /*8*/         "merge(data, start, mid, end)",
-    /*9*/         "Copy both arrays into 2 temporary arrays",
-    /*10*/        "while(both arrays are not empty):",
-    /*11*/        "    if(left array's element <= right array's element):",
-    /*12*/        "        copy left array's element to final sorted array",
-    /*13*/        "    else:",
-    /*14*/        "        copy right array's element to final sorted array",
-    /*15*/        "while(left array is not empty):",
-    /*16*/        "    copy left array's element to final sorted array",
-    /*17*/        "while(right array is not empty):",
-    /*18*/        "    copy right array's element to final sorted array",
-    /*19*/        "return"
-    };
-
-
-       public static String getComparedString(int a, int b){
-           if(a <= b){
-               return a + " <= " + b + ", copy left array's element(" + a + ") to final array";
-           }
-
-           return a + " > " + b + ", copy right array's element(" + b + ") to final array";
-       }
-
-       public static String getRemainingElementString(int element, boolean isLeftSide){
-           if(isLeftSide){
-               return "copy remaining left array's elements(" + element + ") to final array";
-           }
-
-           return "copy remaining right array's elements(" + element + ") to final array";
-       }
-
-       public static String getMergeSortString(int left, int right){
-           return "mergeSort(data, " + left + ", " + right + ")";
-       }
-
-       public static String getMergeString(int left, int mid, int right){
-           return "merge(data, " + left + ", " + mid + ", " + right + ")";
-       }
+    public static final List<Integer> tree1 = Arrays.asList(100, 50, 150, 20, 70, 60, 80, 120, 200, 220, 110, 130);
+    public static final List<Integer> tree2 = Arrays.asList(100, 150, 120, 200, 220, 110, 130);
+    public static final List<Integer> tree3 = Arrays.asList(50, 40, 100, 30, 45, 10, 35, 65);
 
 }

@@ -119,8 +119,7 @@
                     android:ems="10"
                     android:hint="Enter number"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:text="70" />
+                    android:inputType="number" />
 
                 <View
                     android:layout_width="2dp"
@@ -151,8 +150,7 @@
                     android:ems="10"
                     android:hint="Enter number"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:text="100" />
+                    android:inputType="number" />
 
                 <View
                     android:layout_width="2dp"
@@ -198,16 +196,37 @@
                 android:textColor="@color/mainColor" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btn_tree1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Debug Tree" />
+                android:layout_height="50dp"
+                android:background="?android:selectableItemBackground"
+                android:text="Example 1"
+                android:textColor="@color/mainColor" />
 
-            <View
-                android:id="@+id/horizontalDiv"
+            <Button
+                android:id="@+id/btn_tree2"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="50dp"
+                android:background="?android:selectableItemBackground"
+                android:text="Example 2"
+                android:textColor="@color/mainColor" />
+
+            <Button
+                android:id="@+id/btn_tree3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:selectableItemBackground"
+                android:text="Example 3"
+                android:textColor="@color/mainColor" />
+
+            <Button
+                android:id="@+id/btn_cleartree"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:selectableItemBackground"
+                android:text="Clear Tree"
+                android:textColor="@color/mainColor" />
+
 
         </LinearLayout>
 
