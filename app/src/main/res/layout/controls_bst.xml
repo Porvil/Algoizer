@@ -119,7 +119,8 @@
                     android:ems="10"
                     android:hint="Enter number"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="70" />
 
                 <View
                     android:layout_width="2dp"
@@ -150,7 +151,8 @@
                     android:ems="10"
                     android:hint="Enter number"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="100" />
 
                 <View
                     android:layout_width="2dp"

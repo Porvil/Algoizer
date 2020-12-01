@@ -33,7 +33,7 @@ public class BST {
 
     private BSTNode _insert(BSTNode bstNode, int key, int index, int level){
         if (bstNode == null){
-            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("I");
             treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
             treeAnimationStates.add(treeAnimationState);
             return new BSTNode(key);
@@ -41,7 +41,7 @@ public class BST {
 
         if (key == bstNode.key){
             bstNode.count++;
-            TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("I");
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
@@ -55,7 +55,7 @@ public class BST {
             return bstNode;
         }
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("<");
+        TreeAnimationState treeAnimationState = new TreeAnimationState("S");
         treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
         treeAnimationStates.add(treeAnimationState);
 
