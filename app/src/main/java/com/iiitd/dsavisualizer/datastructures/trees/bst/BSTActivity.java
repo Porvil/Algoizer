@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,6 +30,7 @@ import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
+import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
@@ -742,17 +745,52 @@ public class BSTActivity extends AppCompatActivity {
         tableLayout.post(new Runnable() {
             @Override
             public void run() {
-                int height = tableLayout.getHeight() / TreeLayout.treeLayout.size();
+                final int height = tableLayout.getHeight() / TreeLayout.treeLayout.size();
 
-                LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 int row = 0;
                 int col = 0;
                 for(List<TreeLayoutElement> treeLayout : treeLayout){
                     TableRow tableRow = new TableRow(context);
                     col = 0;
-                    for(TreeLayoutElement layoutElement : treeLayout){
-                        tableRow.addView(UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col));
+                    for(final TreeLayoutElement layoutElement : treeLayout){
+                        final View bstView = UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col);
+                        final int finalRow = row;
+                        bstView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                System.out.println("Clicked");
+                                if(layoutElement.type == NodeType.ELEMENT) {
+
+                                    System.out.println(v.getX() + " | " + v.getY());
+                                    View myView = layoutInflater.inflate(R.layout.layout_bstnode, null);
+                                    TextView value = myView.findViewById(R.id.tv_bst_value);
+                                    TextView count = myView.findViewById(R.id.tv_bst_count);
+
+                                    TextView valueR = bstView.findViewById(R.id.tv_elementvalue);
+                                    TextView countR = bstView.findViewById(R.id.tv_elementcount);
+                                    value.setText(valueR.getText().toString().trim());
+                                    count.setText(countR.getText().toString().trim());
+
+                                    UtilUI.setText(value, "Node", valueR.getText().toString().trim());
+                                    UtilUI.setText(count, "Count", countR.getText().toString().trim());
+                                    final Dialog dialog = new Dialog(context);
+
+                                    // Setting dialogview
+                                    Window window = dialog.getWindow();
+                                    window.setGravity(Gravity.TOP | Gravity.LEFT);
+                                    WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                                    wmlp.x = (int) v.getX();
+                                    wmlp.y = height * finalRow;
+//                                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                                    window.setAttributes(wmlp);
+                                    dialog.setContentView(myView);
+                                    dialog.show();
+                                }
+                            }
+                        });
+                        tableRow.addView(bstView);
                         col++;
                     }
 
