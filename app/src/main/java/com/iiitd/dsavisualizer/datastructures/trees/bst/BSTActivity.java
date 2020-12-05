@@ -773,18 +773,24 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(valueR.getText().toString().trim());
                                     count.setText(countR.getText().toString().trim());
 
-                                    UtilUI.setText(value, "Node", valueR.getText().toString().trim());
-                                    UtilUI.setText(count, "Count", countR.getText().toString().trim());
                                     final Dialog dialog = new Dialog(context);
 
-                                    // Setting dialogview
+                                    ImageButton btn_bst_close = myView.findViewById(R.id.btn_bst_close);
+
+                                    btn_bst_close.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
                                     Window window = dialog.getWindow();
                                     window.setGravity(Gravity.TOP | Gravity.LEFT);
-                                    WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                                    wmlp.x = (int) v.getX();
-                                    wmlp.y = height * finalRow;
-//                                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                                    window.setAttributes(wmlp);
+                                    WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+                                    layoutParams.x = (int) v.getX();
+                                    layoutParams.y = height * finalRow;
+                                    window.setAttributes(layoutParams);
+
                                     dialog.setContentView(myView);
                                     dialog.show();
                                 }
