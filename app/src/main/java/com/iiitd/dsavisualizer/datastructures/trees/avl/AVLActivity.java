@@ -89,7 +89,7 @@ public class AVLActivity extends AppCompatActivity {
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT = R.layout.activity_tree;
-    final int CONTROL = R.layout.controls_bst;
+    final int CONTROL = R.layout.controls_avl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,63 +372,63 @@ public class AVLActivity extends AppCompatActivity {
     }
 
     private void createExampleTree(List<Integer> tree) {
-//
-//        // Clear the Tree
-//        clearTree();
-//
-//        ArrayList<ArrayList<TreeAnimationState>> list = new ArrayList<>();
-//
-//        for(Integer data : tree){
-//            list.add(avl.insert(data));
-//        }
-//
-//        for(ArrayList<TreeAnimationState> insert : list){
-//            for(TreeAnimationState treeAnimationState : insert) {
-//                for(TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
-//                    if (treeElementAnimationData.elementIndex != -1) {
-//                        int first = treeElementAnimationData.row;
-//                        int second = treeElementAnimationData.col;
-//                        View view = tableRows.get(first).getChildAt(second);
-//                        view.setVisibility(View.VISIBLE);
-//
-//                        TextView value = view.findViewById(R.id.tv_elementvalue);
-//                        TextView count = view.findViewById(R.id.tv_elementcount);
-//
-//                        int data = treeElementAnimationData.data;
-//                        int count1 = treeElementAnimationData.count;
-//                        TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
-//
-//                        value.setText(String.valueOf(data));
-//                        count.setText(String.valueOf(count1));
-//
-//                        if (layoutElement.state == NodeState.ELEMENT_HIDDEN) {
-//                            value.setText(String.valueOf(data));
-//                            count.setText(String.valueOf(count1));
-//                            tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
-//                            treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
-//                            ViewAnimator.animate(view).bounceIn().duration(animDuration).start();
-//                        } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
-//                            System.out.println("Shown");
-//                            ViewAnimator.animate(view).flash().duration(animDuration).start();
-//                        }
-//
-//                        if (first > 0) {
-//                            View view1 = tableRows.get(first - 1).getChildAt(second);
-//                            view1.setVisibility(View.VISIBLE);
-//                            TreeLayoutElement layoutElement1 = treeLayout.get(first - 1).get(second);
-//                            if (layoutElement1.state == NodeState.ARROW_HIDDEN) {
-//                                tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
-//                                treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
-//                                ViewAnimator.animate(view1).bounceIn().duration(animDuration).start();
-//                            } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
-//                                System.out.println("Shown");
-//                                ViewAnimator.animate(view1).flash().duration(animDuration).start();
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
+        // Clear the Tree
+        clearTree();
+
+        ArrayList<ArrayList<TreeAnimationState>> list = new ArrayList<>();
+
+        for(Integer data : tree){
+            list.add(avl.insert(data));
+        }
+
+        for(ArrayList<TreeAnimationState> insert : list){
+            for(TreeAnimationState treeAnimationState : insert) {
+                for(TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                    if (treeElementAnimationData.elementIndex != -1) {
+                        int first = treeElementAnimationData.row;
+                        int second = treeElementAnimationData.col;
+                        View view = tableRows.get(first).getChildAt(second);
+                        view.setVisibility(View.VISIBLE);
+
+                        TextView value = view.findViewById(R.id.tv_elementvalue);
+                        TextView count = view.findViewById(R.id.tv_elementcount);
+
+                        int data = treeElementAnimationData.data;
+                        int count1 = treeElementAnimationData.count;
+                        TreeLayoutElement layoutElement = treeLayout.get(first).get(second);
+
+                        value.setText(String.valueOf(data));
+                        count.setText(String.valueOf(count1));
+
+                        if (layoutElement.state == NodeState.ELEMENT_HIDDEN) {
+                            value.setText(String.valueOf(data));
+                            count.setText(String.valueOf(count1));
+                            tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
+                            treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
+                            ViewAnimator.animate(view).bounceIn().duration(animDuration).start();
+                        } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
+                            System.out.println("Shown");
+                            ViewAnimator.animate(view).flash().duration(animDuration).start();
+                        }
+
+                        if (first > 0) {
+                            View view1 = tableRows.get(first - 1).getChildAt(second);
+                            view1.setVisibility(View.VISIBLE);
+                            TreeLayoutElement layoutElement1 = treeLayout.get(first - 1).get(second);
+                            if (layoutElement1.state == NodeState.ARROW_HIDDEN) {
+                                tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
+                                treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
+                                ViewAnimator.animate(view1).bounceIn().duration(animDuration).start();
+                            } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
+                                System.out.println("Shown");
+                                ViewAnimator.animate(view1).flash().duration(animDuration).start();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void clearTree() {
@@ -453,9 +453,9 @@ public class AVLActivity extends AppCompatActivity {
 
         if(timer == null) {
             switch (operation) {
-//                case "INSERT":
-//                    avl.insert(data);
-//                    break;
+                case "INSERT":
+                    avl.insert(data);
+                    break;
 //                case "DELETE":
 //                    avl.delete(data);
 //                    break;
@@ -646,7 +646,7 @@ public class AVLActivity extends AppCompatActivity {
                                     final View nextView = tableRows.get(nextPair.first).getChildAt(nextPair.second);
                                     TreeLayoutElement nextElement = treeLayout.get(nextPair.first).get(nextPair.second);
 
-                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+//                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
 
                                     TextView value = nextView.findViewById(R.id.tv_elementvalue);
                                     TextView count = nextView.findViewById(R.id.tv_elementcount);

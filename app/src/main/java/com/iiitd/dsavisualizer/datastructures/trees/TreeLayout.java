@@ -13,6 +13,8 @@ import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.*;
 //HARDCODED INFORMATION, Handle with care
 public class TreeLayout {
 
+    public static final int baseIndex = 8;
+    public static final int baseLevel = 4;
     public static ArrayList<List<TreeLayoutElement>> treeLayout = new ArrayList<>();
     public static HashMap<Integer, Pair<Integer, Integer>> map = new HashMap<>();
 

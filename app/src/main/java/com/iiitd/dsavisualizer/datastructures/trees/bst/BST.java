@@ -14,8 +14,8 @@ import java.util.Queue;
 public class BST {
 
     private BSTNode root;
-    private final int baseIndex = 8;
-    private final int baseLevel = 4;
+    private final int baseIndex = TreeLayout.baseIndex;
+    private final int baseLevel = TreeLayout.baseLevel;
     public TreeSequence treeSequence;
     private ArrayList<TreeAnimationState> treeAnimationStates;
 

@@ -4,12 +4,14 @@ public class AVLNode {
 
     int key;
     int count;
+    int height;
     AVLNode left;
     AVLNode right;
 
-    public AVLNode(int key) {
+    AVLNode(int key) {
         this.key = key;
         this.count = 1;
+        this.height = 1;
         this.left = null;
         this.right = null;
     }

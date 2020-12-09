@@ -31,6 +31,6 @@
         android:layout_height="match_parent"
         android:gravity="bottom|left"
         android:text="0"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </FrameLayout>
