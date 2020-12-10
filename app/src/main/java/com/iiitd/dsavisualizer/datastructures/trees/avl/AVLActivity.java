@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
@@ -38,6 +39,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -79,6 +81,7 @@ public class AVLActivity extends AppCompatActivity {
 
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
+    ArrayList<ArrayList<Pair<Integer, Integer>>> tableRowsCoordinates = new ArrayList<>();
 
     ArrayList<List<TreeLayoutElement>> treeLayout = TreeLayout.treeLayout;
     AVL avl;
@@ -131,6 +134,17 @@ public class AVLActivity extends AppCompatActivity {
         et_delete = v_menu.findViewById(R.id.et_delete);
 
         initViews();
+
+        LinearLayout linearLayout = v_main.findViewById(R.id.ll_anim);
+        linearLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                tv_info.setText(event.getX() + " | " + event.getY());
+                return false;
+            }
+        });
+
+
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -365,7 +379,13 @@ public class AVLActivity extends AppCompatActivity {
         btn_tree3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createExampleTree(AVLInfo.tree3);
+//                createExampleTree(AVLInfo.tree3);
+                for(ArrayList<Pair<Integer, Integer>> a : tableRowsCoordinates){
+                    for(Pair<Integer, Integer> p :  a){
+                        System.out.print(p);
+                    }
+                    System.out.println();
+                }
             }
         });
 
@@ -459,18 +479,18 @@ public class AVLActivity extends AppCompatActivity {
 //                case "DELETE":
 //                    avl.delete(data);
 //                    break;
-//                case "SEARCH":
-//                    avl.search(data);
-//                    break;
-//                case "INORDER":
-//                    avl.inorder();
-//                    break;
-//                case "PREORDER":
-//                    avl.preorder();
-//                    break;
-//                case "POSTORDER":
-//                    avl.postorder();
-//                    break;
+                case "SEARCH":
+                    avl.search(data);
+                    break;
+                case "INORDER":
+                    avl.inorder();
+                    break;
+                case "PREORDER":
+                    avl.preorder();
+                    break;
+                case "POSTORDER":
+                    avl.postorder();
+                    break;
             }
 
             final int animDurationTemp = this.animDuration;
@@ -514,193 +534,238 @@ public class AVLActivity extends AppCompatActivity {
                         TreeAnimationState treeAnimationState = avl.treeSequence.animationStates.get(curSeqNo);
                         System.out.println(treeAnimationState);
 
-                        for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+//                        for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                             switch (treeAnimationState.info) {
                                 case "NS": {
-                                    Toast.makeText(context, "No space in tree :(", Toast.LENGTH_SHORT).show();
-                                    System.out.println("No space in tree :(");
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Toast.makeText(context, "No space in tree :(", Toast.LENGTH_SHORT).show();
+                                        System.out.println("No space in tree :(");
+                                    }
                                     break;
                                 }
                                 case "NF": {
-                                    Toast.makeText(context, "Element not found :(", Toast.LENGTH_SHORT).show();
-                                    System.out.println("Element not found :(");
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Toast.makeText(context, "Element not found :(", Toast.LENGTH_SHORT).show();
+                                        System.out.println("Element not found :(");
+                                    }
                                     break;
                                 }
                                 case "F": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+                                        TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
-                                    if(curPair.first > 0){
-                                        final View currentView1 = tableRows.get(curPair.first-1).getChildAt(curPair.second);
-                                        ViewAnimator.animate(currentView1).duration(animDurationTemp).flash().start();
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
+                                        if (curPair.first > 0) {
+                                            final View currentView1 = tableRows.get(curPair.first - 1).getChildAt(curPair.second);
+                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).flash().start();
+                                        }
                                     }
                                     break;
                                 }
                                 case "P": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+                                        TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).bounce().start();
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).bounce().start();
+                                    }
                                     break;
                                 }
                                 case "S": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+                                        TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).swing().start();
-                                    if(curPair.first > 0){
-                                        final View currentView1 = tableRows.get(curPair.first-1).getChildAt(curPair.second);
-                                        ViewAnimator.animate(currentView1).duration(animDurationTemp).swing().start();
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).swing().start();
+                                        if (curPair.first > 0) {
+                                            final View currentView1 = tableRows.get(curPair.first - 1).getChildAt(curPair.second);
+                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).swing().start();
+                                        }
                                     }
                                     break;
                                 }
                                 case "I": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+                                        TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    if(curPair.first > 0){
-                                        final View currentView1 = tableRows.get(curPair.first-1).getChildAt(curPair.second);
-                                        TreeLayoutElement layoutElement = treeLayout.get(curPair.first-1).get(curPair.second);
-                                        if(layoutElement.state == NodeState.ARROW_HIDDEN){
-                                            layoutElement.state = NodeState.ARROW_SHOWN;
-                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
-                                        }else if(layoutElement.state == NodeState.ARROW_SHOWN){
-                                            ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
+                                        if (curPair.first > 0) {
+                                            final View currentView1 = tableRows.get(curPair.first - 1).getChildAt(curPair.second);
+                                            TreeLayoutElement layoutElement = treeLayout.get(curPair.first - 1).get(curPair.second);
+                                            if (layoutElement.state == NodeState.ARROW_HIDDEN) {
+                                                layoutElement.state = NodeState.ARROW_SHOWN;
+                                                ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
+                                            } else if (layoutElement.state == NodeState.ARROW_SHOWN) {
+                                                ViewAnimator.animate(currentView1).duration(animDurationTemp).bounceIn().start();
+                                            }
                                         }
-                                    }
 
-                                    treeLayoutData.showElement(treeElementAnimationData.elementIndex);
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).bounceIn().start();
+                                        treeLayoutData.showElement(treeElementAnimationData.elementIndex);
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).bounceIn().start();
+                                    }
                                     break;
                                 }
                                 case "D": {
-                                    System.out.println("DEL");
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        System.out.println("DEL");
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start()
-                                            .onStop(new AnimationListener.Stop() {
-                                                @Override
-                                                public void onStop() {
-                                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
-                                                }
-                                            });
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start()
+                                                .onStop(new AnimationListener.Stop() {
+                                                    @Override
+                                                    public void onStop() {
+                                                        treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+                                                    }
+                                                });
+                                    }
                                     break;
                                 }
                                 case "C": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    TextView value = currentView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = currentView.findViewById(R.id.tv_elementcount);
+                                        TextView value = currentView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = currentView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
+                                    }
                                     break;
                                 }
                                 case "1": {
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start().onStop(new AnimationListener.Stop() {
-                                        @Override
-                                        public void onStop() {
-                                            treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
-                                        }
-                                    });
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start().onStop(new AnimationListener.Stop() {
+                                            @Override
+                                            public void onStop() {
+                                                treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+                                            }
+                                        });
+                                    }
                                     break;
                                 }
                                 case "CM": {
-                                    System.out.println("Copy move");
-                                    System.out.println(treeElementAnimationData);
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    Pair<Integer, Integer> nextPair = TreeLayout.map.get(treeElementAnimationData.newElementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
-                                    final View nextView = tableRows.get(nextPair.first).getChildAt(nextPair.second);
-                                    TreeLayoutElement nextElement = treeLayout.get(nextPair.first).get(nextPair.second);
+                                    ArrayList<Integer> visibleViews = new ArrayList<>();
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        visibleViews.add(treeElementAnimationData.newElementIndex);
+                                    }
 
-//                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+                                    System.out.println(visibleViews);
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        System.out.println("Copy move");
+                                        System.out.println(treeElementAnimationData);
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        Pair<Integer, Integer> nextPair = TreeLayout.map.get(treeElementAnimationData.newElementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                        final View nextView = tableRows.get(nextPair.first).getChildAt(nextPair.second);
+                                        TreeLayoutElement nextElement = treeLayout.get(nextPair.first).get(nextPair.second);
 
-                                    TextView value = nextView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = nextView.findViewById(R.id.tv_elementcount);
+                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
+                                        TextView value = nextView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = nextView.findViewById(R.id.tv_elementcount);
 
-                                    nextView.setVisibility(View.VISIBLE);
-                                    nextElement.state = NodeState.ELEMENT_SHOWN;
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    float nextX = nextView.getX();
-                                    float nextY = tableRows.get(nextPair.first).getY();
+                                        nextView.setVisibility(View.VISIBLE);
+                                        nextElement.state = NodeState.ELEMENT_SHOWN;
 
-                                    float curX = currentView.getX();
-                                    float curY = tableRows.get(curPair.first).getY();
+//                                    float nextX = nextView.getX();
+//                                    float nextY = tableRows.get(nextPair.first).getY();
+//
+//                                    float curX = currentView.getX();
+//                                    float curY = tableRows.get(curPair.first).getY();
 
-                                    float X = curX - nextX;
-                                    float Y = curY - nextY;
+                                        float nextX = tableRowsCoordinates.get(nextPair.first).get(nextPair.second).first;
+                                        float nextY = tableRowsCoordinates.get(nextPair.first).get(nextPair.second).second;
 
-                                    nextView.animate().setDuration(0).translationX(X).start();
-                                    nextView.animate().setDuration(0).translationY(Y).start();
+                                        float curX = tableRowsCoordinates.get(curPair.first).get(curPair.second).first;
+                                        float curY = tableRowsCoordinates.get(curPair.first).get(curPair.second).second;
+
+                                        float X = curX - nextX;
+                                        float Y = curY - nextY;
+
+//                                    System.out.println("Cur  = " + curX + " | " + curY);
+//                                    System.out.println("Next = " + nextX + " | " + nextY);
+//                                    System.out.println(" diff = " + X + " | " + Y);
+
+                                        nextView.animate().setDuration(0).translationX(X).start();
+                                        nextView.animate().setDuration(0).translationY(Y).start();
+                                    }
+
+                                    for (Integer i : visibleViews) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(i);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                        currentView.setVisibility(View.VISIBLE);
+                                    }
+
                                     break;
                                 }
                                 case "MB": {
-                                    System.out.println("move back");
-                                    Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
-                                    Pair<Integer, Integer> nextPair = TreeLayout.map.get(treeElementAnimationData.newElementIndex);
-                                    final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
-                                    final View nextView = tableRows.get(nextPair.first).getChildAt(nextPair.second);
-                                    TreeLayoutElement curElement = treeLayout.get(curPair.first).get(curPair.second);
-                                    TreeLayoutElement nextElement = treeLayout.get(nextPair.first).get(nextPair.second);
-                                    treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
-                                    currentView.setVisibility(View.INVISIBLE);
-                                    curElement.state = NodeState.ELEMENT_HIDDEN;
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        System.out.println("move back");
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        Pair<Integer, Integer> nextPair = TreeLayout.map.get(treeElementAnimationData.newElementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                        final View nextView = tableRows.get(nextPair.first).getChildAt(nextPair.second);
+                                        TreeLayoutElement curElement = treeLayout.get(curPair.first).get(curPair.second);
+                                        TreeLayoutElement nextElement = treeLayout.get(nextPair.first).get(nextPair.second);
+                                        treeLayoutData.hideElement(treeElementAnimationData.elementIndex);
+                                        currentView.setVisibility(View.INVISIBLE);
+                                        curElement.state = NodeState.ELEMENT_HIDDEN;
 
-                                    TextView value = nextView.findViewById(R.id.tv_elementvalue);
-                                    TextView count = nextView.findViewById(R.id.tv_elementcount);
+                                        TextView value = nextView.findViewById(R.id.tv_elementvalue);
+                                        TextView count = nextView.findViewById(R.id.tv_elementcount);
 
-                                    value.setText(String.valueOf(treeElementAnimationData.data));
-                                    count.setText(String.valueOf(treeElementAnimationData.count));
-                                    nextView.setVisibility(View.VISIBLE);
-                                    nextElement.state = NodeState.ELEMENT_SHOWN;
+                                        value.setText(String.valueOf(treeElementAnimationData.data));
+                                        count.setText(String.valueOf(treeElementAnimationData.count));
+                                        nextView.setVisibility(View.VISIBLE);
+                                        nextElement.state = NodeState.ELEMENT_SHOWN;
 
-                                    ViewAnimator.animate(nextView)
-                                            .duration(animDurationTemp)
-                                            .translationX(0)
-                                            .translationY(0)
-                                            .start()
-                                            .onStop(new AnimationListener.Stop() {
-                                                @Override
-                                                public void onStop() {
-                                                    treeLayoutData.showElement(treeElementAnimationData.newElementIndex);
-                                                }
-                                            });
+                                        ViewAnimator.animate(nextView)
+                                                .duration(animDurationTemp)
+                                                .translationX(0)
+                                                .translationY(0)
+                                                .start()
+                                                .onStop(new AnimationListener.Stop() {
+                                                    @Override
+                                                    public void onStop() {
+                                                        treeLayoutData.showElement(treeElementAnimationData.newElementIndex);
+                                                    }
+                                                });
+                                    }
                                     break;
                                 }
                                 default:
@@ -709,7 +774,7 @@ public class AVLActivity extends AppCompatActivity {
                             }
                         }
                     }
-                }
+//                }
             });
 
             avl.treeSequence.forward();
@@ -752,7 +817,8 @@ public class AVLActivity extends AppCompatActivity {
                 int row = 0;
                 int col = 0;
                 for(List<TreeLayoutElement> treeLayout : treeLayout){
-                    TableRow tableRow = new TableRow(context);
+                    final TableRow tableRow = new TableRow(context);
+                    final ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
                     col = 0;
                     for(final TreeLayoutElement layoutElement : treeLayout){
                         final View bstView = UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col);
@@ -791,12 +857,49 @@ public class AVLActivity extends AppCompatActivity {
                             }
                         });
                         tableRow.addView(bstView);
+                        final int finalRow1 = row;
+//                        tableRow.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                tableRowCoordinate.add(new Pair<>((int)tableRow.getChildAt(finalRow1).getX(), height * finalRow));
+//                            }
+//                        });
+//                        tableRowCoordinate.add(new Pair<>((int)tableRow.getChildAt(row).getX(), height * finalRow));
                         col++;
                     }
 
                     tableRows.add(tableRow);
+//                    tableRowsCoordinates.add(tableRowCoordinate);
                     tableLayout.addView(tableRow);
                     row++;
+                }
+
+                tableLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        int rowF = 0;
+                        for(TableRow tableRow : tableRows){
+                            System.out.println(tableRow);
+                            final int finalRow = rowF;
+                            ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
+                            for(int i=0;i<tableRow.getChildCount();i++){
+                                View childAt = tableRow.getChildAt(i);
+                                System.out.println(childAt.getX() + " | " + childAt.getY());
+                                tableRowCoordinate.add(new Pair<>((int)childAt.getX(), height * finalRow));
+                            }
+                            tableRowsCoordinates.add(tableRowCoordinate);
+                            rowF++;
+                            System.out.println();
+                        }
+                    }
+                },100);
+
+
+                for(ArrayList<Pair<Integer, Integer>> a : tableRowsCoordinates){
+                    for(Pair<Integer, Integer> p :  a){
+                        System.out.print(p);
+                    }
+                    System.out.println();
                 }
 
                 treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);

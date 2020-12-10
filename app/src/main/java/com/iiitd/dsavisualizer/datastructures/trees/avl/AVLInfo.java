@@ -35,7 +35,8 @@ public class AVLInfo {
         map.put(SINGLE_MERGE, new Integer[]{1, 2});
     }
 
-    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 2);
+//    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 2);
+    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 14);
 //    public static final List<Integer> tree1 = Arrays.asList(100, 50, 150, 20, 70, 60, 80, 120, 200, 220, 110, 130);
     public static final List<Integer> tree2 = Arrays.asList(8,2,12,1,6);
 //    public static final List<Integer> tree2 = Arrays.asList(100, 150, 120, 200, 220, 110, 130);

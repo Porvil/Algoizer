@@ -37,28 +37,43 @@ public class AVL {
         return (a > b) ? a : b;
     }
 
-//    public boolean search(int key) {
-//        return search(root, key);
-//    }
-//
-//    private boolean search(AVLNode avlNode, int key) {
-//        boolean found = false;
-//        while ((avlNode != null) && !found) {
-//            int rval = avlNode.key;
-//            if (key < rval) {
-//                avlNode = avlNode.left;
-//            }
-//            else if (key > rval) {
-//                avlNode = avlNode.right;
-//            }
-//            else {
-//                found = true;
-//                break;
-//            }
-//            found = search(avlNode, key);
-//        }
-//        return found;
-//    }
+    public void search(int key) {
+        treeAnimationStates = new ArrayList<>();
+        _search(root, key, baseIndex, baseLevel);
+        treeSequence = new TreeSequence(treeAnimationStates);
+    }
+
+    private void  _search(AVLNode avlNode, int key, int index, int level){
+        if (avlNode == null) {
+            System.out.println("NULL Node, Not found");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            treeAnimationState.add(new TreeElementAnimationData(-1,-1));
+            treeAnimationStates.add(treeAnimationState);
+            return;
+        }
+
+        if (key < avlNode.key) {
+            System.out.println("LESS KEY = " + avlNode.key);
+
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            _search(avlNode.left, key, index - level, level / 2);
+        }
+        else if (key > avlNode.key) {
+            System.out.println("More KEY = " + avlNode.key);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            _search(avlNode.right, key, index + level, level / 2);
+        }
+        else{
+            TreeAnimationState treeAnimationState = new TreeAnimationState("F");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+        }
+
+    }
 
 //    public int largest_SmallerEqual(int key) {
 //        if (root != null) {
@@ -198,6 +213,7 @@ public class AVL {
 //    }
 
     AVLNode rotate(AVLNode avlNode, int key, int diff, int index, int level) {
+        System.out.println("in = " + index + " | lev = " + level);
         //LL
         if (diff > 1 && key < avlNode.left.key) {
             System.out.println("Left Left");
@@ -207,21 +223,21 @@ public class AVL {
         // RR
         if (diff < -1 && key > avlNode.right.key) {
             System.out.println("Right Right");
-            return leftRotate(avlNode);
+            return leftRotate(avlNode, index, level);
         }
 
         // LR
         if (diff > 1 && key > avlNode.left.key) {
             System.out.println("Left Right");
-            avlNode.left = leftRotate(avlNode.left);
+            avlNode.left = leftRotate(avlNode.left, index - level, level/2);
             return rightRotate(avlNode, index, level);
         }
 
         // RL
         if (diff < -1 && key < avlNode.right.key) {
             System.out.println("Right Left");
-            avlNode.right = rightRotate(avlNode.right, index, level);
-            return leftRotate(avlNode);
+            avlNode.right = rightRotate(avlNode.right, index + level, level/2);
+            return leftRotate(avlNode, index, level);
         }
 
         System.out.println("no rotation needed :p");
@@ -232,9 +248,6 @@ public class AVL {
 
         AVLNode left = avlNode.left;
         AVLNode temp = left.right;
-
-        AVLNode ls = null;
-        AVLNode rs = null;
 
         System.out.println("rotation needed at index = " + index + " | level = " + level);
         // l = left
@@ -251,16 +264,16 @@ public class AVL {
 
         int new_index_a = TreeLayout.childs[index_a].second;
         int new_index_l = TreeLayout.parents[index_l];
-        int new_index_ls = TreeLayout.parents[index_ls];
-        int new_index_rs = TreeLayout.childs[index_rs].second;
-        int new_index_ts = index_ts == 3 ? 5 : index_ts == 6 ? 10 : -1;
+//        int new_index_ls = TreeLayout.parents[index_ls];
+//        int new_index_rs = TreeLayout.childs[index_rs].second;
+//        int new_index_ts = index_ts == 3 ? 5 : index_ts == 6 ? 10 : -1;
         //remove this hardcoding later
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_l + " -> " + new_index_l);
-        System.out.println("ls | " + index_ls + " -> " + new_index_ls);
-        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
-        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
+//        System.out.println("ls | " + index_ls + " -> " + new_index_ls);
+//        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
+//        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
         TreeAnimationState step2 = new TreeAnimationState("CM");
         TreeAnimationState step3 = new TreeAnimationState("MB");
@@ -275,10 +288,6 @@ public class AVL {
 
         //ls
         if(left.left != null) {
-            ls = left.left;
-//            step2.add(new TreeElementAnimationData(ls.key, ls.count, index_ls, new_index_ls));
-//            step3.add(new TreeElementAnimationData(ls.key, ls.count, index_ls, new_index_ls));
-
             int level1 = level / (2);
             int index1 = index_l;
 
@@ -314,15 +323,75 @@ public class AVL {
 
         //rs
         if(avlNode.right != null) {
-            rs = avlNode.right;
-            step2.add(new TreeElementAnimationData(rs.key, rs.count, index_rs, new_index_rs));
-            step3.add(new TreeElementAnimationData(rs.key, rs.count, index_rs, new_index_rs));
+            int level2 = level/2;
+            int index2 = index_rs;
+
+            AVLNode temp2 = avlNode.right;
+            Queue<AVLNode> queue = new LinkedList<>();
+            Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+            System.out.println("in = " + (index2+level2));
+            queue.add(temp2);
+            queue2.add(new Pair(index2+level2, index2));
+
+            while(queue.size() > 0 ) {
+                AVLNode node = queue.remove();
+                Pair<Integer, Integer> pair = queue2.remove();
+                int currentIndex = pair.first;
+                int parentIndex = pair.second;
+                System.out.println(node);
+                System.out.println(pair);
+                System.out.println(node.key + " | " + pair);
+                step2.add(new TreeElementAnimationData(node.key, node.count, parentIndex, currentIndex));
+                step3.add(new TreeElementAnimationData(node.key, node.count, parentIndex, currentIndex));
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                }
+            }
+
         }
 
         //ts
         if(temp != null) {
-            step2.add(new TreeElementAnimationData(temp.key, temp.count, index_ts, new_index_ts));
-            step3.add(new TreeElementAnimationData(temp.key, temp.count, index_ts, new_index_ts));
+            int level3 = level/(2*2);
+            int index3 = index_ts;
+
+            int add = index_ts == 3 ? 2 : index_ts == 6 ? 4 : -1;
+            System.out.println("add   " + add);
+            AVLNode temp3 = temp;
+            Queue<AVLNode> queue = new LinkedList<>();
+            Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+            System.out.println("in = " + (index3));
+            queue.add(temp3);
+            queue2.add(new Pair<>(index3, level3));
+
+            while(queue.size() > 0 ) {
+                AVLNode node = queue.remove();
+                Pair<Integer, Integer> pair = queue2.remove();
+                int currentIndex = pair.first;
+                int parentIndex = currentIndex + add;
+                step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                    queue2.add(new Pair<>(currentIndex - level3, level3/2));
+
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    queue2.add(new Pair<>(currentIndex + level3, level3/2));
+                }
+            }
+
         }
 
         treeAnimationStates.add(step2);
@@ -341,9 +410,159 @@ public class AVL {
         return left;
     }
 
-    AVLNode leftRotate(AVLNode avlNode) {
+    AVLNode leftRotate(AVLNode avlNode, int index, int level) {
         AVLNode right = avlNode.right;
         AVLNode temp = right.left;
+
+
+        System.out.println("rotation needed at index = " + index + " | level = " + level);
+        // r = right
+        // a = node where rotation needed
+        // ls = left subtree of "a"
+        // rs = right subtree of "r"
+        // ts = right subtree of "r"
+
+        int index_a = index;
+        int index_r = TreeLayout.childs[index_a].second;
+        int index_ls = TreeLayout.childs[index_a].first;
+        int index_rs = TreeLayout.childs[index_r].second;
+        int index_ts = TreeLayout.childs[index_r].first;
+
+        int new_index_a = TreeLayout.childs[index_a].first;
+        int new_index_r = TreeLayout.parents[index_r];
+//        int new_index_ls = TreeLayout.childs[index_ls].first;
+//        int new_index_rs = TreeLayout.parents[index_rs];
+//        int new_index_ts = index_ts == 13 ? 11 : index_ts == 10 ? 6 : -1;
+        //remove this hardcoding later
+
+        System.out.println("a  | " + index_a + " -> " + new_index_a);
+        System.out.println("l  | " + index_r + " -> " + new_index_r);
+//        System.out.println("ls | " + index_ls + " -> " + new_index_ls);
+//        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
+//        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
+
+        TreeAnimationState step2 = new TreeAnimationState("CM");
+        TreeAnimationState step3 = new TreeAnimationState("MB");
+
+        //a
+        step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
+        step3.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
+
+        //r
+        step2.add(new TreeElementAnimationData(right.key, right.count, index_r, new_index_r));
+        step3.add(new TreeElementAnimationData(right.key, right.count, index_r, new_index_r));
+
+        //ls
+        if(avlNode.left != null) {
+            int level2 = level/2;
+            int index2 = index_ls;
+
+            AVLNode temp2 = avlNode.left;
+            Queue<AVLNode> queue = new LinkedList<>();
+            Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+            System.out.println("in = " + (index2-level2));
+            queue.add(temp2);
+            queue2.add(new Pair(index2-level2, index2));
+
+            while(queue.size() > 0 ) {
+                AVLNode node = queue.remove();
+                Pair<Integer, Integer> pair = queue2.remove();
+                int currentIndex = pair.first;
+                int parentIndex = pair.second;
+                System.out.println(node);
+                System.out.println(pair);
+                System.out.println(node.key + " | " + pair);
+                step2.add(new TreeElementAnimationData(node.key, node.count, parentIndex, currentIndex));
+                step3.add(new TreeElementAnimationData(node.key, node.count, parentIndex, currentIndex));
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                }
+            }
+
+        }
+
+        //rs
+        if(right.right != null) {
+            int level1 = level / (2);
+            int index1 = index_r;
+
+            AVLNode temp1 = right.right;
+            Queue<AVLNode> queue = new LinkedList<>();
+            Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+            System.out.println("in = " + (index1+level1));
+            queue.add(temp1);
+            queue2.add(new Pair(index1+level1, index1));
+
+            while(queue.size() > 0 ){
+                AVLNode node = queue.remove();
+                Pair<Integer, Integer> pair = queue2.remove();
+                int currentIndex = pair.first;
+                int parentIndex = pair.second;
+                System.out.println(node.key + " | " + pair);
+                step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+
+                if(node.left != null){
+                    queue.add(node.left);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                    queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                }
+            }
+
+        }
+
+        //ts
+        if(temp != null) {
+            int level3 = level/(2*2);
+            int index3 = index_ts;
+
+            int add = index_ts == 13 ? 2 : index_ts == 10 ? 4 : -1;
+            System.out.println("add   " + add);
+            AVLNode temp3 = temp;
+            Queue<AVLNode> queue = new LinkedList<>();
+            Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+            System.out.println("in = " + (index3));
+            queue.add(temp3);
+            queue2.add(new Pair<>(index3, level3));
+
+            while(queue.size() > 0 ) {
+                AVLNode node = queue.remove();
+                Pair<Integer, Integer> pair = queue2.remove();
+                int currentIndex = pair.first;
+                int parentIndex = currentIndex - add;
+                step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                    queue2.add(new Pair<>(currentIndex - level3, level3/2));
+
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    queue2.add(new Pair<>(currentIndex + level3, level3/2));
+                }
+            }
+
+        }
+
+        treeAnimationStates.add(step2);
+        treeAnimationStates.add(step3);
+
 
         // Perform rotation
         right.left = avlNode;
@@ -366,54 +585,57 @@ public class AVL {
         return iterate;
     }
 
-    public void preDisp() {
-        if (root != null) {
-            pre(root);
-        } else {
-            System.out.print(-1);
-        }
-        System.out.println();
+    public void inorder(){
+        treeAnimationStates = new ArrayList<>();
+        _inorder(root, baseIndex, baseLevel);
+        treeSequence = new TreeSequence(treeAnimationStates);
     }
 
-    private void pre(AVLNode avlNode) {
-        if (avlNode != null) {
-            System.out.print(avlNode.key + " ");
-            pre(avlNode.left);
-            pre(avlNode.right);
-        }
-    }
-
-    public void postDisp() {
-        if (root != null) {
-            post(root);
-        } else {
-            System.out.print(-1);
-        }
-        System.out.println();
-    }
-
-    private void post(AVLNode avlNode) {
-        if (avlNode != null) {
-            post(avlNode.left);
-            post(avlNode.right);
-            System.out.print(avlNode.key + " ");
+    private void _inorder(AVLNode avlNode, int index, int level){
+        System.out.println("inorder");
+        if (avlNode != null){
+            _inorder(avlNode.left, index - level, level / 2);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            System.out.print(avlNode.key + "(" + avlNode.count + ") ");
+            _inorder(avlNode.right, index + level, level / 2);
         }
     }
 
-    public void inDisp() {
-        if (root != null) {
-            in(root);
-        } else {
-            System.out.print(-1);
-        }
-        System.out.println();
+    public void preorder(){
+        treeAnimationStates = new ArrayList<>();
+        _preorder(root, baseIndex, baseLevel);
+        treeSequence = new TreeSequence(treeAnimationStates);
     }
 
-    private void in(AVLNode avlNode) {
-        if (avlNode != null) {
-            in(avlNode.left);
-            System.out.print(avlNode.key + " ");
-            in(avlNode.right);
+    private void _preorder(AVLNode avlNode, int index, int level){
+        System.out.println("inorder");
+        if (avlNode != null){
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            System.out.print(avlNode.key + "(" + avlNode.count + ") ");
+            _preorder(avlNode.left, index - level, level / 2);
+            _preorder(avlNode.right, index + level, level / 2);
+        }
+    }
+
+    public void postorder(){
+        treeAnimationStates = new ArrayList<>();
+        _postorder(root, baseIndex, baseLevel);
+        treeSequence = new TreeSequence(treeAnimationStates);
+    }
+
+    private void _postorder(AVLNode avlNode, int index, int level){
+        System.out.println("inorder");
+        if (avlNode != null){
+            _postorder(avlNode.left, index - level, level / 2);
+            _postorder(avlNode.right, index + level, level / 2);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            System.out.print(avlNode.key + "(" + avlNode.count + ") ");
         }
     }
 
