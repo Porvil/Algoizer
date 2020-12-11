@@ -42,6 +42,7 @@ public class AVLInfo {
 //    public static final List<Integer> tree1 = Arrays.asList(20,10,30,40);
 //    public static final List<Integer> tree1 = Arrays.asList(20,10,40,30);
     public static final List<Integer> tree1 = Arrays.asList(20,10,30,25,40);
+//    public static final List<Integer> tree1 = Arrays.asList(31,23,61,13,27,51,83,30,91);
 //    public static final List<Integer> tree1 = Arrays.asList(8,4,14,6,12,42,72);
 //    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 14);
 //    public static final List<Integer> tree1 = Arrays.asList(100, 50, 150, 20, 70, 60, 80, 120, 200, 220, 110, 130);

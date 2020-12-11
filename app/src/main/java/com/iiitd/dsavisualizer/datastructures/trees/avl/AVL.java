@@ -354,19 +354,6 @@ public class AVL {
         return rotateDel(ret, key, diff, index, level);
     }
 
-    int bf(AVLNode avlNode){
-        if(avlNode.left != null && avlNode.right != null){
-            return avlNode.left.height - avlNode.right.height;
-        }
-        else if(avlNode.left != null && avlNode.right == null){
-            return avlNode.left.height;
-        }
-        else if(avlNode.left == null && avlNode.right != null){
-            return avlNode.right.height;
-        }
-        return 0;
-    }
-
     AVLNode rotateDel(AVLNode avlNode, int key, int diff, int index, int level) {
         System.out.println("in = " + index + " | lev = " + level);
 
@@ -416,6 +403,16 @@ public class AVL {
 
     AVLNode rotate(AVLNode avlNode, int key, int diff, int index, int level) {
         System.out.println("in = " + index + " | lev = " + level);
+
+        if(diff >= -1 && diff <= 1){
+            System.out.println("no rotation needed :p");
+            return avlNode;
+        }
+
+//        TreeAnimationState treeAnimationState = new TreeAnimationState("R");
+//        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+//        treeAnimationStates.add(treeAnimationState);
+
         //LL
         if (diff > 1 && key < avlNode.left.key) {
             System.out.println("Left Left");
@@ -447,6 +444,10 @@ public class AVL {
     }
 
     AVLNode rightRotate(AVLNode avlNode, int index, int level) {
+
+        TreeAnimationState treeAnimationState = new TreeAnimationState("R");
+        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+        treeAnimationStates.add(treeAnimationState);
 
         AVLNode left = avlNode.left;
         AVLNode temp = left.right;
@@ -613,6 +614,11 @@ public class AVL {
     }
 
     AVLNode leftRotate(AVLNode avlNode, int index, int level) {
+
+        TreeAnimationState treeAnimationState = new TreeAnimationState("R");
+        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+        treeAnimationStates.add(treeAnimationState);
+
         AVLNode right = avlNode.right;
         AVLNode temp = right.left;
 

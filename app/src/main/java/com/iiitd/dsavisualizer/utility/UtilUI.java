@@ -31,7 +31,7 @@ public class UtilUI {
         textView.setText(data);
     }
 
-    public int getRandomColor(){
+    public static int getRandomColor(){
         Random random = new Random();
         return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }

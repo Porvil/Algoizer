@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.avl;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Gravity;
@@ -768,6 +769,20 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
+                                case "R": {
+                                    for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
+                                        Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
+                                        final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
+                                        View viewById = currentView.findViewById(R.id.fl_main);
+
+                                        Drawable defColor = getResources().getDrawable(R.drawable.rounded_rectangle);
+                                        Drawable highlightColor = getResources().getDrawable(R.drawable.rounded_rectangle_highlighted);
+                                        ViewAnimator.animate(viewById).duration(animDurationTemp)
+//                                                .backgroundColor(defColor, highlightColor, defColor)
+                                                .flash().start();
+                                    }
+                                    break;
+                                }
                                 default:
                                     System.out.println("DEFAULT SWITCH IN TASK -__-");
                                     Toast.makeText(context, "DEFAULT SWITCH IN TASK -__-", Toast.LENGTH_SHORT).show();
@@ -843,13 +858,21 @@ public class AVLActivity extends AppCompatActivity {
                                     UtilUI.setText(count, "Count", countR.getText().toString().trim());
                                     final Dialog dialog = new Dialog(context);
 
+                                    ImageButton btn_bst_close = myView.findViewById(R.id.btn_bst_close);
+
+                                    btn_bst_close.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
                                     // Setting dialogview
                                     Window window = dialog.getWindow();
                                     window.setGravity(Gravity.TOP | Gravity.LEFT);
                                     WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
                                     wmlp.x = (int) v.getX();
                                     wmlp.y = height * finalRow;
-//                                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                                     window.setAttributes(wmlp);
                                     dialog.setContentView(myView);
                                     dialog.show();
@@ -857,19 +880,10 @@ public class AVLActivity extends AppCompatActivity {
                             }
                         });
                         tableRow.addView(bstView);
-                        final int finalRow1 = row;
-//                        tableRow.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                tableRowCoordinate.add(new Pair<>((int)tableRow.getChildAt(finalRow1).getX(), height * finalRow));
-//                            }
-//                        });
-//                        tableRowCoordinate.add(new Pair<>((int)tableRow.getChildAt(row).getX(), height * finalRow));
                         col++;
                     }
 
                     tableRows.add(tableRow);
-//                    tableRowsCoordinates.add(tableRowCoordinate);
                     tableLayout.addView(tableRow);
                     row++;
                 }
@@ -884,7 +898,7 @@ public class AVLActivity extends AppCompatActivity {
                             ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
                             for(int i=0;i<tableRow.getChildCount();i++){
                                 View childAt = tableRow.getChildAt(i);
-                                System.out.println(childAt.getX() + " | " + childAt.getY());
+//                                System.out.println(childAt.getX() + " | " + childAt.getY());
                                 tableRowCoordinate.add(new Pair<>((int)childAt.getX(), height * finalRow));
                             }
                             tableRowsCoordinates.add(tableRowCoordinate);
@@ -892,7 +906,7 @@ public class AVLActivity extends AppCompatActivity {
                             System.out.println();
                         }
                     }
-                },100);
+                },50);
 
 
                 for(ArrayList<Pair<Integer, Integer>> a : tableRowsCoordinates){
