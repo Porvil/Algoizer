@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         btn_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, QuickSortActivity.class));
+                startActivity(new Intent(context, AboutActivity.class));
             }
         });
 
