@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
@@ -40,7 +39,6 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -135,17 +133,6 @@ public class AVLActivity extends AppCompatActivity {
         et_delete = v_menu.findViewById(R.id.et_delete);
 
         initViews();
-
-        LinearLayout linearLayout = v_main.findViewById(R.id.ll_anim);
-        linearLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                tv_info.setText(event.getX() + " | " + event.getY());
-                return false;
-            }
-        });
-
-
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -845,17 +832,18 @@ public class AVLActivity extends AppCompatActivity {
                                 if(layoutElement.type == NodeType.ELEMENT) {
 
                                     System.out.println(v.getX() + " | " + v.getY());
-                                    View myView = layoutInflater.inflate(R.layout.layout_bstnode, null);
-                                    TextView value = myView.findViewById(R.id.tv_bst_value);
-                                    TextView count = myView.findViewById(R.id.tv_bst_count);
+                                    View myView = layoutInflater.inflate(R.layout.layout_node_popup, null);
+                                    TextView value = myView.findViewById(R.id.tv_node_value);
+                                    TextView count = myView.findViewById(R.id.tv_node_count);
+                                    TextView name = myView.findViewById(R.id.tv_node_name);
 
                                     TextView valueR = bstView.findViewById(R.id.tv_elementvalue);
                                     TextView countR = bstView.findViewById(R.id.tv_elementcount);
+
+                                    name.setText("AVL Node");
                                     value.setText(valueR.getText().toString().trim());
                                     count.setText(countR.getText().toString().trim());
 
-                                    UtilUI.setText(value, "Node", valueR.getText().toString().trim());
-                                    UtilUI.setText(count, "Count", countR.getText().toString().trim());
                                     final Dialog dialog = new Dialog(context);
 
                                     ImageButton btn_bst_close = myView.findViewById(R.id.btn_bst_close);
@@ -946,4 +934,10 @@ public class AVLActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        btn_back.performClick();
+    }
+
 }

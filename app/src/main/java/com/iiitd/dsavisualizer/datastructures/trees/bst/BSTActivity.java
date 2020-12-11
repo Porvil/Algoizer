@@ -764,12 +764,15 @@ public class BSTActivity extends AppCompatActivity {
                                 if(layoutElement.type == NodeType.ELEMENT) {
 
                                     System.out.println(v.getX() + " | " + v.getY());
-                                    View myView = layoutInflater.inflate(R.layout.layout_bstnode, null);
-                                    TextView value = myView.findViewById(R.id.tv_bst_value);
-                                    TextView count = myView.findViewById(R.id.tv_bst_count);
+                                    View myView = layoutInflater.inflate(R.layout.layout_node_popup, null);
+                                    TextView value = myView.findViewById(R.id.tv_node_value);
+                                    TextView count = myView.findViewById(R.id.tv_node_count);
+                                    TextView name = myView.findViewById(R.id.tv_node_name);
 
                                     TextView valueR = bstView.findViewById(R.id.tv_elementvalue);
                                     TextView countR = bstView.findViewById(R.id.tv_elementcount);
+
+                                    name.setText("BST Node");
                                     value.setText(valueR.getText().toString().trim());
                                     count.setText(countR.getText().toString().trim());
 
@@ -835,4 +838,10 @@ public class BSTActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        btn_back.performClick();
+    }
+
 }

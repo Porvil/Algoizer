@@ -54,6 +54,7 @@ public class MergeSortActivity extends AppCompatActivity {
     SeekBar sb_animspeed;
     TextView tv_seqno;
     TextView tv_info;
+    ConstraintLayout cl_psuedocode;
     ScrollView sv_psuedocode;
     LinearLayout ll_psuedocode;
 
@@ -102,6 +103,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
         tv_info = v_main.findViewById(R.id.tv_info);
+        cl_psuedocode = v_main.findViewById(R.id.cl_psuedocode);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         cl_info = v_main.findViewById(R.id.cl_info);
@@ -463,8 +465,8 @@ public class MergeSortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isPseudocode) {
-                    sv_psuedocode.setVisibility(View.GONE);
-                    sv_psuedocode.postDelayed(new Runnable() {
+                    cl_psuedocode.setVisibility(View.GONE);
+                    cl_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if(mergeSort != null){
@@ -482,8 +484,8 @@ public class MergeSortActivity extends AppCompatActivity {
                     }, 0);
                 }
                 else {
-                    sv_psuedocode.setVisibility(View.VISIBLE);
-                    sv_psuedocode.postDelayed(new Runnable() {
+                    cl_psuedocode.setVisibility(View.VISIBLE);
+                    cl_psuedocode.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if(mergeSort != null){
@@ -595,4 +597,10 @@ public class MergeSortActivity extends AppCompatActivity {
             });
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        btn_back.performClick();
+    }
+
 }

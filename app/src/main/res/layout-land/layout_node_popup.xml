@@ -17,29 +17,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_node_name"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="BST Node"
+        android:text="Node"
         android:textColor="@color/mainColor"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/btn_bst_close"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_bst_value"
+        android:id="@+id/tv_node_value"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="1"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <TextView
-        android:id="@+id/tv_bst_count"
+        android:id="@+id/tv_node_count"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:gravity="center"
@@ -47,7 +47,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bst_value" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_value" />
 
     <TextView
         android:id="@+id/textView"
@@ -58,7 +58,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <TextView
         android:id="@+id/textView3"

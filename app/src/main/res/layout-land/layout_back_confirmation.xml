@@ -7,7 +7,7 @@
     tools:ignore="MissingDefaultResource">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_node_name"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:gravity="center"
@@ -25,7 +25,7 @@
         android:gravity="center_horizontal|top"
         android:text="Do you want to go back?"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <Button
         android:id="@+id/btn_yes"
