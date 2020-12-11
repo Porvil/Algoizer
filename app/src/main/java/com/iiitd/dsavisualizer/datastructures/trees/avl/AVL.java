@@ -117,11 +117,26 @@ public class AVL {
 
     private AVLNode insert(AVLNode avlNode, int key, int index, int level) {
         if (avlNode == null) {
-            System.out.println("Last Node ez :p");
             TreeAnimationState treeAnimationState = new TreeAnimationState("I");
             treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
             treeAnimationStates.add(treeAnimationState);
-            return (new AVLNode(key));
+            return new AVLNode(key);
+        }
+
+        if (key == avlNode.key){
+            avlNode.count++;
+            TreeAnimationState treeAnimationState = new TreeAnimationState("I");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            return avlNode;
+        }
+
+        if(level == 0){
+            treeAnimationStates.clear();
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NS");
+            treeAnimationState.add(new TreeElementAnimationData(-1, -1, -1));
+            treeAnimationStates.add(treeAnimationState);
+            return avlNode;
         }
 
         TreeAnimationState treeAnimationState = new TreeAnimationState("S");
@@ -129,88 +144,275 @@ public class AVL {
         treeAnimationStates.add(treeAnimationState);
 
         if (key < avlNode.key) {
-            System.out.println("Going Left");
             avlNode.left = insert(avlNode.left, key, index - level, level / 2);
         }
         else if (key > avlNode.key) {
-            System.out.println("Going Right");
             avlNode.right = insert(avlNode.right, key, index + level, level / 2);
-        }
-        else {
-            System.out.println("Same value, just return");
-            return avlNode;
         }
 
         avlNode.height = 1 + max(height(avlNode.left), height(avlNode.right));
 
         int diff = 0;
-        if (avlNode == null) {
-            diff = 0;
-        }
-        else {
-            diff = height(avlNode.left) - height(avlNode.right);
-        }
+        diff = height(avlNode.left) - height(avlNode.right);
 
         System.out.println("diff = " + diff);
         return rotate(avlNode, key, diff, index, level);
     }
 
-//    public void delete(int value) {
-//        root = delete(root, value);
-//    }
-//
-//    private AVLNode delete(AVLNode node, int data) {
-//        if (node == null) {
-//            return node;
-//        }
-//        if (data < node.key) {
-//            node.left = delete(node.left, data);
-//        }
-//        else if (data > node.key) {
-//            node.right = delete(node.right, data);
-//        }
-//        else {
-//            if ((node.left == null) || (node.right == null)) {
-//                AVLNode temp = null;
-//                if (temp == node.left) {
-//                    temp = node.right;
-//                }
-//                else {
-//                    temp = node.left;
-//                }
-//
-//                if (temp == null) {//NO CHILD NODES
-//                    temp = node;
-//                    node = null;
-//                }
-//                else //ONLY ONE CHILD
-//                {
-//                    node = temp;
-//                }
-//            }
-//            else {
-//                AVLNode temp = minimum(node.right);
-//                node.key = temp.key;
-//                node.right = delete(node.right, temp.key);
-//            }
-//        }
-//
-//        if (node == null) {
-//            return node;
-//        }
-//
-//        node.height = max(height(node.left), height(node.right)) + 1;
-//
-//        int diff;
-//        if (node == null) {
-//            diff = 0;
-//        }
-//        else {
-//            diff = height(node.left) - height(node.right);
-//        }
-//
-//        return rotate(node, data, diff);
-//    }
+
+    public void delete(int key){
+        treeAnimationStates = new ArrayList<>();
+        root = _delete(root, key, baseIndex, baseLevel);
+        treeSequence = new TreeSequence(treeAnimationStates);
+    }
+
+    private AVLNode _delete(AVLNode avlNode, int key, int index, int level){
+        AVLNode ret = null;
+        if (avlNode == null) {
+            System.out.println("NULL Node, Not found");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            treeAnimationState.add(new TreeElementAnimationData(-1,-1));
+            treeAnimationStates.add(treeAnimationState);
+            return avlNode;
+        }
+
+        if (key < avlNode.key) {
+            System.out.println("LESS KEY = " + avlNode.key);
+
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            avlNode.left = _delete(avlNode.left, key, index - level, level / 2);
+            ret = avlNode;
+        }
+        else if (key > avlNode.key) {
+            System.out.println("More KEY = " + avlNode.key);
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+            treeAnimationStates.add(treeAnimationState);
+            avlNode.right = _delete(avlNode.right, key, index + level, level / 2);
+            ret = avlNode;
+        }
+        else{
+            if (avlNode.count > 1){
+                avlNode.count--;
+                TreeAnimationState treeAnimationState = new TreeAnimationState("C");
+                treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+                treeAnimationStates.add(treeAnimationState);
+                System.out.println("Count decreased = " + avlNode.key + " : " + avlNode.count);
+                return avlNode;
+            }
+
+            System.out.println(avlNode.key +"  ---===== " + avlNode.count);
+
+            if (avlNode.left == null && avlNode.right == null){
+                System.out.println("Simple delete");
+                TreeAnimationState treeAnimationState = new TreeAnimationState("1");
+                treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+                treeAnimationStates.add(treeAnimationState);
+                ret = null;
+            }
+            else if(avlNode.left == null && avlNode.right != null){
+                System.out.println("Right copy");
+
+                TreeAnimationState step1 = new TreeAnimationState("D");
+                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step3 = new TreeAnimationState("MB");
+                step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+
+                AVLNode temp = avlNode.right;
+                Queue<AVLNode> queue = new LinkedList<>();
+                Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+                System.out.println("in = " + (index+level));
+                queue.add(temp);
+                queue2.add(new Pair(index+level, index));
+
+                while(queue.size() > 0 ) {
+                    AVLNode node = queue.remove();
+                    Pair<Integer, Integer> pair = queue2.remove();
+                    int currentIndex = pair.first;
+                    int parentIndex = pair.second;
+                    System.out.println(node.key + " | " + pair);
+                    step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                    step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+
+                    if (node.left != null) {
+                        queue.add(node.left);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                    }
+                    if (node.right != null) {
+                        queue.add(node.right);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                    }
+                }
+
+                treeAnimationStates.add(step1);
+                treeAnimationStates.add(step2);
+                treeAnimationStates.add(step3);
+
+                ret = avlNode.right;
+            }
+            else if(avlNode.left != null && avlNode.right == null){
+                System.out.println("Left copy");
+
+                TreeAnimationState step1 = new TreeAnimationState("D");
+                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step3 = new TreeAnimationState("MB");
+                step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+
+                AVLNode temp = avlNode.left;
+                Queue<AVLNode> queue = new LinkedList<>();
+                Queue<Pair<Integer, Integer>> queue2 = new LinkedList<>();
+
+                System.out.println("in = " + (index-level));
+                queue.add(temp);
+                queue2.add(new Pair(index-level, index));
+
+                while(queue.size() > 0 ){
+                    AVLNode node = queue.remove();
+                    Pair<Integer, Integer> pair = queue2.remove();
+                    int currentIndex = pair.first;
+                    int parentIndex = pair.second;
+                    System.out.println(node.key + " | " + pair);
+                    step2.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+                    step3.add(new TreeElementAnimationData(node.key, node.count, currentIndex, parentIndex));
+
+                    if(node.left != null){
+                        queue.add(node.left);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].first, TreeLayout.childs[parentIndex].first));
+
+                    }
+                    if(node.right != null){
+                        queue.add(node.right);
+                        queue2.add(new Pair(TreeLayout.childs[currentIndex].second, TreeLayout.childs[parentIndex].second));
+                    }
+                }
+
+                treeAnimationStates.add(step1);
+                treeAnimationStates.add(step2);
+                treeAnimationStates.add(step3);
+
+                ret = avlNode.left;
+            }
+            else if(avlNode.left != null && avlNode.right != null){
+                System.out.println("Right min element");
+
+                AVLNode current = avlNode.right;
+                System.out.println("index == " + index);
+                int curIndex = index+level;
+                int curLevel = level;
+
+                TreeAnimationState step1 = new TreeAnimationState("1");
+
+                step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
+                treeAnimationStates.add(step1);
+
+                while (current.left != null) {
+                    TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+                    treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
+                    current = current.left;
+                    curLevel /= 2;
+                    curIndex = curIndex - curLevel;
+                    treeAnimationStates.add(treeAnimationState);
+                }
+                TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+                treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
+                treeAnimationStates.add(treeAnimationState);
+
+                AVLNode temp = current;
+
+                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step3 = new TreeAnimationState("MB");
+
+                step2.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
+                step3.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
+
+                treeAnimationStates.add(step2);
+                treeAnimationStates.add(step3);
+
+                System.out.println("IN = " + index + " | lev = " + level);
+                avlNode.key = temp.key;
+                avlNode.count = temp.count;
+                temp.count = 1;
+                avlNode.right = _delete(avlNode.right, temp.key, index + level, level / 2);
+
+                ret = avlNode;
+            }
+        }
+
+        if (ret == null) {
+            return null;
+        }
+
+        ret.height = max(height(ret.left), height(ret.right)) + 1;
+
+        int diff;
+        diff = height(ret.left) - height(ret.right);
+
+        return rotateDel(ret, key, diff, index, level);
+    }
+
+    int bf(AVLNode avlNode){
+        if(avlNode.left != null && avlNode.right != null){
+            return avlNode.left.height - avlNode.right.height;
+        }
+        else if(avlNode.left != null && avlNode.right == null){
+            return avlNode.left.height;
+        }
+        else if(avlNode.left == null && avlNode.right != null){
+            return avlNode.right.height;
+        }
+        return 0;
+    }
+
+    AVLNode rotateDel(AVLNode avlNode, int key, int diff, int index, int level) {
+        System.out.println("in = " + index + " | lev = " + level);
+
+        // Node deleted from Right Subtree, diff = +2
+        if(diff == 2){
+//            int bf = bf(avlNode.left);
+            int bf = height(avlNode.left.left) - height(avlNode.left.right);
+            System.out.println("BF ===================== " + bf);
+            if(bf == 1){
+                System.out.println("Left Left");
+                return rightRotate(avlNode, index, level);
+            }
+            else if(bf == -1){
+                System.out.println("Left Right");
+                avlNode.left = leftRotate(avlNode.left, index - level, level/2);
+                return rightRotate(avlNode, index, level);
+            }
+            else if(bf == 0){
+                System.out.println("Left Left");
+                return rightRotate(avlNode, index, level);
+            }
+        }
+
+        // Node deleted from Left Subtree, diff = -2
+        if(diff == -2){
+//            int bf = bf(avlNode.right);
+            int bf = height(avlNode.right.left) - height(avlNode.right.right);
+            System.out.println("BF ===================== " + bf);
+            if(bf == -1){
+                System.out.println("Right Right");
+                return leftRotate(avlNode, index, level);
+            }
+            else if(bf == 1){
+                System.out.println("Right Left");
+                avlNode.right = rightRotate(avlNode.right, index + level, level/2);
+                return leftRotate(avlNode, index, level);
+            }
+            else if(bf == 0){
+                System.out.println("Right Right");
+                return leftRotate(avlNode, index, level);
+            }
+        }
+
+        System.out.println("no rotation needed :p");
+        return avlNode;
+    }
 
     AVLNode rotate(AVLNode avlNode, int key, int diff, int index, int level) {
         System.out.println("in = " + index + " | lev = " + level);

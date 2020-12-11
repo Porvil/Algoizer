@@ -476,9 +476,9 @@ public class AVLActivity extends AppCompatActivity {
                 case "INSERT":
                     avl.insert(data);
                     break;
-//                case "DELETE":
-//                    avl.delete(data);
-//                    break;
+                case "DELETE":
+                    avl.delete(data);
+                    break;
                 case "SEARCH":
                     avl.search(data);
                     break;

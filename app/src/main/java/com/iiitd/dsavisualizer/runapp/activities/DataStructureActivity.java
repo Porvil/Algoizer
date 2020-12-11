@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
+import com.iiitd.dsavisualizer.datastructures.trees.avl.AVLActivity;
 import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
 
 public class DataStructureActivity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class DataStructureActivity extends AppCompatActivity {
         btn_avl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(context, AlgorithmActivity.class));
+                startActivity(new Intent(context, AVLActivity.class));
             }
         });
 

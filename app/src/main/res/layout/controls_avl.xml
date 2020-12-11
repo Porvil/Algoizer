@@ -152,7 +152,8 @@
                     android:ems="10"
                     android:hint="Enter number"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+                    android:text="10" />
 
                 <View
                     android:layout_width="2dp"

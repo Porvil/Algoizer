@@ -33,14 +33,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Red Black Tree" />
+            android:text="Red Black Tree"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btn_splay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Splay Tree" />
+            android:text="Splay Tree"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </ScrollView>
