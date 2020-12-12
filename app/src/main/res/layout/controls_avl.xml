@@ -22,6 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/close"
             android:src="@drawable/ic_baseline_close_24" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="AVL Tree"
+            android:text="@string/avl_tree"
             android:textColor="@color/mainColor"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -63,7 +64,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="?android:colorBackground"
             android:orientation="vertical"
@@ -80,16 +81,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Enter number"
+                    android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned"
-                    android:text="13" />
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
 
                 <ImageButton
                     android:id="@+id/btn_insertrandom"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:background="?android:selectableItemBackground"
+                    android:contentDescription="@string/random"
                     android:src="@drawable/ic_random_icon" />
 
                 <View
@@ -103,7 +105,7 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="?android:selectableItemBackground"
-                    android:text="Insert"
+                    android:text="@string/insert"
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>
@@ -119,9 +121,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Enter number"
+                    android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned" />
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
 
                 <View
                     android:layout_width="2dp"
@@ -134,7 +137,7 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="?android:selectableItemBackground"
-                    android:text="Search"
+                    android:text="@string/search"
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>
@@ -150,10 +153,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Enter number"
+                    android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned"
-                    android:text="10" />
+                    android:inputType="number"
+                    android:importantForAutofill="no" />
 
                 <View
                     android:layout_width="2dp"
@@ -166,68 +169,84 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="?android:selectableItemBackground"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_inorder"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:text="Inorder"
-                android:textColor="@color/mainColor" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_preorder"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:text="Preorder"
-                android:textColor="@color/mainColor" />
+                <Button
+                    android:id="@+id/btn_preorder"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/pre_order"
+                    android:textColor="@color/mainColor" />
 
-            <Button
-                android:id="@+id/btn_postorder"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:text="Postorder"
-                android:textColor="@color/mainColor" />
+                <Button
+                    android:id="@+id/btn_inorder"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/in_order"
+                    android:textColor="@color/mainColor" />
 
-            <Button
-                android:id="@+id/btn_tree1"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Example 1"
-                android:textColor="@color/mainColor" />
+                <Button
+                    android:id="@+id/btn_postorder"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/post_order"
+                    android:textColor="@color/mainColor" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_tree2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Example 2"
-                android:textColor="@color/mainColor" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_tree3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Example 3"
-                android:textColor="@color/mainColor" />
+                <Button
+                    android:id="@+id/btn_tree1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_1"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_tree2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_2"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_tree3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_3"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_cleartree"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:selectableItemBackground"
-                android:text="Clear Tree"
+                android:text="@string/clear_tree"
                 android:textColor="@color/mainColor" />
 
 

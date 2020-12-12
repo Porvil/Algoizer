@@ -27,4 +27,19 @@
     <string name="l">l</string>
     <string name="r">r</string>
     <string name="comma_separated_ve_elements">Comma separated +ve elements</string>
+    <string name="enter_number">Enter number</string>
+    <string name="insert">Insert</string>
+    <string name="search">Search</string>
+    <string name="delete">Delete</string>
+    <string name="clear_tree">Clear Tree</string>
+    <string name="example_1">Example 1</string>
+    <string name="example_2">Example 2</string>
+    <string name="example_3">Example 3</string>
+    <string name="random">random</string>
+    <string name="pre_order">Pre-order</string>
+    <string name="in_order">In-order</string>
+    <string name="post_order">Post-order</string>
+    <string name="binary_search_tree">Binary Search Tree</string>
+    <string name="avl_tree">AVL Tree</string>
+    <string name="traversals">Traversals</string>
 </resources>

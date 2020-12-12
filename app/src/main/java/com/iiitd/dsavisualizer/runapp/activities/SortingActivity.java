@@ -42,6 +42,5 @@ public class SortingActivity extends AppCompatActivity {
             }
         });
 
-
     }
 }

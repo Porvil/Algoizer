@@ -155,33 +155,34 @@ public class AVLActivity extends AppCompatActivity {
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View view = getLayoutInflater().inflate(R.layout.layout_info, null);
+                View view = getLayoutInflater().inflate(R.layout.layout_trees_info, null);
                 TextView tv_name = view.findViewById(R.id.tv_name);
-                TextView tv_avg = view.findViewById(R.id.tv_avg);
-                TextView tv_worst = view.findViewById(R.id.tv_worst);
-                TextView tv_best = view.findViewById(R.id.tv_best);
+                TextView tv_worst_insert = view.findViewById(R.id.tv_worst_insert);
+                TextView tv_best_insert = view.findViewById(R.id.tv_best_insert);
+                TextView tv_worst_search = view.findViewById(R.id.tv_worst_search);
+                TextView tv_best_search  = view.findViewById(R.id.tv_best_search);
+                TextView tv_worst_delete = view.findViewById(R.id.tv_worst_delete);
+                TextView tv_best_delete = view.findViewById(R.id.tv_best_delete);
+                TextView tv_traversals = view.findViewById(R.id.tv_traversals);
                 TextView tv_space = view.findViewById(R.id.tv_space);
-                TextView tv_stable = view.findViewById(R.id.tv_stable);
-                TextView tv_comparisons = view.findViewById(R.id.tv_comparisons);
                 ImageButton btn_close = view.findViewById(R.id.btn_close);
 
-                String comparisons = "-";
                 if(avl != null) {
                     if(timer != null){
                         timer.cancel();
                         timer = null;
                     }
-
-                    comparisons = String.valueOf(1);
                 }
 
                 tv_name.setText(AVLStats.name);
-                tv_avg.setText(AVLStats.avg);
-                tv_worst.setText(AVLStats.worst);
-                tv_best.setText(AVLStats.best);
+                tv_worst_insert.setText(AVLStats.worst_insert);
+                tv_best_insert.setText(AVLStats.best_insert);
+                tv_worst_search.setText(AVLStats.worst_search);
+                tv_best_search.setText(AVLStats.best_search);
+                tv_worst_delete.setText(AVLStats.worst_delete);
+                tv_best_delete.setText(AVLStats.best_delete);
+                tv_traversals.setText(AVLStats.traversals);
                 tv_space.setText(AVLStats.space);
-                tv_stable.setText(AVLStats.stable);
-                tv_comparisons.setText(comparisons);
 
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(view);
@@ -937,7 +938,12 @@ public class AVLActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        btn_back.performClick();
+        if (dl_main.isDrawerOpen(Gravity.RIGHT)){
+            dl_main.closeDrawer(Gravity.RIGHT);
+        }
+        else {
+            btn_back.performClick();
+        }
     }
 
 }

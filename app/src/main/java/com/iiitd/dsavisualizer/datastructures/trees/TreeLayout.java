@@ -4,11 +4,12 @@ import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.*;
+
+import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.ARROW;
+import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.ELEMENT;
+import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.EMPTY;
 
 //HARDCODED INFORMATION, Handle with care
 public class TreeLayout {

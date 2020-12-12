@@ -27,13 +27,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSort;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class QuickSortActivity extends AppCompatActivity {
 
@@ -286,7 +284,7 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View view = getLayoutInflater().inflate(R.layout.layout_info, null);
+                View view = getLayoutInflater().inflate(R.layout.layout_sorting_info, null);
                 TextView tv_name = view.findViewById(R.id.tv_name);
                 TextView tv_avg = view.findViewById(R.id.tv_avg);
                 TextView tv_worst = view.findViewById(R.id.tv_worst);
@@ -660,7 +658,8 @@ public class QuickSortActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (dl_main.isDrawerOpen(Gravity.RIGHT)){
             dl_main.closeDrawer(Gravity.RIGHT);
-        } else {
+        }
+        else {
             btn_back.performClick();
         }
     }

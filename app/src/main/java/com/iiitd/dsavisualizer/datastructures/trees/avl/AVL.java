@@ -6,7 +6,6 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeSequence;
-import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,7 +24,7 @@ public class AVL {
         treeSequence = new TreeSequence();
     }
 
-    int height(AVLNode avlNode) {
+    private int height(AVLNode avlNode) {
         if (avlNode == null) {
             return 0;
         }
@@ -33,7 +32,7 @@ public class AVL {
         return avlNode.height;
     }
 
-    int max(int a, int b) {
+    private int max(int a, int b) {
         return (a > b) ? a : b;
     }
 
@@ -75,47 +74,14 @@ public class AVL {
 
     }
 
-//    public int largest_SmallerEqual(int key) {
-//        if (root != null) {
-//            return largest_SmallerEqual(root, key);
-//        }
-//
-//        return -1;
-//    }
-//
-//    private int largest_SmallerEqual(AVLNode avlNode, int key) {
-//        // Base cases
-//        if (avlNode == null) {
-//            return -1;
-//        }
-//        if (avlNode.key == key) {
-//            return key;
-//        }
-//        // If avlNode's value is smaller, try in right
-//        // subtree
-//        else if (avlNode.key < key) {
-//            int k = largest_SmallerEqual(avlNode.right, key);
-//            if (k == -1) {
-//                return avlNode.key;
-//            } else {
-//                return k;
-//            }
-//        } // If avlNode's key is greater, return value
-//        // from left subtree.
-//        else if (avlNode.key > key) {
-//            return largest_SmallerEqual(avlNode.left, key);
-//        }
-//        return -1;
-//    }
-
     public ArrayList<TreeAnimationState> insert(int key) {
         treeAnimationStates = new ArrayList<>();
-        root = insert(root, key, baseIndex, baseLevel);
+        root = _insert(root, key, baseIndex, baseLevel);
         treeSequence = new TreeSequence(treeAnimationStates);
         return treeAnimationStates;
     }
 
-    private AVLNode insert(AVLNode avlNode, int key, int index, int level) {
+    private AVLNode _insert(AVLNode avlNode, int key, int index, int level) {
         if (avlNode == null) {
             TreeAnimationState treeAnimationState = new TreeAnimationState("I");
             treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
@@ -144,10 +110,10 @@ public class AVL {
         treeAnimationStates.add(treeAnimationState);
 
         if (key < avlNode.key) {
-            avlNode.left = insert(avlNode.left, key, index - level, level / 2);
+            avlNode.left = _insert(avlNode.left, key, index - level, level / 2);
         }
         else if (key > avlNode.key) {
-            avlNode.right = insert(avlNode.right, key, index + level, level / 2);
+            avlNode.right = _insert(avlNode.right, key, index + level, level / 2);
         }
 
         avlNode.height = 1 + max(height(avlNode.left), height(avlNode.right));
@@ -351,10 +317,10 @@ public class AVL {
         int diff;
         diff = height(ret.left) - height(ret.right);
 
-        return rotateDel(ret, key, diff, index, level);
+        return rotateDel(ret, diff, index, level);
     }
 
-    AVLNode rotateDel(AVLNode avlNode, int key, int diff, int index, int level) {
+    private AVLNode rotateDel(AVLNode avlNode, int diff, int index, int level) {
         System.out.println("in = " + index + " | lev = " + level);
 
         // Node deleted from Right Subtree, diff = +2
@@ -401,17 +367,13 @@ public class AVL {
         return avlNode;
     }
 
-    AVLNode rotate(AVLNode avlNode, int key, int diff, int index, int level) {
+    private AVLNode rotate(AVLNode avlNode, int key, int diff, int index, int level) {
         System.out.println("in = " + index + " | lev = " + level);
 
         if(diff >= -1 && diff <= 1){
             System.out.println("no rotation needed :p");
             return avlNode;
         }
-
-//        TreeAnimationState treeAnimationState = new TreeAnimationState("R");
-//        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
-//        treeAnimationStates.add(treeAnimationState);
 
         //LL
         if (diff > 1 && key < avlNode.left.key) {
@@ -443,7 +405,7 @@ public class AVL {
         return avlNode;
     }
 
-    AVLNode rightRotate(AVLNode avlNode, int index, int level) {
+    private AVLNode rightRotate(AVLNode avlNode, int index, int level) {
 
         TreeAnimationState treeAnimationState = new TreeAnimationState("R");
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
@@ -600,8 +562,6 @@ public class AVL {
         treeAnimationStates.add(step2);
         treeAnimationStates.add(step3);
 
-
-
         // Perform rotation
         left.right = avlNode;
         avlNode.left = temp;
@@ -613,7 +573,7 @@ public class AVL {
         return left;
     }
 
-    AVLNode leftRotate(AVLNode avlNode, int index, int level) {
+    private AVLNode leftRotate(AVLNode avlNode, int index, int level) {
 
         TreeAnimationState treeAnimationState = new TreeAnimationState("R");
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
@@ -771,7 +731,6 @@ public class AVL {
         treeAnimationStates.add(step2);
         treeAnimationStates.add(step3);
 
-
         // Perform rotation
         right.left = avlNode;
         avlNode.right = temp;
@@ -781,16 +740,6 @@ public class AVL {
         right.height = max(height(right.left), height(right.right)) + 1;
 
         return right;
-    }
-
-    AVLNode minimum(AVLNode avlNode) {
-        AVLNode iterate = avlNode;
-
-        while (iterate.left != null) {
-            iterate = iterate.left;
-        }
-
-        return iterate;
     }
 
     public void inorder(){
