@@ -136,16 +136,22 @@ public class MergeSortActivity extends AppCompatActivity {
                     String customArray = et_customarray.getText().toString();
                     if(customArray != null || !customArray.isEmpty()){
                         String[] customInput = customArray.split(",");
-                        int[] data = new int[customInput.length];
-                        try {
-                            for (int i = 0; i < data.length; i++) {
-                                data[i] = Integer.parseInt(customInput[i]);
-                            }
-                            tv_arraysize.setText(String.valueOf(customInput.length));
-                        }
-                        catch (NumberFormatException e){
-                            et_customarray.setError("Bad Input");
+                        int length = customInput.length;
+                        if(length > 16){
+                            et_customarray.setError("Decrease elements");
                             tv_arraysize.setText("0");
+                        }
+                        else {
+                            int[] data = new int[length];
+                            try {
+                                for (int i = 0; i < data.length; i++) {
+                                    data[i] = Integer.parseInt(customInput[i]);
+                                }
+                                tv_arraysize.setText(String.valueOf(customInput.length));
+                            } catch (NumberFormatException e) {
+                                et_customarray.setError("Bad Input");
+                                tv_arraysize.setText("0");
+                            }
                         }
                     }
                 }
@@ -164,15 +170,22 @@ public class MergeSortActivity extends AppCompatActivity {
                 if(!isRandomArray) {
                     if (s != null || !s.toString().isEmpty()) {
                         String[] customInput = s.toString().split(",");
-                        int[] data = new int[customInput.length];
-                        try {
-                            for (int i = 0; i < data.length; i++) {
-                                data[i] = Integer.parseInt(customInput[i]);
-                            }
-                            tv_arraysize.setText(String.valueOf(customInput.length));
-                        } catch (NumberFormatException e) {
-                            et_customarray.setError("Bad Input");
+                        int length = customInput.length;
+                        if(length > 16){
+                            et_customarray.setError("Decrease elements");
                             tv_arraysize.setText("0");
+                        }
+                        else {
+                            int[] data = new int[length];
+                            try {
+                                for (int i = 0; i < data.length; i++) {
+                                    data[i] = Integer.parseInt(customInput[i]);
+                                }
+                                tv_arraysize.setText(String.valueOf(customInput.length));
+                            } catch (NumberFormatException e) {
+                                et_customarray.setError("Bad Input");
+                                tv_arraysize.setText("0");
+                            }
                         }
                     }
                 }
@@ -401,16 +414,23 @@ public class MergeSortActivity extends AppCompatActivity {
                     String customArray = et_customarray.getText().toString();
                     if(customArray != null || !customArray.isEmpty()){
                         String[] customInput = customArray.split(",");
-                        int[] data = new int[customInput.length];
-                        try {
-                            for (int i = 0; i < data.length; i++) {
-                                data[i] = Integer.parseInt(customInput[i]);
-                            }
-                            mergeSort = new MergeSort(context, ll_anim, data);
+                        int length = customInput.length;
+                        if(length > 16){
+                            et_customarray.setError("Decrease elements");
+                            tv_arraysize.setText("0");
                         }
-                        catch (NumberFormatException e){
-                            et_customarray.setError("Bad Input");
-                            mergeSort = null;
+                        else {
+                            int[] data = new int[customInput.length];
+                            try {
+                                for (int i = 0; i < data.length; i++) {
+                                    data[i] = Integer.parseInt(customInput[i]);
+                                }
+                                mergeSort = new MergeSort(context, ll_anim, data);
+                            }
+                            catch (NumberFormatException e){
+                                et_customarray.setError("Bad Input");
+                                mergeSort = null;
+                            }
                         }
                     }
                 }
@@ -600,7 +620,11 @@ public class MergeSortActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        btn_back.performClick();
+        if (dl_main.isDrawerOpen(Gravity.RIGHT)){
+            dl_main.closeDrawer(Gravity.RIGHT);
+        } else {
+            btn_back.performClick();
+        }
     }
 
 }

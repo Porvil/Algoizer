@@ -23,4 +23,8 @@
     <string name="do_you_want_to_go_back">Do you want to go back?</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="_0">0</string>
+    <string name="l">l</string>
+    <string name="r">r</string>
+    <string name="comma_separated_ve_elements">Comma separated +ve elements</string>
 </resources>

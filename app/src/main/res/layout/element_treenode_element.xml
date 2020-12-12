@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:gravity="center|top"
-        android:text="-"
+        android:text="@string/_0"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|center"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|left"
-        android:text="0"
+        android:text="@string/_0"
         android:visibility="invisible" />
 
 </FrameLayout>

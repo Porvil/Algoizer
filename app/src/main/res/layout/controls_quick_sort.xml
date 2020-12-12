@@ -143,7 +143,8 @@
                 android:layout_marginRight="10dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Add comma separated  +ve elements (Max 16)"
+                android:digits="0123456789,"
+                android:hint="@string/comma_separated_ve_elements"
                 android:textColor="@color/mainColor"
                 android:textColorHint="@color/mainColor"
                 android:textSize="14sp" />
