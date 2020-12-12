@@ -823,7 +823,7 @@ public class AVLActivity extends AppCompatActivity {
                     final ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
                     col = 0;
                     for(final TreeLayoutElement layoutElement : treeLayout){
-                        final View bstView = UtilUI.getBSTView(context, layoutInflater, layoutElement, height, row, col);
+                        final View bstView = UtilUI.getTreeNodeView(context, layoutInflater, layoutElement, height, row, col);
                         final int finalRow = row;
                         bstView.setOnClickListener(new View.OnClickListener() {
                             @Override

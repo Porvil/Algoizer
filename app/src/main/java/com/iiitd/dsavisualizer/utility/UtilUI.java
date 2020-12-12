@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TableRow;
@@ -108,42 +107,26 @@ public class UtilUI {
 
     }
 
-    public static View getBSTView(LayoutInflater layoutInflater, int layout, int visibility, int weight){
-        View myView = layoutInflater.inflate(layout, null);
-        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
-//        myView.setPadding(5,5,5,5);
-
-        if(layout == R.layout.element_bst_arrow)
-            visibility = View.INVISIBLE;
-
-        myView.setVisibility(visibility);
-
-        return myView;
-    }
-
-    public static View getBSTView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int height, int row, int col){
+    public static View getTreeNodeView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int height, int row, int col){
         int layout = 0;
         int weight = treeLayoutElement.weight;
 //        int visibility = View.VISIBLE;
         int visibility = View.INVISIBLE;
         switch (treeLayoutElement.type){
             case EMPTY:
-                layout = R.layout.element_bst_empty;
+                layout = R.layout.element_treenode_empty;
                 break;
             case ARROW:
-                layout = R.layout.element_bst_arrow;
+                layout = R.layout.element_treenode_arrow;
                 break;
             case ELEMENT:
-                layout = R.layout.element_bst_element;
+                layout = R.layout.element_treenode_element;
                 break;
         }
         View myView = layoutInflater.inflate(layout, null);
         myView.setLayoutParams(new TableRow.LayoutParams(0, height, weight));
-//        myView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, weight));
-//        myView.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight));
-//        myView.setPadding(5,5,5,5);
 
-        if(row > 0 && layout == R.layout.element_bst_arrow){
+        if(row > 0 && layout == R.layout.element_treenode_arrow){
             int arrowLayout = R.drawable.arrow_4;
             if(row == 1){
                 arrowLayout = R.drawable.arrow_4;
@@ -164,9 +147,8 @@ public class UtilUI {
             FrameLayout frameLayout = myView.findViewById(R.id.fl_arrow);
             frameLayout.setBackground(getDrawable(context, arrowLayout));
         }
-//        if(layout == R.layout.element_bst_arrow)
-//            visibility = View.INVISIBLE;
 
+        // FOR DEBUGGING PURPOSE
         int in = 0;
         if(row == 0)
             in = 8;

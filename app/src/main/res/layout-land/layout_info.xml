@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="600dp"
-    android:layout_height="250dp"
+    android:layout_height="300dp"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_width="550dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="TextView"
+        android:text="@string/info"
         android:textColor="@color/mainColor"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name">
@@ -31,58 +31,67 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="Time :"
+            android:text="@string/time"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView14"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
             android:id="@+id/textView11"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="Space :"
+            android:text="@string/space"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView12"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="Stable :"
+            android:text="@string/stable"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="No. of Comparisions :"
+            android:text="@string/no_of_comparisions"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="450dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/tv_name">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
+            android:id="@+id/constraintLayout10"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,11 +99,52 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tv_avg1"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/average"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_worst1"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/worst"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_avg1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tv_best1"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/best"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
                 android:id="@+id/tv_avg"
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -104,7 +154,6 @@
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_avg"
                 app:layout_constraintTop_toTopOf="parent"
@@ -115,7 +164,6 @@
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_worst"
@@ -128,33 +176,29 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/tv_stable"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_stable"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/tv_comparisons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_space" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_comparisons"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_stable" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
@@ -162,11 +206,11 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_close_24"
-        android:contentDescription="Close" />
+        app:srcCompat="@drawable/ic_baseline_close_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

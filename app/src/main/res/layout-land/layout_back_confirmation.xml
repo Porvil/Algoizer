@@ -11,9 +11,9 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="Confirm Back"
+        android:text="@string/confirm_back"
         android:textColor="@color/mainColor"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,17 +21,23 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center_horizontal|top"
-        android:text="Do you want to go back?"
+        android:text="@string/do_you_want_to_go_back"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <Button
         android:id="@+id/btn_yes"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Yes"
+        style="@style/Button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/yes"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_cancel"
@@ -39,9 +45,13 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="150dp"
+        style="@style/Button"
+        android:layout_width="130dp"
         android:layout_height="50dp"
-        android:text="Cancel"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/cancel"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
