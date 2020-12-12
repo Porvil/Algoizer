@@ -4,4 +4,6 @@
     <string name="array_size">Array Size</string>
     <string name="professors">Dr. Syamantak Das, Dr. Debajyoti Bera</string>
     <string name="students">Porvil, Zubair Aslam</string>
+    <string name="developed_by">Developed By</string>
+    <string name="guided_by">Guided By</string>
 </resources>

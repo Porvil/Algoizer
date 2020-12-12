@@ -1,4 +1,6 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -8,4 +10,11 @@
         <item name="colorControlNormal">@color/mainColor</item>
     </style>
 
+    <style name="Button" >
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_corner</item>
+<!--        <item name="android:background">@color/mainColorDarkerShade</item>-->
+    </style>
 </resources>
