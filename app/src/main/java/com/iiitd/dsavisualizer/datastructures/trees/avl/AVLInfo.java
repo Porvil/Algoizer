@@ -35,19 +35,8 @@ public class AVLInfo {
         map.put(SINGLE_MERGE, new Integer[]{1, 2});
     }
 
-//    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 2);
-//    public static final List<Integer> tree1 = Arrays.asList(30,20,40,10);
-//    public static final List<Integer> tree1 = Arrays.asList(30,10,40,20);
-//    public static final List<Integer> tree1 = Arrays.asList(30,10,40,5,20);
-//    public static final List<Integer> tree1 = Arrays.asList(20,10,30,40);
-//    public static final List<Integer> tree1 = Arrays.asList(20,10,40,30);
-    public static final List<Integer> tree1 = Arrays.asList(20,10,30,25,40);
-//    public static final List<Integer> tree1 = Arrays.asList(31,23,61,13,27,51,83,30,91);
-//    public static final List<Integer> tree1 = Arrays.asList(8,4,14,6,12,42,72);
-//    public static final List<Integer> tree1 = Arrays.asList(8, 4, 12, 14);
-//    public static final List<Integer> tree1 = Arrays.asList(100, 50, 150, 20, 70, 60, 80, 120, 200, 220, 110, 130);
-    public static final List<Integer> tree2 = Arrays.asList(8,2,12,1,6);
-//    public static final List<Integer> tree2 = Arrays.asList(100, 150, 120, 200, 220, 110, 130);
-    public static final List<Integer> tree3 = Arrays.asList(50, 40, 100, 30, 45, 10, 35, 65);
+    public static final List<Integer> tree1 = Arrays.asList(60, 30, 80, 40, 70);
+    public static final List<Integer> tree2 = Arrays.asList(60, 40, 80, 20, 50);
+    public static final List<Integer> tree3 = Arrays.asList(50, 30, 80, 60, 100);
 
 }

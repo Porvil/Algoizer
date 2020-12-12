@@ -368,13 +368,7 @@ public class AVLActivity extends AppCompatActivity {
         btn_tree3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                createExampleTree(AVLInfo.tree3);
-                for(ArrayList<Pair<Integer, Integer>> a : tableRowsCoordinates){
-                    for(Pair<Integer, Integer> p :  a){
-                        System.out.print(p);
-                    }
-                    System.out.println();
-                }
+                createExampleTree(AVLInfo.tree3);
             }
         });
 
