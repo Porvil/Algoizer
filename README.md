@@ -8,7 +8,7 @@ DSA Visualizer is an android application for learning and visualizing the data s
 - QuickSort[Done]
 - BubbleSort[For Later Development]
 - Binary Search Tree[Done]
-- AVL Tree[In Progress]
+- AVL Tree[Done]
 - Red Black Tree[Tentative]
 - Splay Tree[Tentative]
 
@@ -24,6 +24,10 @@ DSA Visualizer is an android application for learning and visualizing the data s
  
 - v1.1 Binary Search Tree (BST) Test\
 [v1.1-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.1-alpha/v1.1-alpha.apk)
+
+- v2.0 Test Release - 1\
+[v2.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v2.0-alpha/v2.0-alpha.apk)
+
 
 ### Usage:
 - Use menu control button to do operations on respective Data Structure/Algorithms
