@@ -4,7 +4,7 @@ import com.iiitd.dsavisualizer.R;
 
 public class AppSettings {
 
-    public static final int SPLASH_TIME = 1000;
+    public static final int SPLASH_TIME = 1500;
     public static final int DEFAULT_ANIM_SPEED = 1500; // Range 500ms to 2500ms
     public static final int DEFAULT_ANIM_DURATION = 750; // Half of DEFAULT_ANIM_SPEED
     public static final int TEXT_SMALL = 12;

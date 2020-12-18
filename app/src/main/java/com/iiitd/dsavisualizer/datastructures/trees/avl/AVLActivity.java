@@ -563,7 +563,7 @@ public class AVLActivity extends AppCompatActivity {
                                         value.setText(String.valueOf(treeElementAnimationData.data));
                                         count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                        ViewAnimator.animate(currentView).duration(animDurationTemp).bounce().start();
+                                        ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
                                     }
                                     break;
                                 }
@@ -900,6 +900,7 @@ public class AVLActivity extends AppCompatActivity {
                 }
 
                 treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
+                dl_main.openDrawer(Gravity.RIGHT);
             }
         });
 

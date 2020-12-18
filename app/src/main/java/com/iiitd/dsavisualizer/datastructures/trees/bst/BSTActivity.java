@@ -554,7 +554,7 @@ public class BSTActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(treeElementAnimationData.data));
                                     count.setText(String.valueOf(treeElementAnimationData.count));
 
-                                    ViewAnimator.animate(currentView).duration(animDurationTemp).bounce().start();
+                                    ViewAnimator.animate(currentView).duration(animDurationTemp).flash().start();
                                     break;
                                 }
                                 case "S": {
@@ -810,6 +810,7 @@ public class BSTActivity extends AppCompatActivity {
                 }
 
                 treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
+                dl_main.openDrawer(Gravity.RIGHT);
             }
         });
 
