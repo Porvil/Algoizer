@@ -53,7 +53,7 @@ public class BubbleSortInfo {
     }
 
     public static String getFlagString(){
-        return "no swaps, break outer for loop";
+        return "flag is false, break outer for loop";
     }
 
 }

@@ -469,32 +469,7 @@ public class QuickSortActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
-
-                View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-
-                Button btn_cancel = view.findViewById(R.id.btn_cancel);
-                Button btn_yes = view.findViewById(R.id.btn_yes);
-
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(view);
-                dialog.show();
-
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                btn_yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
+                back();
             }
         });
 
@@ -607,22 +582,27 @@ public class QuickSortActivity extends AppCompatActivity {
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
                         UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
-                        UtilUI.highlightViews(context, quickSort.sequence.views,
-                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-
                         UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
                                 quickSort.views);
-
-                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-                                quickSort.views, curSeqNo);
+//                        UtilUI.highlightViews(context, quickSort.sequence.views,
+//                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+//                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+//                                quickSort.views, curSeqNo);
+                        UtilUI.highlightCombined(context, quickSort.sortedIndexes,
+                                quickSort.views, curSeqNo,
+                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
 
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
-                        UtilUI.highlightViews(context, quickSort.sequence.views,null);
-                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-                                quickSort.views, -1);
                         UtilUI.setText(tv_info, "Array is sorted");
+//                        UtilUI.highlightViews(context, quickSort.sequence.views,null);
+//                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+//                                quickSort.views, -1);
+                        UtilUI.highlightCombined(context, quickSort.sortedIndexes,
+                                quickSort.views, -1,
+                                null);
+
                     }
                 }
             });
@@ -643,12 +623,16 @@ public class QuickSortActivity extends AppCompatActivity {
                         Integer[] integers = QuickSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
-                    UtilUI.highlightViews(context, quickSort.sequence.views,
-                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                     UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
                             quickSort.views);
-                    UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-                            quickSort.views, curSeqNo);
+//                    UtilUI.highlightViews(context, quickSort.sequence.views,
+//                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+//                    UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
+//                            quickSort.views, curSeqNo);
+                    UtilUI.highlightCombined(context, quickSort.sortedIndexes,
+                            quickSort.views, curSeqNo,
+                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+
                 }
             });
         }
@@ -660,8 +644,37 @@ public class QuickSortActivity extends AppCompatActivity {
             dl_main.closeDrawer(Gravity.RIGHT);
         }
         else {
-            btn_back.performClick();
+            back();
         }
+    }
+
+    private void back(){
+        isAutoPlay = false;
+        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+        timer.cancel();
+
+        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
     }
 
 }

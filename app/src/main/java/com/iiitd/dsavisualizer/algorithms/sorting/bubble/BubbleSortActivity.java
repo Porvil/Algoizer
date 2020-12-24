@@ -451,32 +451,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
-
-                View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-
-                Button btn_cancel = view.findViewById(R.id.btn_cancel);
-                Button btn_yes = view.findViewById(R.id.btn_yes);
-
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(view);
-                dialog.show();
-
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                btn_yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
+                back();
             }
         });
 
@@ -630,8 +605,37 @@ public class BubbleSortActivity extends AppCompatActivity {
             dl_main.closeDrawer(Gravity.RIGHT);
         }
         else {
-            btn_back.performClick();
+            back();
         }
+    }
+
+    private void back(){
+        isAutoPlay = false;
+        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+        timer.cancel();
+
+        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
     }
 
 }

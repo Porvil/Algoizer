@@ -207,12 +207,14 @@ public class QuickSort {
                         QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
                 animationState5.addElementAnimationData(new ElementAnimationData(arr[i].index, new Pair<>(AnimationDirection.RIGHT, val)));
                 animationState5.addElementAnimationData(new ElementAnimationData(arr[j].index, new Pair<>(AnimationDirection.LEFT, val)));
+                animationState5.addHighlightIndexes(arr[i].index, arr[j].index);
                 Util.swap(arr[i], arr[j]);
                 i++;
             }
             else{
                 animationState5 = new AnimationState(QuickSortInfo.E_GREATEREQUAL_P,
                         QuickSortInfo.getComparedString(arr[j].data, pivotElement.data, j, i));
+                animationState5.addHighlightIndexes(arr[i].index, arr[j].index);
             }
             animationState5.addPointers(pairP, pairI, pairJ);
             sequence.addAnimSeq(animationState5);
@@ -223,15 +225,18 @@ public class QuickSort {
         animationState6.addElementAnimationData(new ElementAnimationData(arr[low].index, new Pair<>(AnimationDirection.RIGHT, val2)));
         animationState6.addElementAnimationData(new ElementAnimationData(arr[i-1].index, new Pair<>(AnimationDirection.LEFT, val2)));
         animationState6.addPointers(new Pair<>(pivotElement.index, "P"), new Pair<>(arr[i-1].index, "I-1"));
+        animationState6.addHighlightIndexes(arr[i-1].index, pivotElement.index);
         sequence.addAnimSeq(animationState6);
         Util.swap(arr[low], arr[i-1]);
 
+        sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[i-1].index));
         AnimationState animationState7 = new AnimationState(QuickSortInfo.PA_U, QuickSortInfo.PA_U);
-        animationState7.addHighlightIndexes(arr[i-1].index);
+//        animationState7.addHighlightIndexes(arr[i-1].index);
         for(int z=low;z<=high;z++){
             animationState7.addElementAnimationData(new ElementAnimationData(quickSortData[z].index, new Pair<>(AnimationDirection.UP, 1)));
         }
         sequence.addAnimSeq(animationState7);
+
 
         return i-1;
     }

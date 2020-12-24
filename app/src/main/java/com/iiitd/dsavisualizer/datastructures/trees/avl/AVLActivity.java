@@ -210,48 +210,7 @@ public class AVLActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timer != null) {
-                    timer.cancel();
-                    timer = null;
-                }
-
-                View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-
-                Button btn_cancel = view.findViewById(R.id.btn_cancel);
-                Button btn_yes = view.findViewById(R.id.btn_yes);
-
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(view);
-                dialog.show();
-
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        btn_menu.setEnabled(true);
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        dialog.dismiss();
-                    }
-                });
-
-                btn_yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        System.out.println("Dismmised");
-                        btn_menu.setEnabled(true);
-                        btn_back.setEnabled(true);
-                        btn_info.setEnabled(true);
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    }
-                });
-
+                back();
             }
 
         });
@@ -937,8 +896,52 @@ public class AVLActivity extends AppCompatActivity {
             dl_main.closeDrawer(Gravity.RIGHT);
         }
         else {
-            btn_back.performClick();
+            back();
         }
+    }
+
+    private void back(){
+        if(timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+
+        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_menu.setEnabled(true);
+                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                dialog.dismiss();
+            }
+        });
+
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                System.out.println("Dismmised");
+                btn_menu.setEnabled(true);
+                btn_back.setEnabled(true);
+                btn_info.setEnabled(true);
+                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        });
     }
 
 }
