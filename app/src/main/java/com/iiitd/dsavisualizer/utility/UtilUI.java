@@ -89,7 +89,7 @@ public class UtilUI {
 
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
             }
             return;
         }
@@ -101,7 +101,35 @@ public class UtilUI {
         for(Pair<Integer, Integer> pair : sortedIndexes){
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
-                        .setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+                        .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+            }
+        }
+
+    }
+
+    public static void highlightCombined(Context context, ArrayList<Pair<Integer, Integer>> sortedIndexes,
+                                         View[] views, int curSeqNo, ArrayList<Integer> indexes){
+        if(curSeqNo == -1){
+            for(View view : views){
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+            }
+            return;
+        }
+
+        for(View view : views){
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+        }
+
+        if(indexes != null) {
+            for (int i : indexes) {
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+            }
+        }
+
+        for(Pair<Integer, Integer> pair : sortedIndexes){
+            if(curSeqNo >= pair.first){
+                views[pair.second].findViewById(R.id.tv_elementvalue)
+                        .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
             }
         }
 

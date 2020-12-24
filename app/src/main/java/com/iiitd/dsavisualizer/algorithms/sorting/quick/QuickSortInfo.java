@@ -35,7 +35,7 @@ public class QuickSortInfo {
 
     public static final int[] boldIndexes = new int[]{0, 7};
 
-           public static final String[] psuedocode = new String[]{
+    public static final String[] psuedocode = new String[]{
        /*0*/         "quickSort(data, start, end):",
        /*1*/         "    if start > end",
        /*2*/         "        return",
@@ -59,7 +59,7 @@ public class QuickSortInfo {
 
     public static String getComparedString(int e, int p, int eIndex, int iIndex){
        if(e < p){
-           return e + " < " + p + ", swap data[" + eIndex + "] and data[" + iIndex +"], i++" ;
+           return e + " < " + p + ", swap data[" + eIndex + "] and data[" + iIndex + "], i++" ;
        }
 
        return e + " >= " + p + ", continue";

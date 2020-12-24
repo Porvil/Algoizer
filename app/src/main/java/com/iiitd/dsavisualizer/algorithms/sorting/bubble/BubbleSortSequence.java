@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.algorithms.sorting.merge;
+package com.iiitd.dsavisualizer.algorithms.sorting.bubble;
 
 import android.content.Context;
 import android.util.Pair;
@@ -12,9 +12,9 @@ import com.iiitd.dsavisualizer.algorithms.sorting.Sequence;
 
 import java.util.ArrayList;
 
-public class MergeSortSequence extends Sequence {
+public class BubbleSortSequence extends Sequence {
 
-    public MergeSortSequence(int curSeqNo) {
+    public BubbleSortSequence(int curSeqNo) {
         this.curSeqNo = curSeqNo;
         size = 0;
         this.animationStates = new ArrayList<>();
@@ -54,7 +54,7 @@ public class MergeSortSequence extends Sequence {
 
     @Override
     public boolean backward(){
-        if(size <= 1)
+        if(size <= 0)
             return false;
 
         if(curSeqNo == 0)
@@ -81,7 +81,7 @@ public class MergeSortSequence extends Sequence {
 
     @Override
     public boolean forward(){
-        if(size <= 1)
+        if(size <= 0)
             return false;
 
         if(curSeqNo == size)

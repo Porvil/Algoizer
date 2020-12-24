@@ -1,6 +1,8 @@
-package com.iiitd.dsavisualizer.runapp.others;
+package com.iiitd.dsavisualizer.algorithms.sorting;
 
 import android.util.Pair;
+
+import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 
 import java.util.ArrayList;
 import java.util.Arrays;

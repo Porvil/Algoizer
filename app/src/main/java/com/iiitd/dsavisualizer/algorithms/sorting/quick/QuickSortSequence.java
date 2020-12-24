@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.runapp.others.AnimationState;
-import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
-import com.iiitd.dsavisualizer.runapp.others.Sequence;
+import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
+import com.iiitd.dsavisualizer.algorithms.sorting.Sequence;
 
 import java.util.ArrayList;
 

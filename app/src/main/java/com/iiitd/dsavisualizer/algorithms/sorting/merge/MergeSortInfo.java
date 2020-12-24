@@ -35,7 +35,7 @@ public class MergeSortInfo {
 
     public static final int[] boldIndexes = new int[]{0, 8};
 
-           public static final String[] psuedocode = new String[]{
+    public static final String[] psuedocode = new String[]{
     /*0*/         "mergeSort(data, start, end):",
     /*1*/         "    if start > end",
     /*2*/         "        return",

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.runapp.others.AnimationState;
-import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
+import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Random;
@@ -140,7 +140,7 @@ public class MergeSort {
     }
 
     private void mergesort(){
-        final AnimationState animationState = new AnimationState(MergeSortInfo.MS, MergeSortInfo.getMergeSortString(0, mergeSortData.length-1));
+        AnimationState animationState = new AnimationState(MergeSortInfo.MS, MergeSortInfo.getMergeSortString(0, mergeSortData.length-1));
         for(int i=0;i<mergeSortData.length;i++){
             animationState.addElementAnimationData(new ElementAnimationData(mergeSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
             animationState.addHighlightIndexes(mergeSortData[i].index);

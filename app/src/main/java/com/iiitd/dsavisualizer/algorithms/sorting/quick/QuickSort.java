@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.runapp.others.AnimationState;
-import com.iiitd.dsavisualizer.runapp.others.ElementAnimationData;
+import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
