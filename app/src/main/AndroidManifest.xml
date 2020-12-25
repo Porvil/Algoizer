@@ -51,12 +51,12 @@
         </activity>
 
         <activity
-            android:name=".algorithms.sorting.merge.MergeSortActivity"
+            android:name=".algorithms.sorting.insertion.InsertionSortActivity"
             android:screenOrientation="sensorLandscape">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -66,6 +66,15 @@
                             <action android:name="android.intent.action.MAIN" />
                             <category android:name="android.intent.category.LAUNCHER" />
                         </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".algorithms.sorting.merge.MergeSortActivity"
+            android:screenOrientation="sensorLandscape">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <activity
