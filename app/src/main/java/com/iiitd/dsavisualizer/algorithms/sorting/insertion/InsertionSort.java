@@ -13,7 +13,6 @@ import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
@@ -139,7 +138,7 @@ public class InsertionSort {
     }
 
     private void insertionsort() {
-        AnimationState animationState = new AnimationState(InsertionSortInfo.BS, InsertionSortInfo.getBubbleSortString());
+        AnimationState animationState = new AnimationState(InsertionSortInfo.IS, InsertionSortInfo.getInsertionSortString());
         for(int i = 0; i< insertionSortData.length; i++){
             animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
             animationState.addHighlightIndexes(insertionSortData[i].index);
@@ -155,19 +154,18 @@ public class InsertionSort {
             InsertionSortData insertionSortData = arr[i];
             int j = i - 1;
 
-            AnimationState animationState = new AnimationState(InsertionSortInfo.I,
-                    "Highlight");
+            AnimationState animationState = new AnimationState(InsertionSortInfo.VAL, InsertionSortInfo.getValString(insertionSortData.data, j));
             animationState.addHighlightIndexes(insertionSortData.index);
             animationState.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
                     new Pair<>(AnimationDirection.DOWN, 1)));
             sequence.addAnimSeq(animationState);
 
             while (j >= 0) {
+                comparisons++;
                 if(arr[j].data > insertionSortData.data) {
-                    comparisons++;
 
-                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.I,
-                            "Highlight");
+                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.L_GREATER_R,
+                            InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, insertionSortData.index));
                     animationState1.addHighlightIndexes(insertionSortData.index);
                     animationState1.addHighlightIndexes(arr[j].index);
                     animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index,
@@ -180,8 +178,8 @@ public class InsertionSort {
                     j--;
                 }
                 else{
-                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.I,
-                            "Highlight");
+                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.L_LESSEQUAL_R,
+                            InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, insertionSortData.index));
                     animationState1.addHighlightIndexes(insertionSortData.index);
                     animationState1.addHighlightIndexes(arr[j].index);
                     sequence.addAnimSeq(animationState1);
@@ -190,8 +188,7 @@ public class InsertionSort {
                 }
             }
 
-            AnimationState animationState2 = new AnimationState(InsertionSortInfo.I,
-                    "Highlight");
+            AnimationState animationState2 = new AnimationState(InsertionSortInfo.VAL_U, InsertionSortInfo.getValUString());
             animationState2.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
                     new Pair<>(AnimationDirection.UP, 1)));
             sequence.addAnimSeq(animationState2);
