@@ -107,6 +107,7 @@ public class UtilUI {
 
     }
 
+    // Used by Bubble Sort and Quick Sort
     public static void highlightCombined(Context context, ArrayList<Pair<Integer, Integer>> sortedIndexes,
                                          View[] views, int curSeqNo, ArrayList<Integer> indexes){
         if(curSeqNo == -1){
@@ -130,6 +131,39 @@ public class UtilUI {
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
                         .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+            }
+        }
+
+    }
+
+    // Used by Insertion Sort
+    public static void highlightCombinedForInsertionSort(Context context, ArrayList<Pair<Integer, Integer>> sortedIndexes,
+                                                         View[] views, int curSeqNo, ArrayList<Integer> indexes){
+        if(curSeqNo == -1){
+            for(View view : views){
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+            }
+            return;
+        }
+
+        for(View view : views){
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+        }
+
+        ArrayList<Integer> high = new ArrayList<>();
+        if(indexes != null) {
+            for (int i : indexes) {
+                high.add(i);
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+            }
+        }
+
+        for(Pair<Integer, Integer> pair : sortedIndexes){
+            if(curSeqNo >= pair.first) {
+                if (!high.contains(pair.second)) {
+                    views[pair.second].findViewById(R.id.tv_elementvalue)
+                            .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                }
             }
         }
 

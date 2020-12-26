@@ -75,7 +75,7 @@ public class InsertionSort {
         int totalWidth = linearLayout.getWidth();
         int totalHeight = linearLayout.getHeight();
         this.width = (float) totalWidth / arraySize;
-        this.height =  (float) totalHeight;
+        this.height =  (float) totalHeight / 2;
 
         int MAX = 0;
 
@@ -150,43 +150,55 @@ public class InsertionSort {
 
     private void insertion(InsertionSortData[] arr){
         int length = arr.length;
-        boolean flag = false;
+        sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[0].index));
+        for (int i = 1; i < length; i++) {
+            InsertionSortData insertionSortData = arr[i];
+            int j = i - 1;
 
-        for (int i = 0; i < length; i++) {
-            flag = false;
+            AnimationState animationState = new AnimationState(InsertionSortInfo.I,
+                    "Highlight");
+            animationState.addHighlightIndexes(insertionSortData.index);
+            animationState.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+                    new Pair<>(AnimationDirection.DOWN, 1)));
+            sequence.addAnimSeq(animationState);
 
-            for (int j = 0; j < length - i - 1; j++) {
-                comparisons++;
-                if (arr[j].data > arr[j + 1].data) {
-                    AnimationState animationState = new AnimationState(InsertionSortInfo.L_GREATER_R, InsertionSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
-                    animationState.addHighlightIndexes(insertionSortData[j].index, insertionSortData[j+1].index);
-                    animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[j].index, new Pair<>(AnimationDirection.RIGHT, 1)));
-                    animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[j+1].index, new Pair<>(AnimationDirection.LEFT, 1)));
-                    sequence.addAnimSeq(animationState);
+            while (j >= 0) {
+                if(arr[j].data > insertionSortData.data) {
+                    comparisons++;
 
-                    Util.swap(arr[j], arr[j + 1]);
-                    flag = true;
+                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.I,
+                            "Highlight");
+                    animationState1.addHighlightIndexes(insertionSortData.index);
+                    animationState1.addHighlightIndexes(arr[j].index);
+                    animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index,
+                            new Pair<>(AnimationDirection.RIGHT, 1)));
+                    animationState1.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+                            new Pair<>(AnimationDirection.LEFT, 1)));
+                    sequence.addAnimSeq(animationState1);
+
+                    arr[j + 1] = arr[j];
+                    j--;
                 }
                 else{
-                    AnimationState animationState = new AnimationState(InsertionSortInfo.L_LESSEQUAL_R, InsertionSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
-                    animationState.addHighlightIndexes(insertionSortData[j].index, insertionSortData[j+1].index);
-                    animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[j].index, new Pair<>(AnimationDirection.NULL, 1)));
-                    animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[j+1].index, new Pair<>(AnimationDirection.NULL, 1)));
-                    sequence.addAnimSeq(animationState);
-                }
+                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.I,
+                            "Highlight");
+                    animationState1.addHighlightIndexes(insertionSortData.index);
+                    animationState1.addHighlightIndexes(arr[j].index);
+                    sequence.addAnimSeq(animationState1);
 
+                    break;
+                }
             }
 
-            if(!flag){
-                AnimationState animationState = new AnimationState(InsertionSortInfo.FLAG, InsertionSortInfo.getFlagString());
-                sequence.addAnimSeq(animationState);
-                for(int k=0;k<length-i-1;k++){
-                    sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[k].index));
-                }
-                return;
-            }
+            AnimationState animationState2 = new AnimationState(InsertionSortInfo.I,
+                    "Highlight");
+            animationState2.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+                    new Pair<>(AnimationDirection.UP, 1)));
+            sequence.addAnimSeq(animationState2);
+            sortedIndexes.add(new Pair<>(sequence.animationStates.size(), insertionSortData.index));
 
-            sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[length-i-1].index));
+            arr[j + 1] = insertionSortData;
+
         }
     }
 

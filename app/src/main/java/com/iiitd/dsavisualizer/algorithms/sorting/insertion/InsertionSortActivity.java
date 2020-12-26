@@ -558,14 +558,14 @@ public class InsertionSortActivity extends AppCompatActivity {
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
                         UtilUI.setText(tv_info, insertionSort.sequence.animationStates.get(curSeqNo).info);
-                        UtilUI.highlightCombined(context, insertionSort.sortedIndexes,
+                        UtilUI.highlightCombinedForInsertionSort(context, insertionSort.sortedIndexes,
                                 insertionSort.views, curSeqNo,
                                 insertionSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
                         UtilUI.setText(tv_info, "Array is sorted");
-                        UtilUI.highlightCombined(context, insertionSort.sortedIndexes,
+                        UtilUI.highlightCombinedForInsertionSort(context, insertionSort.sortedIndexes,
                                 insertionSort.views, -1,
                                 null);
                     }
@@ -589,7 +589,7 @@ public class InsertionSortActivity extends AppCompatActivity {
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
 
-                    UtilUI.highlightCombined(context, insertionSort.sortedIndexes,
+                    UtilUI.highlightCombinedForInsertionSort(context, insertionSort.sortedIndexes,
                             insertionSort.views, curSeqNo,
                             insertionSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
 

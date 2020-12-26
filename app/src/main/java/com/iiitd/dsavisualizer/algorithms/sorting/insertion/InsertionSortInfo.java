@@ -7,6 +7,7 @@ public class InsertionSortInfo {
 
     /*0*/  public static final String BS = "Insertion Sort";
     /*4*/  public static final String FLAG = "Flag";
+    /*11*/ public static final String I = "I";
     /*11*/ public static final String L_LESSEQUAL_R = "Left <= Right";
     /*13*/ public static final String L_GREATER_R = "Left > Right";
 
@@ -15,6 +16,7 @@ public class InsertionSortInfo {
     static {
         map.put(BS, new Integer[]{0});
         map.put(FLAG, new Integer[]{13, 14});
+        map.put(I, new Integer[]{7, 8, 9});
         map.put(L_LESSEQUAL_R, new Integer[]{7, 8, 9});
         map.put(L_GREATER_R, new Integer[]{10, 11});
     }
