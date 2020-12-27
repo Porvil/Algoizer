@@ -45,7 +45,7 @@ public class SelectionSortInfo {
 
     public static String getComparedString(int a, int b, int index){
         if(a < b){
-            return a + " < " + b + ", min_index = " + index;
+            return a + " < " + b + ", min_ind = " + index;
         }
 
         return a + " >= " + b + ", continue";
@@ -56,7 +56,7 @@ public class SelectionSortInfo {
     }
 
     public static String getValString(int index){
-        return "min_index = " + index;
+        return "min_ind = " + index;
     }
 
     public static String getSwapString(int i, int min_index){

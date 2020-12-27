@@ -13,7 +13,8 @@
 
         <activity
             android:name=".runapp.activities.SplashActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +23,8 @@
 
         <activity
             android:name=".runapp.activities.HomeActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -31,19 +33,23 @@
 
         <activity
             android:name=".runapp.activities.AboutActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance" />
 
         <activity
             android:name=".runapp.activities.DataStructureActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance" />
 
         <activity
             android:name=".runapp.activities.AlgorithmActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance" />
 
         <activity
             android:name=".runapp.activities.SortingActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -52,7 +58,8 @@
 
         <activity
             android:name=".algorithms.sorting.bubble.BubbleSortActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
             <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -61,7 +68,8 @@
 
         <activity
             android:name=".algorithms.sorting.selection.SelectionSortActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--                        <intent-filter>-->
 <!--                            <action android:name="android.intent.action.MAIN" />-->
 <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
@@ -70,7 +78,8 @@
 
         <activity
             android:name=".algorithms.sorting.insertion.InsertionSortActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
             <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -79,7 +88,8 @@
 
         <activity
             android:name=".algorithms.sorting.merge.MergeSortActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -88,7 +98,8 @@
 
         <activity
             android:name=".algorithms.sorting.quick.QuickSortActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -97,7 +108,8 @@
 
         <activity
             android:name=".datastructures.trees.bst.BSTActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -106,7 +118,8 @@
 
         <activity
             android:name=".datastructures.trees.avl.AVLActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:launchMode="singleInstance">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
