@@ -165,7 +165,7 @@ public class InsertionSort {
                 if(arr[j].data > insertionSortData.data) {
 
                     AnimationState animationState1 = new AnimationState(InsertionSortInfo.L_GREATER_R,
-                            InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, insertionSortData.index));
+                            InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, j+1));
                     animationState1.addHighlightIndexes(insertionSortData.index);
                     animationState1.addHighlightIndexes(arr[j].index);
                     animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index,
