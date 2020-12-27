@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
-import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortInfo;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.utility.Util;
@@ -76,7 +75,7 @@ public class SelectionSort {
         int totalWidth = linearLayout.getWidth();
         int totalHeight = linearLayout.getHeight();
         this.width = (float) totalWidth / arraySize;
-        this.height =  (float) totalHeight / 2;
+        this.height =  (float) totalHeight;
 
         int MAX = 0;
 
@@ -155,17 +154,15 @@ public class SelectionSort {
         for (int i = 0; i < length-1; i++) {
             int min_idx = i;
 
-            AnimationState animationState = new AnimationState(SelectionSortInfo.VAL, "-");
-//                    SelectionSortInfo.getValString(selectionSortData.data, j));
+            AnimationState animationState = new AnimationState(SelectionSortInfo.VAL, SelectionSortInfo.getValString(min_idx));
             animationState.addHighlightIndexes(arr[min_idx].index);
-//            animationState.addElementAnimationData(new ElementAnimationData(selectionSortData.index,
-//                    new Pair<>(AnimationDirection.DOWN, 1)));
             sequence.addAnimSeq(animationState);
 
             for (int j = i+1; j < length; j++) {
+                comparisons++;
+
                 if (arr[j].data < arr[min_idx].data) {
-                    AnimationState animationState1 = new AnimationState(SelectionSortInfo.L_LESSEQUAL_R,"-");
-//                            SelectionSortInfo.getComparedString(arr[j].data, selectionSortData.data, j, selectionSortData.index));
+                    AnimationState animationState1 = new AnimationState(SelectionSortInfo.L_LESSER_R, SelectionSortInfo.getComparedString(arr[j].data, arr[min_idx].data, j));
                     animationState1.addHighlightIndexes(arr[min_idx].index);
                     animationState1.addHighlightIndexes(arr[j].index);
                     sequence.addAnimSeq(animationState1);
@@ -173,8 +170,7 @@ public class SelectionSort {
                     min_idx = j;
                 }
                 else{
-                    AnimationState animationState1 = new AnimationState(SelectionSortInfo.L_GREATER_R,"-");
-//                            SelectionSortInfo.getComparedString(arr[j].data, selectionSortData.data, j, selectionSortData.index));
+                    AnimationState animationState1 = new AnimationState(SelectionSortInfo.L_GREATEREQUAL_R, SelectionSortInfo.getComparedString(arr[j].data, arr[min_idx].data, j));
                     animationState1.addHighlightIndexes(arr[min_idx].index);
                     animationState1.addHighlightIndexes(arr[j].index);
                     sequence.addAnimSeq(animationState1);
@@ -185,9 +181,8 @@ public class SelectionSort {
             if(min_idx != i) {
                 int diff = Math.abs(i - min_idx);
                 System.out.println(i + " | " + min_idx + " | " + diff);
-                AnimationState animationState2 = new AnimationState(BubbleSortInfo.L_GREATER_R, "-");
-//                    BubbleSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
-            animationState2.addHighlightIndexes(arr[min_idx].index, arr[i].index);
+                AnimationState animationState2 = new AnimationState(SelectionSortInfo.SWAP, SelectionSortInfo.getSwapString(i, min_idx));
+                animationState2.addHighlightIndexes(arr[min_idx].index, arr[i].index);
                 animationState2.addElementAnimationData(new ElementAnimationData(arr[min_idx].index,
                         new Pair<>(AnimationDirection.LEFT, diff)));
                 animationState2.addElementAnimationData(new ElementAnimationData(arr[i].index,
