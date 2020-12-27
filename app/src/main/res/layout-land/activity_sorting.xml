@@ -34,6 +34,19 @@
             android:layout_height="25dp" />
 
         <Button
+            android:id="@+id/btn_selectionsort"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="Selection Sort" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <Button
             android:id="@+id/btn_insertionsort"
             style="@style/Button"
             android:layout_width="match_parent"
