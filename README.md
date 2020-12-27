@@ -4,14 +4,18 @@
 DSA Visualizer is an android application for learning and visualizing the data structures and algorithms visually step by step.
 
 ### Features:
-- MergeSort[Done]
-- QuickSort[Done]
-- BubbleSort[Done]
-- InsertionSort[Done]
-- Binary Search Tree[Done]
-- AVL Tree[Done]
-- Red Black Tree[Tentative]
-- Splay Tree[Tentative]
+
+#### Algorithms:
+- MergeSort [Done]
+- QuickSort [Done]
+- BubbleSort [Done]
+- InsertionSort [Done]
+- SelectionSort [Done]
+#### Data Structures:
+- Binary Search Tree [Done]
+- AVL Tree [Done]
+- Red Black Tree [Tentative]
+- Splay Tree [Tentative]
 
 ### Installation:
 
