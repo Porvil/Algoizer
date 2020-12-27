@@ -38,6 +38,7 @@ public class SelectionSortInfo {
     /*11*/        "",
     /*12*/        "        if(min_ind != i)",
     /*13*/        "            swap data[i] and data[min_ind]",
+    /*14*/        "",
 
     };
 

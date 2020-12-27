@@ -55,7 +55,8 @@ public class MergeSortInfo {
     /*16*/        "    copy left array's element to final sorted array",
     /*17*/        "while(right array is not empty):",
     /*18*/        "    copy right array's element to final sorted array",
-    /*19*/        "return"
+    /*19*/        "return",
+    /*20*/        ""
     };
 
 
