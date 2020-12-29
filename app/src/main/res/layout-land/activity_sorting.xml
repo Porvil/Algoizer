@@ -1,86 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:scrollbarSize="10dp"
     android:scrollbarStyle="insideInset"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource" >
 
     <LinearLayout
-
+        android:id="@+id/ll_sorting_row1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".runapp.activities.SortingActivity">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <Button
-            android:id="@+id/btn_bubblesort"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Bubble Sort" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <Button
-            android:id="@+id/btn_selectionsort"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Selection Sort" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <Button
-            android:id="@+id/btn_insertionsort"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Insertion Sort" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <Button
-            android:id="@+id/btn_mergesort"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Merge Sort" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <Button
-            android:id="@+id/btn_quicksort"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Quick Sort" />
-
-    </LinearLayout>
-
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/ll_sorting_row2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"/>
+</LinearLayout>

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,11 +19,17 @@ import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivit
 
 public class SortingActivity extends AppCompatActivity {
 
-    Button btn_bubblesort;
-    Button btn_selectionsort;
-    Button btn_insertionsort;
-    Button btn_mergesort;
-    Button btn_quicksort;
+    LinearLayout ll_sorting_row1;
+    LinearLayout ll_sorting_row2;
+
+    SortingData[] sortingData = new SortingData[]{
+            new SortingData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.logo),
+            new SortingData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.arrow_1),
+            new SortingData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.arrow_1),
+            new SortingData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.arrow_1),
+            new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.arrow_1),
+            new SortingData("", "", R.drawable.button_corner)
+    };
 
     Context context;
     @Override
@@ -31,46 +39,60 @@ public class SortingActivity extends AppCompatActivity {
 
         context = this;
 
-        btn_bubblesort = findViewById(R.id.btn_bubblesort);
-        btn_selectionsort = findViewById(R.id.btn_selectionsort);
-        btn_insertionsort = findViewById(R.id.btn_insertionsort);
-        btn_mergesort = findViewById(R.id.btn_mergesort);
-        btn_quicksort = findViewById(R.id.btn_quicksort);
+        ll_sorting_row1 = findViewById(R.id.ll_sorting_row1);
+        ll_sorting_row2 = findViewById(R.id.ll_sorting_row2);
 
-        btn_bubblesort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, BubbleSortActivity.class));
-            }
-        });
+        for(int i=0;i<sortingData.length;i++){
+            final SortingData sortingData = this.sortingData[i];
+            View view = getLayoutInflater().inflate(R.layout.layout_sortingitem, null);
+            ImageView imageView = view.findViewById(R.id.iv_sorticon);
+            TextView textView = view.findViewById(R.id.tv_sortname);
 
-        btn_selectionsort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, SelectionSortActivity.class));
-            }
-        });
+            imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
+            textView.setText(sortingData.text);
 
-        btn_insertionsort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, InsertionSortActivity.class));
-            }
-        });
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            layoutParams.setMargins(5,5,5,5);
+            view.setLayoutParams(layoutParams);
 
-        btn_mergesort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, MergeSortActivity.class));
+            if(i < 5){
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Class<?> aClass = Class.forName(sortingData.activity);
+                            startActivity(new Intent(context, aClass));
+                        }
+                        catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
 
-        btn_quicksort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, QuickSortActivity.class));
+
+            if(i < 3){
+                ll_sorting_row1.addView(view);
             }
-        });
+            else{
+                ll_sorting_row2.addView(view);
+            }
+        }
 
     }
+
+}
+
+class SortingData {
+    String activity;
+    String text;
+    int drawable;
+
+    public SortingData(String activity, String text, int drawable) {
+        this.activity = activity;
+        this.text = text;
+        this.drawable = drawable;
+    }
+
 }
