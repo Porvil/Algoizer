@@ -83,8 +83,9 @@
                     android:ems="10"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
                     android:inputType="number"
-                    android:importantForAutofill="no" />
+                    android:text="5" />
 
                 <ImageButton
                     android:id="@+id/btn_insertrandom"
@@ -155,8 +156,9 @@
                     android:ems="10"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
                     android:inputType="number"
-                    android:importantForAutofill="no" />
+                    android:text="100" />
 
                 <View
                     android:layout_width="2dp"

@@ -33,7 +33,7 @@ public class BST {
 
     private BSTNode _insert(BSTNode bstNode, int key, int index, int level){
         if (bstNode == null){
-            TreeAnimationState treeAnimationState = new TreeAnimationState("I");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("I", BSTInfo.getInsertString(key, 1));
             treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
             treeAnimationStates.add(treeAnimationState);
             return new BSTNode(key);
@@ -41,7 +41,7 @@ public class BST {
 
         if (key == bstNode.key){
             bstNode.count++;
-            TreeAnimationState treeAnimationState = new TreeAnimationState("I");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("I", BSTInfo.getInsertString(key, bstNode.count));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
@@ -49,13 +49,13 @@ public class BST {
 
         if(level == 0){
             treeAnimationStates.clear();
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NS");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NS", BSTInfo.getNoSpaceString());
             treeAnimationState.add(new TreeElementAnimationData(-1, -1, -1));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
         }
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+        TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getSearchString(key, bstNode.key));
         treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
         treeAnimationStates.add(treeAnimationState);
 
@@ -78,7 +78,7 @@ public class BST {
     private BSTNode _delete(BSTNode bstNode, int key, int index, int level){
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NF", BSTInfo.getNotFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return bstNode;
@@ -87,14 +87,14 @@ public class BST {
         if (key < bstNode.key) {
             System.out.println("LESS KEY = " + bstNode.key);
 
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             bstNode.left = _delete(bstNode.left, key, index - level, level / 2);
         }
         else if (key > bstNode.key) {
             System.out.println("More KEY = " + bstNode.key);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             bstNode.right = _delete(bstNode.right, key, index + level, level / 2);
@@ -102,7 +102,7 @@ public class BST {
         else{
             if (bstNode.count > 1){
                 bstNode.count--;
-                TreeAnimationState treeAnimationState = new TreeAnimationState("C");
+                TreeAnimationState treeAnimationState = new TreeAnimationState("C", BSTInfo.getDeleteString(key, bstNode.count));
                 treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
                 treeAnimationStates.add(treeAnimationState);
                 System.out.println("Count decreased = " + bstNode.key + " : " + bstNode.count);
@@ -113,7 +113,7 @@ public class BST {
 
             if (bstNode.left == null && bstNode.right == null){
                 System.out.println("Simple delete");
-                TreeAnimationState treeAnimationState = new TreeAnimationState("1");
+                TreeAnimationState treeAnimationState = new TreeAnimationState("1", BSTInfo.getDeleteString(key, 1));
                 treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
                 treeAnimationStates.add(treeAnimationState);
                 return null;
@@ -121,9 +121,9 @@ public class BST {
             else if(bstNode.left == null && bstNode.right != null){
                 System.out.println("Right copy");
 
-                TreeAnimationState step1 = new TreeAnimationState("D");
+                TreeAnimationState step1 = new TreeAnimationState("D", BSTInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState("CM");
-                TreeAnimationState step3 = new TreeAnimationState("MB");
+                TreeAnimationState step3 = new TreeAnimationState("MB", BSTInfo.getRightSubtreeString());
                 step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
                 BSTNode temp = bstNode.right;
@@ -163,9 +163,9 @@ public class BST {
             else if(bstNode.left != null && bstNode.right == null){
                 System.out.println("Left copy");
 
-                TreeAnimationState step1 = new TreeAnimationState("D");
+                TreeAnimationState step1 = new TreeAnimationState("D", BSTInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState("CM");
-                TreeAnimationState step3 = new TreeAnimationState("MB");
+                TreeAnimationState step3 = new TreeAnimationState("MB", BSTInfo.getLeftSubtreeString());
                 step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
                 BSTNode temp = bstNode.left;
@@ -210,27 +210,27 @@ public class BST {
                 int curIndex = index+level;
                 int curLevel = level;
 
-                TreeAnimationState step1 = new TreeAnimationState("1");
+                TreeAnimationState step1 = new TreeAnimationState("1", BSTInfo.getDeleteString(key, 1));
 
                 step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
                 treeAnimationStates.add(step1);
 
                 while (current.left != null) {
-                    TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+                    TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getFindSuccessorString(key));
                     treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
                     current = current.left;
                     curLevel /= 2;
                     curIndex = curIndex - curLevel;
                     treeAnimationStates.add(treeAnimationState);
                 }
-                TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+                TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getFoundSuccessorString(key, current.key));
                 treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
                 treeAnimationStates.add(treeAnimationState);
 
                 BSTNode temp = current;
 
                 TreeAnimationState step2 = new TreeAnimationState("CM");
-                TreeAnimationState step3 = new TreeAnimationState("MB");
+                TreeAnimationState step3 = new TreeAnimationState("MB", "Copy to top");
 
                 step2.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
                 step3.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
@@ -259,7 +259,7 @@ public class BST {
     private void  _search(BSTNode bstNode, int key, int index, int level){
         if (bstNode == null) {
             System.out.println("NULL Node, Not found");
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NF");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("NF", BSTInfo.getNotFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return;
@@ -268,20 +268,20 @@ public class BST {
         if (key < bstNode.key) {
             System.out.println("LESS KEY = " + bstNode.key);
 
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             _search(bstNode.left, key, index - level, level / 2);
         }
         else if (key > bstNode.key) {
             System.out.println("More KEY = " + bstNode.key);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("S", BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             _search(bstNode.right, key, index + level, level / 2);
         }
         else{
-            TreeAnimationState treeAnimationState = new TreeAnimationState("F");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("F", BSTInfo.getFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
         }

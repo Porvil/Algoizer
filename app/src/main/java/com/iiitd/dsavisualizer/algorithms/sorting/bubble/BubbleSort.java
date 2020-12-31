@@ -28,7 +28,7 @@ public class BubbleSort {
     View[] views;
     int[] positions;
     final LinearLayout linearLayout;
-    BubbleSortSequence sequence;
+    BubbleSortSortingSequence sequence;
     final Random random;
     float width;
     float height;
@@ -122,7 +122,7 @@ public class BubbleSort {
             bubbleSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new BubbleSortSequence(0);
+        this.sequence = new BubbleSortSortingSequence(0);
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

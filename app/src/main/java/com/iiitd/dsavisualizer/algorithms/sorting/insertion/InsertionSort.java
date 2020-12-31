@@ -27,7 +27,7 @@ public class InsertionSort {
     View[] views;
     int[] positions;
     final LinearLayout linearLayout;
-    InsertionSortSequence sequence;
+    InsertionSortSortingSequence sequence;
     final Random random;
     float width;
     float height;
@@ -121,7 +121,7 @@ public class InsertionSort {
             insertionSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new InsertionSortSequence(0);
+        this.sequence = new InsertionSortSortingSequence(0);
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

@@ -8,13 +8,13 @@ import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
-import com.iiitd.dsavisualizer.algorithms.sorting.Sequence;
+import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
 
 import java.util.ArrayList;
 
-public class BubbleSortSequence extends Sequence {
+public class BubbleSortSortingSequence extends SortingSequence {
 
-    public BubbleSortSequence(int curSeqNo) {
+    public BubbleSortSortingSequence(int curSeqNo) {
         this.curSeqNo = curSeqNo;
         size = 0;
         this.animationStates = new ArrayList<>();

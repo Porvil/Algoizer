@@ -28,7 +28,7 @@ public class SelectionSort {
     View[] views;
     int[] positions;
     final LinearLayout linearLayout;
-    SelectionSortSequence sequence;
+    SelectionSortSortingSequence sequence;
     final Random random;
     float width;
     float height;
@@ -122,7 +122,7 @@ public class SelectionSort {
             selectionSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new SelectionSortSequence(0);
+        this.sequence = new SelectionSortSortingSequence(0);
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

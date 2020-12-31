@@ -28,7 +28,7 @@ public class QuickSort {
     View[] views;
     int[] positions;
     final LinearLayout linearLayout;
-    QuickSortSequence sequence;
+    QuickSortSortingSequence sequence;
     final Random random;
     float width;
     float height;
@@ -125,7 +125,7 @@ public class QuickSort {
             quickSortData[i] = quickSortData1;
         }
 
-        this.sequence = new QuickSortSequence(0);
+        this.sequence = new QuickSortSortingSequence(0);
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

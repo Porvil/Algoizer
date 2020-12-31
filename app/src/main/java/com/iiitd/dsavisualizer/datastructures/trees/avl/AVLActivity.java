@@ -440,24 +440,24 @@ public class AVLActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (avl.treeSequence.curSeqNo < avl.treeSequence.size) {
+//                    if (avl.treeSequence.curSeqNo < avl.treeSequence.size) {
                         task(animDurationTemp);
-                    } else {
-                        System.out.println("Canceled");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                btn_menu.setEnabled(true);
-                                btn_back.setEnabled(true);
-                                btn_info.setEnabled(true);
-                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        timer.cancel();
-                        timer = null;
-                    }
+//                    } else {
+//                        System.out.println("Canceled");
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                btn_menu.setEnabled(true);
+//                                btn_back.setEnabled(true);
+//                                btn_info.setEnabled(true);
+//                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                        timer.cancel();
+//                        timer = null;
+//                    }
                 }
             }, animStepDuration, animStepDuration);
 
@@ -468,6 +468,7 @@ public class AVLActivity extends AppCompatActivity {
         if (avl != null) {
             final int curSeqNo = avl.treeSequence.curSeqNo;
             System.out.println("SEQ = "  + curSeqNo);
+            avl.treeSequence.forward();
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -477,7 +478,7 @@ public class AVLActivity extends AppCompatActivity {
                         System.out.println(treeAnimationState);
 
 //                        for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
-                            switch (treeAnimationState.info) {
+                            switch (treeAnimationState.state) {
                                 case "NS": {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Toast.makeText(context, "No space in tree :(", Toast.LENGTH_SHORT).show();
@@ -721,6 +722,8 @@ public class AVLActivity extends AppCompatActivity {
                                         ViewAnimator.animate(viewById).duration(animDurationTemp)
 //                                                .backgroundColor(defColor, highlightColor, defColor)
                                                 .flash().start();
+
+//                                        ViewAnimator.animate(viewById).rotation(360).duration(animDuration).start();
                                     }
                                     break;
                                 }
@@ -729,11 +732,27 @@ public class AVLActivity extends AppCompatActivity {
                                     Toast.makeText(context, "DEFAULT SWITCH IN TASK -__-", Toast.LENGTH_SHORT).show();
                             }
                         }
+                    else{
+                        System.out.println("Canceled");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btn_menu.setEnabled(true);
+                                btn_back.setEnabled(true);
+                                btn_info.setEnabled(true);
+                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        timer.cancel();
+                        timer = null;
+                    }
                     }
 //                }
             });
 
-            avl.treeSequence.forward();
+
         }
 
     }

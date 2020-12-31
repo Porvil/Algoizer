@@ -26,7 +26,7 @@ public class MergeSort {
     View[] views;
     int[] positions;
     final LinearLayout linearLayout;
-    MergeSortSequence sequence;
+    MergeSortSortingSequence sequence;
     final Random random;
     float width;
     float height;
@@ -123,7 +123,7 @@ public class MergeSort {
             mergeSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new MergeSortSequence(0);
+        this.sequence = new MergeSortSortingSequence(0);
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

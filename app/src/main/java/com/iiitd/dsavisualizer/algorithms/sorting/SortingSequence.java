@@ -6,7 +6,7 @@ import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
 
 import java.util.ArrayList;
 
-public abstract class Sequence {
+public abstract class SortingSequence {
 
     public int size;
     public int curSeqNo;

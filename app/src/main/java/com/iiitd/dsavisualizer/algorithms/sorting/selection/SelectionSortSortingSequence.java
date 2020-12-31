@@ -1,20 +1,20 @@
-package com.iiitd.dsavisualizer.algorithms.sorting.quick;
+package com.iiitd.dsavisualizer.algorithms.sorting.selection;
 
 import android.content.Context;
 import android.util.Pair;
 import android.view.View;
 
-import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
-import com.iiitd.dsavisualizer.algorithms.sorting.Sequence;
+import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
+import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
+import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 
 import java.util.ArrayList;
 
-public class QuickSortSequence extends Sequence {
+public class SelectionSortSortingSequence extends SortingSequence {
 
-    public QuickSortSequence(int curSeqNo) {
+    public SelectionSortSortingSequence(int curSeqNo) {
         this.curSeqNo = curSeqNo;
         size = 0;
         this.animationStates = new ArrayList<>();
@@ -54,7 +54,7 @@ public class QuickSortSequence extends Sequence {
 
     @Override
     public boolean backward(){
-        if(size <= 1)
+        if(size <= 0)
             return false;
 
         if(curSeqNo == 0)
@@ -81,7 +81,7 @@ public class QuickSortSequence extends Sequence {
 
     @Override
     public boolean forward(){
-        if(size <= 1)
+        if(size <= 0)
             return false;
 
         if(curSeqNo == size)
