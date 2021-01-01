@@ -6,6 +6,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeSequence;
+import static com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationStateType.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -45,7 +46,7 @@ public class AVL {
     private void  _search(AVLNode avlNode, int key, int index, int level){
         if (avlNode == null) {
             System.out.println("NULL Node, Not found");
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NF", AVLInfo.getNotFoundString(key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(NOT_FOUND, AVLInfo.getNotFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return;
@@ -54,20 +55,20 @@ public class AVL {
         if (key < avlNode.key) {
             System.out.println("LESS KEY = " + avlNode.key);
 
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getSearchString(key, avlNode.key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             _search(avlNode.left, key, index - level, level / 2);
         }
         else if (key > avlNode.key) {
             System.out.println("More KEY = " + avlNode.key);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getSearchString(key, avlNode.key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             _search(avlNode.right, key, index + level, level / 2);
         }
         else{
-            TreeAnimationState treeAnimationState = new TreeAnimationState("F", AVLInfo.getFoundString(key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(FOUND, AVLInfo.getFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
         }
@@ -83,7 +84,7 @@ public class AVL {
 
     private AVLNode _insert(AVLNode avlNode, int key, int index, int level) {
         if (avlNode == null) {
-            TreeAnimationState treeAnimationState = new TreeAnimationState("I", AVLInfo.getInsertString(key, 1));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(INSERT, AVLInfo.getInsertString(key, 1));
             treeAnimationState.add(new TreeElementAnimationData(key, 1, index));
             treeAnimationStates.add(treeAnimationState);
             return new AVLNode(key);
@@ -91,7 +92,7 @@ public class AVL {
 
         if (key == avlNode.key){
             avlNode.count++;
-            TreeAnimationState treeAnimationState = new TreeAnimationState("I", AVLInfo.getInsertString(key, avlNode.count));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(INSERT, AVLInfo.getInsertString(key, avlNode.count));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             return avlNode;
@@ -99,13 +100,13 @@ public class AVL {
 
         if(level == 0){
             treeAnimationStates.clear();
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NS", AVLInfo.getNoSpaceString());
+            TreeAnimationState treeAnimationState = new TreeAnimationState(NO_SPACE, AVLInfo.getNoSpaceString());
             treeAnimationState.add(new TreeElementAnimationData(-1, -1, -1));
             treeAnimationStates.add(treeAnimationState);
             return avlNode;
         }
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getSearchString(key, avlNode.key));
+        TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
 
@@ -136,7 +137,7 @@ public class AVL {
         AVLNode ret = null;
         if (avlNode == null) {
             System.out.println("NULL Node, Not found");
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NF", AVLInfo.getNotFoundString(key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(NOT_FOUND, AVLInfo.getNotFoundString(key));
             treeAnimationState.add(new TreeElementAnimationData(-1,-1));
             treeAnimationStates.add(treeAnimationState);
             return avlNode;
@@ -145,7 +146,7 @@ public class AVL {
         if (key < avlNode.key) {
             System.out.println("LESS KEY = " + avlNode.key);
 
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getSearchString(key, avlNode.key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             avlNode.left = _delete(avlNode.left, key, index - level, level / 2);
@@ -153,7 +154,7 @@ public class AVL {
         }
         else if (key > avlNode.key) {
             System.out.println("More KEY = " + avlNode.key);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getSearchString(key, avlNode.key));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             avlNode.right = _delete(avlNode.right, key, index + level, level / 2);
@@ -162,7 +163,7 @@ public class AVL {
         else{
             if (avlNode.count > 1){
                 avlNode.count--;
-                TreeAnimationState treeAnimationState = new TreeAnimationState("C", AVLInfo.getDeleteString(key, avlNode.count));
+                TreeAnimationState treeAnimationState = new TreeAnimationState(DELETE_DECREASE, AVLInfo.getDeleteString(key, avlNode.count));
                 treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
                 treeAnimationStates.add(treeAnimationState);
                 System.out.println("Count decreased = " + avlNode.key + " : " + avlNode.count);
@@ -173,7 +174,7 @@ public class AVL {
 
             if (avlNode.left == null && avlNode.right == null){
                 System.out.println("Simple delete");
-                TreeAnimationState treeAnimationState = new TreeAnimationState("1", AVLInfo.getDeleteString(key, 1));
+                TreeAnimationState treeAnimationState = new TreeAnimationState(DELETE_NO_CHILD, AVLInfo.getDeleteString(key, 1));
                 treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
                 treeAnimationStates.add(treeAnimationState);
                 ret = null;
@@ -181,9 +182,9 @@ public class AVL {
             else if(avlNode.left == null && avlNode.right != null){
                 System.out.println("Right copy");
 
-                TreeAnimationState step1 = new TreeAnimationState("D", AVLInfo.getDeleteString(key, 1));
-                TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getRightSubtreeString());
-                TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getRightSubtreeString());
+                TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, AVLInfo.getDeleteString(key, 1));
+                TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getRightSubtreeString());
+                TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getRightSubtreeString());
                 step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
 
                 AVLNode temp = avlNode.right;
@@ -223,9 +224,9 @@ public class AVL {
             else if(avlNode.left != null && avlNode.right == null){
                 System.out.println("Left copy");
 
-                TreeAnimationState step1 = new TreeAnimationState("D", AVLInfo.getDeleteString(key, 1));
-                TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getLeftSubtreeString());
-                TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getLeftSubtreeString());
+                TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, AVLInfo.getDeleteString(key, 1));
+                TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getLeftSubtreeString());
+                TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getLeftSubtreeString());
                 step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
 
                 AVLNode temp = avlNode.left;
@@ -270,27 +271,27 @@ public class AVL {
                 int curIndex = index+level;
                 int curLevel = level;
 
-                TreeAnimationState step1 = new TreeAnimationState("1", AVLInfo.getDeleteString(key, 1));
+                TreeAnimationState step1 = new TreeAnimationState(DELETE_NO_CHILD, AVLInfo.getDeleteString(key, 1));
 
                 step1.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
                 treeAnimationStates.add(step1);
 
                 while (current.left != null) {
-                    TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getFindSuccessorString(key));
+                    TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getFindSuccessorString(key));
                     treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
                     current = current.left;
                     curLevel /= 2;
                     curIndex = curIndex - curLevel;
                     treeAnimationStates.add(treeAnimationState);
                 }
-                TreeAnimationState treeAnimationState = new TreeAnimationState("S", AVLInfo.getFoundSuccessorString(key, current.key));
+                TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getFoundSuccessorString(key, current.key));
                 treeAnimationState.add(new TreeElementAnimationData(current.key, current.count, curIndex));
                 treeAnimationStates.add(treeAnimationState);
 
                 AVLNode temp = current;
 
-                TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getMoveUpString(temp.key, avlNode.key));
-                TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getMoveUpString(temp.key, avlNode.key));
+                TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getMoveUpString(temp.key, avlNode.key));
+                TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getMoveUpString(temp.key, avlNode.key));
 
                 step2.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
                 step3.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
@@ -325,7 +326,7 @@ public class AVL {
 
         if(diff == 2 || diff == -2) {
 
-            TreeAnimationState treeAnimationState = new TreeAnimationState("NULL", "BF = " + diff + " of " + avlNode.key);
+            TreeAnimationState treeAnimationState = new TreeAnimationState(NULL, "BF = " + diff + " of " + avlNode.key);
             treeAnimationStates.add(treeAnimationState);
 
             // Node deleted from Right Subtree, diff = +2
@@ -377,7 +378,7 @@ public class AVL {
             return avlNode;
         }
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("NULL", "BF = " + diff + " of " + avlNode.key);
+        TreeAnimationState treeAnimationState = new TreeAnimationState(NULL, "BF = " + diff + " of " + avlNode.key);
         treeAnimationStates.add(treeAnimationState);
 
         //LL
@@ -436,7 +437,7 @@ public class AVL {
 //        int new_index_ts = index_ts == 3 ? 5 : index_ts == 6 ? 10 : -1;
         //remove this hardcoding later
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getRightRotateString(avlNode.key));
+        TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getRightRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
 
@@ -451,8 +452,8 @@ public class AVL {
 //        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
 //        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
-        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getRightRotateString(avlNode.key));
-        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getRightRotateString(avlNode.key));
+        TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getRightRotateString(avlNode.key));
+        TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getRightRotateString(avlNode.key));
 
         // a
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
@@ -609,7 +610,7 @@ public class AVL {
 //        int new_index_ts = index_ts == 13 ? 11 : index_ts == 10 ? 6 : -1;
         //remove this hardcoding later
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getLeftRotateString(avlNode.key));
+        TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getLeftRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
 
@@ -623,8 +624,8 @@ public class AVL {
 //        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
 //        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
-        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getLeftRotateString(avlNode.key));
-        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getLeftRotateString(avlNode.key));
+        TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getLeftRotateString(avlNode.key));
+        TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getLeftRotateString(avlNode.key));
 
         //a
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
@@ -766,7 +767,7 @@ public class AVL {
         System.out.println("inorder");
         if (avlNode != null){
             _inorder(avlNode.left, index - level, level / 2);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P", AVLInfo.getOrderTraversalString("In"));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(ORDER_TRAVERSAL, AVLInfo.getOrderTraversalString("In"));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(avlNode.key + "(" + avlNode.count + ") ");
@@ -783,7 +784,7 @@ public class AVL {
     private void _preorder(AVLNode avlNode, int index, int level){
         System.out.println("preorder");
         if (avlNode != null){
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P", AVLInfo.getOrderTraversalString("Pre"));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(ORDER_TRAVERSAL, AVLInfo.getOrderTraversalString("Pre"));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(avlNode.key + "(" + avlNode.count + ") ");
@@ -803,7 +804,7 @@ public class AVL {
         if (avlNode != null){
             _postorder(avlNode.left, index - level, level / 2);
             _postorder(avlNode.right, index + level, level / 2);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P", AVLInfo.getOrderTraversalString("Post"));
+            TreeAnimationState treeAnimationState = new TreeAnimationState(ORDER_TRAVERSAL, AVLInfo.getOrderTraversalString("Post"));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(avlNode.key + "(" + avlNode.count + ") ");

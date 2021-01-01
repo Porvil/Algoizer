@@ -463,21 +463,21 @@ public class AVLActivity extends AppCompatActivity {
 
 //                        for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                             switch (treeAnimationState.state) {
-                                case "NS": {
+                                case NO_SPACE: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Toast.makeText(context, "No space in tree :(", Toast.LENGTH_SHORT).show();
                                         System.out.println("No space in tree :(");
                                     }
                                     break;
                                 }
-                                case "NF": {
+                                case NOT_FOUND: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Toast.makeText(context, "Element not found :(", Toast.LENGTH_SHORT).show();
                                         System.out.println("Element not found :(");
                                     }
                                     break;
                                 }
-                                case "F": {
+                                case FOUND: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -496,7 +496,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "P": {
+                                case ORDER_TRAVERSAL: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -511,7 +511,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "S": {
+                                case SEARCH: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -530,7 +530,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "I": {
+                                case INSERT: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -557,7 +557,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "D": {
+                                case DELETE_1_CHILD: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         System.out.println("DEL");
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
@@ -573,7 +573,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "C": {
+                                case DELETE_DECREASE: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -588,7 +588,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "1": {
+                                case DELETE_NO_CHILD: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -602,7 +602,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "CM": {
+                                case COPY_AND_MOVE: {
                                     ArrayList<Integer> visibleViews = new ArrayList<>();
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         visibleViews.add(treeElementAnimationData.newElementIndex);
@@ -660,7 +660,7 @@ public class AVLActivity extends AppCompatActivity {
 
                                     break;
                                 }
-                                case "MB": {
+                                case MOVE_BACK: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         System.out.println("move back");
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
@@ -695,7 +695,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "R": {
+                                case ROTATION: {
                                     for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                                         Pair<Integer, Integer> curPair = TreeLayout.map.get(treeElementAnimationData.elementIndex);
                                         final View currentView = tableRows.get(curPair.first).getChildAt(curPair.second);
@@ -711,7 +711,7 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
-                                case "NULL": {
+                                case NULL: {
 
                                     System.out.println("NULLLLL");
 

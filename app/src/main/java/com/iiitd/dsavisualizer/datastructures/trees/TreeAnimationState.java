@@ -3,16 +3,16 @@ package com.iiitd.dsavisualizer.datastructures.trees;
 import java.util.ArrayList;
 
 public class TreeAnimationState {
-    public String state;
+    public TreeAnimationStateType state;
     public String info;
     public ArrayList<TreeElementAnimationData> elementAnimationData;
 
-    public TreeAnimationState(String state) {
+    public TreeAnimationState(TreeAnimationStateType state) {
         this.state = state;
         this.elementAnimationData = new ArrayList<>();
     }
 
-    public TreeAnimationState(String state, String info) {
+    public TreeAnimationState(TreeAnimationStateType state, String info) {
         this.state = state;
         this.info = info;
         this.elementAnimationData = new ArrayList<>();
