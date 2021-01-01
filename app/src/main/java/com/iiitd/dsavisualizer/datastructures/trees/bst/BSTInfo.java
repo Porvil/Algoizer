@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 //HARDCODED INFORMATION, Handle with care
