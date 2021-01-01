@@ -438,24 +438,7 @@ public class BSTActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-//                    if (bst.treeSequence.curSeqNo < bst.treeSequence.size) {
                         task(animDurationTemp);
-//                    } else {
-//                        System.out.println("Canceled");
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                btn_menu.setEnabled(true);
-//                                btn_back.setEnabled(true);
-//                                btn_info.setEnabled(true);
-//                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//
-//                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                        timer.cancel();
-//                        timer = null;
-//                    }
                 }
             }, animStepDuration, animStepDuration);
 
@@ -712,7 +695,6 @@ public class BSTActivity extends AppCompatActivity {
                     }
                 }
             });
-
 
         }
 

@@ -440,24 +440,7 @@ public class AVLActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-//                    if (avl.treeSequence.curSeqNo < avl.treeSequence.size) {
                         task(animDurationTemp);
-//                    } else {
-//                        System.out.println("Canceled");
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                btn_menu.setEnabled(true);
-//                                btn_back.setEnabled(true);
-//                                btn_info.setEnabled(true);
-//                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//
-//                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                        timer.cancel();
-//                        timer = null;
-//                    }
                 }
             }, animStepDuration, animStepDuration);
 
@@ -476,6 +459,7 @@ public class AVLActivity extends AppCompatActivity {
                     if(curSeqNo < avl.treeSequence.size) {
                         TreeAnimationState treeAnimationState = avl.treeSequence.animationStates.get(curSeqNo);
                         System.out.println(treeAnimationState);
+                        UtilUI.setText(tv_info, avl.treeSequence.animationStates.get(curSeqNo).info);
 
 //                        for (final TreeElementAnimationData treeElementAnimationData : treeAnimationState.elementAnimationData) {
                             switch (treeAnimationState.state) {
@@ -727,12 +711,19 @@ public class AVLActivity extends AppCompatActivity {
                                     }
                                     break;
                                 }
+                                case "NULL": {
+
+                                    System.out.println("NULLLLL");
+
+                                    break;
+                                }
                                 default:
                                     System.out.println("DEFAULT SWITCH IN TASK -__-");
                                     Toast.makeText(context, "DEFAULT SWITCH IN TASK -__-", Toast.LENGTH_SHORT).show();
                             }
                         }
                     else{
+                        UtilUI.setText(tv_info, "Done");
                         System.out.println("Canceled");
                         runOnUiThread(new Runnable() {
                             @Override

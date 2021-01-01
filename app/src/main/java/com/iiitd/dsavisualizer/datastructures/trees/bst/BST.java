@@ -122,7 +122,7 @@ public class BST {
                 System.out.println("Right copy");
 
                 TreeAnimationState step1 = new TreeAnimationState("D", BSTInfo.getDeleteString(key, 1));
-                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step2 = new TreeAnimationState("CM", BSTInfo.getRightSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState("MB", BSTInfo.getRightSubtreeString());
                 step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
@@ -164,7 +164,7 @@ public class BST {
                 System.out.println("Left copy");
 
                 TreeAnimationState step1 = new TreeAnimationState("D", BSTInfo.getDeleteString(key, 1));
-                TreeAnimationState step2 = new TreeAnimationState("CM");
+                TreeAnimationState step2 = new TreeAnimationState("CM", BSTInfo.getLeftSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState("MB", BSTInfo.getLeftSubtreeString());
                 step1.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
 
@@ -229,8 +229,8 @@ public class BST {
 
                 BSTNode temp = current;
 
-                TreeAnimationState step2 = new TreeAnimationState("CM");
-                TreeAnimationState step3 = new TreeAnimationState("MB", "Copy to top");
+                TreeAnimationState step2 = new TreeAnimationState("CM", BSTInfo.getMoveUpString(temp.key, bstNode.key));
+                TreeAnimationState step3 = new TreeAnimationState("MB", BSTInfo.getMoveUpString(temp.key, bstNode.key));
 
                 step2.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
                 step3.add(new TreeElementAnimationData(temp.key, temp.count, curIndex, index));
@@ -298,7 +298,7 @@ public class BST {
         System.out.println("inorder");
         if (bstNode != null){
             _inorder(bstNode.left, index - level, level / 2);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P", BSTInfo.getOrderTraversalString("In"));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(bstNode.key + "(" + bstNode.count + ") ");
@@ -313,9 +313,9 @@ public class BST {
     }
 
     private void _preorder(BSTNode bstNode, int index, int level){
-        System.out.println("inorder");
+        System.out.println("preorder");
         if (bstNode != null){
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P", BSTInfo.getOrderTraversalString("Pre"));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(bstNode.key + "(" + bstNode.count + ") ");
@@ -331,11 +331,11 @@ public class BST {
     }
 
     private void _postorder(BSTNode bstNode, int index, int level){
-        System.out.println("inorder");
+        System.out.println("postorder");
         if (bstNode != null){
             _postorder(bstNode.left, index - level, level / 2);
             _postorder(bstNode.right, index + level, level / 2);
-            TreeAnimationState treeAnimationState = new TreeAnimationState("P");
+            TreeAnimationState treeAnimationState = new TreeAnimationState("P", BSTInfo.getOrderTraversalString("Post"));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
             System.out.print(bstNode.key + "(" + bstNode.count + ") ");
