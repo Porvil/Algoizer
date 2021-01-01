@@ -412,8 +412,6 @@ public class AVL {
 
     private AVLNode rightRotate(AVLNode avlNode, int index, int level) {
 
-
-
         AVLNode left = avlNode.left;
         AVLNode temp = left.right;
 
@@ -438,9 +436,13 @@ public class AVL {
 //        int new_index_ts = index_ts == 3 ? 5 : index_ts == 6 ? 10 : -1;
         //remove this hardcoding later
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getRightRotateString(avlNode.left.key));
-        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_l));
+        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getRightRotateString(avlNode.key));
+        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
+
+//        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getRightRotateString(avlNode.left.key));
+//        treeAnimationState.add(new TreeElementAnimationData(avlNode.left.key, avlNode.left.count, index_l));
+//        treeAnimationStates.add(treeAnimationState);
 
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
@@ -449,8 +451,8 @@ public class AVL {
 //        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
 //        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
-        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getRightRotateString(avlNode.left.key));
-        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getRightRotateString(avlNode.left.key));
+        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getRightRotateString(avlNode.key));
+        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getRightRotateString(avlNode.key));
 
         // a
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
@@ -587,7 +589,6 @@ public class AVL {
         AVLNode right = avlNode.right;
         AVLNode temp = right.left;
 
-
         System.out.println("rotation needed at index = " + index + " | level = " + level);
         // r = right
         // a = node where rotation needed
@@ -608,9 +609,13 @@ public class AVL {
 //        int new_index_ts = index_ts == 13 ? 11 : index_ts == 10 ? 6 : -1;
         //remove this hardcoding later
 
-        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getLeftRotateString(avlNode.right.key));
-        treeAnimationState.add(new TreeElementAnimationData(avlNode.right.key, avlNode.count, index_r));
+        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getLeftRotateString(avlNode.key));
+        treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
+
+//        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getLeftRotateString(avlNode.right.key));
+//        treeAnimationState.add(new TreeElementAnimationData(avlNode.right.key, avlNode.right.count, index_r));
+//        treeAnimationStates.add(treeAnimationState);
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_r + " -> " + new_index_r);
@@ -618,8 +623,8 @@ public class AVL {
 //        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
 //        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
-        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getLeftRotateString(avlNode.right.key));
-        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getLeftRotateString(avlNode.right.key));
+        TreeAnimationState step2 = new TreeAnimationState("CM", AVLInfo.getLeftRotateString(avlNode.key));
+        TreeAnimationState step3 = new TreeAnimationState("MB", AVLInfo.getLeftRotateString(avlNode.key));
 
         //a
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
