@@ -81,8 +81,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="numberSigned"
-                    android:text="0" />
+                    android:imeOptions="actionDone"
+                    android:text="0-1" />
 
                 <EditText
                     android:id="@+id/et2"

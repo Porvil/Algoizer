@@ -334,8 +334,10 @@ public class GraphActivity extends AppCompatActivity {
                 String s1 = et1.getText().toString();
                 String s2 = et2.getText().toString();
 
-                int i1 = Integer.parseInt(s1);
-                int i2 = Integer.parseInt(s2);
+                String[] split = s1.split("-");
+
+                int i1 = Integer.parseInt(split[0]);
+                int i2 = Integer.parseInt(split[1]);
 
                 int edge = graph.createEdge(i1, i2, 1);
                 board.update(graph);
@@ -374,33 +376,33 @@ public class GraphActivity extends AppCompatActivity {
                 mPaintText.setTextSize(30);
                 Paint paint = new Paint(Color.BLACK);
                 Rect rect = new Rect();
-
-                for(int i = 0; i<board.xCount +1; i++){
-                    int left = (int) (i*board.xSize);
-                    int right = left + 1;
-                    int top = 0;
-                    int bottom = (int) board.Y;
-                    rect.set(left, top, right, bottom);
-                    board.customCanvas.canvas.drawRect(rect, paint);
-                }
-
-
-                for(int i = 0; i<board.yCount +1; i++){
-                    int top = (int) (i*board.ySize);
-                    int bottom = top + 1;
-                    int left = 0;
-                    int right = (int) board.X;
-                    rect.set(left, top, right, bottom);
-                    board.customCanvas.canvas.drawRect(rect, paint);
-                }
-                for(int r = 0; r<board.yCount +1; r++){
-                    for(int c = 0; c<board.xCount +1; c++){
-                        String text = r + " " + c;
-                        int yy = (int) (r*board.xSize + board.xSize /2);
-                        int xx = (int) (c*board.ySize + board.ySize /2);
-                        board.customCanvas.canvas.drawText(text, xx, yy, mPaintText);
-                    }
-                }
+//
+//                for(int i = 0; i<board.xCount +1; i++){
+//                    int left = (int) (i*board.xSize);
+//                    int right = left + 1;
+//                    int top = 0;
+//                    int bottom = (int) board.Y;
+//                    rect.set(left, top, right, bottom);
+//                    board.customCanvas.canvas.drawRect(rect, paint);
+//                }
+//
+//
+//                for(int i = 0; i<board.yCount +1; i++){
+//                    int top = (int) (i*board.ySize);
+//                    int bottom = top + 1;
+//                    int left = 0;
+//                    int right = (int) board.X;
+//                    rect.set(left, top, right, bottom);
+//                    board.customCanvas.canvas.drawRect(rect, paint);
+//                }
+//                for(int r = 0; r<board.yCount +1; r++){
+//                    for(int c = 0; c<board.xCount +1; c++){
+//                        String text = r + " " + c;
+//                        int yy = (int) (r*board.xSize + board.xSize /2);
+//                        int xx = (int) (c*board.ySize + board.ySize /2);
+//                        board.customCanvas.canvas.drawText(text, xx, yy, mPaintText);
+//                    }
+//                }
 
 
 //                iv_graph.setOnTouchListener(new View.OnTouchListener() {

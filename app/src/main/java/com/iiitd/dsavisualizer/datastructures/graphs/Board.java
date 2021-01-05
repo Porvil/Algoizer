@@ -105,6 +105,8 @@ public class Board {
 
                 Paint paint1 = new Paint();
                 paint1.setColor(Color.BLUE);
+                paint1.setStrokeWidth(5);
+                paint1.setAntiAlias(true);
 
                 double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
