@@ -3,8 +3,13 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -23,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -58,9 +64,16 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
+    Button btn_edge;
+    EditText et1;
+    EditText et2;
     EditText et_insert;
     EditText et_search;
     EditText et_delete;
+
+    CustomCanvas customCanvas;
+    Graph graph;
+    Board board;
 
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
@@ -108,6 +121,9 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
+        btn_edge = v_menu.findViewById(R.id.btn_edge);
+        et1 = v_menu.findViewById(R.id.et1);
+        et2 = v_menu.findViewById(R.id.et2);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
         et_delete = v_menu.findViewById(R.id.et_delete);
@@ -311,6 +327,22 @@ public class GraphActivity extends AppCompatActivity {
 //            }
 //        });
 
+
+        btn_edge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s1 = et1.getText().toString();
+                String s2 = et2.getText().toString();
+
+                int i1 = Integer.parseInt(s1);
+                int i2 = Integer.parseInt(s2);
+
+                int edge = graph.createEdge(i1, i2, 1);
+                board.update(graph);
+
+            }
+        });
+
     }
 
     private void initViews() {
@@ -330,6 +362,142 @@ public class GraphActivity extends AppCompatActivity {
 //            UtilUI.setText(tv_info, "-");
 //            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
 //        }
+
+        iv_graph.post(new Runnable() {
+            @Override
+            public void run() {
+                customCanvas = new CustomCanvas(context, iv_graph);
+                graph = new Graph();
+                board = new Board(context, customCanvas);
+
+                Paint mPaintText = new Paint(Paint.UNDERLINE_TEXT_FLAG);
+                mPaintText.setTextSize(30);
+                Paint paint = new Paint(Color.BLACK);
+                Rect rect = new Rect();
+
+                for(int i = 0; i<board.xCount +1; i++){
+                    int left = (int) (i*board.xSize);
+                    int right = left + 1;
+                    int top = 0;
+                    int bottom = (int) board.Y;
+                    rect.set(left, top, right, bottom);
+                    board.customCanvas.canvas.drawRect(rect, paint);
+                }
+
+
+                for(int i = 0; i<board.yCount +1; i++){
+                    int top = (int) (i*board.ySize);
+                    int bottom = top + 1;
+                    int left = 0;
+                    int right = (int) board.X;
+                    rect.set(left, top, right, bottom);
+                    board.customCanvas.canvas.drawRect(rect, paint);
+                }
+                for(int r = 0; r<board.yCount +1; r++){
+                    for(int c = 0; c<board.xCount +1; c++){
+                        String text = r + " " + c;
+                        int yy = (int) (r*board.xSize + board.xSize /2);
+                        int xx = (int) (c*board.ySize + board.ySize /2);
+                        board.customCanvas.canvas.drawText(text, xx, yy, mPaintText);
+                    }
+                }
+
+
+//                iv_graph.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        if(event.getAction() == MotionEvent.ACTION_UP) {
+//                            float x1 = event.getX();
+//                            float y1 = event.getY();
+//
+//                            float x = (x1 / board.colWidth);
+//                            float y =  (y1 / board.rowHeight);
+//
+//                            Rect box = board.getBox(x, y);
+//
+//                            System.out.println("BOX = " + box.centerX() + " | " + box.centerY());
+//
+//                            iv_graph.invalidate();
+//                        }
+//                        return false;
+//                    }
+//                });
+
+
+            }
+        });
+
+        final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+
+            @Override
+            public boolean onDown(MotionEvent event) {
+                System.out.println("On down");
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent event) {
+                System.out.println("long");
+
+                float x1 = event.getX();
+                float y1 = event.getY();
+
+                float x = (x1 / board.xSize);
+                float y =  (y1 / board.ySize);
+
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent event) {
+                System.out.println("Single touch up");
+
+                float x1 = event.getX();
+                float y1 = event.getY();
+
+                float x = (x1 / board.xSize);
+                float y =  (y1 / board.ySize);
+
+                int row = (int) y;
+                int col = (int) x;
+//                System.out.println("touch = " + x + "|" + y);
+
+                boolean state = board.getState(x, y);
+                if(state){
+//                    System.out.p/rintln("ON");
+                }
+                else{
+                    System.out.println("OFF");
+                    Vertex vertex = graph.createVertex((int) graph.noOfVertices, row, col);
+                    board.addVertex(x, y, vertex);
+//                        board.switchState(x, y);
+                }
+
+
+                board.update(graph);
+                iv_graph.invalidate();
+
+                return  true;
+            }
+        });
+
+        iv_graph.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+//                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+//
+//
+//                }
+//                return true;
+
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+
+                return true;
+            }
+        });
 
     }
 
@@ -379,7 +547,7 @@ public class GraphActivity extends AppCompatActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                System.out.println("Dismmised");
+                System.out.println("Dismissed");
                 btn_menu.setEnabled(true);
                 btn_back.setEnabled(true);
                 btn_info.setEnabled(true);
