@@ -3,6 +3,8 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -29,6 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,10 +47,12 @@ public class GraphActivity extends AppCompatActivity {
     ViewStub vs_main;
     ViewStub vs_menu;
     LinearLayout ll_anim;
+    ImageView iv_grid;
     ImageView iv_graph;
     ConstraintLayout cl_info;
     ImageButton btn_back;
     ImageButton btn_menu;
+    ImageButton btn_grid;
     ImageButton btn_info;
     SeekBar sb_animspeed;
     TextView tv_info;
@@ -74,6 +79,7 @@ public class GraphActivity extends AppCompatActivity {
     CustomCanvas customCanvas;
     Graph graph;
     Board board;
+    boolean isGridOn = true;
 
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
@@ -101,9 +107,11 @@ public class GraphActivity extends AppCompatActivity {
         v_menu = vs_menu.inflate();
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
+        iv_grid = v_main.findViewById(R.id.iv_grid);
         iv_graph = v_main.findViewById(R.id.iv_graph);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_menu = v_main.findViewById(R.id.btn_menu);
+        btn_grid = v_main.findViewById(R.id.btn_grid);
         btn_info = v_main.findViewById(R.id.btn_info);
         btn_back = v_main.findViewById(R.id.btn_back);
         tv_info = v_main.findViewById(R.id.tv_info);
@@ -145,6 +153,21 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
 
+        });
+
+        btn_grid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isGridOn = !isGridOn;
+                if(isGridOn){
+                    btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on_24));
+                    iv_grid.setVisibility(View.VISIBLE);
+                }
+                else{
+                    btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_off_24));
+                    iv_grid.setVisibility(View.GONE);
+                }
+            }
         });
 
         // Info Button
@@ -372,37 +395,52 @@ public class GraphActivity extends AppCompatActivity {
                 graph = new Graph();
                 board = new Board(context, customCanvas);
 
-                Paint mPaintText = new Paint(Paint.UNDERLINE_TEXT_FLAG);
-                mPaintText.setTextSize(30);
-                Paint paint = new Paint(Color.BLACK);
-                Rect rect = new Rect();
-//
-//                for(int i = 0; i<board.xCount +1; i++){
-//                    int left = (int) (i*board.xSize);
-//                    int right = left + 1;
-//                    int top = 0;
-//                    int bottom = (int) board.Y;
-//                    rect.set(left, top, right, bottom);
-//                    board.customCanvas.canvas.drawRect(rect, paint);
-//                }
-//
-//
-//                for(int i = 0; i<board.yCount +1; i++){
-//                    int top = (int) (i*board.ySize);
-//                    int bottom = top + 1;
-//                    int left = 0;
-//                    int right = (int) board.X;
-//                    rect.set(left, top, right, bottom);
-//                    board.customCanvas.canvas.drawRect(rect, paint);
-//                }
-//                for(int r = 0; r<board.yCount +1; r++){
-//                    for(int c = 0; c<board.xCount +1; c++){
-//                        String text = r + " " + c;
-//                        int yy = (int) (r*board.xSize + board.xSize /2);
-//                        int xx = (int) (c*board.ySize + board.ySize /2);
-//                        board.customCanvas.canvas.drawText(text, xx, yy, mPaintText);
-//                    }
-//                }
+                // Grid
+                iv_grid.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Bitmap bitmap = Bitmap.createBitmap(
+                                iv_grid.getWidth(), iv_grid.getHeight(), Bitmap.Config.ARGB_8888);
+                        // Associate the bitmap to the ImageView.
+                        iv_grid.setImageBitmap(bitmap);
+                        // Create a Canvas with the bitmap.
+                        Canvas canvas = new Canvas(bitmap);
+
+                        Paint mPaintText = new Paint(Paint.UNDERLINE_TEXT_FLAG);
+                        mPaintText.setTextSize(30);
+                        Paint paint = new Paint(Color.BLACK);
+                        Rect rect = new Rect();
+
+                        for(int i = 0; i<board.xCount +1; i++){
+                            int left = (int) (i*board.xSize);
+                            int right = left + 1;
+                            int top = 0;
+                            int bottom = (int) board.Y;
+                            rect.set(left, top, right, bottom);
+                            canvas.drawRect(rect, paint);
+                        }
+
+
+                        for(int i = 0; i<board.yCount +1; i++){
+                            int top = (int) (i*board.ySize);
+                            int bottom = top + 1;
+                            int left = 0;
+                            int right = (int) board.X;
+                            rect.set(left, top, right, bottom);
+                            canvas.drawRect(rect, paint);
+                        }
+                        for(int r = 0; r<board.yCount +1; r++){
+                            for(int c = 0; c<board.xCount +1; c++){
+                                String text = r + " " + c;
+                                int yy = (int) (r*board.xSize + board.xSize /2);
+                                int xx = (int) (c*board.ySize + board.ySize /2);
+                                canvas.drawText(text, xx, yy, mPaintText);
+                            }
+                        }
+                    }
+                });
+
 
 
 //                iv_graph.setOnTouchListener(new View.OnTouchListener() {
