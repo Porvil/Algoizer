@@ -4,17 +4,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Pair;
+import android.graphics.Typeface;
 import android.util.TypedValue;
 
+import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Board {
 
+    private final int nodeSize = 10;// in mm
     private final float circleRatio = 0.75f;
     Context context;
 
@@ -25,6 +25,12 @@ public class Board {
     public float xSize;//column width
     public float ySize;//row height
     public Data[][] data;
+
+    private final Paint paintVertex;
+    private final Paint paintEdge;
+    private final Paint paintText;
+    private final int textSize;
+    private final int edgeWidth;
 
     CustomCanvas customCanvas;
 
@@ -37,7 +43,7 @@ public class Board {
         // px = 1mm
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
                 context.getResources().getDisplayMetrics());
-        float cm = px * 10;
+        float cm = px * nodeSize;
         float x = (X / cm);
         float y = (Y / cm);
 
@@ -56,37 +62,32 @@ public class Board {
                 data[r][c] = new Data();
             }
         }
+
+        this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
+        this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
+
+        this.paintText = new Paint();
+        this.paintText.setTextAlign(Paint.Align.CENTER);
+        this.paintText.setTextSize(textSize);
+        this.paintText.setColor(Color.WHITE);
+        this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
+        this.paintVertex = new Paint();
+        this.paintVertex.setColor(context.getResources().getColor(R.color.mainColor));
+
+        this.paintEdge = new Paint();
+        this.paintEdge.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
+        this.paintEdge.setStrokeWidth(edgeWidth);
     }
 
+    // Re-Draws the complete graph
     public void update(Graph graph){
-
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 if(data[r][c].state){
                     Rect rect = getRect(r, c);
-
-                    int x = rect.centerX();
-                    int y = rect.centerY();
-
-                    int width = Math.abs(rect.right - rect.left);
-                    int height = Math.abs(rect.top - rect.bottom);
-
-                    float diameter = Math.min(width, height) * circleRatio;
-                    float radius = diameter / 2;
-
-                    System.out.println(width + " -- " + height + " ---- " + radius);
-                    Paint paint = new Paint();
-                    paint.setColor(Color.MAGENTA);
-                    Paint paint2 = new Paint(Paint.UNDERLINE_TEXT_FLAG);
-                    paint2.setTextSize(100);
-                    paint2.setTextAlign(Paint.Align.CENTER);
-                    customCanvas.canvas.drawCircle(x, y, radius, paint);
-                    String text = String.valueOf(data[r][c].vertex.name);
-                    System.out.println("tetx " + text);
-                    customCanvas.canvas.drawText(text, x, y, paint2);
-//                    drawCenter(rect, text);
-
+                    drawNode(rect, data[r][c].vertex);
                 }
             }
         }
@@ -103,52 +104,55 @@ public class Board {
                 Rect rect1 = getRect(vertex.getValue().row, vertex.getValue().col);
                 Rect rect2 = getRect(edge.dest.row, edge.dest.col);
 
-                Paint paint1 = new Paint();
-                paint1.setColor(Color.BLUE);
-                paint1.setStrokeWidth(5);
-                paint1.setAntiAlias(true);
-
-                double[] lineCoordinates = getLineCoordinates(rect1, rect2);
-
-                float lx1 = (float) lineCoordinates[0];
-                float ly1 = (float) lineCoordinates[1];
-
-                float lx2 = (float) lineCoordinates[2];
-                float ly2 = (float) lineCoordinates[3];
-
-                customCanvas.canvas.drawLine(lx1, ly1, lx2, ly2, paint1);
+                drawEdge(rect1, rect2, edge);
             }
         }
     }
 
-    private void drawCenter(Rect r, String text) {
-        Paint paint = new Paint();
-        paint.setTextSize(100);
-        paint.setColor(Color.RED);
-        paint.setTextAlign(Paint.Align.CENTER);
-        customCanvas.canvas.getClipBounds(r);
-        int cHeight = r.height();
-        int cWidth = r.width();
-        paint.setTextAlign(Paint.Align.LEFT);
-        paint.getTextBounds(text, 0, text.length(), r);
-        float x = cWidth / 2f - r.width() / 2f - r.left;
-        float y = cHeight / 2f + r.height() / 2f - r.bottom;
-        customCanvas.canvas.drawText(text, x, y, paint);
+    // Draws a single Node
+    public void drawNode(Rect rect, Vertex vertex) {
+        int x = rect.centerX();
+        int y = rect.centerY();
+
+        float radius = getRadius(rect);
+        String text = String.valueOf(vertex.name);
+
+        customCanvas.canvas.drawCircle(x, y, radius, paintVertex);
+
+        Rect rectText = new Rect();
+        paintText.getTextBounds(text, 0, text.length(), rectText);
+        customCanvas.canvas.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
+
     }
 
-    public Rect getRect(float row, float col) {
-        int c = (int) col;
-        int r = (int) row;
-        System.out.println("touch =---= " + r + " = " + c);
-        int left = (int) (c * xSize);
-        int top = (int) (r * ySize);
-        int right = (int) (left + xSize);
-        int bottom = (int) (top + ySize);
+    // Draws a single Edge
+    public void drawEdge(Rect rect1, Rect rect2, Edge edge) {
+        double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
-        Rect rect = new Rect(left, top, right, bottom);
-        return rect;
+        float lx1 = (float) lineCoordinates[0];
+        float ly1 = (float) lineCoordinates[1];
+
+        float lx2 = (float) lineCoordinates[2];
+        float ly2 = (float) lineCoordinates[3];
+
+        customCanvas.canvas.drawLine(lx1, ly1, lx2, ly2, paintEdge);
     }
 
+    // Adds Vertex element to grid element and calls drawNode
+    public void addVertex(float xAxisPos, float yAxisPos, Vertex vertex) {
+        // Row and Col of the vertex
+        int col = (int) xAxisPos;
+        int row = (int) yAxisPos;
+
+        // Change its state and add vertex reference
+        data[row][col].state = true;
+        data[row][col].vertex = vertex;
+
+        Rect rect = getRect(row, col);
+        drawNode(rect, vertex);
+    }
+
+    // Returns state of the grid element, whether it is being used or not
     public boolean getState(float xAxisPos, float yAxisPos){
         int col = (int) xAxisPos;
         int row = (int) yAxisPos;
@@ -156,117 +160,40 @@ public class Board {
         return data[row][col].state;
     }
 
-    public boolean switchState(float xAxisPos, float yAxisPos){
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
+    // Returns Rect for given grid[row][col]
+    public Rect getRect(float row, float col) {
+        int c = (int) col;
+        int r = (int) row;
 
-        data[row][col].state = !data[row][col].state;
-
-        return data[row][col].state;
-    }
-
-    public Rect getBox(float xAxisPos, float yAxisPos) {
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-        System.out.println("touch === " + row + " = " + col);
-        int left = (int) (col * xSize);
-        int top = (int) (row * ySize);
+        int left = (int) (c * xSize);
+        int top = (int) (r * ySize);
         int right = (int) (left + xSize);
         int bottom = (int) (top + ySize);
 
-
-        data[row][col].state = !data[row][col].state;
-
-
-        Paint paint = new Paint();
-        Rect rect = new Rect(left, top, right, bottom);
-
-        if (!data[row][col].state) {
-            paint.setColor(Color.RED);
-        } else {
-            paint.setColor(Color.GREEN);
-        }
-
-        customCanvas.canvas.drawRect(rect, paint);
-
-
-        ArrayList<Pair<Integer, Integer>> arrayList = new ArrayList<>();
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                if (data[r][c].state) {
-                    arrayList.add(new Pair<>(r, c));
-                }
-            }
-        }
-
-        for (int i1 = 0; i1 < arrayList.size(); i1++) {
-            for (int i2 = 0; i2 < arrayList.size(); i2++) {
-                if (i1 < i2) {
-                    Pair<Integer, Integer> pair1 = arrayList.get(i1);
-                    Pair<Integer, Integer> pair2 = arrayList.get(i2);
-
-                    Rect rect1 = getRect(pair1.first, pair1.second);
-                    Rect rect2 = getRect(pair2.first, pair2.second);
-
-                    Paint paint1 = new Paint();
-                    paint1.setColor(Color.BLUE);
-
-                    double[] lineCoordinates = getLineCoordinates(rect1, rect2);
-
-                    float lx1 = (float) lineCoordinates[0];
-                    float ly1 = (float) lineCoordinates[1];
-
-                    float lx2 = (float) lineCoordinates[2];
-                    float ly2 = (float) lineCoordinates[3];
-
-                    customCanvas.canvas.drawLine(lx1, ly1, lx2, ly2, paint1);
-                }
-            }
-        }
-
-        drawNode(rect);
-
-        return rect;
+        return new Rect(left, top, right, bottom);
     }
 
-    public void drawNode(Rect rect) {
-        int x = rect.centerX();
-        int y = rect.centerY();
-
-        int width = Math.abs(rect.right - rect.left);
-        int height = Math.abs(rect.top - rect.bottom);
+    // Returns radius for the node
+    private float getRadius(Rect rect){
+        int width = rect.width();
+        int height = rect.height();
 
         float diameter = Math.min(width, height) * circleRatio;
         float radius = diameter / 2;
 
-        System.out.println(width + " -- " + height + " ---- " + radius);
-        Paint paint = new Paint();
-        paint.setColor(Color.MAGENTA);
-        customCanvas.canvas.drawCircle(x, y, radius, paint);
+        return radius;
     }
 
+    // Returns double[4] = {startX, startY, endX, endY} for edge Line
     public double[] getLineCoordinates(Rect rect1, Rect rect2){
-        double width1 = Math.abs(rect1.right - rect1.left);
-        double height1 = Math.abs(rect1.top - rect1.bottom);
-
-        double diameter1 = Math.min(width1, height1) * circleRatio;
-        double radius1 = diameter1 / 2;
-
-        double width2 = Math.abs(rect2.right - rect2.left);
-        double height2 = Math.abs(rect2.top - rect2.bottom);
-
-        double diameter2 = Math.min(width2, height2) * circleRatio;
-        double radius2 = diameter2 / 2;
-
-
         double x1 = rect1.centerX();
         double y1 = rect1.centerY();
 
         double x2 = rect2.centerX();
         double y2 = rect2.centerY();
 
-        double r1 = radius1;
-        double r2 = radius2;
+        double r1 = getRadius(rect1);
+        double r2 = getRadius(rect2);
 
         double u = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
 
@@ -279,11 +206,4 @@ public class Board {
         return new double[]{a1,b1,a2,b2};
     }
 
-    public void addVertex(float xAxisPos, float yAxisPos, Vertex vertex) {
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-
-        data[row][col].state = true;
-        data[row][col].vertex = vertex;
-    }
 }

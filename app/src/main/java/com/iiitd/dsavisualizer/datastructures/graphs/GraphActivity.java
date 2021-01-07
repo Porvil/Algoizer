@@ -485,7 +485,6 @@ public class GraphActivity extends AppCompatActivity {
                 float x = (x1 / board.xSize);
                 float y =  (y1 / board.ySize);
 
-
             }
 
             @Override
@@ -504,17 +503,17 @@ public class GraphActivity extends AppCompatActivity {
 
                 boolean state = board.getState(x, y);
                 if(state){
-//                    System.out.p/rintln("ON");
+//                    System.out.println("ON");
                 }
                 else{
                     System.out.println("OFF");
-                    Vertex vertex = graph.createVertex((int) graph.noOfVertices, row, col);
+                    Vertex vertex = graph.createVertex(graph.noOfVertices, row, col);
                     board.addVertex(x, y, vertex);
 //                        board.switchState(x, y);
                 }
 
 
-                board.update(graph);
+//                board.update(graph);
                 iv_graph.invalidate();
 
                 return  true;
@@ -524,13 +523,6 @@ public class GraphActivity extends AppCompatActivity {
         iv_graph.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-//                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-//
-//
-//                }
-//                return true;
-
                 if (gestureDetector.onTouchEvent(event)) {
                     return true;
                 }

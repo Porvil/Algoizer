@@ -1,12 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class Graph {
 
@@ -64,75 +59,9 @@ public class Graph {
     }
 
     public void print(){
-
         for(Map.Entry<Integer, Vertex> vertex : vertices.entrySet() ){
             vertex.getValue().printEdges();
         }
-
-    }
-
-}
-
-
-class Vertex{
-
-    int name;
-    boolean isVisited;
-    int row;
-    int col;
-    Set<Edge> edges;
-
-    public Vertex(int name, int row, int col) {
-        this.name = name;
-        this.isVisited = false;
-        this.row = row;
-        this.col = col;
-        edges = new HashSet<>();
-    }
-
-    public boolean createEdge(Edge edge){
-        if(edges.contains(edge))
-            return false;
-
-        edges.add(edge);
-        return true;
-
-    }
-
-    public void printEdges(){
-        Iterator it = edges.iterator();
-        System.out.print(name);
-        while(it.hasNext()){
-            System.out.print( " --> " + ((Edge)(it.next())).dest.name );
-        }
-        System.out.println(" --> NULL ");
-    }
-
-}
-
-class Edge{
-    Vertex dest;
-    double weight;
-
-    public Edge(Vertex dest, double weight) {
-        this.dest = dest;
-        this.weight = weight;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-        if((o == null) || (o.getClass() != this.getClass())) return false;
-
-        return this.dest == ((Edge)o).dest;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.dest);
-        return hash;
     }
 
 }
