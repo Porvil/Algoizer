@@ -8,22 +8,30 @@ import android.widget.ImageView;
 public class CustomCanvas {
 
     public Context context;
-    public Canvas canvas;
-    public Bitmap bitmap;
-    public ImageView imageView;
+    public Canvas canvasGraph;
+    public Canvas canvasGrid;
+    public Bitmap bitmapGraph;
+    public Bitmap bitmapGrid;
+    public ImageView imageViewGraph;
+    public ImageView imageViewGrid;
 
-    public CustomCanvas(Context context, ImageView imageView) {
+    public CustomCanvas(Context context, ImageView imageViewGraph, ImageView imageViewGrid) {
         this.context = context;
-        this.imageView = imageView;
+        this.imageViewGraph = imageViewGraph;
+        this.imageViewGrid = imageViewGrid;
 
-        int width = imageView.getWidth();
-        int height = imageView.getHeight();
+        int width = imageViewGraph.getWidth();
+        int height = imageViewGraph.getHeight();
 
-        System.out.println("Canvas = " + width + "x" +height);
+        System.out.println("Canvas = " + width + "x" + height);
 
-        this.bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        this.imageView.setImageBitmap(bitmap);
-        this.canvas = new Canvas(bitmap);
+        this.bitmapGraph = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        this.imageViewGraph.setImageBitmap(bitmapGraph);
+        this.canvasGraph = new Canvas(bitmapGraph);
+
+        this.bitmapGrid = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        this.imageViewGrid.setImageBitmap(bitmapGrid);
+        this.canvasGrid = new Canvas(bitmapGrid);
     }
 
 }

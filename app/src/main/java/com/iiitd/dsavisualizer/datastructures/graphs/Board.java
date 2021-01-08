@@ -26,9 +26,12 @@ public class Board {
     public float ySize;//row height
     public Data[][] data;
 
+    private final Paint paintGrid;
+    private final Paint paintGridCoordinates;
     private final Paint paintVertex;
     private final Paint paintEdge;
     private final Paint paintText;
+    private final int textSizeCoordinates;
     private final int textSize;
     private final int edgeWidth;
 
@@ -36,8 +39,8 @@ public class Board {
 
     public Board(Context context, CustomCanvas customCanvas) {
         this.context = context;
-        this.X = customCanvas.imageView.getWidth();
-        this.Y = customCanvas.imageView.getHeight();
+        this.X = customCanvas.imageViewGraph.getWidth();
+        this.Y = customCanvas.imageViewGraph.getHeight();
         this.customCanvas = customCanvas;
 
         // px = 1mm
@@ -63,8 +66,17 @@ public class Board {
             }
         }
 
+        this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
+
+        this.paintGrid = new Paint();
+        this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
+
+        this.paintGridCoordinates = new Paint();
+        this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
+        this.paintGridCoordinates.setTextSize(textSizeCoordinates);
+        this.paintGridCoordinates.setColor(Color.BLACK);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
@@ -78,6 +90,45 @@ public class Board {
         this.paintEdge = new Paint();
         this.paintEdge.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdge.setStrokeWidth(edgeWidth);
+
+        // Draw Grid on Grid ImageView
+        drawGrid();
+    }
+
+    private void drawGrid() {
+        Rect rect = new Rect();
+
+        for(int i=0; i<xCount+1; i++){
+            int left = (int) (i*xSize);
+            int right = left + 1;
+            int top = 0;
+            int bottom = (int) Y;
+            rect.set(left, top, right, bottom);
+            customCanvas.canvasGrid.drawRect(rect, paintGrid);
+        }
+
+        for(int i=0; i<yCount+1; i++){
+            int top = (int) (i*ySize);
+            int bottom = top + 1;
+            int left = 0;
+            int right = (int) X;
+            rect.set(left, top, right, bottom);
+            customCanvas.canvasGrid.drawRect(rect, paintGrid);
+        }
+
+        for (int r = 0; r < yCount; r++) {
+            for (int c = 0; c < xCount; c++) {
+                String text = "(" + r + "," + c + ")";
+                Rect rect1 = getRect(r, c);
+                int x = (int) (rect1.left + (rect1.width() * 0.95f));
+                int y = (int) (rect1.top + (rect1.height() * 0.95f));
+                Rect rectText = new Rect();
+                paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
+                customCanvas.canvasGrid.drawText(text, x, y , paintGridCoordinates);
+
+            }
+        }
+
     }
 
     // Re-Draws the complete graph
@@ -117,12 +168,11 @@ public class Board {
         float radius = getRadius(rect);
         String text = String.valueOf(vertex.name);
 
-        customCanvas.canvas.drawCircle(x, y, radius, paintVertex);
+        customCanvas.canvasGraph.drawCircle(x, y, radius, paintVertex);
 
         Rect rectText = new Rect();
         paintText.getTextBounds(text, 0, text.length(), rectText);
-        customCanvas.canvas.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
-
+        customCanvas.canvasGraph.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
     }
 
     // Draws a single Edge
@@ -135,7 +185,7 @@ public class Board {
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
 
-        customCanvas.canvas.drawLine(lx1, ly1, lx2, ly2, paintEdge);
+        customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
     }
 
     // Adds Vertex element to grid element and calls drawNode

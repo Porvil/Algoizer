@@ -388,82 +388,18 @@ public class GraphActivity extends AppCompatActivity {
 //            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
 //        }
 
+        // Draws Grid and Graph View After Layouts have been laid out
         iv_graph.post(new Runnable() {
             @Override
             public void run() {
-                customCanvas = new CustomCanvas(context, iv_graph);
-                graph = new Graph();
-                board = new Board(context, customCanvas);
-
-                // Grid
                 iv_grid.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        Bitmap bitmap = Bitmap.createBitmap(
-                                iv_grid.getWidth(), iv_grid.getHeight(), Bitmap.Config.ARGB_8888);
-                        // Associate the bitmap to the ImageView.
-                        iv_grid.setImageBitmap(bitmap);
-                        // Create a Canvas with the bitmap.
-                        Canvas canvas = new Canvas(bitmap);
-
-                        Paint mPaintText = new Paint(Paint.UNDERLINE_TEXT_FLAG);
-                        mPaintText.setTextSize(30);
-                        Paint paint = new Paint(Color.BLACK);
-                        Rect rect = new Rect();
-
-                        for(int i = 0; i<board.xCount +1; i++){
-                            int left = (int) (i*board.xSize);
-                            int right = left + 1;
-                            int top = 0;
-                            int bottom = (int) board.Y;
-                            rect.set(left, top, right, bottom);
-                            canvas.drawRect(rect, paint);
-                        }
-
-
-                        for(int i = 0; i<board.yCount +1; i++){
-                            int top = (int) (i*board.ySize);
-                            int bottom = top + 1;
-                            int left = 0;
-                            int right = (int) board.X;
-                            rect.set(left, top, right, bottom);
-                            canvas.drawRect(rect, paint);
-                        }
-                        for(int r = 0; r<board.yCount +1; r++){
-                            for(int c = 0; c<board.xCount +1; c++){
-                                String text = r + " " + c;
-                                int yy = (int) (r*board.xSize + board.xSize /2);
-                                int xx = (int) (c*board.ySize + board.ySize /2);
-                                canvas.drawText(text, xx, yy, mPaintText);
-                            }
-                        }
+                        customCanvas = new CustomCanvas(context, iv_graph, iv_grid);
+                        graph = new Graph();
+                        board = new Board(context, customCanvas);
                     }
                 });
-
-
-
-//                iv_graph.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if(event.getAction() == MotionEvent.ACTION_UP) {
-//                            float x1 = event.getX();
-//                            float y1 = event.getY();
-//
-//                            float x = (x1 / board.colWidth);
-//                            float y =  (y1 / board.rowHeight);
-//
-//                            Rect box = board.getBox(x, y);
-//
-//                            System.out.println("BOX = " + box.centerX() + " | " + box.centerY());
-//
-//                            iv_graph.invalidate();
-//                        }
-//                        return false;
-//                    }
-//                });
-
-
             }
         });
 
@@ -511,7 +447,6 @@ public class GraphActivity extends AppCompatActivity {
                     board.addVertex(x, y, vertex);
 //                        board.switchState(x, y);
                 }
-
 
 //                board.update(graph);
                 iv_graph.invalidate();
