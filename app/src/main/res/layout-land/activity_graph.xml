@@ -46,6 +46,13 @@
                     android:clickable="true"
                     android:longClickable="true" />
 
+                <ImageView
+                    android:id="@+id/iv_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:longClickable="false" />
+
             </FrameLayout>
 
         </LinearLayout>

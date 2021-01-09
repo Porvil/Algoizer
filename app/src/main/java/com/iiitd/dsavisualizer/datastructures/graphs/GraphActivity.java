@@ -3,6 +3,9 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -44,6 +47,7 @@ public class GraphActivity extends AppCompatActivity {
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_graph;
+    ImageView iv_anim;
     ConstraintLayout cl_info;
     ImageButton btn_back;
     ImageButton btn_menu;
@@ -105,6 +109,7 @@ public class GraphActivity extends AppCompatActivity {
         ll_anim = v_main.findViewById(R.id.ll_anim);
         iv_grid = v_main.findViewById(R.id.iv_grid);
         iv_graph = v_main.findViewById(R.id.iv_graph);
+        iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_grid = v_main.findViewById(R.id.btn_grid);
@@ -318,19 +323,22 @@ public class GraphActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        btn_cleartree.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                clearTree();
-//            }
-//        });
+        btn_cleartree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
+            }
+        });
 //
-//        btn_tree1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                createExampleTree(BSTInfo.tree1);
-//            }
-//        });
+        btn_tree1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Paint paint = new Paint(Color.RED);
+                paint.setColor(Color.RED);
+                board.customCanvas.canvasAnimation.drawCircle(100,100,50, paint);
+
+            }
+        });
 //
         btn_tree2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -374,7 +382,7 @@ public class GraphActivity extends AppCompatActivity {
 //                graph.addEdge(3, 3);
 
 
-                board.update(graphOld);
+                board.update(graph);
             }
         });
 //
@@ -409,8 +417,9 @@ public class GraphActivity extends AppCompatActivity {
                 int i1 = Integer.parseInt(split[0]);
                 int i2 = Integer.parseInt(split[1]);
 
-                int edge = graphOld.createEdge(i1, i2, 1);
-                board.update(graphOld);
+//                int edge = graphOld.createEdge(i1, i2, 1);
+                graph.addEdge(i1, i2);
+                board.update(graph);
 
             }
         });
@@ -442,10 +451,15 @@ public class GraphActivity extends AppCompatActivity {
                 iv_grid.post(new Runnable() {
                     @Override
                     public void run() {
-                        customCanvas = new CustomCanvas(context, iv_graph, iv_grid);
-                        graphOld = new GraphOld();
-                        graph = new Graph();
-                        board = new Board(context, customCanvas);
+                        iv_anim.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim);
+                                graphOld = new GraphOld();
+                                graph = new Graph();
+                                board = new Board(context, customCanvas);
+                            }
+                        });
                     }
                 });
             }

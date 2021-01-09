@@ -10,12 +10,13 @@ import android.util.TypedValue;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Board {
 
     private final int nodeSize = 10;// in mm
-    private final float circleRatio = 0.75f;
+    private final float circleRatio = 0.66f;
     Context context;
 
     public float X;//width
@@ -132,7 +133,7 @@ public class Board {
     }
 
     // Re-Draws the complete graphOld
-    public void update(GraphOld graphOld){
+    public void update(Graph graph){
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
@@ -144,18 +145,18 @@ public class Board {
         }
 
         //Edges
-        for(Map.Entry<Integer, VertexOld> vertex : graphOld.vertices.entrySet() ){
+        for(Map.Entry<Integer, ArrayList<Integer>> vertex : graph.map.entrySet() ){
 
-            for (EdgeOld edgeOld : vertex.getValue().edgeOlds) {
+            for (Integer edgeOld : vertex.getValue()) {
+                System.out.println(vertex.getKey() + ":" + edgeOld);
 
-                System.out.println(vertex.getKey() + " -> " + edgeOld.dest.name);
-                System.out.println(vertex.getValue().row + ":" + vertex.getValue().col);
-                System.out.println(edgeOld.dest.row + ":" + edgeOld.dest.col);
+                int[] vertex1 = getCoordintes(vertex.getKey());
+                int[] vertex2 = getCoordintes(edgeOld);
 
-                Rect rect1 = getRect(vertex.getValue().row, vertex.getValue().col);
-                Rect rect2 = getRect(edgeOld.dest.row, edgeOld.dest.col);
+                Rect rect1 = getRect(vertex1[0], vertex1[1]);
+                Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdge(rect1, rect2, edgeOld);
+                drawEdge(rect1, rect2);
             }
         }
     }
@@ -176,7 +177,7 @@ public class Board {
     }
 
     // Draws a single EdgeOld
-    public void drawEdge(Rect rect1, Rect rect2, EdgeOld edgeOld) {
+    public void drawEdge(Rect rect1, Rect rect2) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -184,6 +185,10 @@ public class Board {
 
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
+
+        double distance = distance(lx1, ly1, lx2, ly2);
+        System.out.println("distance = " + distance);
+
 
         customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
     }
@@ -220,6 +225,18 @@ public class Board {
         int row = (int) yAxisPos;
 
         return data[row][col].state;
+    }
+
+    public int[] getCoordintes(int key){
+        for (int r = 0; r < yCount; r++) {
+            for (int c = 0; c < xCount; c++) {
+                if(data[r][c].data == key){
+                    return new int[]{r, c};
+                }
+            }
+        }
+
+        return null;
     }
 
     // Returns Rect for given grid[row][col]
@@ -268,4 +285,7 @@ public class Board {
         return new double[]{a1,b1,a2,b2};
     }
 
+    public double distance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+    }
 }
