@@ -7,11 +7,12 @@ public class Data {
     public Rect rect;
     public int row;
     public int column;
-    Vertex vertex;
+    public int data;
+//    VertexOld vertexOld;
     boolean state;
 
     public Data() {
         state = false;
-        vertex = null;
+//        vertexOld = null;
     }
 }

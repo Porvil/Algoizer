@@ -3,11 +3,6 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -77,6 +72,7 @@ public class GraphActivity extends AppCompatActivity {
     EditText et_delete;
 
     CustomCanvas customCanvas;
+    GraphOld graphOld;
     Graph graph;
     Board board;
     boolean isGridOn = true;
@@ -336,19 +332,70 @@ public class GraphActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        btn_tree2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                createExampleTree(BSTInfo.tree2);
-//            }
-//        });
+        btn_tree2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                VertexOld vertexOld0 = graphOld.createVertex(graphOld.noOfVertices, 0, 0);
+//                board.addVertex(0, 0, vertexOld0);
 //
-//        btn_tree3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                createExampleTree(BSTInfo.tree3);
-//            }
-//        });
+//                VertexOld vertexOld1 = graphOld.createVertex(graphOld.noOfVertices, 0, 3);
+//                board.addVertex(0, 3, vertexOld1);
+//
+//                VertexOld vertexOld2 = graphOld.createVertex(graphOld.noOfVertices, 2, 0);
+//                board.addVertex(2, 0, vertexOld2);
+//
+//                VertexOld vertexOld3 = graphOld.createVertex(graphOld.noOfVertices, 2, 4);
+//                board.addVertex(2, 4, vertexOld3);
+//
+//                VertexOld vertexOld4 = graphOld.createVertex(graphOld.noOfVertices, 4, 3);
+//                board.addVertex(4, 3, vertexOld4);
+
+
+
+
+                graph.addVertex(0);board.addVertex(0,0,0);
+                graph.addVertex(1);board.addVertex(0,3,1);
+                graph.addVertex(2);board.addVertex(2,0,2);
+                graph.addVertex(3);board.addVertex(2,4,3);
+                graph.addVertex(4);board.addVertex(4,3,4);
+
+
+                graph.addEdge(0, 1);
+                graph.addEdge(0, 2);
+                graph.addEdge(1, 2);
+                graph.addEdge(2, 3);
+                graph.addEdge(3, 4);
+
+//                graph.addEdge(0, 1);
+//                graph.addEdge(0, 2);
+//                graph.addEdge(1, 2);
+//                graph.addEdge(2, 0);
+//                graph.addEdge(2, 3);
+//                graph.addEdge(3, 3);
+
+
+                board.update(graphOld);
+            }
+        });
+//
+        btn_tree3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                VertexOld source = board.data[0][0].vertexOld;
+//                BFSOld bfs = new BFSOld(graphOld);
+//                bfs.run(source);
+
+                BFS bfs = new BFS(graph);
+                bfs.run(2);
+                System.out.println();
+                System.out.println();
+                System.out.println("NEXT RUN");
+
+                bfs.run(2);
+
+            }
+        });
 
 
         btn_edge.setOnClickListener(new View.OnClickListener() {
@@ -362,8 +409,8 @@ public class GraphActivity extends AppCompatActivity {
                 int i1 = Integer.parseInt(split[0]);
                 int i2 = Integer.parseInt(split[1]);
 
-                int edge = graph.createEdge(i1, i2, 1);
-                board.update(graph);
+                int edge = graphOld.createEdge(i1, i2, 1);
+                board.update(graphOld);
 
             }
         });
@@ -388,7 +435,7 @@ public class GraphActivity extends AppCompatActivity {
 //            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
 //        }
 
-        // Draws Grid and Graph View After Layouts have been laid out
+        // Draws Grid and GraphOld View After Layouts have been laid out
         iv_graph.post(new Runnable() {
             @Override
             public void run() {
@@ -396,6 +443,7 @@ public class GraphActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         customCanvas = new CustomCanvas(context, iv_graph, iv_grid);
+                        graphOld = new GraphOld();
                         graph = new Graph();
                         board = new Board(context, customCanvas);
                     }
@@ -443,12 +491,15 @@ public class GraphActivity extends AppCompatActivity {
                 }
                 else{
                     System.out.println("OFF");
-                    Vertex vertex = graph.createVertex(graph.noOfVertices, row, col);
-                    board.addVertex(x, y, vertex);
+//                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
+                    int noOfVertices = graph.noOfVertices;
+                    graph.addVertex(noOfVertices);
+                    board.addVertex(x, y, noOfVertices);
+//                    board.addVertex(x, y, vertexOld);
 //                        board.switchState(x, y);
                 }
 
-//                board.update(graph);
+//                board.update(graphOld);
                 iv_graph.invalidate();
 
                 return  true;

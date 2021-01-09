@@ -131,42 +131,42 @@ public class Board {
 
     }
 
-    // Re-Draws the complete graph
-    public void update(Graph graph){
+    // Re-Draws the complete graphOld
+    public void update(GraphOld graphOld){
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 if(data[r][c].state){
                     Rect rect = getRect(r, c);
-                    drawNode(rect, data[r][c].vertex);
+                    drawNode(rect, data[r][c].data);
                 }
             }
         }
 
         //Edges
-        for(Map.Entry<Integer, Vertex> vertex : graph.vertices.entrySet() ){
+        for(Map.Entry<Integer, VertexOld> vertex : graphOld.vertices.entrySet() ){
 
-            for (Edge edge : vertex.getValue().edges) {
+            for (EdgeOld edgeOld : vertex.getValue().edgeOlds) {
 
-                System.out.println(vertex.getKey() + " -> " + edge.dest.name);
+                System.out.println(vertex.getKey() + " -> " + edgeOld.dest.name);
                 System.out.println(vertex.getValue().row + ":" + vertex.getValue().col);
-                System.out.println(edge.dest.row + ":" + edge.dest.col);
+                System.out.println(edgeOld.dest.row + ":" + edgeOld.dest.col);
 
                 Rect rect1 = getRect(vertex.getValue().row, vertex.getValue().col);
-                Rect rect2 = getRect(edge.dest.row, edge.dest.col);
+                Rect rect2 = getRect(edgeOld.dest.row, edgeOld.dest.col);
 
-                drawEdge(rect1, rect2, edge);
+                drawEdge(rect1, rect2, edgeOld);
             }
         }
     }
 
     // Draws a single Node
-    public void drawNode(Rect rect, Vertex vertex) {
+    public void drawNode(Rect rect, int name) {
         int x = rect.centerX();
         int y = rect.centerY();
 
         float radius = getRadius(rect);
-        String text = String.valueOf(vertex.name);
+        String text = String.valueOf(name);
 
         customCanvas.canvasGraph.drawCircle(x, y, radius, paintVertex);
 
@@ -175,8 +175,8 @@ public class Board {
         customCanvas.canvasGraph.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
     }
 
-    // Draws a single Edge
-    public void drawEdge(Rect rect1, Rect rect2, Edge edge) {
+    // Draws a single EdgeOld
+    public void drawEdge(Rect rect1, Rect rect2, EdgeOld edgeOld) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -188,18 +188,30 @@ public class Board {
         customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
     }
 
-    // Adds Vertex element to grid element and calls drawNode
-    public void addVertex(float xAxisPos, float yAxisPos, Vertex vertex) {
-        // Row and Col of the vertex
+    // Adds VertexOld element to grid element and calls drawNode
+    public void addVertex(float xAxisPos, float yAxisPos, int name) {
+        // Row and Col of the vertexOld
         int col = (int) xAxisPos;
         int row = (int) yAxisPos;
 
-        // Change its state and add vertex reference
+        // Change its state and add vertexOld reference
         data[row][col].state = true;
-        data[row][col].vertex = vertex;
+        data[row][col].data = name;
+//        data[row][col].vertexOld = vertexOld;
 
         Rect rect = getRect(row, col);
-        drawNode(rect, vertex);
+        drawNode(rect, data[row][col].data);
+    }
+
+    // Adds VertexOld element to grid element and calls drawNode
+    public void addVertex(int row, int col, int name) {
+        // Change its state and add vertexOld reference
+        data[row][col].state = true;
+        data[row][col].data = name;
+//        data[row][col].vertexOld = vertexOld;
+
+        Rect rect = getRect(row, col);
+        drawNode(rect, data[row][col].data);
     }
 
     // Returns state of the grid element, whether it is being used or not

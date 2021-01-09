@@ -4,35 +4,35 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Vertex {
+public class VertexOld {
 
     int name;
     boolean isVisited;
     int row;
     int col;
-    Set<Edge> edges;
+    Set<EdgeOld> edgeOlds;
 
-    public Vertex(int name, int row, int col) {
+    public VertexOld(int name, int row, int col) {
         this.name = name;
         this.isVisited = false;
         this.row = row;
         this.col = col;
-        edges = new HashSet<>();
+        edgeOlds = new HashSet<>();
     }
 
-    public boolean createEdge(Edge edge) {
-        if (edges.contains(edge))
+    public boolean createEdge(EdgeOld edgeOld) {
+        if (edgeOlds.contains(edgeOld))
             return false;
 
-        edges.add(edge);
+        edgeOlds.add(edgeOld);
         return true;
     }
 
     public void printEdges() {
-        Iterator it = edges.iterator();
+        Iterator it = edgeOlds.iterator();
         System.out.print(name);
         while (it.hasNext()) {
-            System.out.print(" --> " + ((Edge) (it.next())).dest.name);
+            System.out.print(" --> " + ((EdgeOld) (it.next())).dest.name);
         }
         System.out.println(" --> NULL ");
     }
