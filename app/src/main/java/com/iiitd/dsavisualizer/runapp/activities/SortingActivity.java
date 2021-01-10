@@ -23,8 +23,8 @@ public class SortingActivity extends AppCompatActivity {
     LinearLayout ll_sorting_row2;
 
     SortingData[] sortingData = new SortingData[]{
-            new SortingData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.logo),
-            new SortingData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.arrow_1),
+            new SortingData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.bubblesort),
+            new SortingData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.selectionsort),
             new SortingData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.arrow_1),
             new SortingData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.arrow_1),
             new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.arrow_1),
@@ -49,6 +49,7 @@ public class SortingActivity extends AppCompatActivity {
             TextView textView = view.findViewById(R.id.tv_sortname);
 
             imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
+//            imageView.setColorFilter(getResources().getColor(R.color.mainColor));
             textView.setText(sortingData.text);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,

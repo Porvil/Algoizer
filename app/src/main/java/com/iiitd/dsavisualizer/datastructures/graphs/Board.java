@@ -35,6 +35,7 @@ public class Board {
     private final int textSizeCoordinates;
     private final int textSize;
     private final int edgeWidth;
+    private final int arrowLength;
 
     CustomCanvas customCanvas;
 
@@ -70,6 +71,7 @@ public class Board {
         this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
+        this.arrowLength = 50;
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
@@ -191,6 +193,34 @@ public class Board {
 
 
         customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
+        arrow12(lx1, ly1, lx2, ly2);
+        arrow21(lx1, ly1, lx2, ly2);
+    }
+
+    public void arrow12(float x, float y, float x1, float y1) {
+        double degree = calculateDegree(x, x1, y, y1);
+
+        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-30)+90))));
+        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-30)+90)))));
+
+        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-60)+180))));
+        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-60)+180)))));
+
+        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdge);
+        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdge);
+    }
+
+    public void arrow21(float x, float y, float x1, float y1) {
+
+        double degree1 = calculateDegree(x1, x, y1, y);
+        float endX11 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-30)+90))));
+        float endY11 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-30)+90)))));
+
+        float endX22 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-60)+180))));
+        float endY22 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-60)+180)))));
+
+        customCanvas.canvasGraph.drawLine(x, y, endX11, endY11, paintEdge);
+        customCanvas.canvasGraph.drawLine(x, y, endX22, endY22, paintEdge);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
@@ -287,5 +317,11 @@ public class Board {
 
     public double distance(double x1, double y1, double x2, double y2) {
         return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+    }
+
+    public double calculateDegree(float x1, float x2, float y1, float y2) {
+        float startRadians = (float) Math.atan((y2 - y1) / (x2 - x1));
+        startRadians += ((x2 >= x1) ? 90 : -90) * Math.PI / 180;
+        return Math.toDegrees(startRadians);
     }
 }

@@ -361,11 +361,11 @@ public class GraphActivity extends AppCompatActivity {
 
 
 
-                graph.addVertex(0);board.addVertex(0,0,0);
-                graph.addVertex(1);board.addVertex(0,3,1);
-                graph.addVertex(2);board.addVertex(2,0,2);
-                graph.addVertex(3);board.addVertex(2,4,3);
-                graph.addVertex(4);board.addVertex(4,3,4);
+                graph.addVertex(0,0,0);board.addVertex(0,0,0);
+                graph.addVertex(1,0,3);board.addVertex(0,3,1);
+                graph.addVertex(2,2,0);board.addVertex(2,0,2);
+                graph.addVertex(3,2,4);board.addVertex(2,4,3);
+                graph.addVertex(4,4,3);board.addVertex(4,3,4);
 
 
                 graph.addEdge(0, 1);
@@ -395,12 +395,23 @@ public class GraphActivity extends AppCompatActivity {
 //                bfs.run(source);
 
                 BFS bfs = new BFS(graph);
-                bfs.run(2);
-                System.out.println();
-                System.out.println();
-                System.out.println("NEXT RUN");
+                bfs.run(0);
 
-                bfs.run(2);
+                int i=0;
+                for(GraphAnimationState graphAnimationState : bfs.graphSequence.animationStates){
+                    i++;
+                    System.out.println("Seq = " + i);
+                    System.out.println(graphAnimationState.state);
+                    for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
+                        System.out.println(graphElementAnimationData);
+                    }
+
+                }
+//                System.out.println();
+//                System.out.println();
+//                System.out.println("NEXT RUN");
+//
+//                bfs.run(2);
 
             }
         });
@@ -507,7 +518,7 @@ public class GraphActivity extends AppCompatActivity {
                     System.out.println("OFF");
 //                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
                     int noOfVertices = graph.noOfVertices;
-                    graph.addVertex(noOfVertices);
+                    graph.addVertex(noOfVertices, col, row);
                     board.addVertex(x, y, noOfVertices);
 //                    board.addVertex(x, y, vertexOld);
 //                        board.switchState(x, y);
