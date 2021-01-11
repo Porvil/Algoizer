@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -21,19 +22,28 @@ import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
+import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -397,16 +407,18 @@ public class GraphActivity extends AppCompatActivity {
                 BFS bfs = new BFS(graph);
                 bfs.run(0);
 
-                int i=0;
-                for(GraphAnimationState graphAnimationState : bfs.graphSequence.animationStates){
-                    i++;
-                    System.out.println("Seq = " + i);
-                    System.out.println(graphAnimationState.state);
-                    for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
-                        System.out.println(graphElementAnimationData);
-                    }
+                startTimer("BFS", bfs);
 
-                }
+//                int i=0;
+//                for(GraphAnimationState graphAnimationState : bfs.graphSequence.animationStates){
+//                    i++;
+//                    System.out.println("Seq = " + i);
+//                    System.out.println(graphAnimationState.state);
+//                    for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
+//                        System.out.println(graphElementAnimationData);
+//                    }
+//
+//                }
 //                System.out.println();
 //                System.out.println();
 //                System.out.println("NEXT RUN");
@@ -436,6 +448,68 @@ public class GraphActivity extends AppCompatActivity {
         });
 
     }
+
+    private void startTimer(String operation, final BFS bfs){
+        if(!dl_main.isOpen()) {
+            System.out.println("OPEN");
+            dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            btn_menu.setEnabled(false);
+            btn_back.setEnabled(false);
+            btn_info.setEnabled(false);
+        }
+
+        if(timer == null) {
+
+            final int animDurationTemp = this.animDuration;
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    task(animDurationTemp, bfs);
+                }
+            }, animStepDuration, animStepDuration);
+
+        }
+    }
+
+    private void task(final int animDurationTemp, final BFS bfs) {
+        if (bfs != null) {
+            final int curSeqNo = bfs.graphSequence.curSeqNo;
+            System.out.println("SEQ = "  + curSeqNo);
+            bfs.graphSequence.forward();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(curSeqNo < bfs.graphSequence.animationStates.size()) {
+                        GraphAnimationState graphAnimationState = bfs.graphSequence.animationStates.get(curSeqNo);
+                        System.out.println(graphAnimationState);
+
+                    }
+                    else{
+                        UtilUI.setText(tv_info, "Done");
+                        System.out.println("Canceled");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btn_menu.setEnabled(true);
+                                btn_back.setEnabled(true);
+                                btn_info.setEnabled(true);
+                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        timer.cancel();
+                        timer = null;
+                    }
+                }
+            });
+
+        }
+
+    }
+
 
     private void initViews() {
 //        if(bst != null){
