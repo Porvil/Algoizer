@@ -15,8 +15,12 @@ import java.util.Map;
 
 public class Board {
 
+    private final int topAngle = 45;// in mm
+    private final int bottomAngle = 45;// in mm
     private final int nodeSize = 10;// in mm
     private final float circleRatio = 0.66f;
+    private final float edgeArrowRatio = 0.24f;
+    private final float nodeRadius;
     Context context;
 
     public float X;//width
@@ -31,10 +35,12 @@ public class Board {
     private final Paint paintGridCoordinates;
     private final Paint paintVertex;
     private final Paint paintEdge;
+    private final Paint paintEdgeArrows;
     private final Paint paintText;
     private final int textSizeCoordinates;
     private final int textSize;
     private final int edgeWidth;
+    private final int edgeArrowWidth;
     private final int arrowLength;
 
     CustomCanvas customCanvas;
@@ -61,6 +67,10 @@ public class Board {
         System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
         System.out.println("no of rows = " + yCount + " | " + "no of columns = " + xCount);
 
+        float minSide = Math.min(xSize, ySize);
+        this.nodeRadius = ( minSide * circleRatio) / 2;
+        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
+
         this.data = new Data[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
@@ -71,7 +81,8 @@ public class Board {
         this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
-        this.arrowLength = 50;
+        this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
+//        this.arrowLength = 50;
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
@@ -93,6 +104,10 @@ public class Board {
         this.paintEdge = new Paint();
         this.paintEdge.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdge.setStrokeWidth(edgeWidth);
+
+        this.paintEdgeArrows = new Paint();
+        this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
+        this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
 
         // Draw Grid on Grid ImageView
         drawGrid();
@@ -152,8 +167,8 @@ public class Board {
             for (Integer edgeOld : vertex.getValue()) {
                 System.out.println(vertex.getKey() + ":" + edgeOld);
 
-                int[] vertex1 = getCoordintes(vertex.getKey());
-                int[] vertex2 = getCoordintes(edgeOld);
+                int[] vertex1 = getCoordinates(vertex.getKey());
+                int[] vertex2 = getCoordinates(edgeOld);
 
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
@@ -200,27 +215,27 @@ public class Board {
     public void arrow12(float x, float y, float x1, float y1) {
         double degree = calculateDegree(x, x1, y, y1);
 
-        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-30)+90))));
-        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-30)+90)))));
+        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
+        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
 
-        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-60)+180))));
-        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-60)+180)))));
+        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
+        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
 
-        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdge);
-        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdge);
+        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
+        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
     }
 
     public void arrow21(float x, float y, float x1, float y1) {
 
         double degree1 = calculateDegree(x1, x, y1, y);
-        float endX11 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-30)+90))));
-        float endY11 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-30)+90)))));
+        float endX11 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-topAngle)+90))));
+        float endY11 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-topAngle)+90)))));
 
-        float endX22 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-60)+180))));
-        float endY22 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-60)+180)))));
+        float endX22 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-bottomAngle)+180))));
+        float endY22 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-bottomAngle)+180)))));
 
-        customCanvas.canvasGraph.drawLine(x, y, endX11, endY11, paintEdge);
-        customCanvas.canvasGraph.drawLine(x, y, endX22, endY22, paintEdge);
+        customCanvas.canvasGraph.drawLine(x, y, endX11, endY11, paintEdgeArrows);
+        customCanvas.canvasGraph.drawLine(x, y, endX22, endY22, paintEdgeArrows);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
@@ -257,7 +272,7 @@ public class Board {
         return data[row][col].state;
     }
 
-    public int[] getCoordintes(int key){
+    public int[] getCoordinates(int key){
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 if(data[r][c].data == key){
@@ -287,6 +302,7 @@ public class Board {
         int width = rect.width();
         int height = rect.height();
 
+        System.out.println("rect = " + width + "x" + height);
         float diameter = Math.min(width, height) * circleRatio;
         float radius = diameter / 2;
 

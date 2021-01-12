@@ -3,4 +3,5 @@
     <dimen name="coordinatesText">14sp</dimen>
     <dimen name="nodeText">20sp</dimen>
     <dimen name="edgeWidth">5dp</dimen>
+    <dimen name="edgeArrowWidth">2dp</dimen>
 </resources>

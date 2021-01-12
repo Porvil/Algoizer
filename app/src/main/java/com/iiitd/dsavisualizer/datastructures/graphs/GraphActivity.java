@@ -589,7 +589,7 @@ public class GraphActivity extends AppCompatActivity {
 //                    System.out.println("ON");
                 }
                 else{
-                    System.out.println("OFF");
+//                    System.out.println("OFF");
 //                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
                     int noOfVertices = graph.noOfVertices;
                     graph.addVertex(noOfVertices, col, row);
