@@ -236,6 +236,7 @@
             tools:layout_editor_absoluteY="3dp" />
 
         <RadioGroup
+            android:id="@+id/rg_graphcontrols"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
@@ -245,35 +246,39 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rb_graphcontrol_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/graph_selector_radiogroup"
                 android:button="@null"
                 android:checked="true"
-                android:text="Node"
-                android:textColor="@color/colorWhite"
-                android:drawableTop="@drawable/ic_baseline_add_24" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/graph_selector_radiogroup"
-                android:button="@null"
-                android:text="Edge"
-                android:textColor="@color/colorWhite"
-                android:drawableTop="@drawable/ic_baseline_linear_scale_24" />
-
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/graph_selector_radiogroup"
-                android:button="@null"
+                android:drawableTop="@drawable/ic_baseline_pan_tool_24"
+                android:onClick="onGraphControlsClick"
                 android:text="View"
-                android:textColor="@color/colorWhite"
-                android:drawableTop="@drawable/ic_baseline_pan_tool_24" />
+                android:textColor="@color/colorWhite" />
+
+            <RadioButton
+                android:id="@+id/rb_graphcontrol_vertex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/graph_selector_radiogroup"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableTop="@drawable/ic_baseline_add_24"
+                android:onClick="onGraphControlsClick"
+                android:text="Node"
+                android:textColor="@color/colorWhite" />
+
+            <RadioButton
+                android:id="@+id/rb_graphcontrol_edge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/graph_selector_radiogroup"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_baseline_linear_scale_24"
+                android:onClick="onGraphControlsClick"
+                android:text="Edge"
+                android:textColor="@color/colorWhite" />
 
         </RadioGroup>
 

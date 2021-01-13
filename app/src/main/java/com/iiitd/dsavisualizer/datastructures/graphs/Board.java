@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.TypedValue;
@@ -151,6 +152,9 @@ public class Board {
 
     // Re-Draws the complete graphOld
     public void update(Graph graph){
+
+        customCanvas.canvasGraph.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
@@ -204,7 +208,7 @@ public class Board {
         float ly2 = (float) lineCoordinates[3];
 
         double distance = distance(lx1, ly1, lx2, ly2);
-        System.out.println("distance = " + distance);
+//        System.out.println("distance = " + distance);
 
 
         customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
@@ -264,11 +268,25 @@ public class Board {
         drawNode(rect, data[row][col].data);
     }
 
+    // Adds VertexOld element to grid element and calls drawNode
+    public void removeVertex(int row, int col) {
+        // Change its state and add vertexOld reference
+        data[row][col].state = false;
+        data[row][col].data = -1;
+//        data[row][col].vertexOld = vertexOld;
+
+    }
+
     // Returns state of the grid element, whether it is being used or not
     public boolean getState(float xAxisPos, float yAxisPos){
         int col = (int) xAxisPos;
         int row = (int) yAxisPos;
 
+        return data[row][col].state;
+    }
+
+    // Returns state of the grid element, whether it is being used or not
+    public boolean getState(int row, int col){
         return data[row][col].state;
     }
 

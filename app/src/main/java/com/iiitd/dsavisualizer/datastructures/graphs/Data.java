@@ -13,6 +13,7 @@ public class Data {
 
     public Data() {
         state = false;
+        data = -1;
 //        vertexOld = null;
     }
 }

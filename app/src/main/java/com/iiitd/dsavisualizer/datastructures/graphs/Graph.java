@@ -80,4 +80,13 @@ public class Graph {
 
         System.out.println();
     }
+
+    public int getNewVertexNumber(){
+        for(int i=0;i<noOfVertices+1;i++){
+            if(!vertexMap.containsKey(i))
+                return i;
+        }
+
+        return noOfVertices+1;
+    }
 }

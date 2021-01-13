@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -18,25 +17,21 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.iiitd.dsavisualizer.datastructures.graphs.GraphControlState.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.github.florent37.viewanimator.AnimationListener;
-import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
-import com.iiitd.dsavisualizer.datastructures.trees.TreeAnimationState;
-import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
-import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
-import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -59,6 +54,7 @@ public class GraphActivity extends AppCompatActivity {
     ImageView iv_graph;
     ImageView iv_anim;
     ConstraintLayout cl_info;
+    RadioGroup rg_graphcontrols;
     ImageButton btn_back;
     ImageButton btn_menu;
     ImageButton btn_grid;
@@ -91,6 +87,7 @@ public class GraphActivity extends AppCompatActivity {
     Board board;
     boolean isGridOn = true;
 
+    GraphControls graphControls;
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
 
@@ -121,6 +118,7 @@ public class GraphActivity extends AppCompatActivity {
         iv_graph = v_main.findViewById(R.id.iv_graph);
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
+        rg_graphcontrols = v_main.findViewById(R.id.rg_graphcontrols);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_grid = v_main.findViewById(R.id.btn_grid);
         btn_info = v_main.findViewById(R.id.btn_info);
@@ -336,6 +334,7 @@ public class GraphActivity extends AppCompatActivity {
         btn_cleartree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //clears animation graph only
                 board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
             }
         });
@@ -425,6 +424,36 @@ public class GraphActivity extends AppCompatActivity {
 //
 //                bfs.run(2);
 
+            }
+        });
+//
+//        rg_graphcontrols.setListener
+
+//        rg_graphcontrols.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println(v);
+//
+//            }
+//        });
+//
+        rg_graphcontrols.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_graphcontrol_view:
+                        graphControls.selectedState = 0;
+                        graphControls.viewState--;
+                        break;
+                    case R.id.rb_graphcontrol_vertex:
+                        graphControls.selectedState = 1;
+                        graphControls.vertexState--;
+                        break;
+                    case R.id.rb_graphcontrol_edge:
+                        graphControls.selectedState = 2;
+                        graphControls.edgeState--;
+                        break;
+                }
             }
         });
 
@@ -529,6 +558,8 @@ public class GraphActivity extends AppCompatActivity {
 //            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
 //        }
 
+        graphControls = new GraphControls();
+
         // Draws Grid and GraphOld View After Layouts have been laid out
         iv_graph.post(new Runnable() {
             @Override
@@ -583,20 +614,80 @@ public class GraphActivity extends AppCompatActivity {
                 int row = (int) y;
                 int col = (int) x;
 //                System.out.println("touch = " + x + "|" + y);
+                System.out.println("touch = " + row + "|" + col);
+                System.out.println(board.getState(row, col));
 
-                boolean state = board.getState(x, y);
-                if(state){
-//                    System.out.println("ON");
+                switch(graphControls.getCurrentState()){
+                    case VIEW:
+                        break;
+                    case VERTEX_ADD:
+                        if(!board.getState(row, col)){
+                            int noOfVertices = graph.getNewVertexNumber();
+                            graph.addVertex(noOfVertices, row, col);
+                            board.addVertex(row, col, noOfVertices);
+                        }
+                        break;
+                    case VERTEX_REMOVE:
+                        if(board.getState(row, col)){
+                            int noOfVertices = board.data[row][col].data;
+                            graph.removeVertex(noOfVertices, row, col);
+//                            graph.print();
+                            board.removeVertex(row, col);
+                        }
+                        break;
+                    case EDGE_ADD:
+                        if(board.getState(row, col)){
+                            if(graphControls.startEdge != -1){//some node already selected
+                                int des = board.data[row][col].data;
+                                int src = graphControls.startEdge;
+                                if(src != des) {
+                                    graph.addEdge(src, des);
+                                    board.update(graph);
+                                }
+                                graphControls.startEdge = -1;
+                            }
+                            else{// first node getting selected now
+                                int data = board.data[row][col].data;
+                                graphControls.startEdge = data;
+                            }
+
+                        }
+                        break;
+                    case EDGE_REMOVE:
+                        if(board.getState(row, col)){
+                            if(graphControls.startEdge != -1){//some node already selected
+                                int des = board.data[row][col].data;
+                                int src = graphControls.startEdge;
+                                graph.removeEdge(src, des);
+                                board.update(graph);
+                                graphControls.startEdge = -1;
+                            }
+                            else{// first node getting selected now
+                                int data = board.data[row][col].data;
+                                graphControls.startEdge = data;
+                            }
+
+                        }
+                        break;
+
                 }
-                else{
-//                    System.out.println("OFF");
-//                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
-                    int noOfVertices = graph.noOfVertices;
-                    graph.addVertex(noOfVertices, col, row);
-                    board.addVertex(x, y, noOfVertices);
-//                    board.addVertex(x, y, vertexOld);
-//                        board.switchState(x, y);
-                }
+
+                board.update(graph);
+                System.out.println(board.getState(row, col));
+
+//                boolean state = board.getState(x, y);
+//                if(state){
+////                    System.out.println("ON");
+//                }
+//                else{
+////                    System.out.println("OFF");
+////                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
+//                    int noOfVertices = graph.noOfVertices;
+//                    graph.addVertex(noOfVertices, col, row);
+//                    board.addVertex(x, y, noOfVertices);
+////                    board.addVertex(x, y, vertexOld);
+////                        board.switchState(x, y);
+//                }
 
 //                board.update(graphOld);
                 iv_graph.invalidate();
@@ -671,6 +762,25 @@ public class GraphActivity extends AppCompatActivity {
                 dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
+    }
+
+    public void onGraphControlsClick(View view) {
+        int checkedId = view.getId();
+        System.out.println(graphControls.getCurrentState());
+
+        switch (checkedId){
+            case R.id.rb_graphcontrol_view:
+                graphControls.changeState(0);
+                break;
+            case R.id.rb_graphcontrol_vertex:
+                graphControls.changeState(1);
+                break;
+            case R.id.rb_graphcontrol_edge:
+                graphControls.changeState(2);
+                break;
+        }
+
+        System.out.println(graphControls.getCurrentState());
     }
 
 }
