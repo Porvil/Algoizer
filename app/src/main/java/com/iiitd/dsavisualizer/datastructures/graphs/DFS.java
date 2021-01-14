@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +20,9 @@ public class DFS {
         System.out.print(v + " ");
 
 
-        ArrayList<Integer> i = g.map.get(v);
-        for(int des : i){
-            if(visited.get(des) == false){
+        ArrayList<Pair<Integer, Integer>> i = g.map.get(v);
+        for(Pair<Integer, Integer> des : i){
+            if(visited.get(des.first) == false){
                 System.out.println("EDGE IN BFS :-    " + v + " --> " + des);
                 DFSUtil(v, visited);
             }
@@ -36,7 +38,7 @@ public class DFS {
         // not visited(set as
         // false by default in java)
         HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Integer>> entry : g.map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : g.map.entrySet()){
             visited.put(entry.getKey(), false);
         }
         // Call the recursive helper

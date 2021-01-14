@@ -1,23 +1,29 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Graph {
+    public boolean directed;
+    public boolean weighted;
     public int noOfVertices;
-    public Map<Integer, ArrayList<Integer>> map;
+    public Map<Integer, ArrayList<Pair<Integer, Integer>>> map;
     public Map<Integer, Vertex> vertexMap;
 
-    public Graph() {
+    public Graph(boolean directed, boolean weighted) {
+        this.directed = directed;
+        this.weighted = weighted;
         this.noOfVertices = 0;
         map = new HashMap<>();
         vertexMap = new HashMap<>();
     }
 
     // Add edges to the graph
-    void addEdge(int src, int des) {
-        map.get(src).add(des);
+    void addEdge(int src, int des, int weight) {
+        map.get(src).add(new Pair<>(des, weight));
     }
 
     // Add edges to the graph
@@ -28,7 +34,7 @@ public class Graph {
         }
 
         noOfVertices++;
-        map.put(v, new ArrayList<Integer>());
+        map.put(v, new ArrayList<Pair<Integer, Integer>>());
         vertexMap.put(v, new Vertex(row, col));
     }
 
@@ -42,9 +48,9 @@ public class Graph {
         noOfVertices--;
         map.remove(v);
         vertexMap.remove(v);
-        for(Map.Entry<Integer, ArrayList<Integer>> entry : map.entrySet()){
-            for(Integer i : new ArrayList<>(entry.getValue())){
-                if(i == v)
+        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : map.entrySet()){
+            for(Pair<Integer, Integer> i : new ArrayList<>(entry.getValue())){
+                if(i.first == v)
                     entry.getValue().remove(i);
             }
 //            entry.getValue().removeIf(i -> i == v);
@@ -53,8 +59,8 @@ public class Graph {
 
     // Remove edges from the graph
     void removeEdge(int src, int des) {
-        for(Integer i : new ArrayList<>(map.get(src))){
-            if(i == des)
+        for(Pair<Integer, Integer> i : new ArrayList<>(map.get(src))){
+            if(i.first == des)
                 map.get(src).remove(i);
         }
 //        map.get(src).removeIf(i -> i == des);
@@ -70,10 +76,10 @@ public class Graph {
     void print(){
         System.out.println("no of vertices = " + noOfVertices);
 
-        for(Map.Entry<Integer, ArrayList<Integer>> entry : map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : map.entrySet()){
             System.out.println();
             System.out.print(entry.getKey() + " -> ");
-            for(int i : entry.getValue()){
+            for(Pair<Integer, Integer> i : entry.getValue()){
                 System.out.print(i + " " );
             }
         }

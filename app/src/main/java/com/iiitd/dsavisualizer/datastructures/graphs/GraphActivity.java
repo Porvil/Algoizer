@@ -81,10 +81,11 @@ public class GraphActivity extends AppCompatActivity {
     EditText et_search;
     EditText et_delete;
 
+    GraphWrapper graphWrapper;
     CustomCanvas customCanvas;
     GraphOld graphOld;
-    Graph graph;
-    Board board;
+//    Graph graph;
+//    Board board;
     boolean isGridOn = true;
 
     GraphControls graphControls;
@@ -335,7 +336,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //clears animation graph only
-                board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
+                graphWrapper.board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
             }
         });
 //
@@ -344,7 +345,7 @@ public class GraphActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Paint paint = new Paint(Color.RED);
                 paint.setColor(Color.RED);
-                board.customCanvas.canvasAnimation.drawCircle(100,100,50, paint);
+                graphWrapper.board.customCanvas.canvasAnimation.drawCircle(100,100,50, paint);
 
             }
         });
@@ -370,18 +371,18 @@ public class GraphActivity extends AppCompatActivity {
 
 
 
-                graph.addVertex(0,0,0);board.addVertex(0,0,0);
-                graph.addVertex(1,0,3);board.addVertex(0,3,1);
-                graph.addVertex(2,2,0);board.addVertex(2,0,2);
-                graph.addVertex(3,2,4);board.addVertex(2,4,3);
-                graph.addVertex(4,4,3);board.addVertex(4,3,4);
+                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
+                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
+                graphWrapper.graph.addVertex(2,2,0);graphWrapper.board.addVertex(2,0,2);
+                graphWrapper.graph.addVertex(3,2,4);graphWrapper.board.addVertex(2,4,3);
+                graphWrapper.graph.addVertex(4,4,3);graphWrapper.board.addVertex(4,3,4);
 
 
-                graph.addEdge(0, 1);
-                graph.addEdge(0, 2);
-                graph.addEdge(1, 2);
-                graph.addEdge(2, 3);
-                graph.addEdge(3, 4);
+                graphWrapper.graph.addEdge(0, 1, 1);
+                graphWrapper.graph.addEdge(0, 2, 1);
+                graphWrapper.graph.addEdge(1, 2, 1);
+                graphWrapper.graph.addEdge(2, 3, 1);
+                graphWrapper.graph.addEdge(3, 4, 1);
 
 //                graph.addEdge(0, 1);
 //                graph.addEdge(0, 2);
@@ -391,7 +392,7 @@ public class GraphActivity extends AppCompatActivity {
 //                graph.addEdge(3, 3);
 
 
-                board.update(graph);
+                graphWrapper.board.update(graphWrapper.graph);
             }
         });
 //
@@ -403,7 +404,7 @@ public class GraphActivity extends AppCompatActivity {
 //                BFSOld bfs = new BFSOld(graphOld);
 //                bfs.run(source);
 
-                BFS bfs = new BFS(graph);
+                BFS bfs = new BFS(graphWrapper.graph);
                 bfs.run(0);
 
                 startTimer("BFS", bfs);
@@ -470,8 +471,8 @@ public class GraphActivity extends AppCompatActivity {
                 int i2 = Integer.parseInt(split[1]);
 
 //                int edge = graphOld.createEdge(i1, i2, 1);
-                graph.addEdge(i1, i2);
-                board.update(graph);
+                graphWrapper.graph.addEdge(i1, i2,1);
+                graphWrapper.board.update(graphWrapper.graph);
 
             }
         });
@@ -572,8 +573,9 @@ public class GraphActivity extends AppCompatActivity {
                             public void run() {
                                 customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim);
                                 graphOld = new GraphOld();
-                                graph = new Graph();
-                                board = new Board(context, customCanvas);
+//                                graph = new Graph(false, false);
+//                                board = new Board(context, customCanvas);
+                                graphWrapper = new GraphWrapper(context, customCanvas, false, false);
                             }
                         });
                     }
@@ -596,8 +598,8 @@ public class GraphActivity extends AppCompatActivity {
                 float x1 = event.getX();
                 float y1 = event.getY();
 
-                float x = (x1 / board.xSize);
-                float y =  (y1 / board.ySize);
+                float x = (x1 / graphWrapper.board.xSize);
+                float y =  (y1 / graphWrapper.board.ySize);
 
             }
 
@@ -608,62 +610,66 @@ public class GraphActivity extends AppCompatActivity {
                 float x1 = event.getX();
                 float y1 = event.getY();
 
-                float x = (x1 / board.xSize);
-                float y =  (y1 / board.ySize);
+                float x = (x1 / graphWrapper.board.xSize);
+                float y =  (y1 / graphWrapper.board.ySize);
 
                 int row = (int) y;
                 int col = (int) x;
 //                System.out.println("touch = " + x + "|" + y);
                 System.out.println("touch = " + row + "|" + col);
-                System.out.println(board.getState(row, col));
+                System.out.println(graphWrapper.board.getState(row, col));
 
                 switch(graphControls.getCurrentState()){
                     case VIEW:
                         break;
                     case VERTEX_ADD:
-                        if(!board.getState(row, col)){
-                            int noOfVertices = graph.getNewVertexNumber();
-                            graph.addVertex(noOfVertices, row, col);
-                            board.addVertex(row, col, noOfVertices);
-                        }
+//                        if(!graphWrapper.board.getState(row, col)){
+//                            int noOfVertices = graphWrapper.graph.getNewVertexNumber();
+//                            graphWrapper.graph.addVertex(noOfVertices, row, col);
+//                            graphWrapper.board.addVertex(row, col, noOfVertices);
+//                        }
+                        graphWrapper.addVertex(event);
                         break;
                     case VERTEX_REMOVE:
-                        if(board.getState(row, col)){
-                            int noOfVertices = board.data[row][col].data;
-                            graph.removeVertex(noOfVertices, row, col);
-//                            graph.print();
-                            board.removeVertex(row, col);
-                        }
+//                        if(graphWrapper.board.getState(row, col)){
+//                            int noOfVertices = graphWrapper.board.data[row][col].data;
+//                            graphWrapper.graph.removeVertex(noOfVertices, row, col);
+////                            graph.print();
+//                            graphWrapper.board.removeVertex(row, col);
+//                        }
+                        graphWrapper.removeVertex(event);
                         break;
                     case EDGE_ADD:
-                        if(board.getState(row, col)){
+                        if(graphWrapper.board.getState(row, col)){
                             if(graphControls.startEdge != -1){//some node already selected
-                                int des = board.data[row][col].data;
+                                int des = graphWrapper.board.data[row][col].data;
                                 int src = graphControls.startEdge;
                                 if(src != des) {
-                                    graph.addEdge(src, des);
-                                    board.update(graph);
+//                                    graphWrapper.graph.addEdge(src, des, 1);
+//                                    graphWrapper.board.update(graphWrapper.graph);
+                                    graphWrapper.addEdge(src, des);
                                 }
                                 graphControls.startEdge = -1;
                             }
                             else{// first node getting selected now
-                                int data = board.data[row][col].data;
+                                int data = graphWrapper.board.data[row][col].data;
                                 graphControls.startEdge = data;
                             }
 
                         }
                         break;
                     case EDGE_REMOVE:
-                        if(board.getState(row, col)){
+                        if(graphWrapper.board.getState(row, col)){
                             if(graphControls.startEdge != -1){//some node already selected
-                                int des = board.data[row][col].data;
+                                int des = graphWrapper.board.data[row][col].data;
                                 int src = graphControls.startEdge;
-                                graph.removeEdge(src, des);
-                                board.update(graph);
+//                                graphWrapper.graph.removeEdge(src, des);
+//                                graphWrapper.board.update(graphWrapper.graph);
+                                graphWrapper.removeEdge(src, des);
                                 graphControls.startEdge = -1;
                             }
                             else{// first node getting selected now
-                                int data = board.data[row][col].data;
+                                int data = graphWrapper.board.data[row][col].data;
                                 graphControls.startEdge = data;
                             }
 
@@ -672,8 +678,8 @@ public class GraphActivity extends AppCompatActivity {
 
                 }
 
-                board.update(graph);
-                System.out.println(board.getState(row, col));
+//                graphWrapper.board.update(graphWrapper.graph);
+                System.out.println(graphWrapper.board.getState(row, col));
 
 //                boolean state = board.getState(x, y);
 //                if(state){

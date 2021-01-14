@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.util.Pair;
 import android.util.TypedValue;
 
 import com.iiitd.dsavisualizer.R;
@@ -153,6 +154,8 @@ public class Board {
     // Re-Draws the complete graphOld
     public void update(Graph graph){
 
+        System.out.println("REDRAWING CANVAS");
+        // clears canvas
         customCanvas.canvasGraph.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Nodes
@@ -166,13 +169,13 @@ public class Board {
         }
 
         //Edges
-        for(Map.Entry<Integer, ArrayList<Integer>> vertex : graph.map.entrySet() ){
+        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> vertex : graph.map.entrySet() ){
 
-            for (Integer edgeOld : vertex.getValue()) {
+            for (Pair<Integer, Integer> edgeOld : vertex.getValue()) {
                 System.out.println(vertex.getKey() + ":" + edgeOld);
 
                 int[] vertex1 = getCoordinates(vertex.getKey());
-                int[] vertex2 = getCoordinates(edgeOld);
+                int[] vertex2 = getCoordinates(edgeOld.first);
 
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
