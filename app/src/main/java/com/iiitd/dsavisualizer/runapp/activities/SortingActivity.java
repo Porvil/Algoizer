@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivit
 
 public class SortingActivity extends AppCompatActivity {
 
+    View[] views;
     LinearLayout ll_sorting_row1;
     LinearLayout ll_sorting_row2;
 
@@ -28,7 +30,6 @@ public class SortingActivity extends AppCompatActivity {
             new SortingData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.insertionsorticon),
             new SortingData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.mergesorticon),
             new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.quicksorticon),
-            new SortingData("", "", R.drawable.empty)
     };
 
     Context context;
@@ -39,8 +40,13 @@ public class SortingActivity extends AppCompatActivity {
 
         context = this;
 
+        views = new View[6];
+
         ll_sorting_row1 = findViewById(R.id.ll_sorting_row1);
         ll_sorting_row2 = findViewById(R.id.ll_sorting_row2);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.MATCH_PARENT, 1);
 
         for(int i=0;i<sortingData.length;i++){
             final SortingData sortingData = this.sortingData[i];
@@ -51,32 +57,35 @@ public class SortingActivity extends AppCompatActivity {
             imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
             textView.setText(sortingData.text);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
-                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
             layoutParams.setMargins(5,5,5,5);
             view.setLayoutParams(layoutParams);
+            views[i] = view;
 
-            if(i < 5){
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Class<?> aClass = Class.forName(sortingData.activity);
-                            startActivity(new Intent(context, aClass));
-                        }
-                        catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Class<?> aClass = Class.forName(sortingData.activity);
+                        startActivity(new Intent(context, aClass));
                     }
-                });
-            }
+                    catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
+        }
 
+        Space space = new Space(this);
+        space.setLayoutParams(layoutParams);
+        views[5] = space;
+
+        for(int i=0;i<views.length;i++){
             if(i < 3){
-                ll_sorting_row1.addView(view);
+                ll_sorting_row1.addView(views[i]);
             }
             else{
-                ll_sorting_row2.addView(view);
+                ll_sorting_row2.addView(views[i]);
             }
         }
 
