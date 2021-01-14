@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
@@ -55,6 +57,9 @@ public class GraphActivity extends AppCompatActivity {
     ImageView iv_anim;
     ConstraintLayout cl_info;
     RadioGroup rg_graphcontrols;
+    RadioButton rb_graphcontrol_view;
+    RadioButton rb_graphcontrol_vertex;
+    RadioButton rb_graphcontrol_edge;
     ImageButton btn_back;
     ImageButton btn_menu;
     ImageButton btn_grid;
@@ -120,6 +125,9 @@ public class GraphActivity extends AppCompatActivity {
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         rg_graphcontrols = v_main.findViewById(R.id.rg_graphcontrols);
+        rb_graphcontrol_view = v_main.findViewById(R.id.rb_graphcontrol_view);
+        rb_graphcontrol_vertex = v_main.findViewById(R.id.rb_graphcontrol_vertex);
+        rb_graphcontrol_edge = v_main.findViewById(R.id.rb_graphcontrol_edge);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_grid = v_main.findViewById(R.id.btn_grid);
         btn_info = v_main.findViewById(R.id.btn_info);
@@ -655,7 +663,6 @@ public class GraphActivity extends AppCompatActivity {
                                 int data = graphWrapper.board.data[row][col].data;
                                 graphControls.startEdge = data;
                             }
-
                         }
                         break;
                     case EDGE_REMOVE:
@@ -672,30 +679,15 @@ public class GraphActivity extends AppCompatActivity {
                                 int data = graphWrapper.board.data[row][col].data;
                                 graphControls.startEdge = data;
                             }
-
                         }
                         break;
 
                 }
 
-//                graphWrapper.board.update(graphWrapper.graph);
+//                graphWrapper.update();
                 System.out.println(graphWrapper.board.getState(row, col));
 
-//                boolean state = board.getState(x, y);
-//                if(state){
-////                    System.out.println("ON");
-//                }
-//                else{
-////                    System.out.println("OFF");
-////                    VertexOld vertexOld = graphOld.createVertex(graphOld.noOfVertices, row, col);
-//                    int noOfVertices = graph.noOfVertices;
-//                    graph.addVertex(noOfVertices, col, row);
-//                    board.addVertex(x, y, noOfVertices);
-////                    board.addVertex(x, y, vertexOld);
-////                        board.switchState(x, y);
-//                }
-
-//                board.update(graphOld);
+                //Careful about this below line
                 iv_graph.invalidate();
 
                 return  true;
@@ -787,6 +779,34 @@ public class GraphActivity extends AppCompatActivity {
         }
 
         System.out.println(graphControls.getCurrentState());
+        switch(graphControls.getCurrentState()){
+            case VIEW:{
+                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_pan_tool_24);
+                rb_graphcontrol_view.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                break;
+            }
+            case VERTEX_ADD: {
+                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_add_24);
+                rb_graphcontrol_vertex.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                break;
+            }
+            case VERTEX_REMOVE: {
+                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_remove_24);
+                rb_graphcontrol_vertex.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                break;
+            }
+            case EDGE_ADD:{
+                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_linear_scale_24);
+                rb_graphcontrol_edge.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                break;
+            }
+            case EDGE_REMOVE:{
+                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_delete_24);
+                rb_graphcontrol_edge.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                break;
+            }
+
+        }
     }
 
 }

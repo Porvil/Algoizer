@@ -39,7 +39,7 @@ public class GraphWrapper {
         if(!board.getState(row, col)){
             graph.addVertex(nodeNumber, row, col);
             board.addVertex(row, col, nodeNumber);
-
+            update();
             return true;
         }
 
@@ -58,7 +58,7 @@ public class GraphWrapper {
             int nodeNumber = board.data[row][col].data;
             graph.removeVertex(nodeNumber, row, col);
             board.removeVertex(row, col);
-
+            update();
             return true;
         }
 
@@ -76,7 +76,7 @@ public class GraphWrapper {
         }
 
         graph.addEdge(src, des, weight);
-        board.update(graph);
+        update();
 
         return true;
     }
@@ -88,11 +88,13 @@ public class GraphWrapper {
         }
 
         graph.removeEdge(src, des);
-        board.update(graph);
+        update();
 
         return true;
     }
 
-
+    public void update(){
+        board.update(graph);
+    }
 
 }
