@@ -54,6 +54,7 @@ public class SortingActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.iv_sorticon);
             TextView textView = view.findViewById(R.id.tv_sortname);
 
+//            imageView.setImageDrawable(UtilUI.resizeImage(context, sortingData.drawable));
             imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
             textView.setText(sortingData.text);
 
