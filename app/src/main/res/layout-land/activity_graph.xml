@@ -40,6 +40,14 @@
                     android:longClickable="false" />
 
                 <ImageView
+                    android:id="@+id/iv_coordinates"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:longClickable="false" />
+
+                <ImageView
                     android:id="@+id/iv_graph"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -255,7 +263,7 @@
                 android:drawableTop="@drawable/ic_baseline_pan_tool_24"
                 android:onClick="onGraphControlsClick"
                 android:text="View"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/mainColor" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_vertex"
@@ -267,7 +275,7 @@
                 android:drawableTop="@drawable/ic_baseline_add_24"
                 android:onClick="onGraphControlsClick"
                 android:text="Node"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/mainColor" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_edge"
@@ -278,7 +286,7 @@
                 android:drawableTop="@drawable/ic_baseline_linear_scale_24"
                 android:onClick="onGraphControlsClick"
                 android:text="Edge"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/mainColor" />
 
         </RadioGroup>
 

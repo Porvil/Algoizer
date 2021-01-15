@@ -6,7 +6,7 @@
     <color name="mainColorDone">#3700B3</color>
 <!--    <color name="colorPrimary">#6200EE</color>-->
     <color name="colorPrimaryDark">#3700B3</color>
-
+    <color name="mainColorOpposite">#fe8d59</color>
     <color name="colorDivider">#03DAC5</color>
     <color name="colorWhite">#ffffff</color>
 </resources>

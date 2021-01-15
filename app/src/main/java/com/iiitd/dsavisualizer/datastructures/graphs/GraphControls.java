@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphControlState.*;
+import static com.iiitd.dsavisualizer.datastructures.graphs.GraphViewState.*;
 
 public class GraphControls {
     int viewState;//0
@@ -11,12 +12,16 @@ public class GraphControls {
 
     int startEdge;
 
+    GraphViewState graphViewState;
+
     public GraphControls() {
         this.viewState = 0;
         this.vertexState = 0;
         this.edgeState = 0;
         this.selectedState = 0;
         this.startEdge = -1;
+
+        this.graphViewState = GRAPH_ONLY;
     }
 
     public GraphControlState getCurrentState(){
@@ -52,6 +57,20 @@ public class GraphControls {
             edgeState++;
             edgeState %= 2;
             startEdge = -1;//resets selected vertex for edge
+        }
+    }
+
+    public void changeGraphViewState(){
+        switch (graphViewState){
+            case GRAPH_ONLY:
+                graphViewState = GraphViewState.GRAPH_GRID;
+                break;
+            case GRAPH_GRID:
+                graphViewState = GraphViewState.GRAPH_GRID_COORDINATES;
+                break;
+            case GRAPH_GRID_COORDINATES:
+                graphViewState = GraphViewState.GRAPH_ONLY;
+                break;
         }
     }
 

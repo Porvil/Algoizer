@@ -26,8 +26,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.iiitd.dsavisualizer.datastructures.graphs.GraphControlState.*;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -53,6 +51,7 @@ public class GraphActivity extends AppCompatActivity {
     ViewStub vs_menu;
     LinearLayout ll_anim;
     ImageView iv_grid;
+    ImageView iv_coordinates;
     ImageView iv_graph;
     ImageView iv_anim;
     ConstraintLayout cl_info;
@@ -88,16 +87,8 @@ public class GraphActivity extends AppCompatActivity {
 
     GraphWrapper graphWrapper;
     CustomCanvas customCanvas;
-    GraphOld graphOld;
-//    Graph graph;
-//    Board board;
-    boolean isGridOn = true;
-
     GraphControls graphControls;
-    TableLayout tableLayout;
-    ArrayList<TableRow> tableRows = new ArrayList<>();
 
-    Random random = new Random();
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
@@ -121,6 +112,7 @@ public class GraphActivity extends AppCompatActivity {
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         iv_grid = v_main.findViewById(R.id.iv_grid);
+        iv_coordinates = v_main.findViewById(R.id.iv_coordinates);
         iv_graph = v_main.findViewById(R.id.iv_graph);
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
@@ -176,15 +168,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_grid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isGridOn = !isGridOn;
-                if(isGridOn){
-                    btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on_24));
-                    iv_grid.setVisibility(View.VISIBLE);
-                }
-                else{
-                    btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_off_24));
-                    iv_grid.setVisibility(View.GONE);
-                }
+                graphControls.changeGraphViewState();
+                updateGraphViewState();
             }
         });
 
@@ -417,35 +402,10 @@ public class GraphActivity extends AppCompatActivity {
 
                 startTimer("BFS", bfs);
 
-//                int i=0;
-//                for(GraphAnimationState graphAnimationState : bfs.graphSequence.animationStates){
-//                    i++;
-//                    System.out.println("Seq = " + i);
-//                    System.out.println(graphAnimationState.state);
-//                    for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
-//                        System.out.println(graphElementAnimationData);
-//                    }
-//
-//                }
-//                System.out.println();
-//                System.out.println();
-//                System.out.println("NEXT RUN");
-//
-//                bfs.run(2);
 
             }
         });
-//
-//        rg_graphcontrols.setListener
 
-//        rg_graphcontrols.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                System.out.println(v);
-//
-//            }
-//        });
-//
         rg_graphcontrols.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -466,7 +426,6 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-
         btn_edge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -478,7 +437,6 @@ public class GraphActivity extends AppCompatActivity {
                 int i1 = Integer.parseInt(split[0]);
                 int i2 = Integer.parseInt(split[1]);
 
-//                int edge = graphOld.createEdge(i1, i2, 1);
                 graphWrapper.graph.addEdge(i1, i2,1);
                 graphWrapper.board.update(graphWrapper.graph);
 
@@ -569,7 +527,7 @@ public class GraphActivity extends AppCompatActivity {
 
         graphControls = new GraphControls();
 
-        // Draws Grid and GraphOld View After Layouts have been laid out
+        // Draws Grid and Graph View After Layouts have been laid out
         iv_graph.post(new Runnable() {
             @Override
             public void run() {
@@ -579,11 +537,9 @@ public class GraphActivity extends AppCompatActivity {
                         iv_anim.post(new Runnable() {
                             @Override
                             public void run() {
-                                customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim);
-                                graphOld = new GraphOld();
-//                                graph = new Graph(false, false);
-//                                board = new Board(context, customCanvas);
-                                graphWrapper = new GraphWrapper(context, customCanvas, false, false);
+                                customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim, iv_coordinates);
+                                graphWrapper = new GraphWrapper(context, customCanvas, true, false);
+                                updateGraphViewState();
                             }
                         });
                     }
@@ -631,20 +587,9 @@ public class GraphActivity extends AppCompatActivity {
                     case VIEW:
                         break;
                     case VERTEX_ADD:
-//                        if(!graphWrapper.board.getState(row, col)){
-//                            int noOfVertices = graphWrapper.graph.getNewVertexNumber();
-//                            graphWrapper.graph.addVertex(noOfVertices, row, col);
-//                            graphWrapper.board.addVertex(row, col, noOfVertices);
-//                        }
                         graphWrapper.addVertex(event);
                         break;
                     case VERTEX_REMOVE:
-//                        if(graphWrapper.board.getState(row, col)){
-//                            int noOfVertices = graphWrapper.board.data[row][col].data;
-//                            graphWrapper.graph.removeVertex(noOfVertices, row, col);
-////                            graph.print();
-//                            graphWrapper.board.removeVertex(row, col);
-//                        }
                         graphWrapper.removeVertex(event);
                         break;
                     case EDGE_ADD:
@@ -653,8 +598,6 @@ public class GraphActivity extends AppCompatActivity {
                                 int des = graphWrapper.board.data[row][col].data;
                                 int src = graphControls.startEdge;
                                 if(src != des) {
-//                                    graphWrapper.graph.addEdge(src, des, 1);
-//                                    graphWrapper.board.update(graphWrapper.graph);
                                     graphWrapper.addEdge(src, des);
                                 }
                                 graphControls.startEdge = -1;
@@ -670,8 +613,6 @@ public class GraphActivity extends AppCompatActivity {
                             if(graphControls.startEdge != -1){//some node already selected
                                 int des = graphWrapper.board.data[row][col].data;
                                 int src = graphControls.startEdge;
-//                                graphWrapper.graph.removeEdge(src, des);
-//                                graphWrapper.board.update(graphWrapper.graph);
                                 graphWrapper.removeEdge(src, des);
                                 graphControls.startEdge = -1;
                             }
@@ -764,7 +705,7 @@ public class GraphActivity extends AppCompatActivity {
 
     public void onGraphControlsClick(View view) {
         int checkedId = view.getId();
-        System.out.println(graphControls.getCurrentState());
+//        System.out.println(graphControls.getCurrentState());
 
         switch (checkedId){
             case R.id.rb_graphcontrol_view:
@@ -805,7 +746,26 @@ public class GraphActivity extends AppCompatActivity {
                 rb_graphcontrol_edge.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
                 break;
             }
+        }
+    }
 
+    public void updateGraphViewState(){
+        switch (graphControls.graphViewState){
+            case GRAPH_ONLY:
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_off_24));
+                iv_grid.setVisibility(View.GONE);
+                iv_coordinates.setVisibility(View.GONE);
+                break;
+            case GRAPH_GRID:
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on_24));
+                iv_grid.setVisibility(View.VISIBLE);
+                iv_coordinates.setVisibility(View.GONE);
+                break;
+            case GRAPH_GRID_COORDINATES:
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on2_24));
+                iv_grid.setVisibility(View.VISIBLE);
+                iv_coordinates.setVisibility(View.VISIBLE);
+                break;
         }
     }
 

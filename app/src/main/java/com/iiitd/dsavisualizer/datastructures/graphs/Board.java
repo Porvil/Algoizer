@@ -144,8 +144,7 @@ public class Board {
                 int y = (int) (rect1.top + (rect1.height() * 0.95f));
                 Rect rectText = new Rect();
                 paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
-                customCanvas.canvasGrid.drawText(text, x, y , paintGridCoordinates);
-
+                customCanvas.canvasCoordinates.drawText(text, x, y , paintGridCoordinates);
             }
         }
 
@@ -216,7 +215,7 @@ public class Board {
 
         customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
         arrow12(lx1, ly1, lx2, ly2);
-        arrow21(lx1, ly1, lx2, ly2);
+//        arrow21(lx1, ly1, lx2, ly2);
     }
 
     public void arrow12(float x, float y, float x1, float y1) {
