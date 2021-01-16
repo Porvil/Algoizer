@@ -10,7 +10,7 @@ public class Graph {
     public boolean directed;
     public boolean weighted;
     public int noOfVertices;
-    public Map<Integer, ArrayList<Pair<Integer, Integer>>> map;
+    public Map<Integer, ArrayList<Edge>> map;
     public Map<Integer, Vertex> vertexMap;
 
     public Graph(boolean directed, boolean weighted) {
@@ -23,7 +23,8 @@ public class Graph {
 
     // Add edges to the graph
     void addEdge(int src, int des, int weight) {
-        map.get(src).add(new Pair<>(des, weight));
+        map.get(src).add(new Edge(src, des, weight));
+//        map.get(src).add(new Pair<>(des, weight));
     }
 
     // Add edges to the graph
@@ -34,7 +35,7 @@ public class Graph {
         }
 
         noOfVertices++;
-        map.put(v, new ArrayList<Pair<Integer, Integer>>());
+        map.put(v, new ArrayList<Edge>());
         vertexMap.put(v, new Vertex(row, col));
     }
 
@@ -48,9 +49,9 @@ public class Graph {
         noOfVertices--;
         map.remove(v);
         vertexMap.remove(v);
-        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : map.entrySet()){
-            for(Pair<Integer, Integer> i : new ArrayList<>(entry.getValue())){
-                if(i.first == v)
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : map.entrySet()){
+            for(Edge i : new ArrayList<>(entry.getValue())){
+                if(i.des == v)
                     entry.getValue().remove(i);
             }
 //            entry.getValue().removeIf(i -> i == v);
@@ -59,8 +60,8 @@ public class Graph {
 
     // Remove edges from the graph
     void removeEdge(int src, int des) {
-        for(Pair<Integer, Integer> i : new ArrayList<>(map.get(src))){
-            if(i.first == des)
+        for(Edge i : new ArrayList<>(map.get(src))){
+            if(i.des == des)
                 map.get(src).remove(i);
         }
 //        map.get(src).removeIf(i -> i == des);
@@ -76,10 +77,10 @@ public class Graph {
     void print(){
         System.out.println("no of vertices = " + noOfVertices);
 
-        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : map.entrySet()){
             System.out.println();
             System.out.print(entry.getKey() + " -> ");
-            for(Pair<Integer, Integer> i : entry.getValue()){
+            for(Edge i : entry.getValue()){
                 System.out.print(i + " " );
             }
         }

@@ -67,20 +67,15 @@ public class GraphActivity extends AppCompatActivity {
     TextView tv_info;
 
     ImageButton btn_closemenu;
-    ImageButton btn_insertrandom;
-    Button btn_insert;
-    Button btn_search;
-    Button btn_delete;
-    Button btn_inorder;
-    Button btn_preorder;
-    Button btn_postorder;
+    Button btn_bfs;
+    Button btn_dfs;
     Button btn_cleartree;
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
     Button btn_edge;
     EditText et1;
-    EditText et2;
+    EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
     EditText et_delete;
@@ -128,20 +123,15 @@ public class GraphActivity extends AppCompatActivity {
         cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
-        btn_insert = v_menu.findViewById(R.id.btn_insert);
-        btn_insertrandom = v_menu.findViewById(R.id.btn_insertrandom);
-        btn_search = v_menu.findViewById(R.id.btn_search);
-        btn_delete = v_menu.findViewById(R.id.btn_delete);
-        btn_inorder = v_menu.findViewById(R.id.btn_inorder);
-        btn_preorder = v_menu.findViewById(R.id.btn_preorder);
-        btn_postorder = v_menu.findViewById(R.id.btn_postorder);
+        btn_bfs = v_menu.findViewById(R.id.btn_bfs);
+        btn_dfs = v_menu.findViewById(R.id.btn_dfs);
         btn_cleartree = v_menu.findViewById(R.id.btn_cleartree);
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
         btn_edge = v_menu.findViewById(R.id.btn_edge);
         et1 = v_menu.findViewById(R.id.et1);
-        et2 = v_menu.findViewById(R.id.et2);
+        et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
         et_delete = v_menu.findViewById(R.id.et_delete);
@@ -304,26 +294,20 @@ public class GraphActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        btn_inorder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        btn_bfs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                startTimer("INORDER", -1);
-//            }
-//        });
-//
-//        btn_preorder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+            }
+        });
+
+        btn_dfs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                startTimer("PREORDER", -1);
-//            }
-//        });
-//
-//        btn_postorder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startTimer("POSTORDER", -1);
-//            }
-//        });
+            }
+        });
+
 
         btn_cleartree.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -429,16 +413,50 @@ public class GraphActivity extends AppCompatActivity {
         btn_edge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s1 = et1.getText().toString();
-                String s2 = et2.getText().toString();
+//                String s1 = et1.getText().toString();
+//
+//                String[] split = s1.split("-");
+//
+//                int i1 = Integer.parseInt(split[0]);
+//                int i2 = Integer.parseInt(split[1]);
+//
+//                graphWrapper.graph.addEdge(i1, i2,1);
+//                graphWrapper.board.update(graphWrapper.graph);
 
-                String[] split = s1.split("-");
 
-                int i1 = Integer.parseInt(split[0]);
-                int i2 = Integer.parseInt(split[1]);
+                String s = et_customgraphinput.getText().toString();
+                String[] ss = s.split("\\n");
 
-                graphWrapper.graph.addEdge(i1, i2,1);
-                graphWrapper.board.update(graphWrapper.graph);
+//                System.out.println(s);
+                for(String sss : ss){
+                    System.out.println(sss);
+                }
+
+                int length = ss.length;
+                String[] starts = ss[0].split("\\s+");
+                boolean directed = starts[0].equals("0") ? false : true;
+                boolean weighted = starts[1].equals("0") ? false : true;
+                ArrayList<Integer> vertices = new ArrayList<>();
+                ArrayList<Edge> edges = new ArrayList<>();
+
+                for(int i=1;i<length;i++){
+                    String[] split = ss[i].split("\\s+");
+
+                    if(split[0].equals("V")){
+                        for(int j=1;j<split.length;j++){
+                            int vertex = Integer.parseInt(split[j]);
+                            vertices.add(vertex);
+                        }
+                    }
+                    else if(split[0].equals("E")){
+                        int src = Integer.parseInt(split[1]);
+                        int des = Integer.parseInt(split[2]);
+                        int weight = weighted ? Integer.parseInt(split[3]) : 1;
+                        edges.add(new Edge(src, des, weight));
+                    }
+                }
+
+                graphWrapper.customInput(vertices, edges);
 
             }
         });

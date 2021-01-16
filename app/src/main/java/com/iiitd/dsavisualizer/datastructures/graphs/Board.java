@@ -32,6 +32,7 @@ public class Board {
     public float xSize;//column width
     public float ySize;//row height
     public Data[][] data;
+    public int maxVertices;
 
     private final Paint paintGrid;
     private final Paint paintGridCoordinates;
@@ -65,6 +66,7 @@ public class Board {
 
         xSize = (this.X / xCount);
         ySize = (this.Y / yCount);
+        maxVertices = yCount * xCount;
 
         System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
         System.out.println("no of rows = " + yCount + " | " + "no of columns = " + xCount);
@@ -168,13 +170,13 @@ public class Board {
         }
 
         //Edges
-        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> vertex : graph.map.entrySet() ){
+        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.map.entrySet() ){
 
-            for (Pair<Integer, Integer> edgeOld : vertex.getValue()) {
-                System.out.println(vertex.getKey() + ":" + edgeOld);
+            for (Edge edge : vertex.getValue()) {
+                System.out.println(vertex.getKey() + ":" + edge);
 
                 int[] vertex1 = getCoordinates(vertex.getKey());
-                int[] vertex2 = getCoordinates(edgeOld.first);
+                int[] vertex2 = getCoordinates(edge.des);
 
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);

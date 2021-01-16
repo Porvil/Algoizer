@@ -20,10 +20,10 @@ public class DFS {
         System.out.print(v + " ");
 
 
-        ArrayList<Pair<Integer, Integer>> i = g.map.get(v);
-        for(Pair<Integer, Integer> des : i){
-            if(visited.get(des.first) == false){
-                System.out.println("EDGE IN BFS :-    " + v + " --> " + des);
+        ArrayList<Edge> i = g.map.get(v);
+        for(Edge edge : i){
+            if(visited.get(edge.des) == false){
+                System.out.println("EDGE IN DFS :-    " + v + " --> " + edge);
                 DFSUtil(v, visited);
             }
         }
@@ -38,7 +38,7 @@ public class DFS {
         // not visited(set as
         // false by default in java)
         HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : g.map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : g.map.entrySet()){
             visited.put(entry.getKey(), false);
         }
         // Call the recursive helper

@@ -84,14 +84,6 @@
                     android:imeOptions="actionDone"
                     android:text="0-1" />
 
-                <EditText
-                    android:id="@+id/et2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:text="1" />
-
                 <Button
                     android:id="@+id/btn_edge"
                     android:layout_width="0dp"
@@ -100,111 +92,13 @@
                     android:text="Edge" />
             </LinearLayout>
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/et_customgraphinput"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_insert"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/enter_number"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:text="5" />
-
-                <ImageButton
-                    android:id="@+id/btn_insertrandom"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:selectableItemBackground"
-                    android:contentDescription="@string/random"
-                    android:src="@drawable/ic_random_icon" />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="?android:attr/listDivider" />
-
-                <Button
-                    android:id="@+id/btn_insert"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/insert"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/enter_number"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:importantForAutofill="no" />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="?android:attr/listDivider" />
-
-                <Button
-                    android:id="@+id/btn_search"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/search"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/enter_number"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:text="100" />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="?android:attr/listDivider" />
-
-                <Button
-                    android:id="@+id/btn_delete"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/delete"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -212,31 +106,23 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_preorder"
+                    android:id="@+id/btn_bfs"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="@string/pre_order"
+                    android:text="BFS"
                     android:textColor="@color/mainColor" />
 
                 <Button
-                    android:id="@+id/btn_inorder"
+                    android:id="@+id/btn_dfs"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="@string/in_order"
+                    android:text="DFS"
                     android:textColor="@color/mainColor" />
 
-                <Button
-                    android:id="@+id/btn_postorder"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/post_order"
-                    android:textColor="@color/mainColor" />
             </LinearLayout>
 
             <LinearLayout

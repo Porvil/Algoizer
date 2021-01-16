@@ -18,7 +18,7 @@ public class BFS {
 
     void run(int s){
         HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : g.map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : g.map.entrySet()){
             visited.put(entry.getKey(), false);
         }
 
@@ -36,14 +36,14 @@ public class BFS {
             s = queue.poll();
 //            System.out.println(s + " ");
 
-            ArrayList<Pair<Integer, Integer>> i = g.map.get(s);
-            for(Pair<Integer, Integer> des : i){
-                if(!visited.get(des.first)){
-                    visited.put(des.first, true);
-//                    System.out.println("EDGE IN BFS :-    " + s + " --> " + des);
-                    queue.add(des.first);
-                    Vertex vertex1 = g.vertexMap.get(des.first);
-                    GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + des.first);
+            ArrayList<Edge> i = g.map.get(s);
+            for(Edge edge : i){
+                if(!visited.get(edge.des)){
+                    visited.put(edge.des, true);
+//                    System.out.println("EDGE IN BFS :-    " + s + " --> " + edge.des);
+                    queue.add(edge.des);
+                    Vertex vertex1 = g.vertexMap.get(edge.des);
+                    GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + edge.des);
                     graphAnimationState1.add(new GraphElementAnimationData(vertex1.row, vertex1.col));
                     graphSequence.animationStates.add(graphAnimationState1);
                 }
