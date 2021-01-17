@@ -14,6 +14,7 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 public class Board {
 
@@ -361,5 +362,32 @@ public class Board {
         float startRadians = (float) Math.atan((y2 - y1) / (x2 - x1));
         startRadians += ((x2 >= x1) ? 90 : -90) * Math.PI / 180;
         return Math.toDegrees(startRadians);
+    }
+
+    public Pair<Integer, Integer> getRandomAvailableNode(){
+        ArrayList<Pair<Integer, Integer>> available = new ArrayList<>();
+        for (int r = 0; r < yCount; r++) {
+            for (int c = 0; c < xCount; c++) {
+                if(!data[r][c].state){
+                    available.add(new Pair<>(r, c));
+                }
+            }
+        }
+
+        if(available.size() == 0)
+            return null;
+
+        return available.get(new Random().nextInt(available.size()));
+    }
+
+    public void reset(Graph graph){
+        this.data = new Data[yCount][xCount];
+        for (int r = 0; r < yCount; r++) {
+            for (int c = 0; c < xCount; c++) {
+                data[r][c] = new Data();
+            }
+        }
+
+        update(graph);
     }
 }
