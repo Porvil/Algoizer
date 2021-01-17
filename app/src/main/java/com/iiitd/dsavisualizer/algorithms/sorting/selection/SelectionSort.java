@@ -122,7 +122,7 @@ public class SelectionSort {
             selectionSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new SelectionSortSortingSequence(0);
+        this.sequence = new SelectionSortSortingSequence();
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);

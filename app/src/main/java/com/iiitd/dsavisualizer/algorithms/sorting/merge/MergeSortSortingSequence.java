@@ -1,56 +1,14 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
-import android.content.Context;
 import android.util.Pair;
-import android.view.View;
 
-import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
+import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
 
-import java.util.ArrayList;
-
+// MergeSort Sequence used by MergeSort
 public class MergeSortSortingSequence extends SortingSequence {
-
-    public MergeSortSortingSequence(int curSeqNo) {
-        this.curSeqNo = curSeqNo;
-        size = 0;
-        this.animationStates = new ArrayList<>();
-    }
-
-    public void setAnimateViews(float height, float width, Context context) {
-        this.animateViews = new AnimateViews(height, width, context);
-    }
-
-    public void addAnimSeq(AnimationState animationState){
-        animationStates.add(animationState);
-        size++;
-    }
-
-    public void setViews(View[] views) {
-        this.views = views;
-    }
-
-    public void setPositions(int[] positions) {
-        this.positions = positions;
-    }
-
-    @Override
-    public String toString() {
-        return curSeqNo + "\n" + call();
-    }
-
-    private String call() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(AnimationState s : animationStates){
-            stringBuilder.append(s.toString());
-            stringBuilder.append("\n");
-        }
-
-        return stringBuilder.toString();
-    }
 
     @Override
     public boolean backward(){

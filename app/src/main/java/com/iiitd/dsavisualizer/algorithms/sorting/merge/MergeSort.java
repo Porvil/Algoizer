@@ -123,7 +123,7 @@ public class MergeSort {
             mergeSortData[i] = mergeSortData1;
         }
 
-        this.sequence = new MergeSortSortingSequence(0);
+        this.sequence = new MergeSortSortingSequence();
         this.sequence.setViews(views);
         this.sequence.setPositions(positions);
         this.sequence.setAnimateViews(height, width, context);
