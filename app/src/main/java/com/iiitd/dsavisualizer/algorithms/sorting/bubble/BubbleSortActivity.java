@@ -505,11 +505,11 @@ public class BubbleSortActivity extends AppCompatActivity {
 
     private void initViews() {
         if(bubbleSort != null){
-            tv_seqno.setText("0 / " + bubbleSort.sequence.animationStates.size());
-            UtilUI.setText(tv_info, bubbleSort.sequence.animationStates.get(0).info);
+            tv_seqno.setText("0 / " + bubbleSort.sequence.sortingAnimationStates.size());
+            UtilUI.setText(tv_info, bubbleSort.sequence.sortingAnimationStates.get(0).info);
             UtilUI.highlightViews(context, bubbleSort.sequence.views,
-                    bubbleSort.sequence.animationStates.get(0).highlightIndexes);
-            String state = bubbleSort.sequence.animationStates.get(0).state;
+                    bubbleSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
+            String state = bubbleSort.sequence.sortingAnimationStates.get(0).state;
             if(BubbleSortInfo.map.containsKey(state)){
                 Integer[] integers = BubbleSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
@@ -550,17 +550,17 @@ public class BubbleSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + bubbleSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + bubbleSort.sequence.sortingAnimationStates.size());
                     if(curSeqNo < bubbleSort.sequence.size) {
-                        String state = bubbleSort.sequence.animationStates.get(curSeqNo).state;
+                        String state = bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                         if(BubbleSortInfo.map.containsKey(state)){
                             Integer[] integers = BubbleSortInfo.map.get(state);
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
-                        UtilUI.setText(tv_info, bubbleSort.sequence.animationStates.get(curSeqNo).info);
+                        UtilUI.setText(tv_info, bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).info);
                         UtilUI.highlightCombined(context, bubbleSort.sortedIndexes,
                                 bubbleSort.views, curSeqNo,
-                                bubbleSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                                bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
@@ -581,9 +581,9 @@ public class BubbleSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + bubbleSort.sequence.animationStates.size());
-                    UtilUI.setText(tv_info, bubbleSort.sequence.animationStates.get(curSeqNo).info);
-                    String state = bubbleSort.sequence.animationStates.get(curSeqNo).state;
+                    tv_seqno.setText(curSeqNo + " / " + bubbleSort.sequence.sortingAnimationStates.size());
+                    UtilUI.setText(tv_info, bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).info);
+                    String state = bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                     if (BubbleSortInfo.map.containsKey(state)) {
                         Integer[] integers = BubbleSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
@@ -591,9 +591,7 @@ public class BubbleSortActivity extends AppCompatActivity {
 
                     UtilUI.highlightCombined(context, bubbleSort.sortedIndexes,
                             bubbleSort.views, curSeqNo,
-                            bubbleSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-
-
+                            bubbleSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                 }
             });
         }

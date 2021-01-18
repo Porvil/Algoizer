@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.algorithms.sorting.SortingAnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
-import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
-import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -85,7 +85,7 @@ public class BubbleSort {
         this.positions = new int[arraySize];
         if(isRandomize){
             for (int i = 0; i < data.length; i++) {
-                data[i] = random.nextInt(20) + 1;
+                data[i] = random.nextInt(AppSettings.SORTING_ELEMENT_BOUND) + 1;
                 MAX = Math.max(data[i], MAX);
             }
         }
@@ -139,12 +139,12 @@ public class BubbleSort {
     }
 
     private void bubblesort() {
-        AnimationState animationState = new AnimationState(BubbleSortInfo.BS, BubbleSortInfo.getBubbleSortString());
+        SortingAnimationState sortingAnimationState = new SortingAnimationState(BubbleSortInfo.BS, BubbleSortInfo.getBubbleSortString());
         for(int i=0;i<bubbleSortData.length;i++){
-            animationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
-            animationState.addHighlightIndexes(bubbleSortData[i].index);
+            sortingAnimationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
+            sortingAnimationState.addHighlightIndexes(bubbleSortData[i].index);
         }
-        sequence.addAnimSeq(animationState);
+        sequence.addAnimSeq(sortingAnimationState);
         bubble(bubbleSortData);
     }
 
@@ -158,35 +158,35 @@ public class BubbleSort {
             for (int j = 0; j < length - i - 1; j++) {
                 comparisons++;
                 if (arr[j].data > arr[j + 1].data) {
-                    AnimationState animationState = new AnimationState(BubbleSortInfo.L_GREATER_R, BubbleSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
-                    animationState.addHighlightIndexes(bubbleSortData[j].index, bubbleSortData[j+1].index);
-                    animationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j].index, new Pair<>(AnimationDirection.RIGHT, 1)));
-                    animationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j+1].index, new Pair<>(AnimationDirection.LEFT, 1)));
-                    sequence.addAnimSeq(animationState);
+                    SortingAnimationState sortingAnimationState = new SortingAnimationState(BubbleSortInfo.L_GREATER_R, BubbleSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
+                    sortingAnimationState.addHighlightIndexes(bubbleSortData[j].index, bubbleSortData[j+1].index);
+                    sortingAnimationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j].index, new Pair<>(AnimationDirection.RIGHT, 1)));
+                    sortingAnimationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j+1].index, new Pair<>(AnimationDirection.LEFT, 1)));
+                    sequence.addAnimSeq(sortingAnimationState);
 
                     Util.swap(arr[j], arr[j + 1]);
                     flag = true;
                 }
                 else{
-                    AnimationState animationState = new AnimationState(BubbleSortInfo.L_LESSEQUAL_R, BubbleSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
-                    animationState.addHighlightIndexes(bubbleSortData[j].index, bubbleSortData[j+1].index);
-                    animationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j].index, new Pair<>(AnimationDirection.NULL, 1)));
-                    animationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j+1].index, new Pair<>(AnimationDirection.NULL, 1)));
-                    sequence.addAnimSeq(animationState);
+                    SortingAnimationState sortingAnimationState = new SortingAnimationState(BubbleSortInfo.L_LESSEQUAL_R, BubbleSortInfo.getComparedString(arr[j].data, arr[j+1].data, j, j+1));
+                    sortingAnimationState.addHighlightIndexes(bubbleSortData[j].index, bubbleSortData[j+1].index);
+                    sortingAnimationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j].index, new Pair<>(AnimationDirection.NULL, 1)));
+                    sortingAnimationState.addElementAnimationData(new ElementAnimationData(bubbleSortData[j+1].index, new Pair<>(AnimationDirection.NULL, 1)));
+                    sequence.addAnimSeq(sortingAnimationState);
                 }
 
             }
 
             if(!flag){
-                AnimationState animationState = new AnimationState(BubbleSortInfo.FLAG, BubbleSortInfo.getFlagString());
-                sequence.addAnimSeq(animationState);
+                SortingAnimationState sortingAnimationState = new SortingAnimationState(BubbleSortInfo.FLAG, BubbleSortInfo.getFlagString());
+                sequence.addAnimSeq(sortingAnimationState);
                 for(int k=0;k<length-i-1;k++){
-                    sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[k].index));
+                    sortedIndexes.add(new Pair<>(sequence.sortingAnimationStates.size(), arr[k].index));
                 }
                 return;
             }
 
-            sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[length-i-1].index));
+            sortedIndexes.add(new Pair<>(sequence.sortingAnimationStates.size(), arr[length-i-1].index));
         }
     }
 

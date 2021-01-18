@@ -6,25 +6,25 @@ public class TreeSequence {
 
     public int size;
     public int curSeqNo;
-    public ArrayList<TreeAnimationState> animationStates;
+    public ArrayList<TreeAnimationState> treeAnimationStates;
 
 
     public TreeSequence() {
-        this.animationStates = new ArrayList<>();
+        this.treeAnimationStates = new ArrayList<>();
     }
 
-    public TreeSequence(ArrayList<TreeAnimationState> animationStates) {
-        this.animationStates = animationStates;
+    public TreeSequence(ArrayList<TreeAnimationState> treeAnimationStates) {
+        this.treeAnimationStates = treeAnimationStates;
         this.curSeqNo = 0;
-        this.size = animationStates.size();
+        this.size = treeAnimationStates.size();
     }
 
     @Override
     public String toString() {
         return "TreeSequence{" +
-                "size=" + size +
-                ", curSeqNo=" + curSeqNo +
-                ", animationStates=" + animationStates +
+                "size = " + size +
+                ", curSeqNo = " + curSeqNo +
+                ", treeAnimationStates = " + treeAnimationStates +
                 '}';
     }
 

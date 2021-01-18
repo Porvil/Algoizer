@@ -5,14 +5,14 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AnimationState {
+public class SortingAnimationState {
     public final String state;
     public String info;
     public ArrayList<ElementAnimationData> elementAnimationData;
     public ArrayList<Integer> highlightIndexes;
     public ArrayList<Pair<Integer, String>> pointers;
 
-    public AnimationState(String state, String info) {
+    public SortingAnimationState(String state, String info) {
         this.state = state;
         this.info = info;
         this.elementAnimationData = new ArrayList<>();

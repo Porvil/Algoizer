@@ -505,11 +505,11 @@ public class SelectionSortActivity extends AppCompatActivity {
 
     private void initViews() {
         if(selectionSort != null){
-            tv_seqno.setText("0 / " + selectionSort.sequence.animationStates.size());
-            UtilUI.setText(tv_info, selectionSort.sequence.animationStates.get(0).info);
+            tv_seqno.setText("0 / " + selectionSort.sequence.sortingAnimationStates.size());
+            UtilUI.setText(tv_info, selectionSort.sequence.sortingAnimationStates.get(0).info);
             UtilUI.highlightViews(context, selectionSort.sequence.views,
-                    selectionSort.sequence.animationStates.get(0).highlightIndexes);
-            String state = selectionSort.sequence.animationStates.get(0).state;
+                    selectionSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
+            String state = selectionSort.sequence.sortingAnimationStates.get(0).state;
             if(SelectionSortInfo.map.containsKey(state)){
                 Integer[] integers = SelectionSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
@@ -550,17 +550,17 @@ public class SelectionSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + selectionSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + selectionSort.sequence.sortingAnimationStates.size());
                     if(curSeqNo < selectionSort.sequence.size) {
-                        String state = selectionSort.sequence.animationStates.get(curSeqNo).state;
+                        String state = selectionSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                         if(SelectionSortInfo.map.containsKey(state)){
                             Integer[] integers = SelectionSortInfo.map.get(state);
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
-                        UtilUI.setText(tv_info, selectionSort.sequence.animationStates.get(curSeqNo).info);
+                        UtilUI.setText(tv_info, selectionSort.sequence.sortingAnimationStates.get(curSeqNo).info);
                         UtilUI.highlightCombinedForInsertionSort(context, selectionSort.sortedIndexes,
                                 selectionSort.views, curSeqNo,
-                                selectionSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                                selectionSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
@@ -581,9 +581,9 @@ public class SelectionSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + selectionSort.sequence.animationStates.size());
-                    UtilUI.setText(tv_info, selectionSort.sequence.animationStates.get(curSeqNo).info);
-                    String state = selectionSort.sequence.animationStates.get(curSeqNo).state;
+                    tv_seqno.setText(curSeqNo + " / " + selectionSort.sequence.sortingAnimationStates.size());
+                    UtilUI.setText(tv_info, selectionSort.sequence.sortingAnimationStates.get(curSeqNo).info);
+                    String state = selectionSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                     if (SelectionSortInfo.map.containsKey(state)) {
                         Integer[] integers = SelectionSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
@@ -591,9 +591,7 @@ public class SelectionSortActivity extends AppCompatActivity {
 
                     UtilUI.highlightCombinedForInsertionSort(context, selectionSort.sortedIndexes,
                             selectionSort.views, curSeqNo,
-                            selectionSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-
-
+                            selectionSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                 }
             });
         }

@@ -42,7 +42,6 @@ public class SelectionSortInfo {
 
     };
 
-
     public static String getComparedString(int a, int b, int index){
         if(a < b){
             return a + " < " + b + ", min_ind = " + index;

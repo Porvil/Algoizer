@@ -20,6 +20,7 @@ import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivit
 
 public class SortingActivity extends AppCompatActivity {
 
+    Context context;
     View[] views;
     LinearLayout ll_sorting_row1;
     LinearLayout ll_sorting_row2;
@@ -32,7 +33,6 @@ public class SortingActivity extends AppCompatActivity {
             new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.quicksorticon),
     };
 
-    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,6 @@ public class SortingActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.iv_sorticon);
             TextView textView = view.findViewById(R.id.tv_sortname);
 
-//            imageView.setImageDrawable(UtilUI.resizeImage(context, sortingData.drawable));
             imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
             textView.setText(sortingData.text);
 

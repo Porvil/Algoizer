@@ -523,17 +523,17 @@ public class QuickSortActivity extends AppCompatActivity {
 
     private void initViews() {
         if(quickSort != null){
-            tv_seqno.setText("0 / " + quickSort.sequence.animationStates.size());
-            UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(0).info);
+            tv_seqno.setText("0 / " + quickSort.sequence.sortingAnimationStates.size());
+            UtilUI.setText(tv_info, quickSort.sequence.sortingAnimationStates.get(0).info);
             UtilUI.highlightViews(context, quickSort.sequence.views,
-                    quickSort.sequence.animationStates.get(0).highlightIndexes);
-            String state = quickSort.sequence.animationStates.get(0).state;
+                    quickSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
+            String state = quickSort.sequence.sortingAnimationStates.get(0).state;
             if(QuickSortInfo.map.containsKey(state)){
                 Integer[] integers = QuickSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
             }
 
-            UtilUI.changePointers(quickSort.sequence.animationStates.get(0).pointers,
+            UtilUI.changePointers(quickSort.sequence.sortingAnimationStates.get(0).pointers,
                     quickSort.views);
 
             UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
@@ -574,35 +574,26 @@ public class QuickSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.sortingAnimationStates.size());
                     if(curSeqNo < quickSort.sequence.size) {
-                        String state = quickSort.sequence.animationStates.get(curSeqNo).state;
+                        String state = quickSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                         if(QuickSortInfo.map.containsKey(state)){
                             Integer[] integers = QuickSortInfo.map.get(state);
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
-                        UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
-                        UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
+                        UtilUI.setText(tv_info, quickSort.sequence.sortingAnimationStates.get(curSeqNo).info);
+                        UtilUI.changePointers(quickSort.sequence.sortingAnimationStates.get(curSeqNo).pointers,
                                 quickSort.views);
-//                        UtilUI.highlightViews(context, quickSort.sequence.views,
-//                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-//                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-//                                quickSort.views, curSeqNo);
                         UtilUI.highlightCombined(context, quickSort.sortedIndexes,
                                 quickSort.views, curSeqNo,
-                                quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-
+                                quickSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
                         UtilUI.setText(tv_info, "Array is sorted");
-//                        UtilUI.highlightViews(context, quickSort.sequence.views,null);
-//                        UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-//                                quickSort.views, -1);
                         UtilUI.highlightCombined(context, quickSort.sortedIndexes,
                                 quickSort.views, -1,
                                 null);
-
                     }
                 }
             });
@@ -616,23 +607,18 @@ public class QuickSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.animationStates.size());
-                    UtilUI.setText(tv_info, quickSort.sequence.animationStates.get(curSeqNo).info);
-                    String state = quickSort.sequence.animationStates.get(curSeqNo).state;
+                    tv_seqno.setText(curSeqNo + " / " + quickSort.sequence.sortingAnimationStates.size());
+                    UtilUI.setText(tv_info, quickSort.sequence.sortingAnimationStates.get(curSeqNo).info);
+                    String state = quickSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                     if (QuickSortInfo.map.containsKey(state)) {
                         Integer[] integers = QuickSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
-                    UtilUI.changePointers(quickSort.sequence.animationStates.get(curSeqNo).pointers,
+                    UtilUI.changePointers(quickSort.sequence.sortingAnimationStates.get(curSeqNo).pointers,
                             quickSort.views);
-//                    UtilUI.highlightViews(context, quickSort.sequence.views,
-//                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-//                    UtilUI.highlightSortedElements(context, quickSort.sortedIndexes,
-//                            quickSort.views, curSeqNo);
                     UtilUI.highlightCombined(context, quickSort.sortedIndexes,
                             quickSort.views, curSeqNo,
-                            quickSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
-
+                            quickSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                 }
             });
         }

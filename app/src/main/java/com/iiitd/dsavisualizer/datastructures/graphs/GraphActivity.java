@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +34,6 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -495,8 +492,8 @@ public class GraphActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(curSeqNo < bfs.graphSequence.animationStates.size()) {
-                        GraphAnimationState graphAnimationState = bfs.graphSequence.animationStates.get(curSeqNo);
+                    if(curSeqNo < bfs.graphSequence.graphAnimationStates.size()) {
+                        GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
                     }
@@ -526,22 +523,6 @@ public class GraphActivity extends AppCompatActivity {
 
 
     private void initViews() {
-//        if(bst != null){
-//            tv_seqno.setText("0 / " + bst.sequence.animationStates.size());
-//            UtilUI.setText(tv_info, bst.sequence.animationStates.get(0).info);
-//            UtilUI.highlightViews(context, bst.sequence.views,
-//                    bst.sequence.animationStates.get(0).highlightIndexes);
-//            String state = bst.sequence.animationStates.get(0).state;
-//            if(BSTInfo.map.containsKey(state)){
-//                Integer[] integers = BSTInfo.map.get(state);
-//                UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
-//            }
-//        }
-//        else{
-//            tv_seqno.setText("0 / 0");
-//            UtilUI.setText(tv_info, "-");
-//            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
-//        }
 
         graphControls = new GraphControls();
 

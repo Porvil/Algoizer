@@ -1,7 +1,5 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
-import android.util.Pair;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,7 +28,7 @@ public class BFS {
 
         GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
         graphAnimationState.add(new GraphElementAnimationData(vertex.row, vertex.col));
-        graphSequence.animationStates.add(graphAnimationState);
+        graphSequence.graphAnimationStates.add(graphAnimationState);
 
         while (queue.size() != 0) {
             s = queue.poll();
@@ -45,7 +43,7 @@ public class BFS {
                     Vertex vertex1 = g.vertexMap.get(edge.des);
                     GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + edge.des);
                     graphAnimationState1.add(new GraphElementAnimationData(vertex1.row, vertex1.col));
-                    graphSequence.animationStates.add(graphAnimationState1);
+                    graphSequence.graphAnimationStates.add(graphAnimationState1);
                 }
             }
 

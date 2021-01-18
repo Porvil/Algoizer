@@ -36,7 +36,6 @@ public class TreeLayoutElement {
             case ARROW_HIDDEN:
             case ELEMENT_HIDDEN:
                 return View.INVISIBLE;
-
         }
 
         return View.INVISIBLE;

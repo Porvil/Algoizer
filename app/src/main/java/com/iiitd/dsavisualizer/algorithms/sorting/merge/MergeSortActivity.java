@@ -505,11 +505,11 @@ public class MergeSortActivity extends AppCompatActivity {
 
     private void initViews() {
         if(mergeSort != null){
-            tv_seqno.setText("0 / " + mergeSort.sequence.animationStates.size());
-            UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(0).info);
+            tv_seqno.setText("0 / " + mergeSort.sequence.sortingAnimationStates.size());
+            UtilUI.setText(tv_info, mergeSort.sequence.sortingAnimationStates.get(0).info);
             UtilUI.highlightViews(context, mergeSort.sequence.views,
-                    mergeSort.sequence.animationStates.get(0).highlightIndexes);
-            String state = mergeSort.sequence.animationStates.get(0).state;
+                    mergeSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
+            String state = mergeSort.sequence.sortingAnimationStates.get(0).state;
             if(MergeSortInfo.map.containsKey(state)){
                 Integer[] integers = MergeSortInfo.map.get(state);
                 UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
@@ -550,16 +550,16 @@ public class MergeSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
+                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.sortingAnimationStates.size());
                     if(curSeqNo < mergeSort.sequence.size) {
-                        String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
+                        String state = mergeSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                         if(MergeSortInfo.map.containsKey(state)){
                             Integer[] integers = MergeSortInfo.map.get(state);
                             UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                         }
-                        UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
+                        UtilUI.setText(tv_info, mergeSort.sequence.sortingAnimationStates.get(curSeqNo).info);
                         UtilUI.highlightViews(context, mergeSort.sequence.views,
-                                mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                                mergeSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                     }
                     else{
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
@@ -578,15 +578,15 @@ public class MergeSortActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.animationStates.size());
-                    UtilUI.setText(tv_info, mergeSort.sequence.animationStates.get(curSeqNo).info);
-                    String state = mergeSort.sequence.animationStates.get(curSeqNo).state;
+                    tv_seqno.setText(curSeqNo + " / " + mergeSort.sequence.sortingAnimationStates.size());
+                    UtilUI.setText(tv_info, mergeSort.sequence.sortingAnimationStates.get(curSeqNo).info);
+                    String state = mergeSort.sequence.sortingAnimationStates.get(curSeqNo).state;
                     if (MergeSortInfo.map.containsKey(state)) {
                         Integer[] integers = MergeSortInfo.map.get(state);
                         UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
                     }
                     UtilUI.highlightViews(context, mergeSort.sequence.views,
-                            mergeSort.sequence.animationStates.get(curSeqNo).highlightIndexes);
+                            mergeSort.sequence.sortingAnimationStates.get(curSeqNo).highlightIndexes);
                 }
             });
         }

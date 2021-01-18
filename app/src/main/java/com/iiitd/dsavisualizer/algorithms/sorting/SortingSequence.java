@@ -15,7 +15,7 @@ public abstract class SortingSequence {
     public View[] views;
     public int[] positions;
     public AnimateViews animateViews;
-    public ArrayList<AnimationState> animationStates;
+    public ArrayList<SortingAnimationState> sortingAnimationStates;
 
     public abstract boolean backward();
     public abstract boolean forward();
@@ -23,15 +23,15 @@ public abstract class SortingSequence {
     public SortingSequence() {
         this.curSeqNo = 0;
         this.size = 0;
-        this.animationStates = new ArrayList<>();
+        this.sortingAnimationStates = new ArrayList<>();
     }
 
     public void setAnimateViews(float height, float width, Context context) {
         this.animateViews = new AnimateViews(height, width, context);
     }
 
-    public void addAnimSeq(AnimationState animationState){
-        animationStates.add(animationState);
+    public void addAnimSeq(SortingAnimationState sortingAnimationState){
+        sortingAnimationStates.add(sortingAnimationState);
         size++;
     }
 
@@ -45,8 +45,8 @@ public abstract class SortingSequence {
 
     public String printAnimationStates() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(AnimationState animationState : animationStates){
-            stringBuilder.append(animationState.toString());
+        for(SortingAnimationState sortingAnimationState : sortingAnimationStates){
+            stringBuilder.append(sortingAnimationState.toString());
             stringBuilder.append("\n");
         }
 

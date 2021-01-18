@@ -331,7 +331,6 @@ public class AVL {
 
             // Node deleted from Right Subtree, diff = +2
             if (diff == 2) {
-//            int bf = bf(avlNode.left);
                 int bf = height(avlNode.left.left) - height(avlNode.left.right);
                 System.out.println("BF ===================== " + bf);
                 if (bf == 1) {
@@ -349,7 +348,6 @@ public class AVL {
 
             // Node deleted from Left Subtree, diff = -2
             if (diff == -2) {
-//            int bf = bf(avlNode.right);
                 int bf = height(avlNode.right.left) - height(avlNode.right.right);
                 System.out.println("BF ===================== " + bf);
                 if (bf == -1) {
@@ -423,7 +421,6 @@ public class AVL {
         // rs = right subtree of "a"
         // ts = right subtree of "l"
 
-
         int index_a = index;
         int index_l = TreeLayout.childs[index_a].first;
         int index_ls = TreeLayout.childs[index_l].first;
@@ -440,11 +437,6 @@ public class AVL {
         TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getRightRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
-
-//        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getRightRotateString(avlNode.left.key));
-//        treeAnimationState.add(new TreeElementAnimationData(avlNode.left.key, avlNode.left.count, index_l));
-//        treeAnimationStates.add(treeAnimationState);
-
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_l + " -> " + new_index_l);
@@ -613,10 +605,6 @@ public class AVL {
         TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getLeftRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
         treeAnimationStates.add(treeAnimationState);
-
-//        TreeAnimationState treeAnimationState = new TreeAnimationState("R", AVLInfo.getLeftRotateString(avlNode.right.key));
-//        treeAnimationState.add(new TreeElementAnimationData(avlNode.right.key, avlNode.right.count, index_r));
-//        treeAnimationStates.add(treeAnimationState);
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_r + " -> " + new_index_r);

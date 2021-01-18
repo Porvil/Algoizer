@@ -2,7 +2,7 @@ package com.iiitd.dsavisualizer.algorithms.sorting.selection;
 
 import android.util.Pair;
 
-import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.SortingAnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
@@ -18,7 +18,7 @@ public class SelectionSortSortingSequence extends SortingSequence {
         if(curSeqNo == 0)
             return false;
 
-        AnimationState old = animationStates.get(curSeqNo-1);
+        SortingAnimationState old = sortingAnimationStates.get(curSeqNo-1);
 
         for(ElementAnimationData elementAnimationData : old.elementAnimationData){
             ElementAnimationData inverse = ElementAnimationData.reverse(elementAnimationData);
@@ -45,7 +45,7 @@ public class SelectionSortSortingSequence extends SortingSequence {
         if(curSeqNo == size)
             return false;
 
-        AnimationState now = animationStates.get(curSeqNo);
+        SortingAnimationState now = sortingAnimationStates.get(curSeqNo);
         for(ElementAnimationData elementAnimationData : now.elementAnimationData){
             for(Pair<AnimationDirection, Integer> inst : elementAnimationData.instructions){
                 int index = elementAnimationData.index;

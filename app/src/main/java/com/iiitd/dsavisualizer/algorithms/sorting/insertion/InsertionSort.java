@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.algorithms.sorting.AnimationState;
+import com.iiitd.dsavisualizer.algorithms.sorting.SortingAnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
@@ -84,7 +84,7 @@ public class InsertionSort {
         this.positions = new int[arraySize];
         if(isRandomize){
             for (int i = 0; i < data.length; i++) {
-                data[i] = random.nextInt(20) + 1;
+                data[i] = random.nextInt(AppSettings.SORTING_ELEMENT_BOUND) + 1;
                 MAX = Math.max(data[i], MAX);
             }
         }
@@ -138,61 +138,61 @@ public class InsertionSort {
     }
 
     private void insertionsort() {
-        AnimationState animationState = new AnimationState(InsertionSortInfo.IS, InsertionSortInfo.getInsertionSortString());
+        SortingAnimationState sortingAnimationState = new SortingAnimationState(InsertionSortInfo.IS, InsertionSortInfo.getInsertionSortString());
         for(int i = 0; i< insertionSortData.length; i++){
-            animationState.addElementAnimationData(new ElementAnimationData(insertionSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
-            animationState.addHighlightIndexes(insertionSortData[i].index);
+            sortingAnimationState.addElementAnimationData(new ElementAnimationData(insertionSortData[i].index, new Pair<>(AnimationDirection.NULL, 1)));
+            sortingAnimationState.addHighlightIndexes(insertionSortData[i].index);
         }
-        sequence.addAnimSeq(animationState);
+        sequence.addAnimSeq(sortingAnimationState);
         insertion(insertionSortData);
     }
 
     private void insertion(InsertionSortData[] arr){
         int length = arr.length;
-        sortedIndexes.add(new Pair<>(sequence.animationStates.size(), arr[0].index));
+        sortedIndexes.add(new Pair<>(sequence.sortingAnimationStates.size(), arr[0].index));
         for (int i = 1; i < length; i++) {
             InsertionSortData insertionSortData = arr[i];
             int j = i - 1;
 
-            AnimationState animationState = new AnimationState(InsertionSortInfo.VAL, InsertionSortInfo.getValString(insertionSortData.data, j));
-            animationState.addHighlightIndexes(insertionSortData.index);
-            animationState.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+            SortingAnimationState sortingAnimationState = new SortingAnimationState(InsertionSortInfo.VAL, InsertionSortInfo.getValString(insertionSortData.data, j));
+            sortingAnimationState.addHighlightIndexes(insertionSortData.index);
+            sortingAnimationState.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
                     new Pair<>(AnimationDirection.DOWN, 1)));
-            sequence.addAnimSeq(animationState);
+            sequence.addAnimSeq(sortingAnimationState);
 
             while (j >= 0) {
                 comparisons++;
                 if(arr[j].data > insertionSortData.data) {
 
-                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.L_GREATER_R,
+                    SortingAnimationState sortingAnimationState1 = new SortingAnimationState(InsertionSortInfo.L_GREATER_R,
                             InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, j+1));
-                    animationState1.addHighlightIndexes(insertionSortData.index);
-                    animationState1.addHighlightIndexes(arr[j].index);
-                    animationState1.addElementAnimationData(new ElementAnimationData(arr[j].index,
+                    sortingAnimationState1.addHighlightIndexes(insertionSortData.index);
+                    sortingAnimationState1.addHighlightIndexes(arr[j].index);
+                    sortingAnimationState1.addElementAnimationData(new ElementAnimationData(arr[j].index,
                             new Pair<>(AnimationDirection.RIGHT, 1)));
-                    animationState1.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+                    sortingAnimationState1.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
                             new Pair<>(AnimationDirection.LEFT, 1)));
-                    sequence.addAnimSeq(animationState1);
+                    sequence.addAnimSeq(sortingAnimationState1);
 
                     arr[j + 1] = arr[j];
                     j--;
                 }
                 else{
-                    AnimationState animationState1 = new AnimationState(InsertionSortInfo.L_LESSEQUAL_R,
+                    SortingAnimationState sortingAnimationState1 = new SortingAnimationState(InsertionSortInfo.L_LESSEQUAL_R,
                             InsertionSortInfo.getComparedString(arr[j].data, insertionSortData.data, j, insertionSortData.index));
-                    animationState1.addHighlightIndexes(insertionSortData.index);
-                    animationState1.addHighlightIndexes(arr[j].index);
-                    sequence.addAnimSeq(animationState1);
+                    sortingAnimationState1.addHighlightIndexes(insertionSortData.index);
+                    sortingAnimationState1.addHighlightIndexes(arr[j].index);
+                    sequence.addAnimSeq(sortingAnimationState1);
 
                     break;
                 }
             }
 
-            AnimationState animationState2 = new AnimationState(InsertionSortInfo.VAL_U, InsertionSortInfo.getValUString());
-            animationState2.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
+            SortingAnimationState sortingAnimationState2 = new SortingAnimationState(InsertionSortInfo.VAL_U, InsertionSortInfo.getValUString());
+            sortingAnimationState2.addElementAnimationData(new ElementAnimationData(insertionSortData.index,
                     new Pair<>(AnimationDirection.UP, 1)));
-            sequence.addAnimSeq(animationState2);
-            sortedIndexes.add(new Pair<>(sequence.animationStates.size(), insertionSortData.index));
+            sequence.addAnimSeq(sortingAnimationState2);
+            sortedIndexes.add(new Pair<>(sequence.sortingAnimationStates.size(), insertionSortData.index));
 
             arr[j + 1] = insertionSortData;
 
