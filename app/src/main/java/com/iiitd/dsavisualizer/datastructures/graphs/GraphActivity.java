@@ -3,9 +3,11 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -310,7 +312,8 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //clears animation graph only
-                graphWrapper.board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
+//                graphWrapper.board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
+                graphWrapper.board.clearCanvasAnim();
             }
         });
 //
@@ -492,10 +495,39 @@ public class GraphActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    graphWrapper.board.paintVertex.setColor(getResources().getColor(R.color.mainColorDone));
+                    graphWrapper.board.paintEdge.setColor(getResources().getColor(R.color.mainColorDone));
+
                     if(curSeqNo < bfs.graphSequence.graphAnimationStates.size()) {
                         GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
+                        for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
+                            System.out.println(graphElementAnimationData.toString());
+                            int row = graphElementAnimationData.row;
+                            int col = graphElementAnimationData.col;
+
+                            Canvas canvas = graphWrapper.board.customCanvas.canvasAnimation;
+                            Rect rect = graphWrapper.board.getRect(row, col);
+//                            graphWrapper.board.__drawNode(canvas, rect, graphWrapper.board.data[row][col].data);
+                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.src);
+                            if(graphElementAnimationData.des != -1){
+                                int[] vertex1 = graphWrapper.board.getCoordinates(graphElementAnimationData.src);
+                                int[] vertex2 = graphWrapper.board.getCoordinates(graphElementAnimationData.des);
+
+                                Rect rect1 = graphWrapper.board.getRect(vertex1[0], vertex1[1]);
+                                Rect rect2 = graphWrapper.board.getRect(vertex2[0], vertex2[1]);
+
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2);
+                            }
+
+                            iv_anim.invalidate();
+//                            graphWrapper.update();
+                        }
+
+//                        switch (graphAnimationState.info){
+//
+//                        }
                     }
                     else{
                         UtilUI.setText(tv_info, "Done");
@@ -627,7 +659,7 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper.update();
                 System.out.println(graphWrapper.board.getState(row, col));
 
-                //Careful about this below line
+                //Careful about this below line, MUST BE CALLED
                 iv_graph.invalidate();
 
                 return  true;

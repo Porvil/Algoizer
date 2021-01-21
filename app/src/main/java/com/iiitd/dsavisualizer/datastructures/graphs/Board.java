@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -37,10 +38,10 @@ public class Board {
 
     private final Paint paintGrid;
     private final Paint paintGridCoordinates;
-    private final Paint paintVertex;
-    private final Paint paintEdge;
-    private final Paint paintEdgeArrows;
-    private final Paint paintText;
+    public final Paint paintVertex;
+    public final Paint paintEdge;
+    public final Paint paintEdgeArrows;
+    public final Paint paintText;
     private final int textSizeCoordinates;
     private final int textSize;
     private final int edgeWidth;
@@ -158,14 +159,15 @@ public class Board {
 
         System.out.println("REDRAWING CANVAS");
         // clears canvas
-        customCanvas.canvasGraph.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        clearCanvasGraph();
+//        customCanvas.canvasGraph.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 if(data[r][c].state){
                     Rect rect = getRect(r, c);
-                    drawNode(rect, data[r][c].data);
+                    drawNodeGraph(rect, data[r][c].data);
                 }
             }
         }
@@ -182,28 +184,47 @@ public class Board {
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdge(rect1, rect2);
+                drawEdgeGraph(rect1, rect2);
             }
         }
     }
 
     // Draws a single Node
-    public void drawNode(Rect rect, int name) {
+    public void drawNodeGraph(Rect rect, int name) {
+        __drawNode(customCanvas.canvasGraph, rect, name);
+    }
+
+    // Draws a single Node
+    public void drawNodeAnim(Rect rect, int name) {
+        __drawNode(customCanvas.canvasAnimation, rect, name);
+    }
+
+    // Draws a single Node
+    public void __drawNode(Canvas canvas, Rect rect, int name) {
         int x = rect.centerX();
         int y = rect.centerY();
 
         float radius = getRadius(rect);
         String text = String.valueOf(name);
 
-        customCanvas.canvasGraph.drawCircle(x, y, radius, paintVertex);
+        canvas.drawCircle(x, y, radius, paintVertex);
 
         Rect rectText = new Rect();
         paintText.getTextBounds(text, 0, text.length(), rectText);
-        customCanvas.canvasGraph.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
+        canvas.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
     }
 
     // Draws a single EdgeOld
-    public void drawEdge(Rect rect1, Rect rect2) {
+    public void drawEdgeGraph(Rect rect1, Rect rect2) {
+        __drawEdge(customCanvas.canvasGraph, rect1, rect2);
+    }
+
+    // Draws a single EdgeOld
+    public void drawEdgeAnim(Rect rect1, Rect rect2) {
+        __drawEdge(customCanvas.canvasAnimation, rect1, rect2);
+    }
+
+    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -216,12 +237,27 @@ public class Board {
 //        System.out.println("distance = " + distance);
 
 
-        customCanvas.canvasGraph.drawLine(lx1, ly1, lx2, ly2, paintEdge);
+        canvas.drawLine(lx1, ly1, lx2, ly2, paintEdge);
         arrow12(lx1, ly1, lx2, ly2);
 //        arrow21(lx1, ly1, lx2, ly2);
     }
 
     public void arrow12(float x, float y, float x1, float y1) {
+//        double degree = calculateDegree(x, x1, y, y1);
+//
+//        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
+//        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
+//
+//        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
+//        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
+//
+//        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
+//        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
+
+        __arrow12(customCanvas.canvasGraph, x, y, x1, y1);
+    }
+
+    public void __arrow12(Canvas canvas, float x, float y, float x1, float y1) {
         double degree = calculateDegree(x, x1, y, y1);
 
         float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
@@ -230,8 +266,8 @@ public class Board {
         float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
         float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
 
-        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
-        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
+        canvas.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
+        canvas.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
     }
 
     public void arrow21(float x, float y, float x1, float y1) {
@@ -259,7 +295,7 @@ public class Board {
 //        data[row][col].vertexOld = vertexOld;
 
         Rect rect = getRect(row, col);
-        drawNode(rect, data[row][col].data);
+        drawNodeGraph(rect, data[row][col].data);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
@@ -270,7 +306,7 @@ public class Board {
 //        data[row][col].vertexOld = vertexOld;
 
         Rect rect = getRect(row, col);
-        drawNode(rect, data[row][col].data);
+        drawNodeGraph(rect, data[row][col].data);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
@@ -325,7 +361,7 @@ public class Board {
         int width = rect.width();
         int height = rect.height();
 
-        System.out.println("rect = " + width + "x" + height);
+//        System.out.println("rect = " + width + "x" + height);
         float diameter = Math.min(width, height) * circleRatio;
         float radius = diameter / 2;
 
@@ -389,5 +425,17 @@ public class Board {
         }
 
         update(graph);
+    }
+
+    public void clearCanvasGraph(){
+        __clearCanvas(customCanvas.canvasGraph);
+    }
+
+    public void clearCanvasAnim(){
+        __clearCanvas(customCanvas.canvasAnimation);
+    }
+
+    public void __clearCanvas(Canvas canvas){
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
 }
