@@ -26,8 +26,9 @@ public class BFS {
         visited.put(s, true);
         queue.add(s);
 
+        // DES == NODE FOR ANIMATION
         GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
-        graphAnimationState.add(new GraphElementAnimationData(vertex.row, vertex.col, s));
+        graphAnimationState.add(new GraphElementAnimationData(vertex.row, vertex.col, -1, s));
         graphSequence.graphAnimationStates.add(graphAnimationState);
 
         while (queue.size() != 0) {
@@ -38,7 +39,7 @@ public class BFS {
             for(Edge edge : i){
                 if(!visited.get(edge.des)){
                     visited.put(edge.des, true);
-//                    System.out.println("EDGE IN BFS :-    " + s + " --> " + edge.des);
+                    System.out.println("EDGE IN BFS :-    " + s + " --> " + edge.des);
                     queue.add(edge.des);
                     Vertex vertex1 = g.vertexMap.get(edge.des);
                     GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + edge.des);

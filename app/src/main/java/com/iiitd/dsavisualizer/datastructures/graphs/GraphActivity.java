@@ -36,6 +36,7 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,6 +74,8 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_tree2;
     Button btn_tree3;
     Button btn_edge;
+    Button btn_import;
+    Button btn_export;
     EditText et1;
     EditText et_customgraphinput;
     EditText et_insert;
@@ -129,6 +132,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
         btn_edge = v_menu.findViewById(R.id.btn_edge);
+        btn_import = v_menu.findViewById(R.id.btn_import);
+        btn_export = v_menu.findViewById(R.id.btn_export);
         et1 = v_menu.findViewById(R.id.et1);
         et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu.findViewById(R.id.et_insert);
@@ -461,6 +466,52 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+        btn_export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(graphWrapper != null){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String newLine = "\n";
+
+                    //graph type
+                    stringBuilder.append(graphWrapper.directed)
+                            .append(" ")
+                            .append(graphWrapper.weighted)
+                            .append(newLine);
+
+                    //vertices
+                    int noOfVertices = graphWrapper.graph.noOfVertices;
+                    stringBuilder.append("VC ")
+                            .append(noOfVertices)
+                            .append(newLine);
+                    for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
+                        stringBuilder.append("V ")
+                                .append(vertexEntry.getKey())
+                                .append(" ")
+                                .append(vertexEntry.getValue().row)
+                                .append(" ")
+                                .append(vertexEntry.getValue().col)
+                                .append(newLine);
+                    }
+
+                    //edges
+                    for( Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()){
+                        for(Edge i : entry.getValue()){
+                            stringBuilder.append("E ")
+                                    .append(i.src)
+                                    .append(" ")
+                                    .append(i.des)
+                                    .append(" ")
+                                    .append(i.weight)
+                                    .append(newLine);
+                        }
+                    }
+
+                    System.out.println(stringBuilder.toString());
+
+                }
+            }
+        });
     }
 
     private void startTimer(String operation, final BFS bfs){
@@ -507,11 +558,13 @@ public class GraphActivity extends AppCompatActivity {
                             int row = graphElementAnimationData.row;
                             int col = graphElementAnimationData.col;
 
+                            System.out.println(graphElementAnimationData);
+
                             Canvas canvas = graphWrapper.board.customCanvas.canvasAnimation;
                             Rect rect = graphWrapper.board.getRect(row, col);
 //                            graphWrapper.board.__drawNode(canvas, rect, graphWrapper.board.data[row][col].data);
-                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.src);
-                            if(graphElementAnimationData.des != -1){
+                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.des);
+                            if(graphElementAnimationData.src != -1){
                                 int[] vertex1 = graphWrapper.board.getCoordinates(graphElementAnimationData.src);
                                 int[] vertex2 = graphWrapper.board.getCoordinates(graphElementAnimationData.des);
 

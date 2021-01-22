@@ -26,6 +26,8 @@ public class GraphElementAnimationData {
         return "GraphElementAnimationData{" +
                 "row=" + row +
                 ", col=" + col +
+                ", src=" + src +
+                ", des=" + des +
                 ", info='" + info + '\'' +
                 '}';
     }
