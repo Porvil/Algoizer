@@ -1,6 +1,8 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -507,8 +509,14 @@ public class GraphActivity extends AppCompatActivity {
                         }
                     }
 
-                    System.out.println(stringBuilder.toString());
+                    String string = stringBuilder.toString();
+                    System.out.println(string);
 
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", string);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(context,"Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
                 }
             }
         });

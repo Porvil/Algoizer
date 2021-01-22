@@ -438,4 +438,34 @@ public class Board {
     public void __clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
+
+    public double score(Graph graph){
+        double result = 0;
+
+        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.map.entrySet() ){
+
+            for (Edge edge : vertex.getValue()) {
+
+                int[] vertex1 = getCoordinates(vertex.getKey());
+                int[] vertex2 = getCoordinates(edge.des);
+
+                Rect rect1 = getRect(vertex1[0], vertex1[1]);
+                Rect rect2 = getRect(vertex2[0], vertex2[1]);
+
+                double[] lineCoordinates = getLineCoordinates(rect1, rect2);
+
+                float lx1 = (float) lineCoordinates[0];
+                float ly1 = (float) lineCoordinates[1];
+
+                float lx2 = (float) lineCoordinates[2];
+                float ly2 = (float) lineCoordinates[3];
+
+                double distance = distance(lx1, ly1, lx2, ly2);
+                System.out.println(distance);
+                result += distance;
+            }
+        }
+
+        return result;
+    }
 }

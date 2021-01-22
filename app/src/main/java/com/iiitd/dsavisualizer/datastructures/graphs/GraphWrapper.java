@@ -157,6 +157,12 @@ public class GraphWrapper {
 
         update();
 
+        //check distances
+        double score = board.score(graph);
+        System.out.println("Score = " + score);
+
+
+
         return true;
 
     }
@@ -165,4 +171,78 @@ public class GraphWrapper {
         this.graph = new Graph(directed, weighted);
         board.reset(graph);
     }
+
+//    public void minimizeGraph(ArrayList<Pair<Integer, Integer>> data){
+//        int xCount = board.xCount;
+//        int yCount = board.yCount;
+//
+////        data.add(Pair.create(0, 0));
+////        data.add(Pair.create(0, 3));
+////        data.add(Pair.create(2, 0));
+////        data.add(Pair.create(2, 4));
+////        data.add(Pair.create(4, 3));
+//
+//        int minX = xCount+1;
+//        int maxX = -1;
+//        int minY = yCount+1;
+//        int maxY = -1;
+//
+//        for(Pair<Integer, Integer> i : data){
+//            minX = minX < i.second ? minX : i.second;
+//            maxX = maxX > i.second ? maxX : i.second;
+//            minY = minY < i.first ? minY : i.first;
+//            maxY = maxY > i.first ? maxY : i.first;
+//        }
+//
+//        System.out.println(minX + " " + maxX);
+//        System.out.println(minY + " " + maxY);
+//
+//        // compress
+//        int[] row = new int[yCount];
+//        int[] col = new int[xCount];
+//        for(Pair<Integer, Integer> pair : data){
+//            row[pair.first] = 1;
+//            col[pair.second] = 1;
+//        }
+//
+//        //rows
+//        {
+//            int gap = 0;
+//            for (int i = yCount - 1; i >= 0; i--) {
+//                if (row[i] == 0) {
+//                    gap++;
+//                } else {
+//                    if (gap > 0) {
+//                        for (int c = data.size() - 1; c >= 0; c--) {
+//                            if (data.get(c).first > i)
+//                                data.get(c).first -= gap;
+//                        }
+//                    }
+//
+//                    gap = 0;
+//                }
+//            }
+//        }
+//
+//        //cols
+//        {
+//            int gap = 0;
+//            for (int i = xCount - 1; i >= 0; i--) {
+//                if (col[i] == 0) {
+//                    gap++;
+//                } else {
+//                    if (gap > 0) {
+//                        for (int c = data.size() - 1; c >= 0; c--) {
+//                            if (data.get(c).second > i)
+//                                data.get(c).second -= gap;
+//                        }
+//                    }
+//
+//                    gap = 0;
+//                }
+//            }
+//        }
+//
+//    }
+
 }
