@@ -36,7 +36,7 @@ public class Graph {
 
         noOfVertices++;
         map.put(v, new ArrayList<Edge>());
-        vertexMap.put(v, new Vertex(row, col));
+        vertexMap.put(v, new Vertex(v, row, col));
     }
 
     // Remove vertex from the graph, also removes edges associated with it
@@ -96,4 +96,11 @@ public class Graph {
 
         return noOfVertices+1;
     }
+
+    public void clearGraph(){
+        this.noOfVertices = 0;
+        map = new HashMap<>();
+        vertexMap = new HashMap<>();
+    }
+
 }

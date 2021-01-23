@@ -8,10 +8,10 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -71,7 +71,8 @@ public class GraphActivity extends AppCompatActivity {
     ImageButton btn_closemenu;
     Button btn_bfs;
     Button btn_dfs;
-    Button btn_cleartree;
+    Button btn_cleargraph;
+    Button btn_cleargraphanim;
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
@@ -129,7 +130,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
         btn_bfs = v_menu.findViewById(R.id.btn_bfs);
         btn_dfs = v_menu.findViewById(R.id.btn_dfs);
-        btn_cleartree = v_menu.findViewById(R.id.btn_cleartree);
+        btn_cleargraph = v_menu.findViewById(R.id.btn_cleargraph);
+        btn_cleargraphanim = v_menu.findViewById(R.id.btn_cleargraphanim);
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
@@ -315,15 +317,23 @@ public class GraphActivity extends AppCompatActivity {
         });
 
 
-        btn_cleartree.setOnClickListener(new View.OnClickListener() {
+        btn_cleargraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //clears animation graph only
-//                graphWrapper.board.customCanvas.canvasAnimation.drawColor(0, PorterDuff.Mode.CLEAR);
+//                graphWrapper.graph.clearGraph();
+//                graphWrapper.board.reset(graphWrapper.graph);
+                graphWrapper.reset();
+//                graphWrapper.board.clearCanvasGraph();
+            }
+        });
+
+        btn_cleargraphanim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 graphWrapper.board.clearCanvasAnim();
             }
         });
-//
+
         btn_tree1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -333,27 +343,12 @@ public class GraphActivity extends AppCompatActivity {
 
             }
         });
-//
+
         btn_tree2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                VertexOld vertexOld0 = graphOld.createVertex(graphOld.noOfVertices, 0, 0);
-//                board.addVertex(0, 0, vertexOld0);
-//
-//                VertexOld vertexOld1 = graphOld.createVertex(graphOld.noOfVertices, 0, 3);
-//                board.addVertex(0, 3, vertexOld1);
-//
-//                VertexOld vertexOld2 = graphOld.createVertex(graphOld.noOfVertices, 2, 0);
-//                board.addVertex(2, 0, vertexOld2);
-//
-//                VertexOld vertexOld3 = graphOld.createVertex(graphOld.noOfVertices, 2, 4);
-//                board.addVertex(2, 4, vertexOld3);
-//
-//                VertexOld vertexOld4 = graphOld.createVertex(graphOld.noOfVertices, 4, 3);
-//                board.addVertex(4, 3, vertexOld4);
 
-
-
+                graphWrapper.reset();
 
                 graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
                 graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
@@ -368,13 +363,6 @@ public class GraphActivity extends AppCompatActivity {
                 graphWrapper.graph.addEdge(2, 3, 1);
                 graphWrapper.graph.addEdge(3, 4, 1);
 
-//                graph.addEdge(0, 1);
-//                graph.addEdge(0, 2);
-//                graph.addEdge(1, 2);
-//                graph.addEdge(2, 0);
-//                graph.addEdge(2, 3);
-//                graph.addEdge(3, 3);
-
 
                 graphWrapper.board.update(graphWrapper.graph);
             }
@@ -384,15 +372,10 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                VertexOld source = board.data[0][0].vertexOld;
-//                BFSOld bfs = new BFSOld(graphOld);
-//                bfs.run(source);
-
                 BFS bfs = new BFS(graphWrapper.graph);
                 bfs.run(0);
 
                 startTimer("BFS", bfs);
-
 
             }
         });
@@ -420,16 +403,6 @@ public class GraphActivity extends AppCompatActivity {
         btn_edge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String s1 = et1.getText().toString();
-//
-//                String[] split = s1.split("-");
-//
-//                int i1 = Integer.parseInt(split[0]);
-//                int i2 = Integer.parseInt(split[1]);
-//
-//                graphWrapper.graph.addEdge(i1, i2,1);
-//                graphWrapper.board.update(graphWrapper.graph);
-
 
                 String s = et_customgraphinput.getText().toString();
                 String[] ss = s.split("\\n");
@@ -468,6 +441,111 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+        btn_import.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = et_customgraphinput.getText().toString();
+                String[] ss = s.split("\\n");
+
+                ArrayList<Vertex> vertices = new ArrayList<>();
+                ArrayList<Edge> edges = new ArrayList<>();
+
+                boolean directed = false;
+                boolean weighted = false;
+                int noOfVertices = 0;
+
+                boolean gotDirection = false;
+                boolean gotWeight = false;
+                boolean gotVertexCount = false;
+                boolean error = false;
+
+                try {
+                    for (String line : ss) {
+                        String[] chars = line.split("\\s+");
+
+                        switch (chars[0]) {
+                            case "D":
+                                if (!gotDirection) {
+                                    directed = chars[1].equals("0") ? false : true;
+                                    gotDirection = true;
+                                } else {
+                                    error = true;
+                                }
+                                break;
+                            case "W": {
+                                if (!gotWeight) {
+                                    weighted = chars[1].equals("0") ? false : true;
+                                    gotWeight = true;
+                                } else {
+                                    error = true;
+                                }
+                                break;
+                            }
+                            case "VC": {
+                                if (!gotVertexCount) {
+                                    noOfVertices = Integer.parseInt(chars[1]);
+                                    gotVertexCount = true;
+                                } else {
+                                    error = true;
+                                }
+                                break;
+                            }
+                            case "VA": {
+                                int data = Integer.parseInt(chars[1]);
+                                int row = Integer.parseInt(chars[2]);
+                                int col = Integer.parseInt(chars[3]);
+
+                                vertices.add(new Vertex(data, row, col));
+                                break;
+                            }
+                            case "V": {
+                                for (int c = 1; c < chars.length; c++) {
+                                    Pair<Integer, Integer> randomAvailableNode = graphWrapper.board.getRandomAvailableNode();
+                                    int data = Integer.parseInt(chars[c]);
+                                    int row = randomAvailableNode.first;
+                                    int col = randomAvailableNode.second;
+
+                                    vertices.add(new Vertex(data, row, col));
+                                }
+                                break;
+                            }
+                            case "E": {
+                                int src = Integer.parseInt(chars[1]);
+                                int des = Integer.parseInt(chars[2]);
+                                int weight = weighted ? Integer.parseInt(chars[3]) : 1;
+
+                                edges.add(new Edge(src, des, weight));
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e){
+                    System.out.println("Exception while parsing graph data");
+                    error = true;
+                }
+
+                if(error){
+                    System.out.println("BAD INPUT or error");
+                }
+                else{
+                    System.out.println("Directed = " + directed);
+                    System.out.println("Weighted = " + weighted);
+                    System.out.println("No of Vertices = " + noOfVertices);
+                    for(Vertex vertex : vertices){
+                        System.out.println(vertex);
+                    }
+                    for(Edge edge : edges){
+                        System.out.println(edge);
+                    }
+
+                    graphWrapper.customInput1(vertices, edges);
+
+                }
+
+            }
+        });
+
         btn_export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -476,9 +554,11 @@ public class GraphActivity extends AppCompatActivity {
                     String newLine = "\n";
 
                     //graph type
-                    stringBuilder.append(graphWrapper.directed)
-                            .append(" ")
-                            .append(graphWrapper.weighted)
+                    stringBuilder.append("D ")
+                            .append(graphWrapper.directed ? "1" : "0")
+                            .append(newLine)
+                            .append("W ")
+                            .append(graphWrapper.weighted ? "1" : "0")
                             .append(newLine);
 
                     //vertices
@@ -487,7 +567,7 @@ public class GraphActivity extends AppCompatActivity {
                             .append(noOfVertices)
                             .append(newLine);
                     for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
-                        stringBuilder.append("V ")
+                        stringBuilder.append("VA ")
                                 .append(vertexEntry.getKey())
                                 .append(" ")
                                 .append(vertexEntry.getValue().row)

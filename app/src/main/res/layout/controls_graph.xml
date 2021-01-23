@@ -100,6 +100,12 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
 
+            <Button
+                android:id="@+id/btn_clearcustominput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear Input" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -160,11 +166,19 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_cleartree"
+                android:id="@+id/btn_cleargraph"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:selectableItemBackground"
-                android:text="@string/clear_tree"
+                android:text="Clear Graph"
+                android:textColor="@color/mainColor" />
+
+            <Button
+                android:id="@+id/btn_cleargraphanim"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:selectableItemBackground"
+                android:text="Clear Anim Graph"
                 android:textColor="@color/mainColor" />
 
             <LinearLayout
