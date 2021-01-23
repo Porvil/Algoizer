@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GraphWrapper {
     public boolean directed;
@@ -148,7 +149,7 @@ public class GraphWrapper {
         // else check if count is in bound then randomize graph
         // else error not enough space
 
-        minimizeGraph(vertices);
+//        minimizeGraph(vertices);
 
 
         int vertexCount = vertices.size();
@@ -157,6 +158,12 @@ public class GraphWrapper {
         }
 
         for(Vertex vertex : vertices){
+            if(vertex.row == -1 || vertex.col == -1) {
+                Pair<Integer, Integer> randomAvailableNode = board.getRandomAvailableNode();
+                vertex.row = randomAvailableNode.first;
+                vertex.col = randomAvailableNode.second;
+            }
+
             addVertex(vertex.row, vertex.col, vertex.data);
         }
 
@@ -183,12 +190,6 @@ public class GraphWrapper {
     public void minimizeGraph(ArrayList<Vertex> data){
         int xCount = board.xCount;
         int yCount = board.yCount;
-
-//        data.add(Pair.create(0, 0));
-//        data.add(Pair.create(0, 3));
-//        data.add(Pair.create(2, 0));
-//        data.add(Pair.create(2, 4));
-//        data.add(Pair.create(4, 3));
 
         int minX = xCount+1;
         int maxX = -1;
@@ -251,6 +252,63 @@ public class GraphWrapper {
             }
         }
 
+    }
+
+    public boolean checkBounds(ArrayList<Vertex> data){
+
+        if(data.size() == 0)
+            return true;
+
+        int xCount = board.xCount;
+        int yCount = board.yCount;
+
+        int minX = xCount+1;
+        int maxX = -1;
+        int minY = yCount+1;
+        int maxY = -1;
+
+        boolean boundCheckedOnce = false;
+
+        for(Vertex vertex : data){
+            if(vertex.row != -1 && vertex.col != -1) {
+                minX = minX < vertex.col ? minX : vertex.col;
+                maxX = maxX > vertex.col ? maxX : vertex.col;
+                minY = minY < vertex.row ? minY : vertex.row;
+                maxY = maxY > vertex.row ? maxY : vertex.row;
+
+                boundCheckedOnce = true;
+            }
+        }
+
+        System.out.println(minX + " " + maxX);
+        System.out.println(minY + " " + maxY);
+
+        if(boundCheckedOnce)
+            return maxX < xCount && maxY < yCount;
+        else
+            return true;
+
+    }
+
+    public boolean checkIfMinimizable(ArrayList<Vertex> data) {
+
+        if (data.size() == 0)
+            return true;
+
+        HashSet<Integer> rows = new HashSet<>();
+        HashSet<Integer> cols = new HashSet<>();
+
+
+        int xCount = board.xCount;
+        int yCount = board.yCount;
+
+        for (Vertex vertex : data) {
+            rows.add(vertex.row);
+            cols.add(vertex.col);
+        }
+
+        //  yCount = rows, xCount = cols
+        return rows.size() < yCount && cols.size() < xCount;
     }
 
 }

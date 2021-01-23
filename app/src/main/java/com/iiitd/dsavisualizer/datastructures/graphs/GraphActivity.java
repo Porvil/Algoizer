@@ -457,6 +457,7 @@ public class GraphActivity extends AppCompatActivity {
                 boolean gotDirection = false;
                 boolean gotWeight = false;
                 boolean gotVertexCount = false;
+                boolean hasRandomNode = false;
                 boolean error = false;
 
                 try {
@@ -499,13 +500,15 @@ public class GraphActivity extends AppCompatActivity {
                                 break;
                             }
                             case "V": {
+                                hasRandomNode = true;
                                 for (int c = 1; c < chars.length; c++) {
-                                    Pair<Integer, Integer> randomAvailableNode = graphWrapper.board.getRandomAvailableNode();
+//                                    Pair<Integer, Integer> randomAvailableNode = graphWrapper.board.getRandomAvailableNode();
                                     int data = Integer.parseInt(chars[c]);
-                                    int row = randomAvailableNode.first;
-                                    int col = randomAvailableNode.second;
+//                                    int row = randomAvailableNode.first;
+//                                    int col = randomAvailableNode.second;
 
-                                    vertices.add(new Vertex(data, row, col));
+//                                    vertices.add(new Vertex(data, row, col));
+                                    vertices.add(new Vertex(data, -1, -1));
                                 }
                                 break;
                             }
@@ -539,7 +542,45 @@ public class GraphActivity extends AppCompatActivity {
                         System.out.println(edge);
                     }
 
-                    graphWrapper.customInput1(vertices, edges);
+
+                    noOfVertices = vertices.size();
+
+                    // check if it is in bound -> ok
+                    // else check if possible to be minimized -> ok
+                    // else check if count is in bound then randomize graph
+                    // else error not enough space
+
+                    if(noOfVertices > graphWrapper.board.maxVertices){
+                        System.out.println("Not enough space in graph");
+                    }
+                    else if(hasRandomNode){//no bounds checked here, must check somehow
+                        if(graphWrapper.checkBounds(vertices)){
+                            graphWrapper.customInput1(vertices, edges);
+                        }
+                        else{
+                            // Random Graph Now
+                            System.out.println("Random");
+                        }
+                    }
+                    else{
+                        if(graphWrapper.checkBounds(vertices)){
+                            graphWrapper.customInput1(vertices, edges);
+                        }
+                        else{
+                            if(graphWrapper.checkIfMinimizable(vertices)){
+                                graphWrapper.minimizeGraph(vertices);
+
+                                graphWrapper.customInput1(vertices, edges);
+                            }
+                            else {
+                                // Random Graph Now
+                                System.out.println("Random");
+                            }
+                        }
+                    }
+
+
+//                    graphWrapper.customInput1(vertices, edges);
 
                 }
 
