@@ -79,7 +79,6 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
-    Button btn_edge;
     Button btn_import;
     Button btn_export;
     EditText et_customgraphinput;
@@ -139,7 +138,6 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
-        btn_edge = v_menu.findViewById(R.id.btn_edge);
         btn_import = v_menu.findViewById(R.id.btn_import);
         btn_export = v_menu.findViewById(R.id.btn_export);
         et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
@@ -406,13 +404,6 @@ public class GraphActivity extends AppCompatActivity {
                         graphControls.edgeState--;
                         break;
                 }
-            }
-        });
-
-        btn_edge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parseAndShowCustomInput();
             }
         });
 
@@ -853,14 +844,26 @@ public class GraphActivity extends AppCompatActivity {
                         if(col < 0)
                             col = -1;
 
-                        vertices.add(new Vertex(data, row, col));
+                        Vertex vertex = new Vertex(data, row, col);
+
+                        if(!vertices.contains(vertex)){
+                            vertices.add(vertex);
+                        }
+                        else{
+                            int index = vertices.indexOf(vertex);
+                            vertices.get(index).row = row;
+                            vertices.get(index).col = col;
+                        }
                         break;
                     }
                     case "V": {
                         for (int c = 1; c < chars.length; c++) {
                             int data = Integer.parseInt(chars[c]);
 
-                            vertices.add(new Vertex(data, -1, -1));
+                            Vertex vertex = new Vertex(data, -1, -1);
+                            if(!vertices.contains(vertex)){
+                                vertices.add(vertex);
+                            }
                         }
                         break;
                     }
@@ -902,6 +905,7 @@ public class GraphActivity extends AppCompatActivity {
 
             noOfVertices = vertices.size();
 
+            System.out.println("No of Vertices(updated) = " + noOfVertices);
             //Sort vertices here such that, random nodes are in the end of arraylist [ IMPORTANT ]
             Collections.sort(vertices);
 

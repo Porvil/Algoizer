@@ -1,16 +1,11 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
-import java.util.Comparator;
+import java.util.Objects;
 
 public class Vertex implements Comparable<Vertex> {
     public int data;
     public int row;
     public int col;
-//
-//    public Vertex(int row, int col) {
-//        this.row = row;
-//        this.col = col;
-//    }
 
     public Vertex(int data, int row, int col) {
         this.data = data;
@@ -46,5 +41,22 @@ public class Vertex implements Comparable<Vertex> {
                 return o1.row - o2.row;
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Vertex vertex = (Vertex) o;
+        return data == vertex.data;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
     }
 }
