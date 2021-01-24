@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.app.Dialog;
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +12,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -38,6 +38,7 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,6 +72,8 @@ public class GraphActivity extends AppCompatActivity {
     ImageButton btn_closemenu;
     Button btn_bfs;
     Button btn_dfs;
+    ImageButton btn_pastecustominput;
+    ImageButton btn_clearcustominput;
     Button btn_cleargraph;
     Button btn_cleargraphanim;
     Button btn_tree1;
@@ -79,7 +82,6 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_edge;
     Button btn_import;
     Button btn_export;
-    EditText et1;
     EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
@@ -130,6 +132,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
         btn_bfs = v_menu.findViewById(R.id.btn_bfs);
         btn_dfs = v_menu.findViewById(R.id.btn_dfs);
+        btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
+        btn_clearcustominput = v_menu.findViewById(R.id.btn_clearcustominput);
         btn_cleargraph = v_menu.findViewById(R.id.btn_cleargraph);
         btn_cleargraphanim = v_menu.findViewById(R.id.btn_cleargraphanim);
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
@@ -138,7 +142,6 @@ public class GraphActivity extends AppCompatActivity {
         btn_edge = v_menu.findViewById(R.id.btn_edge);
         btn_import = v_menu.findViewById(R.id.btn_import);
         btn_export = v_menu.findViewById(R.id.btn_export);
-        et1 = v_menu.findViewById(R.id.et1);
         et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
@@ -316,7 +319,6 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-
         btn_cleargraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,6 +326,13 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper.board.reset(graphWrapper.graph);
                 graphWrapper.reset();
 //                graphWrapper.board.clearCanvasGraph();
+            }
+        });
+
+        btn_clearcustominput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_customgraphinput.setText("");
             }
         });
 
@@ -403,244 +412,41 @@ public class GraphActivity extends AppCompatActivity {
         btn_edge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String s = et_customgraphinput.getText().toString();
-                String[] ss = s.split("\\n");
-
-//                System.out.println(s);
-                for(String sss : ss){
-                    System.out.println(sss);
-                }
-
-                int length = ss.length;
-                String[] starts = ss[0].split("\\s+");
-                boolean directed = starts[0].equals("0") ? false : true;
-                boolean weighted = starts[1].equals("0") ? false : true;
-                ArrayList<Integer> vertices = new ArrayList<>();
-                ArrayList<Edge> edges = new ArrayList<>();
-
-                for(int i=1;i<length;i++){
-                    String[] split = ss[i].split("\\s+");
-
-                    if(split[0].equals("V")){
-                        for(int j=1;j<split.length;j++){
-                            int vertex = Integer.parseInt(split[j]);
-                            vertices.add(vertex);
-                        }
-                    }
-                    else if(split[0].equals("E")){
-                        int src = Integer.parseInt(split[1]);
-                        int des = Integer.parseInt(split[2]);
-                        int weight = weighted ? Integer.parseInt(split[3]) : 1;
-                        edges.add(new Edge(src, des, weight));
-                    }
-                }
-
-                graphWrapper.customInput(vertices, edges);
-
+                parseAndShowCustomInput();
             }
         });
 
         btn_import.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = et_customgraphinput.getText().toString();
-                String[] ss = s.split("\\n");
-
-                ArrayList<Vertex> vertices = new ArrayList<>();
-                ArrayList<Edge> edges = new ArrayList<>();
-
-                boolean directed = false;
-                boolean weighted = false;
-                int noOfVertices = 0;
-
-                boolean gotDirection = false;
-                boolean gotWeight = false;
-                boolean gotVertexCount = false;
-                boolean hasRandomNode = false;
-                boolean error = false;
-
-                try {
-                    for (String line : ss) {
-                        String[] chars = line.split("\\s+");
-
-                        switch (chars[0]) {
-                            case "D":
-                                if (!gotDirection) {
-                                    directed = chars[1].equals("0") ? false : true;
-                                    gotDirection = true;
-                                } else {
-                                    error = true;
-                                }
-                                break;
-                            case "W": {
-                                if (!gotWeight) {
-                                    weighted = chars[1].equals("0") ? false : true;
-                                    gotWeight = true;
-                                } else {
-                                    error = true;
-                                }
-                                break;
-                            }
-                            case "VC": {
-                                if (!gotVertexCount) {
-                                    noOfVertices = Integer.parseInt(chars[1]);
-                                    gotVertexCount = true;
-                                } else {
-                                    error = true;
-                                }
-                                break;
-                            }
-                            case "VA": {
-                                int data = Integer.parseInt(chars[1]);
-                                int row = Integer.parseInt(chars[2]);
-                                int col = Integer.parseInt(chars[3]);
-
-                                vertices.add(new Vertex(data, row, col));
-                                break;
-                            }
-                            case "V": {
-                                hasRandomNode = true;
-                                for (int c = 1; c < chars.length; c++) {
-//                                    Pair<Integer, Integer> randomAvailableNode = graphWrapper.board.getRandomAvailableNode();
-                                    int data = Integer.parseInt(chars[c]);
-//                                    int row = randomAvailableNode.first;
-//                                    int col = randomAvailableNode.second;
-
-//                                    vertices.add(new Vertex(data, row, col));
-                                    vertices.add(new Vertex(data, -1, -1));
-                                }
-                                break;
-                            }
-                            case "E": {
-                                int src = Integer.parseInt(chars[1]);
-                                int des = Integer.parseInt(chars[2]);
-                                int weight = weighted ? Integer.parseInt(chars[3]) : 1;
-
-                                edges.add(new Edge(src, des, weight));
-                                break;
-                            }
-                        }
-                    }
-                }
-                catch (Exception e){
-                    System.out.println("Exception while parsing graph data");
-                    error = true;
-                }
-
-                if(error){
-                    System.out.println("BAD INPUT or error");
-                }
-                else{
-                    System.out.println("Directed = " + directed);
-                    System.out.println("Weighted = " + weighted);
-                    System.out.println("No of Vertices = " + noOfVertices);
-                    for(Vertex vertex : vertices){
-                        System.out.println(vertex);
-                    }
-                    for(Edge edge : edges){
-                        System.out.println(edge);
-                    }
-
-
-                    noOfVertices = vertices.size();
-
-                    // check if it is in bound -> ok
-                    // else check if possible to be minimized -> ok
-                    // else check if count is in bound then randomize graph
-                    // else error not enough space
-
-                    if(noOfVertices > graphWrapper.board.maxVertices){
-                        System.out.println("Not enough space in graph");
-                    }
-                    else if(hasRandomNode){//no bounds checked here, must check somehow
-                        if(graphWrapper.checkBounds(vertices)){
-                            graphWrapper.customInput1(vertices, edges);
-                        }
-                        else{
-                            // Random Graph Now
-                            System.out.println("Random");
-                        }
-                    }
-                    else{
-                        if(graphWrapper.checkBounds(vertices)){
-                            graphWrapper.customInput1(vertices, edges);
-                        }
-                        else{
-                            if(graphWrapper.checkIfMinimizable(vertices)){
-                                graphWrapper.minimizeGraph(vertices);
-
-                                graphWrapper.customInput1(vertices, edges);
-                            }
-                            else {
-                                // Random Graph Now
-                                System.out.println("Random");
-                            }
-                        }
-                    }
-
-
-//                    graphWrapper.customInput1(vertices, edges);
-
-                }
-
+                parseAndShowCustomInput();
             }
         });
 
         btn_export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(graphWrapper != null){
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String newLine = "\n";
+                exportCurrentGraph();
+            }
+        });
 
-                    //graph type
-                    stringBuilder.append("D ")
-                            .append(graphWrapper.directed ? "1" : "0")
-                            .append(newLine)
-                            .append("W ")
-                            .append(graphWrapper.weighted ? "1" : "0")
-                            .append(newLine);
+        btn_pastecustominput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                String pasteData = "";
 
-                    //vertices
-                    int noOfVertices = graphWrapper.graph.noOfVertices;
-                    stringBuilder.append("VC ")
-                            .append(noOfVertices)
-                            .append(newLine);
-                    for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
-                        stringBuilder.append("VA ")
-                                .append(vertexEntry.getKey())
-                                .append(" ")
-                                .append(vertexEntry.getValue().row)
-                                .append(" ")
-                                .append(vertexEntry.getValue().col)
-                                .append(newLine);
-                    }
+                if (!(clipboard.hasPrimaryClip())) {}
+                else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))) {}
+                else {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
 
-                    //edges
-                    for( Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()){
-                        for(Edge i : entry.getValue()){
-                            stringBuilder.append("E ")
-                                    .append(i.src)
-                                    .append(" ")
-                                    .append(i.des)
-                                    .append(" ")
-                                    .append(i.weight)
-                                    .append(newLine);
-                        }
-                    }
-
-                    String string = stringBuilder.toString();
-                    System.out.println(string);
-
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", string);
-                    clipboard.setPrimaryClip(clip);
-
-                    Toast.makeText(context,"Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
+                    pasteData = item.getText().toString();
+                    et_customgraphinput.setText(pasteData);
                 }
             }
         });
+
     }
 
     private void startTimer(String operation, final BFS bfs){
@@ -979,6 +785,202 @@ public class GraphActivity extends AppCompatActivity {
                 iv_grid.setVisibility(View.VISIBLE);
                 iv_coordinates.setVisibility(View.VISIBLE);
                 break;
+        }
+    }
+
+    public void parseAndShowCustomInput(){
+        String s = et_customgraphinput.getText().toString();
+        String[] ss = s.split("\\n");
+
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
+
+        boolean directed = false;
+        boolean weighted = false;
+        int noOfVertices = 0;
+
+        boolean gotDirection = false;
+        boolean gotWeight = false;
+        boolean gotVertexCount = false;
+        boolean error = false;
+        String response = "";
+
+        try {
+            for (String line : ss) {
+                String[] chars = line.split("\\s+");
+
+                switch (chars[0]) {
+                    case "D":
+                        if (!gotDirection) {
+                            directed = chars[1].equals("1");
+                            gotDirection = true;
+                        }
+                        else{
+                            error = true;
+                            response = "Multiple times \"direction variable provided";
+                        }
+                        break;
+                    case "W": {
+                        if (!gotWeight) {
+                            weighted = chars[1].equals("1");
+                            gotWeight = true;
+                        }
+                        else {
+                            error = true;
+                            response = "Multiple times \"weight variable provided";
+                        }
+                        break;
+                    }
+                    case "VC": {
+                        // USELESS, vertexCount is taken in the end using "vertices.size()"
+                        if (!gotVertexCount) {
+                            noOfVertices = Integer.parseInt(chars[1]);
+                            gotVertexCount = true;
+                        }
+                        else {
+                            error = true;
+                            response = "Multiple times \"vertex count variable provided";
+                        }
+                        break;
+                    }
+                    case "VA": {
+                        int data = Integer.parseInt(chars[1]);
+                        int row = Integer.parseInt(chars[2]);
+                        int col = Integer.parseInt(chars[3]);
+
+                        if(row < 0)
+                            row = -1;
+                        if(col < 0)
+                            col = -1;
+
+                        vertices.add(new Vertex(data, row, col));
+                        break;
+                    }
+                    case "V": {
+                        for (int c = 1; c < chars.length; c++) {
+                            int data = Integer.parseInt(chars[c]);
+
+                            vertices.add(new Vertex(data, -1, -1));
+                        }
+                        break;
+                    }
+                    case "E": {
+                        int src = Integer.parseInt(chars[1]);
+                        int des = Integer.parseInt(chars[2]);
+                        int weight = weighted ? Integer.parseInt(chars[3]) : 1;
+
+                        edges.add(new Edge(src, des, weight));
+                        break;
+                    }
+                    default:
+                        error = true;
+                        response = "Bad Input";
+                        break;
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.println("Exception while parsing graph data");
+            error = true;
+            response = "Bad Input, Exception while parsing graph data";
+        }
+
+        if(error){
+            System.out.println("BAD INPUT or error");
+            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+        }
+        else{
+            if(noOfVertices == 0){
+                System.out.println("No vertices in custom input");
+                response = "No vertices found in custom input";
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+            }
+
+            System.out.println("Directed = " + directed);
+            System.out.println("Weighted = " + weighted);
+            System.out.println("No of Vertices = " + noOfVertices);
+
+            noOfVertices = vertices.size();
+
+            //Sort vertices here such that, random nodes are in the end of arraylist [ IMPORTANT ]
+            Collections.sort(vertices);
+
+
+            if(noOfVertices > graphWrapper.board.maxVertices){
+                System.out.println("Not enough space in graph");
+                response = "Not enough space in graph";
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+            }
+            else if(graphWrapper.checkPerformanceBounds(vertices)){
+                System.out.println("Custom input has large coordinates for vertices");
+                response = "Custom input has large coordinates for vertices";
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+            }
+            else{
+                if (!graphWrapper.checkBounds(vertices)) {
+                    if(graphWrapper.checkIfMinimizable(vertices)){
+                        graphWrapper.minimizeGraph(vertices);
+                    }
+                }
+
+                graphWrapper.customInput(vertices, edges);
+
+                response = "Custom Graph input successful";
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    public void exportCurrentGraph(){
+        if(graphWrapper != null){
+            StringBuilder stringBuilder = new StringBuilder();
+            String newLine = "\n";
+
+            //graph type
+            stringBuilder.append("D ")
+                    .append(graphWrapper.directed ? "1" : "0")
+                    .append(newLine)
+                    .append("W ")
+                    .append(graphWrapper.weighted ? "1" : "0")
+                    .append(newLine);
+
+            //vertices
+            int noOfVertices = graphWrapper.graph.noOfVertices;
+            stringBuilder.append("VC ")
+                    .append(noOfVertices)
+                    .append(newLine);
+            for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
+                stringBuilder.append("VA ")
+                        .append(vertexEntry.getKey())
+                        .append(" ")
+                        .append(vertexEntry.getValue().row)
+                        .append(" ")
+                        .append(vertexEntry.getValue().col)
+                        .append(newLine);
+            }
+
+            //edges
+            for( Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()){
+                for(Edge i : entry.getValue()){
+                    stringBuilder.append("E ")
+                            .append(i.src)
+                            .append(" ")
+                            .append(i.des)
+                            .append(" ")
+                            .append(i.weight)
+                            .append(newLine);
+                }
+            }
+
+            String string = stringBuilder.toString();
+            System.out.println(string);
+
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", string);
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(context,"Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
         }
     }
 

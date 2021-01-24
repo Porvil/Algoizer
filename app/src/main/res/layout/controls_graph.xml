@@ -72,17 +72,33 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/et1"
+                    android:id="@+id/et_customgraphinput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine" />
+
+                <ImageButton
+                    android:id="@+id/btn_clearcustominput"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:imeOptions="actionDone"
-                    android:text="0-1" />
+                    android:background="?android:selectableItemBackground"
+                    app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+                <ImageButton
+                    android:id="@+id/btn_pastecustominput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    app:srcCompat="@drawable/ic_baseline_content_paste_24" />
 
                 <Button
                     android:id="@+id/btn_edge"
@@ -91,20 +107,6 @@
                     android:layout_weight="1"
                     android:text="Edge" />
             </LinearLayout>
-
-            <EditText
-                android:id="@+id/et_customgraphinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine" />
-
-            <Button
-                android:id="@+id/btn_clearcustominput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Clear Input" />
 
             <LinearLayout
                 android:layout_width="match_parent"

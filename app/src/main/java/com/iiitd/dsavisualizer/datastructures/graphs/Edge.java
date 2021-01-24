@@ -4,7 +4,7 @@ public class Edge {
 
     public int src;
     public int des;
-    public double weight;
+    public int weight;
 
     public Edge(int src, int des) {
         this.src = src;
@@ -12,7 +12,7 @@ public class Edge {
         this.weight = 1;
     }
 
-    public Edge(int src, int des, double weight) {
+    public Edge(int src, int des, int weight) {
         this.src = src;
         this.des = des;
         this.weight = weight;

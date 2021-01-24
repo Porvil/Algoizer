@@ -8,12 +8,15 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 public class GraphWrapper {
     public boolean directed;
     public boolean weighted;
     public Board board;
     public Graph graph;
+
+    private final int MAX_BOUNDS = 1000;
 
     public GraphWrapper(Context context, CustomCanvas customCanvas, boolean directed, boolean weighted) {
         this.directed = directed;
@@ -45,10 +48,13 @@ public class GraphWrapper {
 
     private boolean addVertex(int row, int col, int nodeNumber){
         if(!board.getState(row, col)){
-            graph.addVertex(nodeNumber, row, col);
-            board.addVertex(row, col, nodeNumber);
-            update();
-            return true;
+            boolean addVertex = graph.addVertex(nodeNumber, row, col);
+            if(addVertex){
+                board.addVertex(row, col, nodeNumber);
+                update();
+                return true;
+            }
+
         }
 
         return false;
@@ -79,14 +85,19 @@ public class GraphWrapper {
 
     public boolean addEdge(int src, int des, int weight){
 
-        if(!graph.directed){
-            graph.addEdge(des, src, weight);//reverse edge
+        if(graph.checkContainsVertices(src, des)){
+            if(!graph.directed){
+                graph.addEdge(des, src, weight);//reverse edge
+            }
+
+            graph.addEdge(src, des, weight);
+
+            update();
+
+            return true;
         }
 
-        graph.addEdge(src, des, weight);
-        update();
-
-        return true;
+        return false;
     }
 
     public boolean removeEdge(int src, int des){
@@ -105,52 +116,13 @@ public class GraphWrapper {
         board.update(graph);
     }
 
-    public boolean customInput(ArrayList<Integer> vertices, ArrayList<Edge> edges){
+    public boolean customInput(ArrayList<Vertex> vertices, ArrayList<Edge> edges){
 
+        // Reset the graph
         reset();
 
-        int vertexCount = vertices.size();
-        if(vertexCount > board.maxVertices){
-            return false;
-        }
-
-        for(int i : vertices){
-            Pair<Integer, Integer> randomAvailableNode = board.getRandomAvailableNode();
-            if(randomAvailableNode != null) {
-                addVertex(randomAvailableNode.first, randomAvailableNode.second, i);
-            }
-            else{
-                System.out.println("NO SPACE IN GRAPH");
-            }
-        }
-
-        for(Edge edge : edges){
-            addEdge(edge.src, edge.des, (int) edge.weight);
-        }
-
-        update();
-
-        //check distances
-        double score = board.score(graph);
-        System.out.println("Score = " + score);
-
-
-
-        return true;
-
-    }
-
-    public boolean customInput1(ArrayList<Vertex> vertices, ArrayList<Edge> edges){
-
-        reset();
-
-        // check if it is in bound -> ok
-        // else check if possible to be minimized -> ok
-        // else check if count is in bound then randomize graph
-        // else error not enough space
-
-//        minimizeGraph(vertices);
-
+        int xCount = board.xCount;
+        int yCount = board.yCount;
 
         int vertexCount = vertices.size();
         if(vertexCount > board.maxVertices){
@@ -163,12 +135,17 @@ public class GraphWrapper {
                 vertex.row = randomAvailableNode.first;
                 vertex.col = randomAvailableNode.second;
             }
+            else if(vertex.row > yCount || vertex.col > xCount){
+                Pair<Integer, Integer> randomAvailableNode = board.getRandomAvailableNode();
+                vertex.row = randomAvailableNode.first;
+                vertex.col = randomAvailableNode.second;
+            }
 
             addVertex(vertex.row, vertex.col, vertex.data);
         }
 
         for(Edge edge : edges){
-            addEdge(edge.src, edge.des, (int) edge.weight);
+            addEdge(edge.src, edge.des, edge.weight);
         }
 
         update();
@@ -187,44 +164,39 @@ public class GraphWrapper {
         board.reset(graph);
     }
 
-    public void minimizeGraph(ArrayList<Vertex> data){
-        int xCount = board.xCount;
-        int yCount = board.yCount;
+    public void minimizeGraph(ArrayList<Vertex> vertices){
 
-        int minX = xCount+1;
         int maxX = -1;
-        int minY = yCount+1;
         int maxY = -1;
 
-        for(Vertex vertex : data){
-            minX = minX < vertex.col ? minX : vertex.col;
-            maxX = maxX > vertex.col ? maxX : vertex.col;
-            minY = minY < vertex.row ? minY : vertex.row;
-            maxY = maxY > vertex.row ? maxY : vertex.row;
+        for(Vertex vertex : vertices){
+            maxX = Math.max(maxX, vertex.col);
+            maxY = Math.max(maxY, vertex.row);
         }
 
-        System.out.println(minX + " " + maxX);
-        System.out.println(minY + " " + maxY);
 
         // compress
-        int[] row = new int[yCount];
-        int[] col = new int[xCount];
-        for(Vertex pair : data){
-            row[pair.row] = 1;
-            col[pair.col] = 1;
+        int[] row = new int[maxY+1];
+        int[] col = new int[maxX+1];
+
+        for(Vertex pair : vertices){
+            if(pair.row != -1 && pair.col != -1) {
+                row[pair.row] = 1;
+                col[pair.col] = 1;
+            }
         }
 
         //rows
         {
             int gap = 0;
-            for (int i = yCount - 1; i >= 0; i--) {
+            for (int i = row.length-1; i >= 0; i--) {
                 if (row[i] == 0) {
                     gap++;
                 } else {
                     if (gap > 0) {
-                        for (int c = data.size() - 1; c >= 0; c--) {
-                            if (data.get(c).row > i)
-                                data.get(c).row -= gap;
+                        for(Vertex vertex : vertices){
+                            if(vertex.row != -1 && vertex.row > i)
+                                vertex.row -= gap;
                         }
                     }
 
@@ -236,14 +208,15 @@ public class GraphWrapper {
         //cols
         {
             int gap = 0;
-            for (int i = xCount - 1; i >= 0; i--) {
+            for (int i = col.length - 1; i >= 0; i--) {
                 if (col[i] == 0) {
                     gap++;
                 } else {
                     if (gap > 0) {
-                        for (int c = data.size() - 1; c >= 0; c--) {
-                            if (data.get(c).col > i)
-                                data.get(c).col -= gap;
+                        for(Vertex vertex : vertices){
+                            if(vertex.col != -1 && vertex.col > i){
+                                vertex.col -= gap;
+                            }
                         }
                     }
 
@@ -262,32 +235,45 @@ public class GraphWrapper {
         int xCount = board.xCount;
         int yCount = board.yCount;
 
-        int minX = xCount+1;
         int maxX = -1;
-        int minY = yCount+1;
         int maxY = -1;
 
         boolean boundCheckedOnce = false;
 
         for(Vertex vertex : data){
             if(vertex.row != -1 && vertex.col != -1) {
-                minX = minX < vertex.col ? minX : vertex.col;
-                maxX = maxX > vertex.col ? maxX : vertex.col;
-                minY = minY < vertex.row ? minY : vertex.row;
-                maxY = maxY > vertex.row ? maxY : vertex.row;
+                maxX = Math.max(maxX, vertex.col);
+                maxY = Math.max(maxY, vertex.row);
 
                 boundCheckedOnce = true;
             }
         }
-
-        System.out.println(minX + " " + maxX);
-        System.out.println(minY + " " + maxY);
 
         if(boundCheckedOnce)
             return maxX < xCount && maxY < yCount;
         else
             return true;
 
+    }
+
+    public boolean checkPerformanceBounds(ArrayList<Vertex> data){
+
+        if(data.size() == 0)
+            return false;
+
+        int maxX = -1;
+        int maxY = -1;
+
+
+        for(Vertex vertex : data){
+            if(vertex.row != -1 && vertex.col != -1) {
+                maxX = Math.max(maxX, vertex.col);
+                maxY = Math.max(maxY, vertex.row);
+
+            }
+        }
+
+        return !(maxX < 1000 && maxY < 1000);
     }
 
     public boolean checkIfMinimizable(ArrayList<Vertex> data) {
@@ -303,8 +289,10 @@ public class GraphWrapper {
         int yCount = board.yCount;
 
         for (Vertex vertex : data) {
-            rows.add(vertex.row);
-            cols.add(vertex.col);
+            if(vertex.row != -1 && vertex.col != -1) {
+                rows.add(vertex.row);
+                cols.add(vertex.col);
+            }
         }
 
         //  yCount = rows, xCount = cols

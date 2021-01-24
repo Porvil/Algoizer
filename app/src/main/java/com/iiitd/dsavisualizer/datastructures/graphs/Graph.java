@@ -22,21 +22,27 @@ public class Graph {
     }
 
     // Add edges to the graph
-    void addEdge(int src, int des, int weight) {
-        map.get(src).add(new Edge(src, des, weight));
-//        map.get(src).add(new Pair<>(des, weight));
+    boolean addEdge(int src, int des, int weight) {
+        if(checkContainsVertices(src, des)) {
+            map.get(src).add(new Edge(src, des, weight));
+            return true;
+        }
+
+        return false;
     }
 
     // Add edges to the graph
-    void addVertex(int v, int row, int col) {
+    boolean addVertex(int v, int row, int col) {
         if(map.containsKey(v)){
             System.out.println("Vertex present already");
-            return;
+            return false;
         }
 
         noOfVertices++;
         map.put(v, new ArrayList<Edge>());
         vertexMap.put(v, new Vertex(v, row, col));
+
+        return true;
     }
 
     // Remove vertex from the graph, also removes edges associated with it
@@ -72,6 +78,18 @@ public class Graph {
 //                map.get(des).remove(i);
 //        }
 //        map.get(des).removeIf(i -> i == src);
+    }
+
+    boolean checkContainsVertices(int... vertices){
+        if(vertices.length == 0)
+            return true;
+
+        for(int vertex : vertices){
+            if(!map.containsKey(vertex))
+                return false;
+        }
+
+        return true;
     }
 
     void print(){
