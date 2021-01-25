@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.Pair;
 import android.view.MotionEvent;
 
@@ -273,7 +274,7 @@ public class GraphWrapper {
             }
         }
 
-        return !(maxX < 1000 && maxY < 1000);
+        return !(maxX < MAX_BOUNDS && maxY < MAX_BOUNDS);
     }
 
     public boolean checkIfMinimizable(ArrayList<Vertex> data) {

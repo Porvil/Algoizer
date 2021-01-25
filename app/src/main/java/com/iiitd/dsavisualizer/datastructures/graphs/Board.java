@@ -9,6 +9,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
@@ -88,7 +90,6 @@ public class Board {
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
         this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
-//        this.arrowLength = 50;
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
@@ -187,6 +188,8 @@ public class Board {
                 drawEdgeGraph(rect1, rect2);
             }
         }
+
+        refreshGraph();
     }
 
     // Draws a single Node
@@ -437,6 +440,18 @@ public class Board {
 
     public void __clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+    }
+
+    public void refreshAnim(){
+        __refresh(customCanvas.imageViewGraph);
+    }
+
+    public void refreshGraph(){
+        __refresh(customCanvas.imageViewAnimation);
+    }
+
+    public void __refresh(ImageView imageView){
+        imageView.invalidate();
     }
 
     public double score(Graph graph){

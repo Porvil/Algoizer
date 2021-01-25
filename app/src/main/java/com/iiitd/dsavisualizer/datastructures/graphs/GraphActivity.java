@@ -243,66 +243,6 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-//        btn_insertrandom.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int data = random.nextInt(100);
-//                et_insert.setText(String.valueOf(data));
-//                et_insert.setError(null);
-//            }
-//        });
-//
-//        btn_insert.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String s = et_insert.getText().toString();
-//                int data;
-//                if(!s.isEmpty()){
-//                    data = Integer.parseInt(s.trim());
-//                }
-//                else{
-//                    et_insert.setError("Cant be empty");
-//                    return;
-//                }
-//
-//                startTimer("INSERT", data);
-//            }
-//        });
-//
-//        btn_search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String s = et_search.getText().toString();
-//                int data;
-//                if(!s.isEmpty()){
-//                    data = Integer.parseInt(s.trim());
-//                }
-//                else{
-//                    et_search.setError("Cant be empty");
-//                    return;
-//                }
-//
-//                startTimer("SEARCH", data);
-//            }
-//        });
-//
-//        btn_delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String s = et_delete.getText().toString();
-//                int data;
-//                if(!s.isEmpty()){
-//                    data = Integer.parseInt(s.trim());
-//                }
-//                else{
-//                    et_delete.setError("Cant be empty");
-//                    return;
-//                }
-//
-//                startTimer("DELETE", data);
-//            }
-//        });
-
         btn_bfs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,6 +264,8 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper.board.reset(graphWrapper.graph);
                 graphWrapper.reset();
 //                graphWrapper.board.clearCanvasGraph();
+
+                // MUST ALSO RESET ANIM GRAPH [currently doesn't]
             }
         });
 
@@ -597,7 +539,10 @@ public class GraphActivity extends AppCompatActivity {
                     case VIEW:
                         break;
                     case VERTEX_ADD:
-                        graphWrapper.addVertex(event);
+                        boolean addVertex = graphWrapper.addVertex(event);
+                        if(!addVertex){
+                            Toast.makeText(context, "Vertex already present or too close to another vertex", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case VERTEX_REMOVE:
                         graphWrapper.removeVertex(event);
@@ -611,10 +556,12 @@ public class GraphActivity extends AppCompatActivity {
                                     graphWrapper.addEdge(src, des);
                                 }
                                 graphControls.startEdge = -1;
+                                Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
                             }
                             else{// first node getting selected now
                                 int data = graphWrapper.board.data[row][col].data;
                                 graphControls.startEdge = data;
+                                Toast.makeText(context, data + " selected", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;
@@ -639,7 +586,7 @@ public class GraphActivity extends AppCompatActivity {
                 System.out.println(graphWrapper.board.getState(row, col));
 
                 //Careful about this below line, MUST BE CALLED
-                iv_graph.invalidate();
+                graphWrapper.board.refreshGraph();
 
                 return  true;
             }
@@ -808,7 +755,7 @@ public class GraphActivity extends AppCompatActivity {
                         }
                         else{
                             error = true;
-                            response = "Multiple times \"direction variable provided";
+                            response = "Multiple times \"direction\" variable provided";
                         }
                         break;
                     case "W": {
@@ -818,7 +765,7 @@ public class GraphActivity extends AppCompatActivity {
                         }
                         else {
                             error = true;
-                            response = "Multiple times \"weight variable provided";
+                            response = "Multiple times \"weight\" variable provided";
                         }
                         break;
                     }
@@ -830,7 +777,7 @@ public class GraphActivity extends AppCompatActivity {
                         }
                         else {
                             error = true;
-                            response = "Multiple times \"vertex count variable provided";
+                            response = "Multiple times \"vertex count\" variable provided";
                         }
                         break;
                     }
@@ -843,6 +790,12 @@ public class GraphActivity extends AppCompatActivity {
                             row = -1;
                         if(col < 0)
                             col = -1;
+
+                        if(data < 0 && data > 999){
+                            error = true;
+                            response = "Node Value should be [0, 999]";
+                            break;
+                        }
 
                         Vertex vertex = new Vertex(data, row, col);
 
@@ -859,6 +812,12 @@ public class GraphActivity extends AppCompatActivity {
                     case "V": {
                         for (int c = 1; c < chars.length; c++) {
                             int data = Integer.parseInt(chars[c]);
+
+                            if(data < 0 && data > 999){
+                                error = true;
+                                response = "Node Value should be [0, 999]";
+                                break;
+                            }
 
                             Vertex vertex = new Vertex(data, -1, -1);
                             if(!vertices.contains(vertex)){
@@ -906,6 +865,7 @@ public class GraphActivity extends AppCompatActivity {
             noOfVertices = vertices.size();
 
             System.out.println("No of Vertices(updated) = " + noOfVertices);
+
             //Sort vertices here such that, random nodes are in the end of arraylist [ IMPORTANT ]
             Collections.sort(vertices);
 
@@ -954,6 +914,8 @@ public class GraphActivity extends AppCompatActivity {
             stringBuilder.append("VC ")
                     .append(noOfVertices)
                     .append(newLine);
+
+            //vertices
             for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
                 stringBuilder.append("VA ")
                         .append(vertexEntry.getKey())
