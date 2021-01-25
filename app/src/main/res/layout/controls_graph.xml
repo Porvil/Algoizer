@@ -109,12 +109,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_import"
+                    android:id="@+id/btn_custominput"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="Import"
+                    android:text="Custom Input"
                     android:textColor="@color/mainColor" />
 
                 <Button
@@ -124,6 +124,15 @@
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
                     android:text="Export"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_copygraph"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Copy Graph"
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>

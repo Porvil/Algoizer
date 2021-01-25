@@ -1,11 +1,21 @@
 package com.iiitd.dsavisualizer.constants;
 
+import android.Manifest;
+import android.os.Environment;
+
 import com.iiitd.dsavisualizer.R;
 
 // Constants used in the Application
 public class AppSettings {
 
+    public static String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
+
     // Constants
+    public static final String DIRECTORY = "/DSA Visualizer";
+    public static final String SEPARATOR = "/";
+
+    public static final int PERMISSION_ALL = 1000;
     public static final int SPLASH_TIME = 1500;
     public static final int DEFAULT_ANIM_SPEED = 1500; // Range 500ms to 2500ms
     public static final int DEFAULT_ANIM_DURATION = 750; // Half of DEFAULT_ANIM_SPEED
@@ -23,5 +33,9 @@ public class AppSettings {
     public static final int MENU_BUTTON = R.drawable.ic_baseline_menu_open_24;
     public static final int ROUNDED_RECT_ELEMENT = R.drawable.rounded_rectangle;
     public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.rounded_rectangle_highlighted;
+
+    public static String getExternalStoragePath(){
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
 
 }

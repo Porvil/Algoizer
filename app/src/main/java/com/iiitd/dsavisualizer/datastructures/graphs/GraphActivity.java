@@ -6,12 +6,15 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -30,15 +33,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -74,12 +84,13 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_dfs;
     ImageButton btn_pastecustominput;
     ImageButton btn_clearcustominput;
+    Button btn_copygraph;
+    Button btn_custominput;
     Button btn_cleargraph;
     Button btn_cleargraphanim;
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
-    Button btn_import;
     Button btn_export;
     EditText et_customgraphinput;
     EditText et_insert;
@@ -133,12 +144,13 @@ public class GraphActivity extends AppCompatActivity {
         btn_dfs = v_menu.findViewById(R.id.btn_dfs);
         btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
         btn_clearcustominput = v_menu.findViewById(R.id.btn_clearcustominput);
+        btn_copygraph = v_menu.findViewById(R.id.btn_copygraph);
+        btn_custominput = v_menu.findViewById(R.id.btn_custominput);
         btn_cleargraph = v_menu.findViewById(R.id.btn_cleargraph);
         btn_cleargraphanim = v_menu.findViewById(R.id.btn_cleargraphanim);
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
-        btn_import = v_menu.findViewById(R.id.btn_import);
         btn_export = v_menu.findViewById(R.id.btn_export);
         et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu.findViewById(R.id.et_insert);
@@ -246,7 +258,10 @@ public class GraphActivity extends AppCompatActivity {
         btn_bfs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startTimer("INORDER", -1);
+                BFS bfs = new BFS(graphWrapper.graph);
+                bfs.run(0);
+
+                startTimer("BFS", bfs);
             }
         });
 
@@ -254,6 +269,29 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                startTimer("PREORDER", -1);
+            }
+        });
+
+        btn_copygraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String graphString = getCurrentGraph();
+                if(graphString != null) {
+                    System.out.println(graphString);
+
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", graphString);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(context, "Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn_custominput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parseAndShowCustomInput();
             }
         });
 
@@ -321,11 +359,6 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                BFS bfs = new BFS(graphWrapper.graph);
-                bfs.run(0);
-
-                startTimer("BFS", bfs);
-
             }
         });
 
@@ -346,13 +379,6 @@ public class GraphActivity extends AppCompatActivity {
                         graphControls.edgeState--;
                         break;
                 }
-            }
-        });
-
-        btn_import.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parseAndShowCustomInput();
             }
         });
 
@@ -897,7 +923,117 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void exportCurrentGraph(){
-        if(graphWrapper != null){
+
+        String graphString = getCurrentGraph();
+        if(graphString != null){
+            System.out.println(graphString);
+
+            boolean hasPermissions = false;
+            int MyVersion = Build.VERSION.SDK_INT;
+            if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                hasPermissions = hasPermissions(AppSettings.PERMISSIONS);
+                if (!hasPermissions) {
+                    ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+                }
+            }
+            else {
+                hasPermissions = true;
+            }
+
+            // True only if android version API <= 22 OR permissions granted beforehand
+            if(hasPermissions) {
+                //write
+
+                writeGraphToStorage(graphString);
+            }
+        }
+
+    }
+
+    private void checkPermissions(){
+        int MyVersion = Build.VERSION.SDK_INT;
+        if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            if (!hasPermissions(AppSettings.PERMISSIONS)) {
+                ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+            }
+        }
+    }
+
+    public boolean hasPermissions(String... permissions) {
+        if (permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == AppSettings.PERMISSION_ALL) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(v_main, "Permissions Granted.",
+                        Snackbar.LENGTH_SHORT).show();
+
+                exportCurrentGraph();
+            }
+            else {
+                final Snackbar snackbar = Snackbar.make(v_main, "Couldn't export graph [No write permission granted].",
+                        Snackbar.LENGTH_LONG);
+                snackbar.setAction("Give Permissions", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkPermissions();
+                        snackbar.dismiss();
+                    }
+                });
+                snackbar.show();
+            }
+        }
+        else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    public boolean writeGraphToStorage(String string){
+        //Checking the availability state of the External Storage.
+        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            System.out.println("Storage is not mounted, returning!!");
+            return false;
+        }
+
+        String path = AppSettings.getExternalStoragePath() + AppSettings.DIRECTORY;
+        File rootFile = new File(path);
+        if(!rootFile.exists()){
+            boolean mkdir = rootFile.mkdirs();
+            if(!mkdir){
+                System.out.println("Path/file couldn't be created");
+                return false;
+            }
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
+        String currentTimeStamp = dateFormat.format(new Date());
+        String filePath = path + AppSettings.SEPARATOR + "graph-" + currentTimeStamp + ".txt";
+
+        PrintWriter out = null;
+        try {
+           out = new PrintWriter(filePath);
+            out.write(string);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            out.close();
+        }
+
+        return true;
+    }
+
+    public String getCurrentGraph() {
+        if (graphWrapper != null) {
             StringBuilder stringBuilder = new StringBuilder();
             String newLine = "\n";
 
@@ -916,7 +1052,7 @@ public class GraphActivity extends AppCompatActivity {
                     .append(newLine);
 
             //vertices
-            for( Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()){
+            for (Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()) {
                 stringBuilder.append("VA ")
                         .append(vertexEntry.getKey())
                         .append(" ")
@@ -927,8 +1063,8 @@ public class GraphActivity extends AppCompatActivity {
             }
 
             //edges
-            for( Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()){
-                for(Edge i : entry.getValue()){
+            for (Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()) {
+                for (Edge i : entry.getValue()) {
                     stringBuilder.append("E ")
                             .append(i.src)
                             .append(" ")
@@ -939,15 +1075,9 @@ public class GraphActivity extends AppCompatActivity {
                 }
             }
 
-            String string = stringBuilder.toString();
-            System.out.println(string);
-
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", string);
-            clipboard.setPrimaryClip(clip);
-
-            Toast.makeText(context,"Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
+            return stringBuilder.toString();
         }
-    }
 
+        return null;
+    }
 }
