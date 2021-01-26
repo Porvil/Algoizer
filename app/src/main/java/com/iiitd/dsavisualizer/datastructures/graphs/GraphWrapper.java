@@ -26,6 +26,25 @@ public class GraphWrapper {
         board = new Board(context, customCanvas);
     }
 
+    public void changeDirected(boolean directed){
+        this.directed = directed;
+        graph = new Graph(directed, weighted);
+        board.reset(graph);
+    }
+
+    public void changeWeighted(boolean weighted){
+        this.weighted = weighted;
+        graph = new Graph(directed, weighted);
+        board.reset(graph);
+    }
+
+    public void changeDirectedWeighted(boolean directed, boolean weighted){
+        this.directed = directed;
+        this.weighted = weighted;
+        graph = new Graph(directed, weighted);
+        board.reset(graph);
+    }
+
     public boolean addVertex(MotionEvent motionEvent, int nodeNumber){
         float x = (motionEvent.getX() / board.xSize);
         float y =  (motionEvent.getY() / board.ySize);

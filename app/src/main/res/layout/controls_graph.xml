@@ -221,6 +221,85 @@
 
             </LinearLayout>
 
+            <RadioGroup
+                android:id="@+id/rg_weighted"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_switch_outline"
+                android:checkedButton="@id/rb_unweighted"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_unweighted"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_switch_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Unweighted"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/rb_weighted"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_switch_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Weighted"
+                    android:textColor="@color/white" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/rg_directed"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_switch_outline"
+                android:checkedButton="@id/rb_undirected"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_undirected"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_switch_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Undirected"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/rb_directed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_switch_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Directed"
+                    android:textColor="@color/white" />
+            </RadioGroup>
+
+
         </LinearLayout>
 
 

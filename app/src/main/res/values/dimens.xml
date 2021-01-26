@@ -4,4 +4,5 @@
     <dimen name="nodeText">20sp</dimen>
     <dimen name="edgeWidth">5dp</dimen>
     <dimen name="edgeArrowWidth">2dp</dimen>
+    <dimen name="margin_medium">5dp</dimen>
 </resources>

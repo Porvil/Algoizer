@@ -80,6 +80,8 @@ public class GraphActivity extends AppCompatActivity {
     TextView tv_info;
 
     ImageButton btn_closemenu;
+    RadioGroup rg_weighted;
+    RadioGroup rg_directed;
     Button btn_bfs;
     Button btn_dfs;
     ImageButton btn_pastecustominput;
@@ -140,6 +142,8 @@ public class GraphActivity extends AppCompatActivity {
         cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
+        rg_weighted = v_menu.findViewById(R.id.rg_weighted);
+        rg_directed = v_menu.findViewById(R.id.rg_directed);
         btn_bfs = v_menu.findViewById(R.id.btn_bfs);
         btn_dfs = v_menu.findViewById(R.id.btn_dfs);
         btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
@@ -405,6 +409,52 @@ public class GraphActivity extends AppCompatActivity {
                 }
             }
         });
+
+        rg_directed.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                boolean directed = false;
+
+                switch (checkedId){
+                    case R.id.rb_directed:
+                        directed = true;
+                        break;
+                    case R.id.rb_undirected:
+                        directed = false;
+                        break;
+                }
+
+                // Clear everything
+                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
+//                graphWrapper = new GraphWrapper(context, customCanvas, directed, false);
+
+                graphWrapper.changeDirected(directed);
+
+            }
+        });
+
+        rg_weighted.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                boolean weighted = false;
+
+                switch (checkedId){
+                    case R.id.rb_weighted:
+                        weighted = true;
+                        break;
+                    case R.id.rb_unweighted:
+                        weighted = false;
+                        break;
+                }
+
+                // Clear everything
+                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
+                graphWrapper.changeWeighted(weighted);
+            }
+        });
+
 
     }
 
@@ -913,6 +963,21 @@ public class GraphActivity extends AppCompatActivity {
                     }
                 }
 
+                if(weighted){
+                    rg_weighted.check(R.id.rb_weighted);
+                }
+                else{
+                    rg_weighted.check(R.id.rb_unweighted);
+                }
+
+                if(directed){
+                    rg_directed.check(R.id.rb_directed);
+                }
+                else{
+                    rg_directed.check(R.id.rb_undirected);
+                }
+
+                graphWrapper.changeDirectedWeighted(directed, weighted);
                 graphWrapper.customInput(vertices, edges);
 
                 response = "Custom Graph input successful";
