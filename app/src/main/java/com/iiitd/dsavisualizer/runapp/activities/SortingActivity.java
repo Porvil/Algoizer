@@ -26,11 +26,11 @@ public class SortingActivity extends AppCompatActivity {
     LinearLayout ll_sorting_row2;
 
     SortingData[] sortingData = new SortingData[]{
-            new SortingData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.bubblesorticon),
-            new SortingData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.selectionsorticon),
-            new SortingData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.insertionsorticon),
-            new SortingData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.mergesorticon),
-            new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.quicksorticon),
+            new SortingData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.ic_bubblesort),
+            new SortingData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.ic_selectionsort),
+            new SortingData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.ic_insertionsort),
+            new SortingData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.ic_mergesort),
+            new SortingData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort),
     };
 
     @Override
