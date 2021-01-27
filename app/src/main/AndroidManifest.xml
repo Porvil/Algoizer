@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".runapp.activities.SplashActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name=".runapp.activities.HomeActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape">
 
              <intent-filter>

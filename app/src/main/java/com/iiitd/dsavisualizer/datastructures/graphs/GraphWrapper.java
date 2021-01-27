@@ -136,6 +136,7 @@ public class GraphWrapper {
         board.update(graph);
     }
 
+    // should be called only after "changeDirectedWeighted()" method
     public boolean customInput(ArrayList<Vertex> vertices, ArrayList<Edge> edges){
 
         // Reset the graph

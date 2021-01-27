@@ -20,6 +20,7 @@
 
         <ImageView
             android:id="@+id/imageView"
+            android:transitionName="logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
