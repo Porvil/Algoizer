@@ -1,26 +1,26 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.iiitd.dsavisualizer.R;
 
 public class HomeActivity extends AppCompatActivity {
 
+    Context context;
+
     Button btn_ds;
     Button btn_algo;
     Button btn_about;
-
-    Context context;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 doubleBackToExitPressedOnce = false;

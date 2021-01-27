@@ -10,6 +10,7 @@
         <item name="colorControlNormal">@color/mainColor</item>
 
         <item name="android:windowContentTransitions">true</item>
+        <item name="fontFamily">@font/open_sans</item>
 
     </style>
 

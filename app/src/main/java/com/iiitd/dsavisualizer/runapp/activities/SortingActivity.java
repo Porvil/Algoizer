@@ -10,6 +10,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortActivity;
@@ -19,6 +20,19 @@ import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivity;
 
 public class SortingActivity extends AppCompatActivity {
+
+    private static class SortingData {
+        String activity;
+        String text;
+        int drawable;
+
+        public SortingData(String activity, String text, int drawable) {
+            this.activity = activity;
+            this.text = text;
+            this.drawable = drawable;
+        }
+
+    }
 
     Context context;
     View[] views;
@@ -54,7 +68,7 @@ public class SortingActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.iv_sorticon);
             TextView textView = view.findViewById(R.id.tv_sortname);
 
-            imageView.setImageDrawable(getResources().getDrawable(sortingData.drawable));
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, sortingData.drawable));
             textView.setText(sortingData.text);
 
             layoutParams.setMargins(5,5,5,5);
@@ -89,19 +103,6 @@ public class SortingActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-}
-
-class SortingData {
-    String activity;
-    String text;
-    int drawable;
-
-    public SortingData(String activity, String text, int drawable) {
-        this.activity = activity;
-        this.text = text;
-        this.drawable = drawable;
     }
 
 }

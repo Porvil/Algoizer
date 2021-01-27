@@ -14,12 +14,12 @@ import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
 
 public class DataStructureActivity extends AppCompatActivity {
 
+    Context context;
+
     Button btn_bst;
     Button btn_avl;
     Button btn_redblack;
     Button btn_splay;
-
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
