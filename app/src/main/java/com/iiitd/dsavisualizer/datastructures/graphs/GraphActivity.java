@@ -490,8 +490,8 @@ public class GraphActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    graphWrapper.board.paintVertex.setColor(getResources().getColor(R.color.mainColorDone));
-                    graphWrapper.board.paintEdge.setColor(getResources().getColor(R.color.mainColorDone));
+//                    graphWrapper.board.paintVertex.setColor(getResources().getColor(R.color.mainColorDone));
+//                    graphWrapper.board.paintEdge.setColor(getResources().getColor(R.color.mainColorDone));
 
                     if(curSeqNo < bfs.graphSequence.graphAnimationStates.size()) {
                         GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);

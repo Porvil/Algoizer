@@ -40,10 +40,17 @@ public class Board {
 
     private final Paint paintGrid;
     private final Paint paintGridCoordinates;
+
     public final Paint paintVertex;
     public final Paint paintEdge;
     public final Paint paintEdgeArrows;
     public final Paint paintText;
+
+    public final Paint paintVertexAnim;
+    public final Paint paintEdgeAnim;
+    public final Paint paintEdgeArrowsAnim;
+    public final Paint paintTextAnim;
+
     private final int textSizeCoordinates;
     private final int textSize;
     private final int edgeWidth;
@@ -115,6 +122,23 @@ public class Board {
         this.paintEdgeArrows = new Paint();
         this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
+
+        this.paintTextAnim = new Paint();
+        this.paintTextAnim.setTextAlign(Paint.Align.CENTER);
+        this.paintTextAnim.setTextSize(textSize);
+        this.paintTextAnim.setColor(Color.WHITE);
+        this.paintTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
+        this.paintVertexAnim = new Paint();
+        this.paintVertexAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+
+        this.paintEdgeAnim = new Paint();
+        this.paintEdgeAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeAnim.setStrokeWidth(edgeWidth);
+
+        this.paintEdgeArrowsAnim = new Paint();
+        this.paintEdgeArrowsAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
 
         // Draw Grid on Grid ImageView
         drawGrid();
@@ -194,40 +218,40 @@ public class Board {
 
     // Draws a single Node
     public void drawNodeGraph(Rect rect, int name) {
-        __drawNode(customCanvas.canvasGraph, rect, name);
+        __drawNode(customCanvas.canvasGraph, rect, name, paintVertex, paintText);
     }
 
     // Draws a single Node
     public void drawNodeAnim(Rect rect, int name) {
-        __drawNode(customCanvas.canvasAnimation, rect, name);
+        __drawNode(customCanvas.canvasAnimation, rect, name, paintVertexAnim, paintTextAnim);
     }
 
     // Draws a single Node
-    public void __drawNode(Canvas canvas, Rect rect, int name) {
+    public void __drawNode(Canvas canvas, Rect rect, int name, Paint paintV, Paint paintT) {
         int x = rect.centerX();
         int y = rect.centerY();
 
         float radius = getRadius(rect);
         String text = String.valueOf(name);
 
-        canvas.drawCircle(x, y, radius, paintVertex);
+        canvas.drawCircle(x, y, radius, paintV);
 
         Rect rectText = new Rect();
-        paintText.getTextBounds(text, 0, text.length(), rectText);
-        canvas.drawText(text, x, y - (paintText.descent() + paintText.ascent()) / 2, paintText);
+        paintT.getTextBounds(text, 0, text.length(), rectText);
+        canvas.drawText(text, x, y - (paintT.descent() + paintT.ascent()) / 2, paintText);
     }
 
     // Draws a single EdgeOld
     public void drawEdgeGraph(Rect rect1, Rect rect2) {
-        __drawEdge(customCanvas.canvasGraph, rect1, rect2);
+        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows);
     }
 
     // Draws a single EdgeOld
     public void drawEdgeAnim(Rect rect1, Rect rect2) {
-        __drawEdge(customCanvas.canvasAnimation, rect1, rect2);
+        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim);
     }
 
-    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2) {
+    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -240,12 +264,12 @@ public class Board {
 //        System.out.println("distance = " + distance);
 
 
-        canvas.drawLine(lx1, ly1, lx2, ly2, paintEdge);
-        arrow12(lx1, ly1, lx2, ly2);
+        canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
+        arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
 //        arrow21(lx1, ly1, lx2, ly2);
     }
 
-    public void arrow12(float x, float y, float x1, float y1) {
+    public void arrow12(float x, float y, float x1, float y1, Canvas canvas, Paint paintEA) {
 //        double degree = calculateDegree(x, x1, y, y1);
 //
 //        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
@@ -257,10 +281,10 @@ public class Board {
 //        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
 //        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
 
-        __arrow12(customCanvas.canvasGraph, x, y, x1, y1);
+        __arrow12(canvas, x, y, x1, y1, paintEA);
     }
 
-    public void __arrow12(Canvas canvas, float x, float y, float x1, float y1) {
+    public void __arrow12(Canvas canvas, float x, float y, float x1, float y1, Paint paintEA) {
         double degree = calculateDegree(x, x1, y, y1);
 
         float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
@@ -269,8 +293,8 @@ public class Board {
         float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
         float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
 
-        canvas.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
-        canvas.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
+        canvas.drawLine(x1, y1, endX1, endY1, paintEA);
+        canvas.drawLine(x1, y1, endX2, endY2, paintEA);
     }
 
     public void arrow21(float x, float y, float x1, float y1) {
