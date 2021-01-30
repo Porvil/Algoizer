@@ -515,7 +515,8 @@ public class GraphActivity extends AppCompatActivity {
                                 Rect rect1 = graphWrapper.board.getRect(vertex1[0], vertex1[1]);
                                 Rect rect2 = graphWrapper.board.getRect(vertex2[0], vertex2[1]);
 
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2);
+                                // MUST PASS EDGE HERE
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, null);
                             }
 
                             iv_anim.invalidate();

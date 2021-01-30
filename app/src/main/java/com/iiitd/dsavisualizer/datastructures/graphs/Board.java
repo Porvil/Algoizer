@@ -43,11 +43,13 @@ public class Board {
 
     public final Paint paintVertex;
     public final Paint paintEdge;
+    public final Paint paintEdgeWeight;
     public final Paint paintEdgeArrows;
     public final Paint paintText;
 
     public final Paint paintVertexAnim;
     public final Paint paintEdgeAnim;
+    public final Paint paintEdgeWeightAnim;
     public final Paint paintEdgeArrowsAnim;
     public final Paint paintTextAnim;
 
@@ -123,6 +125,12 @@ public class Board {
         this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
 
+        this.paintEdgeWeight = new Paint();
+        this.paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
+        this.paintEdgeWeight.setTextSize(textSize);
+        this.paintEdgeWeight.setColor(Color.RED);
+        this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
         this.paintTextAnim = new Paint();
         this.paintTextAnim.setTextAlign(Paint.Align.CENTER);
         this.paintTextAnim.setTextSize(textSize);
@@ -140,6 +148,11 @@ public class Board {
         this.paintEdgeArrowsAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
         this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
 
+        this.paintEdgeWeightAnim = new Paint();
+        this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
+        this.paintEdgeWeightAnim.setTextSize(textSize);
+        this.paintEdgeWeightAnim.setColor(Color.RED);
+        this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         // Draw Grid on Grid ImageView
         drawGrid();
     }
@@ -209,7 +222,7 @@ public class Board {
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdgeGraph(rect1, rect2);
+                drawEdgeGraph(rect1, rect2, edge);
             }
         }
 
@@ -242,16 +255,16 @@ public class Board {
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2) {
-        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows);
+    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge) {
+        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows, edge);
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeAnim(Rect rect1, Rect rect2) {
-        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim);
+    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge) {
+        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim, edge);
     }
 
-    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA) {
+    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA, Edge edge) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -263,6 +276,18 @@ public class Board {
         double distance = distance(lx1, ly1, lx2, ly2);
 //        System.out.println("distance = " + distance);
 
+        double degree = getAngle(lx1, ly1, lx2, ly2);
+
+        System.out.println("degree "  + degree);
+        float x = lx1 + (lx2 - lx1)/2;
+        float y = ly1 + (ly2 - ly1)/2;
+
+        if(edge != null) {
+            canvas.save();
+            canvas.rotate((float) degree, x, y);
+            canvas.drawText(String.valueOf(edge.weight), x, y, paintEdgeWeight);
+            canvas.restore();
+        }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
         arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
@@ -507,4 +532,15 @@ public class Board {
 
         return result;
     }
+
+    public float getAngle(float x1, float y1, float x2, float y2) {
+        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+
+        if(angle < 0){
+            angle += 360;
+        }
+
+        return angle;
+    }
+
 }
