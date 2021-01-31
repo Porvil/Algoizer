@@ -151,7 +151,7 @@ public class Board {
         this.paintEdgeWeightAnim = new Paint();
         this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
         this.paintEdgeWeightAnim.setTextSize(textSize);
-        this.paintEdgeWeightAnim.setColor(Color.RED);
+        this.paintEdgeWeightAnim.setColor(Color.GREEN);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         // Draw Grid on Grid ImageView
         drawGrid();
@@ -256,15 +256,15 @@ public class Board {
 
     // Draws a single EdgeOld
     public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge) {
-        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows, edge);
+        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows, paintEdgeWeight, edge);
     }
 
     // Draws a single EdgeOld
     public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge) {
-        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim, edge);
+        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim, edge);
     }
 
-    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA, Edge edge) {
+    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA, Paint paintEW, Edge edge) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -285,7 +285,7 @@ public class Board {
         if(edge != null) {
             canvas.save();
             canvas.rotate((float) degree, x, y);
-            canvas.drawText(String.valueOf(edge.weight), x, y, paintEdgeWeight);
+            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
             canvas.restore();
         }
 
@@ -399,6 +399,21 @@ public class Board {
     public Rect getRect(float row, float col) {
         int c = (int) col;
         int r = (int) row;
+
+        int left = (int) (c * xSize);
+        int top = (int) (r * ySize);
+        int right = (int) (left + xSize);
+        int bottom = (int) (top + ySize);
+
+        return new Rect(left, top, right, bottom);
+    }
+
+    // Returns Rect for given key value in graph's board
+    public Rect getRect(int key) {
+
+        int[] coordinates = getCoordinates(key);
+        int c = (int) coordinates[1];
+        int r = (int) coordinates[0];
 
         int left = (int) (c * xSize);
         int top = (int) (r * ySize);

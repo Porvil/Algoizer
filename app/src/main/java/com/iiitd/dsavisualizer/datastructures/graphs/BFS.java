@@ -29,7 +29,16 @@ public class BFS {
         // DES == NODE FOR ANIMATION
         GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
         graphAnimationState.add(new GraphElementAnimationData(vertex.row, vertex.col, -1, s));
+
+
+        GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
+        graphAnimationStateShadow.vertices.add(vertex);
+        graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
+
+
         graphSequence.graphAnimationStates.add(graphAnimationState);
+
+
 
         while (queue.size() != 0) {
             s = queue.poll();
@@ -44,6 +53,12 @@ public class BFS {
                     Vertex vertex1 = g.vertexMap.get(edge.des);
                     GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + edge.des);
                     graphAnimationState1.add(new GraphElementAnimationData(vertex1.row, vertex1.col, s, edge.des));
+
+                    GraphAnimationStateShadow graphAnimationStateShadow1 = new GraphAnimationStateShadow();
+                    graphAnimationStateShadow1.vertices.add(vertex1);
+                    graphAnimationStateShadow1.edges.add(edge);
+                    graphAnimationState1.graphAnimationStateShadow.add(graphAnimationStateShadow1);
+
                     graphSequence.graphAnimationStates.add(graphAnimationState1);
                 }
             }

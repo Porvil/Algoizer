@@ -494,38 +494,53 @@ public class GraphActivity extends AppCompatActivity {
 //                    graphWrapper.board.paintEdge.setColor(getResources().getColor(R.color.mainColorDone));
 
                     if(curSeqNo < bfs.graphSequence.graphAnimationStates.size()) {
+//                        GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
+//                        System.out.println(graphAnimationState);
+//
+//                        for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
+//                            System.out.println(graphElementAnimationData.toString());
+//                            int row = graphElementAnimationData.row;
+//                            int col = graphElementAnimationData.col;
+//
+//                            System.out.println(graphElementAnimationData);
+//
+//                            Canvas canvas = graphWrapper.board.customCanvas.canvasAnimation;
+//                            Rect rect = graphWrapper.board.getRect(row, col);
+////                            graphWrapper.board.__drawNode(canvas, rect, graphWrapper.board.data[row][col].data);
+//                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.des);
+//                            if(graphElementAnimationData.src != -1){
+//                                int[] vertex1 = graphWrapper.board.getCoordinates(graphElementAnimationData.src);
+//                                int[] vertex2 = graphWrapper.board.getCoordinates(graphElementAnimationData.des);
+//
+//                                Rect rect1 = graphWrapper.board.getRect(vertex1[0], vertex1[1]);
+//                                Rect rect2 = graphWrapper.board.getRect(vertex2[0], vertex2[1]);
+//
+//                                // MUST PASS EDGE HERE
+//                                graphWrapper.board.drawEdgeAnim(rect1, rect2, null);
+//                            }
+//
+//                            iv_anim.invalidate();
+////                            graphWrapper.update();
+//                        }
+
                         GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
-                        for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
-                            System.out.println(graphElementAnimationData.toString());
-                            int row = graphElementAnimationData.row;
-                            int col = graphElementAnimationData.col;
-
-                            System.out.println(graphElementAnimationData);
-
-                            Canvas canvas = graphWrapper.board.customCanvas.canvasAnimation;
-                            Rect rect = graphWrapper.board.getRect(row, col);
-//                            graphWrapper.board.__drawNode(canvas, rect, graphWrapper.board.data[row][col].data);
-                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.des);
-                            if(graphElementAnimationData.src != -1){
-                                int[] vertex1 = graphWrapper.board.getCoordinates(graphElementAnimationData.src);
-                                int[] vertex2 = graphWrapper.board.getCoordinates(graphElementAnimationData.des);
-
-                                Rect rect1 = graphWrapper.board.getRect(vertex1[0], vertex1[1]);
-                                Rect rect2 = graphWrapper.board.getRect(vertex2[0], vertex2[1]);
-
-                                // MUST PASS EDGE HERE
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, null);
+                        for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
+                            for(Vertex vertex : graphAnimationStateShadow.vertices){
+                                Rect rect = graphWrapper.board.getRect(vertex.data);
+                                graphWrapper.board.drawNodeAnim(rect, vertex.data);
                             }
 
-                            iv_anim.invalidate();
-//                            graphWrapper.update();
+                            for(Edge edge : graphAnimationStateShadow.edges){
+                                Rect rect1 = graphWrapper.board.getRect(edge.src);
+                                Rect rect2 = graphWrapper.board.getRect(edge.des);
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge);
+                            }
                         }
 
-//                        switch (graphAnimationState.info){
-//
-//                        }
+                        graphWrapper.board.refreshAnim();
+
                     }
                     else{
                         UtilUI.setText(tv_info, "Done");
