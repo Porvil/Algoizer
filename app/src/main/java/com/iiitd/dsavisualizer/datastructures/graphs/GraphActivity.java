@@ -102,6 +102,7 @@ public class GraphActivity extends AppCompatActivity {
     GraphWrapper graphWrapper;
     CustomCanvas customCanvas;
     GraphControls graphControls;
+    GraphSequence graphSequence;
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
@@ -263,7 +264,8 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BFS bfs = new BFS(graphWrapper.graph);
-                bfs.run(0);
+                GraphSequence run = bfs.run(0);
+                graphSequence = run;
 
                 startTimer("BFS", bfs);
             }
@@ -474,56 +476,25 @@ public class GraphActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    task(animDurationTemp, bfs);
+                    task(animDurationTemp);
                 }
             }, animStepDuration, animStepDuration);
 
         }
     }
 
-    private void task(final int animDurationTemp, final BFS bfs) {
-        if (bfs != null) {
-            final int curSeqNo = bfs.graphSequence.curSeqNo;
+    private void task(final int animDurationTemp) {
+        if (graphSequence != null) {
+            final int curSeqNo = graphSequence.curSeqNo;
             System.out.println("SEQ = "  + curSeqNo);
-            bfs.graphSequence.forward();
+            graphSequence.forward();
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-//                    graphWrapper.board.paintVertex.setColor(getResources().getColor(R.color.mainColorDone));
-//                    graphWrapper.board.paintEdge.setColor(getResources().getColor(R.color.mainColorDone));
 
-                    if(curSeqNo < bfs.graphSequence.graphAnimationStates.size()) {
-//                        GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
-//                        System.out.println(graphAnimationState);
-//
-//                        for(GraphElementAnimationData graphElementAnimationData : graphAnimationState.elementAnimationData){
-//                            System.out.println(graphElementAnimationData.toString());
-//                            int row = graphElementAnimationData.row;
-//                            int col = graphElementAnimationData.col;
-//
-//                            System.out.println(graphElementAnimationData);
-//
-//                            Canvas canvas = graphWrapper.board.customCanvas.canvasAnimation;
-//                            Rect rect = graphWrapper.board.getRect(row, col);
-////                            graphWrapper.board.__drawNode(canvas, rect, graphWrapper.board.data[row][col].data);
-//                            graphWrapper.board.drawNodeAnim(rect, graphElementAnimationData.des);
-//                            if(graphElementAnimationData.src != -1){
-//                                int[] vertex1 = graphWrapper.board.getCoordinates(graphElementAnimationData.src);
-//                                int[] vertex2 = graphWrapper.board.getCoordinates(graphElementAnimationData.des);
-//
-//                                Rect rect1 = graphWrapper.board.getRect(vertex1[0], vertex1[1]);
-//                                Rect rect2 = graphWrapper.board.getRect(vertex2[0], vertex2[1]);
-//
-//                                // MUST PASS EDGE HERE
-//                                graphWrapper.board.drawEdgeAnim(rect1, rect2, null);
-//                            }
-//
-//                            iv_anim.invalidate();
-////                            graphWrapper.update();
-//                        }
-
-                        GraphAnimationState graphAnimationState = bfs.graphSequence.graphAnimationStates.get(curSeqNo);
+                    if(curSeqNo < graphSequence.graphAnimationStates.size()) {
+                        GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
                         for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){

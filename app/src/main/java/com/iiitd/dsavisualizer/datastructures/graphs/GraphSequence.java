@@ -10,6 +10,7 @@ public class GraphSequence {
 
 
     public GraphSequence() {
+        this.curSeqNo = 0;
         this.graphAnimationStates = new ArrayList<>();
     }
 

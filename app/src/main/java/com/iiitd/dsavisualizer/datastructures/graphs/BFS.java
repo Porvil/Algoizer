@@ -14,7 +14,7 @@ public class BFS {
         this.graphSequence = new GraphSequence();
     }
 
-    void run(int s){
+    GraphSequence run(int s){
         HashMap<Integer, Boolean> visited = new HashMap<>();
         for(Map.Entry<Integer, ArrayList<Edge>> entry : g.map.entrySet()){
             visited.put(entry.getKey(), false);
@@ -65,5 +65,7 @@ public class BFS {
 
 //            System.out.println();
         }
+
+        return graphSequence;
     }
 }

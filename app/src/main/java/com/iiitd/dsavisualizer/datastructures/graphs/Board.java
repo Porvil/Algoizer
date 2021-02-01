@@ -245,10 +245,11 @@ public class Board {
         int x = rect.centerX();
         int y = rect.centerY();
 
-        float radius = getRadius(rect);
+//        float radius = getRadius(rect);
+//        System.out.println(radius + " ==" + nodeRadius);
         String text = String.valueOf(name);
 
-        canvas.drawCircle(x, y, radius, paintV);
+        canvas.drawCircle(x, y, nodeRadius, paintV);
 
         Rect rectText = new Rect();
         paintT.getTextBounds(text, 0, text.length(), rectText);
