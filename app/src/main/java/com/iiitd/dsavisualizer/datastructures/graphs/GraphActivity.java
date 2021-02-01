@@ -72,12 +72,17 @@ public class GraphActivity extends AppCompatActivity {
     RadioButton rb_graphcontrol_view;
     RadioButton rb_graphcontrol_vertex;
     RadioButton rb_graphcontrol_edge;
+    ImageButton btn_play;
     ImageButton btn_back;
     ImageButton btn_menu;
-    ImageButton btn_grid;
+    ImageButton btn_code;
     ImageButton btn_info;
+    ImageButton btn_backward;
+    ImageButton btn_forward;
     SeekBar sb_animspeed;
+    TextView tv_seqno;
     TextView tv_info;
+    ImageButton btn_grid;
 
     ImageButton btn_closemenu;
     RadioGroup rg_weighted;
@@ -109,6 +114,7 @@ public class GraphActivity extends AppCompatActivity {
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT = R.layout.activity_graph;
     final int CONTROL = R.layout.controls_graph;
+    boolean isAutoPlay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +141,17 @@ public class GraphActivity extends AppCompatActivity {
         rb_graphcontrol_view = v_main.findViewById(R.id.rb_graphcontrol_view);
         rb_graphcontrol_vertex = v_main.findViewById(R.id.rb_graphcontrol_vertex);
         rb_graphcontrol_edge = v_main.findViewById(R.id.rb_graphcontrol_edge);
+        sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
+        btn_play = v_main.findViewById(R.id.btn_play);
         btn_menu = v_main.findViewById(R.id.btn_menu);
-        btn_grid = v_main.findViewById(R.id.btn_grid);
+        btn_code = v_main.findViewById(R.id.btn_code);
         btn_info = v_main.findViewById(R.id.btn_info);
         btn_back = v_main.findViewById(R.id.btn_back);
+        btn_backward = v_main.findViewById(R.id.btn_backward);
+        btn_forward = v_main.findViewById(R.id.btn_forward);
+        tv_seqno = v_main.findViewById(R.id.tv_seqno);
         tv_info = v_main.findViewById(R.id.tv_info);
+        btn_grid = v_main.findViewById(R.id.btn_grid);
         cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
@@ -267,7 +279,7 @@ public class GraphActivity extends AppCompatActivity {
                 GraphSequence run = bfs.run(0);
                 graphSequence = run;
 
-                startTimer("BFS", bfs);
+//                startTimer("BFS", bfs);
             }
         });
 
@@ -457,6 +469,69 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+        // Auto Animation Play/Pause Button
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(graphSequence != null){
+//                    if(isAutoPlay){
+//                        isAutoPlay = false;
+//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+//                        timer.cancel();
+//                    }
+//                    else{
+//                        isAutoPlay = true;
+//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PAUSE_BUTTON));
+//                        timer = new Timer();
+//                        timer.schedule(new TimerTask() {
+//                            @Override
+//                            public void run() {
+//                                if (bubbleSort.sequence.curSeqNo < bubbleSort.sequence.size)
+//                                    onForwardClick();
+//                                else {
+//                                    isAutoPlay = false;
+//                                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+//                                    timer.cancel();
+//                                }
+//                            }
+//                        }, 0, autoAnimSpeed);
+//                    }
+
+
+                }
+            }
+        });
+
+        // One Animation Step-Back
+        btn_backward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                isAutoPlay = false;
+//                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+//                timer.cancel();
+//                onBackwardClick();
+                if(graphSequence != null){
+                    graphSequence.backward();
+                    taskStep(graphSequence.curSeqNo);
+                }
+
+            }
+        });
+
+        // One Animation Step-Forward
+        btn_forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                isAutoPlay = false;
+//                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+//                timer.cancel();
+//                onForwardClick();
+                if(graphSequence != null){
+                    graphSequence.forward();
+                    taskStep(graphSequence.curSeqNo);
+                }
+            }
+        });
 
     }
 
@@ -493,6 +568,7 @@ public class GraphActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
+                    graphWrapper.board.clearCanvasAnim();
                     if(curSeqNo < graphSequence.graphAnimationStates.size()) {
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
@@ -529,6 +605,60 @@ public class GraphActivity extends AppCompatActivity {
                         dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         timer.cancel();
                         timer = null;
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    private void taskStep(final int curSeqNo) {
+        if (graphSequence != null) {
+            System.out.println("SEQ = "  + curSeqNo);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    if(curSeqNo < graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
+
+                        graphWrapper.board.clearCanvasAnim();
+                        GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
+                        System.out.println(graphAnimationState);
+
+                        for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
+                            for(Vertex vertex : graphAnimationStateShadow.vertices){
+                                Rect rect = graphWrapper.board.getRect(vertex.data);
+                                graphWrapper.board.drawNodeAnim(rect, vertex.data);
+                            }
+
+                            for(Edge edge : graphAnimationStateShadow.edges){
+                                Rect rect1 = graphWrapper.board.getRect(edge.src);
+                                Rect rect2 = graphWrapper.board.getRect(edge.des);
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge);
+                            }
+                        }
+
+                        graphWrapper.board.refreshAnim();
+
+                    }
+                    else{
+                        UtilUI.setText(tv_info, "Done");
+                        System.out.println("Canceled");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btn_menu.setEnabled(true);
+                                btn_back.setEnabled(true);
+                                btn_info.setEnabled(true);
+                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                        timer.cancel();
+//                        timer = null;
                     }
                 }
             });

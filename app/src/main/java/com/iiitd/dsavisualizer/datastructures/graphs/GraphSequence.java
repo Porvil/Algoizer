@@ -10,13 +10,13 @@ public class GraphSequence {
 
 
     public GraphSequence() {
-        this.curSeqNo = 0;
+        this.curSeqNo = -1;
         this.graphAnimationStates = new ArrayList<>();
     }
 
     public GraphSequence(ArrayList<GraphAnimationState> graphAnimationStates) {
         this.graphAnimationStates = graphAnimationStates;
-        this.curSeqNo = 0;
+        this.curSeqNo = -1;
         this.size = graphAnimationStates.size();
     }
 

@@ -498,10 +498,12 @@ public class Board {
 
     public void clearCanvasGraph(){
         __clearCanvas(customCanvas.canvasGraph);
+        refreshGraph();
     }
 
     public void clearCanvasAnim(){
         __clearCanvas(customCanvas.canvasAnimation);
+        refreshAnim();
     }
 
     public void __clearCanvas(Canvas canvas){

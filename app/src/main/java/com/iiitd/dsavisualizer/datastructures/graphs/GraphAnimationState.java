@@ -34,7 +34,7 @@ public class GraphAnimationState {
     public String toString() {
         return "GraphAnimationState{" +
                 "state='" + state + '\'' +
-                ", info='" + info + '\'' +
+                ", graphAnimationStateShadow=" + graphAnimationStateShadow +
                 '}';
     }
 }

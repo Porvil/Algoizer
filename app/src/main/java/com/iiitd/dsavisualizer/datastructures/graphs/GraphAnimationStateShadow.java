@@ -12,4 +12,11 @@ public class GraphAnimationStateShadow {
         this.edges = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "GraphAnimationStateShadow{" +
+                "vertices=" + vertices +
+                ", edges=" + edges +
+                '}';
+    }
 }
