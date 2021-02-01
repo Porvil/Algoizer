@@ -23,7 +23,7 @@ public class Board {
 
     private final int topAngle = 45;// in mm
     private final int bottomAngle = 45;// in mm
-    private final int nodeSize = 10;// in mm
+    private final int nodeSize = 8;// in mm
     private final float circleRatio = 0.66f;
     private final float edgeArrowRatio = 0.24f;
     private final float nodeRadius;
@@ -83,6 +83,7 @@ public class Board {
 
         System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
         System.out.println("no of rows = " + yCount + " | " + "no of columns = " + xCount);
+        System.out.println("max count = " + yCount * xCount );
 
         float minSide = Math.min(xSize, ySize);
         this.nodeRadius = ( minSide * circleRatio) / 2;
@@ -282,12 +283,12 @@ public class Board {
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-        if(edge != null) {
-            canvas.save();
-            canvas.rotate((float) degree, x, y);
-            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
-            canvas.restore();
-        }
+//        if(edge != null) {
+//            canvas.save();
+//            canvas.rotate((float) degree, x, y);
+//            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
+//            canvas.restore();
+//        }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
         arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);

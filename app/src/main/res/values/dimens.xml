@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="coordinatesText">14sp</dimen>
-    <dimen name="nodeText">20sp</dimen>
-    <dimen name="edgeWidth">5dp</dimen>
+    <dimen name="nodeText">16sp</dimen>
+    <dimen name="edgeWidth">3dp</dimen>
     <dimen name="edgeArrowWidth">2dp</dimen>
     <dimen name="margin_medium">5dp</dimen>
 </resources>
