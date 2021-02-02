@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class GraphSequence {
 
+    public GraphAlgorithmType graphAlgorithmType;
     public int size;
     public int curSeqNo;
     public ArrayList<GraphAnimationState> graphAnimationStates;
 
 
-    public GraphSequence() {
+    public GraphSequence(GraphAlgorithmType graphAlgorithmType) {
+        this.graphAlgorithmType = graphAlgorithmType;
         this.curSeqNo = -1;
         this.graphAnimationStates = new ArrayList<>();
     }

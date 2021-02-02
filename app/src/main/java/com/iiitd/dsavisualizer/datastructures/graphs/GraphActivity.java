@@ -309,7 +309,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_custominput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parseAndShowCustomInput();
+                String s = et_customgraphinput.getText().toString();
+                parseAndShowCustomInput(s);
             }
         });
 
@@ -353,26 +354,43 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String customInput =
+                        "D 1\n" +
+                        "W 0\n" +
+                        "VC 5\n" +
+                        "VA 0 0 0\n" +
+                        "VA 1 0 3\n" +
+                        "VA 2 2 0\n" +
+                        "VA 3 2 4\n" +
+                        "VA 4 4 3\n" +
+                        "E 0 1 1\n" +
+                        "E 0 2 1\n" +
+                        "E 1 2 1\n" +
+                        "E 2 3 1\n" +
+                        "E 3 4 1\n";
+
+
                 graphWrapper.reset();
+                parseAndShowCustomInput(customInput);
 
-                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
-                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
-                graphWrapper.graph.addVertex(2,2,0);graphWrapper.board.addVertex(2,0,2);
-                graphWrapper.graph.addVertex(3,2,4);graphWrapper.board.addVertex(2,4,3);
-                graphWrapper.graph.addVertex(4,4,3);graphWrapper.board.addVertex(4,3,4);
+//                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
+//                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
+//                graphWrapper.graph.addVertex(2,2,0);graphWrapper.board.addVertex(2,0,2);
+//                graphWrapper.graph.addVertex(3,2,4);graphWrapper.board.addVertex(2,4,3);
+//                graphWrapper.graph.addVertex(4,4,3);graphWrapper.board.addVertex(4,3,4);
+//
+//
+//                graphWrapper.graph.addEdge(0, 1, 1);
+//                graphWrapper.graph.addEdge(0, 2, 1);
+//                graphWrapper.graph.addEdge(1, 2, 1);
+//                graphWrapper.graph.addEdge(2, 3, 1);
+//                graphWrapper.graph.addEdge(3, 4, 1);
 
 
-                graphWrapper.graph.addEdge(0, 1, 1);
-                graphWrapper.graph.addEdge(0, 2, 1);
-                graphWrapper.graph.addEdge(1, 2, 1);
-                graphWrapper.graph.addEdge(2, 3, 1);
-                graphWrapper.graph.addEdge(3, 4, 1);
-
-
-                graphWrapper.board.update(graphWrapper.graph);
+//                graphWrapper.board.update(graphWrapper.graph);
             }
         });
-//
+
         btn_tree3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,19 +401,15 @@ public class GraphActivity extends AppCompatActivity {
         rg_graphcontrols.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.rb_graphcontrol_view:
-                        graphControls.selectedState = 0;
-                        graphControls.viewState--;
-                        break;
-                    case R.id.rb_graphcontrol_vertex:
-                        graphControls.selectedState = 1;
-                        graphControls.vertexState--;
-                        break;
-                    case R.id.rb_graphcontrol_edge:
-                        graphControls.selectedState = 2;
-                        graphControls.edgeState--;
-                        break;
+                if (checkedId == R.id.rb_graphcontrol_view) {
+                    graphControls.selectedState = 0;
+                    graphControls.viewState--;
+                } else if (checkedId == R.id.rb_graphcontrol_vertex) {
+                    graphControls.selectedState = 1;
+                    graphControls.vertexState--;
+                } else if (checkedId == R.id.rb_graphcontrol_edge) {
+                    graphControls.selectedState = 2;
+                    graphControls.edgeState--;
                 }
             }
         });
@@ -430,13 +444,10 @@ public class GraphActivity extends AppCompatActivity {
 
                 boolean directed = false;
 
-                switch (checkedId){
-                    case R.id.rb_directed:
-                        directed = true;
-                        break;
-                    case R.id.rb_undirected:
-                        directed = false;
-                        break;
+                if (checkedId == R.id.rb_directed) {
+                    directed = true;
+                } else if (checkedId == R.id.rb_undirected) {
+                    directed = false;
                 }
 
                 // Clear everything
@@ -454,13 +465,10 @@ public class GraphActivity extends AppCompatActivity {
 
                 boolean weighted = false;
 
-                switch (checkedId){
-                    case R.id.rb_weighted:
-                        weighted = true;
-                        break;
-                    case R.id.rb_unweighted:
-                        weighted = false;
-                        break;
+                if (checkedId == R.id.rb_weighted) {
+                    weighted = true;
+                } else if (checkedId == R.id.rb_unweighted) {
+                    weighted = false;
                 }
 
                 // Clear everything
@@ -857,16 +865,12 @@ public class GraphActivity extends AppCompatActivity {
         int checkedId = view.getId();
 //        System.out.println(graphControls.getCurrentState());
 
-        switch (checkedId){
-            case R.id.rb_graphcontrol_view:
-                graphControls.changeState(0);
-                break;
-            case R.id.rb_graphcontrol_vertex:
-                graphControls.changeState(1);
-                break;
-            case R.id.rb_graphcontrol_edge:
-                graphControls.changeState(2);
-                break;
+        if (checkedId == R.id.rb_graphcontrol_view) {
+            graphControls.changeState(0);
+        } else if (checkedId == R.id.rb_graphcontrol_vertex) {
+            graphControls.changeState(1);
+        } else if (checkedId == R.id.rb_graphcontrol_edge) {
+            graphControls.changeState(2);
         }
 
         System.out.println(graphControls.getCurrentState());
@@ -919,8 +923,7 @@ public class GraphActivity extends AppCompatActivity {
         }
     }
 
-    public void parseAndShowCustomInput(){
-        String s = et_customgraphinput.getText().toString();
+    public void parseAndShowCustomInput(String s){
         String[] ss = s.split("\\n");
 
         ArrayList<Vertex> vertices = new ArrayList<>();
@@ -984,7 +987,7 @@ public class GraphActivity extends AppCompatActivity {
                         if(col < 0)
                             col = -1;
 
-                        if(data < 0 && data > 999){
+                        if(data < 0 || data > 999){
                             error = true;
                             response = "Node Value should be [0, 999]";
                             break;
@@ -1006,7 +1009,7 @@ public class GraphActivity extends AppCompatActivity {
                         for (int c = 1; c < chars.length; c++) {
                             int data = Integer.parseInt(chars[c]);
 
-                            if(data < 0 && data > 999){
+                            if(data < 0 || data > 999){
                                 error = true;
                                 response = "Node Value should be [0, 999]";
                                 break;

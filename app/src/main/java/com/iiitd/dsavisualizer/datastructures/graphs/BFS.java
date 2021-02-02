@@ -11,7 +11,7 @@ public class BFS {
 
     public BFS(Graph g){
         this.g = g;
-        this.graphSequence = new GraphSequence();
+        this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
     }
 
     GraphSequence run(int s){
