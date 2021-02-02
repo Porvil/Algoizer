@@ -540,29 +540,34 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(graphSequence != null){
-//                    if(isAutoPlay){
-//                        isAutoPlay = false;
-//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                        timer.cancel();
-//                    }
-//                    else{
-//                        isAutoPlay = true;
-//                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PAUSE_BUTTON));
-//                        timer = new Timer();
-//                        timer.schedule(new TimerTask() {
-//                            @Override
-//                            public void run() {
-//                                if (bubbleSort.sequence.curSeqNo < bubbleSort.sequence.size)
-//                                    onForwardClick();
-//                                else {
-//                                    isAutoPlay = false;
-//                                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                                    timer.cancel();
-//                                }
-//                            }
-//                        }, 0, autoAnimSpeed);
-//                    }
-
+                    if(isAutoPlay){
+                        isAutoPlay = false;
+                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                        if(timer != null) {
+                            timer.cancel();
+                        }
+                    }
+                    else{
+                        isAutoPlay = true;
+                        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PAUSE_BUTTON));
+                        timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (graphSequence.curSeqNo < graphSequence.getSize()){
+                                    graphSequence.forward();
+                                    taskStep(graphSequence.curSeqNo);
+                                }
+                                else {
+                                    isAutoPlay = false;
+                                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                                    if(timer != null) {
+                                        timer.cancel();
+                                    }
+                                }
+                            }
+                        }, 0, animStepDuration);
+                    }
 
                 }
             }

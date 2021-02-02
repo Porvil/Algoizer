@@ -31,6 +31,10 @@ public class GraphSequence {
                 '}';
     }
 
+    public int getSize(){
+        return graphAnimationStates.size();
+    }
+
     public boolean backward(){
         curSeqNo--;
         return true;
