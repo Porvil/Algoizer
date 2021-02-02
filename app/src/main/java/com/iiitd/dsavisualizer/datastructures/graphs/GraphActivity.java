@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -183,6 +185,12 @@ public class GraphActivity extends AppCompatActivity {
                 // 2500ms to 500ms
                 animStepDuration = (2000 - seekBar.getProgress() * 20) + 500;
                 animDuration = animStepDuration/2;
+
+                // TEMP CODE
+//                int scale = (seekBar.getProgress() / 10) - 5;
+//                System.out.println(seekBar.getProgress() + " " + scale);
+//                customCanvas.canvasGraph.scale(scale, scale);
+//                iv_graph.invalidate();
             }
 
             @Override
@@ -343,9 +351,15 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Paint paint = new Paint(Color.RED);
-                paint.setColor(Color.RED);
-                graphWrapper.board.customCanvas.canvasAnimation.drawCircle(100,100,50, paint);
+
+                customCanvas.canvasGraph.scale(2,2);
+                customCanvas.imageViewGraph.postInvalidate();
+
+//                customCanvas.canvasGraph.save();
+//                customCanvas.canvasGraph.scale(2, 2);
+//                customCanvas.canvasGraph.drawBitmap(customCanvas.bitmapGraph, 0, 0, null);
+//                customCanvas.canvasGraph.restore();
+
 
             }
         });
@@ -394,6 +408,50 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup, null);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = false; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, 300, 300, focusable);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window tolken
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
+//popupWindow.showAsDropDown(view);
+                // dismiss the popup window when touched
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    int orgX, orgY;
+                    int offsetX, offsetY;
+
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                orgX = (int) event.getX();
+                                orgY = (int) event.getY();
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                offsetX = (int)event.getRawX() - orgX;
+                                offsetY = (int)event.getRawY() - orgY;
+                                System.out.println(offsetX + "x" + offsetY);
+                                popupWindow.update(offsetX, offsetY, -1, -1, true);
+                                break;
+                        }
+                        return true;
+                    }});
 
             }
         });
