@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.Pair;
 import android.view.MotionEvent;
 
@@ -9,7 +8,6 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 
 public class GraphWrapper {
     public boolean directed;

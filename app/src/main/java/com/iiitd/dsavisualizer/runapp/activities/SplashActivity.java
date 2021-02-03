@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.WindowManager;
@@ -59,7 +58,11 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        // Back functionality removed from Splash Activity to prevent exceptions [ Also not needed anyways ]
     }
 
 }

@@ -2,7 +2,9 @@ package com.iiitd.dsavisualizer.algorithms.sorting.selection;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -621,6 +623,7 @@ public class SelectionSortActivity extends AppCompatActivity {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {

@@ -3,7 +3,8 @@ package com.iiitd.dsavisualizer.datastructures.trees.avl;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Gravity;
@@ -885,6 +886,7 @@ public class AVLActivity extends AppCompatActivity {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {

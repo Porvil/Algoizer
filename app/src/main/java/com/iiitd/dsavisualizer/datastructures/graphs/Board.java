@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
 import android.util.TypedValue;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;

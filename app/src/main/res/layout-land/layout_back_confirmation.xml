@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="150dp"
+    android:background="@drawable/backlayoutborder"
     tools:ignore="MissingDefaultResource">
 
     <TextView
