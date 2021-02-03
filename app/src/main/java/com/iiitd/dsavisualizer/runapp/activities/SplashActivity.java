@@ -20,20 +20,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_splash);
-
-
-        final ImageView view = findViewById(R.id.iv_splashimage);
-        final ActivityOptionsCompat activityOptionsCompat =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        SplashActivity.this, view,"logo");
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                startActivity(intent, activityOptionsCompat.toBundle());
+                startActivity(intent);
                 finish();
             }
         }, SPLASH_TIME);

@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:scrollbarSize="10dp"
-    android:scrollbarStyle="insideInset"
-    tools:ignore="MissingDefaultResource" >
+    android:fadeScrollbars="false"
+    android:scrollbarStyle="outsideInset"
+    tools:context=".runapp.activities.SortingActivity"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
-        android:id="@+id/ll_sorting_row1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:id="@+id/ll_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"/>
 
-    <LinearLayout
-        android:id="@+id/ll_sorting_row2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"/>
-</LinearLayout>
+</HorizontalScrollView>

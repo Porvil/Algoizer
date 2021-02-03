@@ -258,4 +258,12 @@ public class UtilUI {
         return myView;
     }
 
+    public static float pxToDp(Context context, int px){
+        return px / context.getResources().getDisplayMetrics().density;
+    }
+
+    public static float dpToPx(Context context, int dp){
+        return dp * context.getResources().getDisplayMetrics().density;
+    }
+
 }
