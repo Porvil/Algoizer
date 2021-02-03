@@ -32,7 +32,7 @@ public class SortingActivity extends AppCompatActivity {
             new ActivityItemData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.ic_selectionsort),
             new ActivityItemData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.ic_insertionsort),
             new ActivityItemData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.ic_mergesort),
-            new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort),
+            new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort)
     };
 
 

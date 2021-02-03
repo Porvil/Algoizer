@@ -15,16 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".testing.TestActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".datastructures.graphs.GraphActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
@@ -54,18 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".runapp.activities.AboutActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".runapp.activities.DataStructureActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".runapp.activities.AlgorithmActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".runapp.activities.SortingActivity"
             android:launchMode="singleInstance"

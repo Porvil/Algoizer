@@ -22,6 +22,9 @@ import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivit
 import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivity;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
+import com.iiitd.dsavisualizer.datastructures.trees.avl.AVLActivity;
+import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
 import com.iiitd.dsavisualizer.runapp.others.ActivityItemData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -31,11 +34,10 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout linearLayout;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.ic_bubblesort),
-            new ActivityItemData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.ic_selectionsort),
-            new ActivityItemData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.ic_insertionsort),
-            new ActivityItemData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.ic_mergesort),
-            new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort),
+            new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_bubblesort),
+            new ActivityItemData(BSTActivity.class.getName(), "BST", R.drawable.ic_selectionsort),
+            new ActivityItemData(AVLActivity.class.getName(), "AVL", R.drawable.ic_insertionsort),
+            new ActivityItemData(GraphActivity.class.getName(), "Graph", R.drawable.ic_mergesort)
     };
 
     boolean doubleBackToExitPressedOnce = false;
