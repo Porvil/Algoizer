@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -457,22 +456,6 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        rg_graphcontrols.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_graphcontrol_view) {
-                    graphControls.selectedState = 0;
-                    graphControls.viewState--;
-                } else if (checkedId == R.id.rb_graphcontrol_vertex) {
-                    graphControls.selectedState = 1;
-                    graphControls.vertexState--;
-                } else if (checkedId == R.id.rb_graphcontrol_edge) {
-                    graphControls.selectedState = 2;
-                    graphControls.edgeState--;
-                }
-            }
-        });
-
         btn_export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -742,7 +725,8 @@ public class GraphActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        graphControls = new GraphControls();
+        graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
+        graphControls.updateDrawables();
 
         // Draws Grid and Graph View After Layouts have been laid out
         iv_graph.post(new Runnable() {
@@ -927,45 +911,11 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void onGraphControlsClick(View view) {
-        int checkedId = view.getId();
-//        System.out.println(graphControls.getCurrentState());
+        graphControls.updateState(view);
+        graphControls.updateDrawables();
 
-        if (checkedId == R.id.rb_graphcontrol_view) {
-            graphControls.changeState(0);
-        } else if (checkedId == R.id.rb_graphcontrol_vertex) {
-            graphControls.changeState(1);
-        } else if (checkedId == R.id.rb_graphcontrol_edge) {
-            graphControls.changeState(2);
-        }
+        System.out.println(graphControls);
 
-        System.out.println(graphControls.getCurrentState());
-        switch(graphControls.getCurrentState()){
-            case VIEW:{
-                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_pan_tool_24);
-                rb_graphcontrol_view.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                break;
-            }
-            case VERTEX_ADD: {
-                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_add_24);
-                rb_graphcontrol_vertex.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                break;
-            }
-            case VERTEX_REMOVE: {
-                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_remove_24);
-                rb_graphcontrol_vertex.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                break;
-            }
-            case EDGE_ADD:{
-                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_linear_scale_24);
-                rb_graphcontrol_edge.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                break;
-            }
-            case EDGE_REMOVE:{
-                Drawable drawable = UtilUI.getDrawable(this, R.drawable.ic_baseline_delete_24);
-                rb_graphcontrol_edge.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                break;
-            }
-        }
     }
 
     public void updateGraphViewState(){

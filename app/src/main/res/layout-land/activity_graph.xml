@@ -220,35 +220,38 @@
                 android:id="@+id/rb_graphcontrol_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/graph_selector_radiogroup"
+                android:background="@android:color/transparent"
                 android:button="@null"
                 android:checked="true"
-                android:drawableTop="@drawable/ic_baseline_pan_tool_24"
+                android:drawableTop="@drawable/ic_view_off"
                 android:onClick="onGraphControlsClick"
                 android:text="View"
+                android:textAlignment="center"
                 android:textColor="@color/mainColor" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_vertex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/graph_selector_radiogroup"
+                android:background="@android:color/transparent"
                 android:button="@null"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_baseline_add_24"
+                android:drawableTop="@drawable/ic_vertex_add_off"
                 android:onClick="onGraphControlsClick"
                 android:text="Node"
+                android:textAlignment="center"
                 android:textColor="@color/mainColor" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_edge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/graph_selector_radiogroup"
+                android:background="@android:color/transparent"
                 android:button="@null"
-                android:drawableTop="@drawable/ic_baseline_linear_scale_24"
+                android:drawableTop="@drawable/ic_edge_add_off"
                 android:onClick="onGraphControlsClick"
                 android:text="Edge"
+                android:textAlignment="center"
                 android:textColor="@color/mainColor" />
 
         </RadioGroup>
