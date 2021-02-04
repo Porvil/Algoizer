@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
+import com.iiitd.dsavisualizer.utility.Util;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,45 +21,46 @@ import java.util.Random;
 
 public class Board {
 
-    private final int topAngle = 45;// in mm
-    private final int bottomAngle = 45;// in mm
-    private final int nodeSize = 8;// in mm
-    private final float circleRatio = 0.66f;
-    private final float edgeArrowRatio = 0.24f;
-    private final float nodeRadius;
     Context context;
 
-    public float X;//width
-    public float Y;//height
-    public int xCount;//no of columns
-    public int yCount;//no of rows
-    public float xSize;//column width
-    public float ySize;//row height
-    public Data[][] data;
-    public int maxVertices;
+    // Constants
+    private final int topAngle = 45;               // in degrees
+    private final int bottomAngle = 45;            // in degrees
+    private final int nodeSize = 8;                // in mm
+    private final float circleRatio = 0.66f;       // in ratio [0,1]
+    private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
+    private final float nodeRadius;                // in pixels [Radius of one node]
+    private final float coordinatesOffset;         // in ratio [0,1]
+    private final int textSizeCoordinates;         // in sp
+    private final int textSize;                    // in sp
+    private final int edgeWidth;                   // in dp
+    private final int edgeArrowWidth;              // in dp
+    private final int arrowLength;                 // in pixels
 
-    private final Paint paintGrid;
-    private final Paint paintGridCoordinates;
+    // Board Variables
+    public float X;                                // Width of Board
+    public float Y;                                // Height of Board
+    public int xCount;                             // No. of columns
+    public int yCount;                             // No. of rows
+    public float xSize;                            // One Column Width
+    public float ySize;                            // One Row Height
+    public BoardElement[][] boardElements;         // Contains data about board elements
+    public int maxVertices;                        // Max No. of Vertices possible
+    public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
 
-    public final Paint paintVertex;
-    public final Paint paintEdge;
-    public final Paint paintEdgeWeight;
-    public final Paint paintEdgeArrows;
-    public final Paint paintText;
-
-    public final Paint paintVertexAnim;
-    public final Paint paintEdgeAnim;
-    public final Paint paintEdgeWeightAnim;
-    public final Paint paintEdgeArrowsAnim;
-    public final Paint paintTextAnim;
-
-    private final int textSizeCoordinates;
-    private final int textSize;
-    private final int edgeWidth;
-    private final int edgeArrowWidth;
-    private final int arrowLength;
-
-    CustomCanvas customCanvas;
+    // Paint Variables
+    private Paint paintGrid;
+    private Paint paintGridCoordinates;
+    private Paint paintVertex;
+    private Paint paintEdge;
+    private Paint paintEdgeWeight;
+    private Paint paintEdgeArrows;
+    private Paint paintText;
+    private Paint paintVertexAnim;
+    private Paint paintEdgeAnim;
+    private Paint paintEdgeWeightAnim;
+    private Paint paintEdgeArrowsAnim;
+    private Paint paintTextAnim;
 
     public Board(Context context, CustomCanvas customCanvas) {
         this.context = context;
@@ -87,11 +89,12 @@ public class Board {
         float minSide = Math.min(xSize, ySize);
         this.nodeRadius = ( minSide * circleRatio) / 2;
         this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
+        this.coordinatesOffset = 0.95f;
 
-        this.data = new Data[yCount][xCount];
+        this.boardElements = new BoardElement[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
-                data[r][c] = new Data();
+                boardElements[r][c] = new BoardElement();
             }
         }
 
@@ -99,6 +102,15 @@ public class Board {
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
         this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
+
+        // Initializes all Paint Variables
+        initPaints();
+
+        // Draw Grid on Grid ImageView
+        drawGrid();
+    }
+
+    private void initPaints(){
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
@@ -153,8 +165,6 @@ public class Board {
         this.paintEdgeWeightAnim.setTextSize(textSize);
         this.paintEdgeWeightAnim.setColor(Color.GREEN);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        // Draw Grid on Grid ImageView
-        drawGrid();
     }
 
     private void drawGrid() {
@@ -182,8 +192,8 @@ public class Board {
             for (int c = 0; c < xCount; c++) {
                 String text = "(" + r + "," + c + ")";
                 Rect rect1 = getRect(r, c);
-                int x = (int) (rect1.left + (rect1.width() * 0.95f));
-                int y = (int) (rect1.top + (rect1.height() * 0.95f));
+                int x = (int) (rect1.left + (rect1.width() * coordinatesOffset));
+                int y = (int) (rect1.top + (rect1.height() * coordinatesOffset));
                 Rect rectText = new Rect();
                 paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
                 customCanvas.canvasCoordinates.drawText(text, x, y , paintGridCoordinates);
@@ -198,14 +208,13 @@ public class Board {
         System.out.println("REDRAWING CANVAS");
         // clears canvas
         clearCanvasGraph();
-//        customCanvas.canvasGraph.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
-                if(data[r][c].state){
+                if(boardElements[r][c].occupied){
                     Rect rect = getRect(r, c);
-                    drawNodeGraph(rect, data[r][c].data);
+                    drawNodeGraph(rect, boardElements[r][c].value);
                 }
             }
         }
@@ -274,44 +283,28 @@ public class Board {
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
 
-        double distance = distance(lx1, ly1, lx2, ly2);
-//        System.out.println("distance = " + distance);
-
         double degree = getAngle(lx1, ly1, lx2, ly2);
 
-        System.out.println("degree "  + degree);
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-//        if(edge != null) {
-//            canvas.save();
-//            canvas.rotate((float) degree, x, y);
-//            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
-//            canvas.restore();
-//        }
+        if(edge != null) {
+            canvas.save();
+            canvas.rotate((float) degree, x, y);
+            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
+            canvas.restore();
+        }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
         arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
-//        arrow21(lx1, ly1, lx2, ly2);
     }
 
     public void arrow12(float x, float y, float x1, float y1, Canvas canvas, Paint paintEA) {
-//        double degree = calculateDegree(x, x1, y, y1);
-//
-//        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
-//        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
-//
-//        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
-//        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
-//
-//        customCanvas.canvasGraph.drawLine(x1, y1, endX1, endY1, paintEdgeArrows);
-//        customCanvas.canvasGraph.drawLine(x1, y1, endX2, endY2, paintEdgeArrows);
-
         __arrow12(canvas, x, y, x1, y1, paintEA);
     }
 
-    public void __arrow12(Canvas canvas, float x, float y, float x1, float y1, Paint paintEA) {
-        double degree = calculateDegree(x, x1, y, y1);
+    private void __arrow12(Canvas canvas, float x, float y, float x1, float y1, Paint paintEA) {
+        double degree = Util.calculateDegree(x, x1, y, y1);
 
         float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
         float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
@@ -323,19 +316,6 @@ public class Board {
         canvas.drawLine(x1, y1, endX2, endY2, paintEA);
     }
 
-    public void arrow21(float x, float y, float x1, float y1) {
-
-        double degree1 = calculateDegree(x1, x, y1, y);
-        float endX11 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-topAngle)+90))));
-        float endY11 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-topAngle)+90)))));
-
-        float endX22 = (float) (x + ((arrowLength) * Math.cos(Math.toRadians((degree1-bottomAngle)+180))));
-        float endY22 = (float) (y + ((arrowLength) * Math.sin(Math.toRadians(((degree1-bottomAngle)+180)))));
-
-        customCanvas.canvasGraph.drawLine(x, y, endX11, endY11, paintEdgeArrows);
-        customCanvas.canvasGraph.drawLine(x, y, endX22, endY22, paintEdgeArrows);
-    }
-
     // Adds VertexOld element to grid element and calls drawNode
     public void addVertex(float xAxisPos, float yAxisPos, int name) {
         // Row and Col of the vertexOld
@@ -343,30 +323,30 @@ public class Board {
         int row = (int) yAxisPos;
 
         // Change its state and add vertexOld reference
-        data[row][col].state = true;
-        data[row][col].data = name;
+        boardElements[row][col].occupied = true;
+        boardElements[row][col].value = name;
 //        data[row][col].vertexOld = vertexOld;
 
         Rect rect = getRect(row, col);
-        drawNodeGraph(rect, data[row][col].data);
+        drawNodeGraph(rect, boardElements[row][col].value);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
     public void addVertex(int row, int col, int name) {
         // Change its state and add vertexOld reference
-        data[row][col].state = true;
-        data[row][col].data = name;
+        boardElements[row][col].occupied = true;
+        boardElements[row][col].value = name;
 //        data[row][col].vertexOld = vertexOld;
 
         Rect rect = getRect(row, col);
-        drawNodeGraph(rect, data[row][col].data);
+        drawNodeGraph(rect, boardElements[row][col].value);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
     public void removeVertex(int row, int col) {
         // Change its state and add vertexOld reference
-        data[row][col].state = false;
-        data[row][col].data = -1;
+        boardElements[row][col].occupied = false;
+        boardElements[row][col].value = -1;
 //        data[row][col].vertexOld = vertexOld;
 
     }
@@ -376,18 +356,18 @@ public class Board {
         int col = (int) xAxisPos;
         int row = (int) yAxisPos;
 
-        return data[row][col].state;
+        return boardElements[row][col].occupied;
     }
 
     // Returns state of the grid element, whether it is being used or not
     public boolean getState(int row, int col){
-        return data[row][col].state;
+        return boardElements[row][col].occupied;
     }
 
     public int[] getCoordinates(int key){
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
-                if(data[r][c].data == key){
+                if(boardElements[r][c].value == key){
                     return new int[]{r, c};
                 }
             }
@@ -458,21 +438,11 @@ public class Board {
         return new double[]{a1,b1,a2,b2};
     }
 
-    public double distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-    }
-
-    public double calculateDegree(float x1, float x2, float y1, float y2) {
-        float startRadians = (float) Math.atan((y2 - y1) / (x2 - x1));
-        startRadians += ((x2 >= x1) ? 90 : -90) * Math.PI / 180;
-        return Math.toDegrees(startRadians);
-    }
-
     public Pair<Integer, Integer> getRandomAvailableNode(){
         ArrayList<Pair<Integer, Integer>> available = new ArrayList<>();
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
-                if(!data[r][c].state){
+                if(!boardElements[r][c].occupied){
                     available.add(new Pair<>(r, c));
                 }
             }
@@ -485,10 +455,10 @@ public class Board {
     }
 
     public void reset(Graph graph){
-        this.data = new Data[yCount][xCount];
+        this.boardElements = new BoardElement[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
-                data[r][c] = new Data();
+                boardElements[r][c] = new BoardElement();
             }
         }
 
@@ -505,7 +475,7 @@ public class Board {
         refreshAnim();
     }
 
-    public void __clearCanvas(Canvas canvas){
+    private void __clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
 
@@ -517,38 +487,8 @@ public class Board {
         __refresh(customCanvas.imageViewAnimation);
     }
 
-    public void __refresh(ImageView imageView){
+    private void __refresh(ImageView imageView){
         imageView.invalidate();
-    }
-
-    public double score(Graph graph){
-        double result = 0;
-
-        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.map.entrySet() ){
-
-            for (Edge edge : vertex.getValue()) {
-
-                int[] vertex1 = getCoordinates(vertex.getKey());
-                int[] vertex2 = getCoordinates(edge.des);
-
-                Rect rect1 = getRect(vertex1[0], vertex1[1]);
-                Rect rect2 = getRect(vertex2[0], vertex2[1]);
-
-                double[] lineCoordinates = getLineCoordinates(rect1, rect2);
-
-                float lx1 = (float) lineCoordinates[0];
-                float ly1 = (float) lineCoordinates[1];
-
-                float lx2 = (float) lineCoordinates[2];
-                float ly2 = (float) lineCoordinates[3];
-
-                double distance = distance(lx1, ly1, lx2, ly2);
-                System.out.println(distance);
-                result += distance;
-            }
-        }
-
-        return result;
     }
 
     public float getAngle(float x1, float y1, float x2, float y2) {

@@ -87,7 +87,7 @@ public class GraphWrapper {
         int col = (int) x;
 
         if(board.getState(row, col)){
-            int nodeNumber = board.data[row][col].data;
+            int nodeNumber = board.boardElements[row][col].value;
             graph.removeVertex(nodeNumber, row, col);
             board.removeVertex(row, col);
             update();
@@ -169,13 +169,7 @@ public class GraphWrapper {
 
         update();
 
-        //check distances
-        double score = board.score(graph);
-        System.out.println("Score = " + score);
-
-
         return true;
-
     }
 
     public void reset(){

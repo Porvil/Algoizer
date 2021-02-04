@@ -1,4 +1,7 @@
-package com.iiitd.dsavisualizer.datastructures.graphs;
+package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
+
+import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
+import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;

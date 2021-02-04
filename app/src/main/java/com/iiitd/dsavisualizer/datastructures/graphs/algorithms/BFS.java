@@ -1,4 +1,12 @@
-package com.iiitd.dsavisualizer.datastructures.graphs;
+package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
+
+import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
+import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateShadow;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
+import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +22,7 @@ public class BFS {
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
     }
 
-    GraphSequence run(int s){
+    public GraphSequence run(int s){
 
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();

@@ -40,6 +40,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -799,7 +800,7 @@ public class GraphActivity extends AppCompatActivity {
                     case EDGE_ADD:
                         if(graphWrapper.board.getState(row, col)){
                             if(graphControls.startEdge != -1){//some node already selected
-                                int des = graphWrapper.board.data[row][col].data;
+                                int des = graphWrapper.board.boardElements[row][col].value;
                                 int src = graphControls.startEdge;
                                 if(src != des) {
                                     graphWrapper.addEdge(src, des);
@@ -808,7 +809,7 @@ public class GraphActivity extends AppCompatActivity {
                                 Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
                             }
                             else{// first node getting selected now
-                                int data = graphWrapper.board.data[row][col].data;
+                                int data = graphWrapper.board.boardElements[row][col].value;
                                 graphControls.startEdge = data;
                                 Toast.makeText(context, data + " selected", Toast.LENGTH_SHORT).show();
                             }
@@ -817,13 +818,13 @@ public class GraphActivity extends AppCompatActivity {
                     case EDGE_REMOVE:
                         if(graphWrapper.board.getState(row, col)){
                             if(graphControls.startEdge != -1){//some node already selected
-                                int des = graphWrapper.board.data[row][col].data;
+                                int des = graphWrapper.board.boardElements[row][col].value;
                                 int src = graphControls.startEdge;
                                 graphWrapper.removeEdge(src, des);
                                 graphControls.startEdge = -1;
                             }
                             else{// first node getting selected now
-                                int data = graphWrapper.board.data[row][col].data;
+                                int data = graphWrapper.board.boardElements[row][col].value;
                                 graphControls.startEdge = data;
                             }
                         }
