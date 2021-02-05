@@ -65,77 +65,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:background="?android:colorBackground"
             android:orientation="vertical"
+            android:padding="10dp"
             android:showDividers="middle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_customgraphinput"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:hint="Custom Input"
-                    android:inputType="textMultiLine" />
-
-                <ImageButton
-                    android:id="@+id/btn_clearcustominput"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    app:srcCompat="@drawable/ic_baseline_clear_24" />
-
-                <ImageButton
-                    android:id="@+id/btn_pastecustominput"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    app:srcCompat="@drawable/ic_baseline_content_paste_24" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_custominput"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Custom Input"
-                    android:textColor="@color/mainColor" />
-
-                <Button
-                    android:id="@+id/btn_export"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Export"
-                    android:textColor="@color/mainColor" />
-
-                <Button
-                    android:id="@+id/btn_copygraph"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Copy Graph"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,65 +91,6 @@
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
                     android:text="DFS"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_tree1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_1"
-                    android:textColor="@color/mainColor" />
-
-                <Button
-                    android:id="@+id/btn_tree2"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_2"
-                    android:textColor="@color/mainColor" />
-
-                <Button
-                    android:id="@+id/btn_tree3"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_3"
-                    android:textColor="@color/mainColor" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_cleargraph"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Clear Graph"
-                    android:textColor="@color/mainColor" />
-
-                <Button
-                    android:id="@+id/btn_cleargraphanim"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Clear Anim Graph"
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>
@@ -298,6 +172,135 @@
                     android:text="Directed"
                     android:textColor="@color/white" />
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_tree1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_1"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_tree2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_2"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_tree3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="@string/example_3"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cleargraph"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Clear Graph"
+                    android:textColor="@color/mainColor" />
+
+                <Button
+                    android:id="@+id/btn_cleargraphanim"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:text="Clear Anim Graph"
+                    android:textColor="@color/mainColor" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <EditText
+                    android:id="@+id/et_customgraphinput"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="Custom Input"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="50dp"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageButton
+                        android:id="@+id/btn_clearcustominput"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_copygraph"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_copy_all_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pastecustominput"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_content_paste_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_custominput"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_done_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_savecustominput"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_save_24" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>

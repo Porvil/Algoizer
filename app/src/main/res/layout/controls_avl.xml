@@ -65,9 +65,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:background="?android:colorBackground"
             android:orientation="vertical"
+            android:padding="10dp"
             android:showDividers="middle">
 
             <LinearLayout
@@ -83,8 +83,8 @@
                     android:ems="10"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
 
                 <ImageButton
                     android:id="@+id/btn_insertrandom"
@@ -123,8 +123,8 @@
                     android:ems="10"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
 
                 <View
                     android:layout_width="2dp"
@@ -155,8 +155,8 @@
                     android:ems="10"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
 
                 <View
                     android:layout_width="2dp"

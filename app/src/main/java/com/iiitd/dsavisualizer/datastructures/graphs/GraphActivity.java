@@ -91,16 +91,16 @@ public class GraphActivity extends AppCompatActivity {
     RadioGroup rg_directed;
     Button btn_bfs;
     Button btn_dfs;
-    ImageButton btn_pastecustominput;
     ImageButton btn_clearcustominput;
-    Button btn_copygraph;
-    Button btn_custominput;
+    ImageButton btn_copygraph;
+    ImageButton btn_pastecustominput;
+    ImageButton btn_custominput;
+    ImageButton btn_savecustominput;
     Button btn_cleargraph;
     Button btn_cleargraphanim;
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
-    Button btn_export;
     EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
@@ -162,16 +162,17 @@ public class GraphActivity extends AppCompatActivity {
         rg_directed = v_menu.findViewById(R.id.rg_directed);
         btn_bfs = v_menu.findViewById(R.id.btn_bfs);
         btn_dfs = v_menu.findViewById(R.id.btn_dfs);
-        btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
         btn_clearcustominput = v_menu.findViewById(R.id.btn_clearcustominput);
         btn_copygraph = v_menu.findViewById(R.id.btn_copygraph);
+        btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
+        btn_custominput = v_menu.findViewById(R.id.btn_custominput);
+        btn_savecustominput = v_menu.findViewById(R.id.btn_savecustominput );
         btn_custominput = v_menu.findViewById(R.id.btn_custominput);
         btn_cleargraph = v_menu.findViewById(R.id.btn_cleargraph);
         btn_cleargraphanim = v_menu.findViewById(R.id.btn_cleargraphanim);
         btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
-        btn_export = v_menu.findViewById(R.id.btn_export);
         et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu.findViewById(R.id.et_insert);
         et_search = v_menu.findViewById(R.id.et_search);
@@ -457,7 +458,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_export.setOnClickListener(new View.OnClickListener() {
+        btn_savecustominput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 exportCurrentGraph();
