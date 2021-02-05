@@ -8,6 +8,7 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 public class GraphWrapper {
     public boolean directed;
@@ -310,6 +311,52 @@ public class GraphWrapper {
 
         //  yCount = rows, xCount = cols
         return rows.size() < yCount && cols.size() < xCount;
+    }
+
+    // Returns a serialized String for the current Graph
+    public String getSerializableGraphString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String newLine = "\n";
+
+        //graph type
+        stringBuilder.append("D ")
+                .append(directed ? "1" : "0")
+                .append(newLine)
+                .append("W ")
+                .append(weighted ? "1" : "0")
+                .append(newLine);
+
+        //vertices
+        int noOfVertices = graph.noOfVertices;
+        stringBuilder.append("VC ")
+                .append(noOfVertices)
+                .append(newLine);
+
+        //vertices
+        for (Map.Entry<Integer, Vertex> vertexEntry : graph.vertexMap.entrySet()) {
+            stringBuilder.append("VA ")
+                    .append(vertexEntry.getKey())
+                    .append(" ")
+                    .append(vertexEntry.getValue().row)
+                    .append(" ")
+                    .append(vertexEntry.getValue().col)
+                    .append(newLine);
+        }
+
+        //edges
+        for (Map.Entry<Integer, ArrayList<Edge>> entry : graph.map.entrySet()) {
+            for (Edge i : entry.getValue()) {
+                stringBuilder.append("E ")
+                        .append(i.src)
+                        .append(" ")
+                        .append(i.des)
+                        .append(" ")
+                        .append(i.weight)
+                        .append(newLine);
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
 }

@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalDiv7">
 
 
         <LinearLayout
@@ -72,13 +72,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btn_bfs"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
                     android:text="BFS"
@@ -86,8 +86,8 @@
 
                 <Button
                     android:id="@+id/btn_dfs"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
                     android:text="DFS"
@@ -231,6 +231,12 @@
                     android:textColor="@color/mainColor" />
 
             </LinearLayout>
+
+            <View
+                android:id="@+id/horizontalDiv8"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

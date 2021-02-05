@@ -51,7 +51,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -303,15 +302,17 @@ public class GraphActivity extends AppCompatActivity {
         btn_copygraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String graphString = getCurrentGraph();
-                if(graphString != null) {
-                    System.out.println(graphString);
+                if (graphWrapper != null) {
+                    String graphString = graphWrapper.getSerializableGraphString();
+                    if (graphString != null) {
+                        System.out.println(graphString);
 
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", graphString);
-                    clipboard.setPrimaryClip(clip);
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("Copied Graph to Clipboard", graphString);
+                        clipboard.setPrimaryClip(clip);
 
-                    Toast.makeText(context, "Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Copied Graph to Clipboard", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -912,6 +913,48 @@ public class GraphActivity extends AppCompatActivity {
         });
     }
 
+    public void showSaveGraphDialog(final String graphString){
+        View view = getLayoutInflater().inflate(R.layout.layout_save_confirmation, null);
+
+        final EditText et_graphsavename = view.findViewById(R.id.et_graphsavename);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
+        String currentTimeStamp = dateFormat.format(new Date());
+        final String fileName = "graph-" + currentTimeStamp + ".txt";
+
+        et_graphsavename.setText(fileName);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fileName = et_graphsavename.getText().toString();
+                if(fileName.equals("") || fileName.length() == 0){
+                    et_graphsavename.setError("Cant be empty");
+                }
+                else {
+                    writeGraphToStorage(graphString, fileName);
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+    }
+
     public void onGraphControlsClick(View view) {
         graphControls.updateState(view);
         graphControls.updateDrawables();
@@ -1126,30 +1169,29 @@ public class GraphActivity extends AppCompatActivity {
 
     public void exportCurrentGraph(){
 
-        String graphString = getCurrentGraph();
-        if(graphString != null){
-            System.out.println(graphString);
+        if (graphWrapper != null) {
+            String graphString = graphWrapper.getSerializableGraphString();
+            if (graphString != null) {
+                System.out.println(graphString);
 
-            boolean hasPermissions = false;
-            int MyVersion = Build.VERSION.SDK_INT;
-            if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                hasPermissions = hasPermissions(AppSettings.PERMISSIONS);
-                if (!hasPermissions) {
-                    ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+                boolean hasPermissions = false;
+                int MyVersion = Build.VERSION.SDK_INT;
+                if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    hasPermissions = hasPermissions(AppSettings.PERMISSIONS);
+                    if (!hasPermissions) {
+                        ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+                    }
+                } else {
+                    hasPermissions = true;
+                }
+
+                // True only if android version API <= 22 OR permissions granted automatically
+                if (hasPermissions) {
+                    //write
+                    showSaveGraphDialog(graphString);
                 }
             }
-            else {
-                hasPermissions = true;
-            }
-
-            // True only if android version API <= 22 OR permissions granted beforehand
-            if(hasPermissions) {
-                //write
-
-                writeGraphToStorage(graphString);
-            }
         }
-
     }
 
     private void checkPermissions(){
@@ -1200,7 +1242,7 @@ public class GraphActivity extends AppCompatActivity {
         }
     }
 
-    public boolean writeGraphToStorage(String string){
+    public boolean writeGraphToStorage(String graphString, String fileName){
         //Checking the availability state of the External Storage.
         if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             System.out.println("Storage is not mounted, returning!!");
@@ -1219,12 +1261,14 @@ public class GraphActivity extends AppCompatActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
         String currentTimeStamp = dateFormat.format(new Date());
-        String filePath = path + AppSettings.SEPARATOR + "graph-" + currentTimeStamp + ".txt";
+        if(fileName == null)
+            fileName = "graph-" + currentTimeStamp + ".txt";
+        String filePath = path + AppSettings.SEPARATOR + fileName;
 
         PrintWriter out = null;
         try {
            out = new PrintWriter(filePath);
-            out.write(string);
+            out.write(graphString);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }finally {
@@ -1234,52 +1278,4 @@ public class GraphActivity extends AppCompatActivity {
         return true;
     }
 
-    public String getCurrentGraph() {
-        if (graphWrapper != null) {
-            StringBuilder stringBuilder = new StringBuilder();
-            String newLine = "\n";
-
-            //graph type
-            stringBuilder.append("D ")
-                    .append(graphWrapper.directed ? "1" : "0")
-                    .append(newLine)
-                    .append("W ")
-                    .append(graphWrapper.weighted ? "1" : "0")
-                    .append(newLine);
-
-            //vertices
-            int noOfVertices = graphWrapper.graph.noOfVertices;
-            stringBuilder.append("VC ")
-                    .append(noOfVertices)
-                    .append(newLine);
-
-            //vertices
-            for (Map.Entry<Integer, Vertex> vertexEntry : graphWrapper.graph.vertexMap.entrySet()) {
-                stringBuilder.append("VA ")
-                        .append(vertexEntry.getKey())
-                        .append(" ")
-                        .append(vertexEntry.getValue().row)
-                        .append(" ")
-                        .append(vertexEntry.getValue().col)
-                        .append(newLine);
-            }
-
-            //edges
-            for (Map.Entry<Integer, ArrayList<Edge>> entry : graphWrapper.graph.map.entrySet()) {
-                for (Edge i : entry.getValue()) {
-                    stringBuilder.append("E ")
-                            .append(i.src)
-                            .append(" ")
-                            .append(i.des)
-                            .append(" ")
-                            .append(i.weight)
-                            .append(newLine);
-                }
-            }
-
-            return stringBuilder.toString();
-        }
-
-        return null;
-    }
 }
