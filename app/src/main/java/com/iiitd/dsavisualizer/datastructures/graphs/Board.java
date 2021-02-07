@@ -140,7 +140,7 @@ public class Board {
         this.paintEdgeWeight = new Paint();
         this.paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
         this.paintEdgeWeight.setTextSize(textSize);
-        this.paintEdgeWeight.setColor(Color.RED);
+        this.paintEdgeWeight.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
         this.paintTextAnim = new Paint();
@@ -163,7 +163,7 @@ public class Board {
         this.paintEdgeWeightAnim = new Paint();
         this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
         this.paintEdgeWeightAnim.setTextSize(textSize);
-        this.paintEdgeWeightAnim.setColor(Color.GREEN);
+        this.paintEdgeWeightAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     }
 
@@ -209,6 +209,8 @@ public class Board {
         // clears canvas
         clearCanvasGraph();
 
+        boolean weighted = graph.weighted;
+
         // Nodes
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
@@ -231,7 +233,7 @@ public class Board {
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdgeGraph(rect1, rect2, edge);
+                drawEdgeGraph(rect1, rect2, edge, weighted);
             }
         }
 
@@ -265,16 +267,25 @@ public class Board {
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge) {
-        __drawEdge(customCanvas.canvasGraph, rect1, rect2, paintEdge, paintEdgeArrows, paintEdgeWeight, edge);
+    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
+        __drawEdge(customCanvas.canvasGraph,
+                rect1, rect2,
+                paintEdge, paintEdgeArrows, paintEdgeWeight,
+                edge, weighted);
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge) {
-        __drawEdge(customCanvas.canvasAnimation, rect1, rect2, paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim, edge);
+    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
+        __drawEdge(customCanvas.canvasAnimation,
+                rect1, rect2,
+                paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim,
+                edge, weighted);
     }
 
-    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA, Paint paintEW, Edge edge) {
+    public void __drawEdge(Canvas canvas,
+                           Rect rect1, Rect rect2,
+                           Paint paintE, Paint paintEA, Paint paintEW,
+                           Edge edge, boolean weighted) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -288,7 +299,7 @@ public class Board {
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-        if(edge != null) {
+        if(edge != null && weighted) {
             canvas.save();
             canvas.rotate((float) degree, x, y);
             canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);

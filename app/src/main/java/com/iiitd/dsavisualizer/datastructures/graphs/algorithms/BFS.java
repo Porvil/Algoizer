@@ -22,10 +22,20 @@ public class BFS {
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
     }
 
-    public GraphSequence run(int s){
+    public GraphSequence run(int s) {
 
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
+
+        {
+            GraphAnimationState graphAnimationState = new GraphAnimationState("start");
+
+            GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
+            graphAnimationStateShadow.vertices.addAll(vertices);
+            graphAnimationStateShadow.edges.addAll(edges);
+            graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
 
         HashMap<Integer, Boolean> visited = new HashMap<>();
         for(Map.Entry<Integer, ArrayList<Edge>> entry : g.map.entrySet()){
@@ -43,7 +53,7 @@ public class BFS {
         GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
         graphAnimationStateShadow.vertices.addAll(vertices);
         graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
-        graphSequence.graphAnimationStates.add(graphAnimationState);
+        graphSequence.addGraphAnimationState(graphAnimationState);
 
 
         while (queue.size() != 0) {
@@ -65,7 +75,7 @@ public class BFS {
                     graphAnimationStateShadow1.vertices.addAll(vertices);
                     graphAnimationStateShadow1.edges.addAll(edges);
                     graphAnimationState1.graphAnimationStateShadow.add(graphAnimationStateShadow1);
-                    graphSequence.graphAnimationStates.add(graphAnimationState1);
+                    graphSequence.addGraphAnimationState(graphAnimationState1);
                 }
             }
 

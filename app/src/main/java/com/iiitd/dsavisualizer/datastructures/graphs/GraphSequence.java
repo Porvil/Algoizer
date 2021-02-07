@@ -9,17 +9,16 @@ public class GraphSequence {
     public int curSeqNo;
     public ArrayList<GraphAnimationState> graphAnimationStates;
 
-
     public GraphSequence(GraphAlgorithmType graphAlgorithmType) {
         this.graphAlgorithmType = graphAlgorithmType;
-        this.curSeqNo = -1;
+        this.curSeqNo = 0;
+        this.size = 0;
         this.graphAnimationStates = new ArrayList<>();
     }
 
-    public GraphSequence(ArrayList<GraphAnimationState> graphAnimationStates) {
-        this.graphAnimationStates = graphAnimationStates;
-        this.curSeqNo = -1;
-        this.size = graphAnimationStates.size();
+    public void addGraphAnimationState(GraphAnimationState graphAnimationState){
+        graphAnimationStates.add(graphAnimationState);
+        size++;
     }
 
     @Override
@@ -36,11 +35,26 @@ public class GraphSequence {
     }
 
     public boolean backward(){
+//        if(getSize() <= 0)
+//            return false;
+//
+//        if(curSeqNo == 0)
+//            return false;
+
+        if(curSeqNo <= 0)
+            return false;
+
         curSeqNo--;
         return true;
     }
 
     public boolean forward(){
+        if(size <= 0)
+            return false;
+
+        if(curSeqNo >= size-1)
+            return false;
+
         curSeqNo++;
         return true;
     }

@@ -288,6 +288,7 @@ public class GraphActivity extends AppCompatActivity {
                 GraphSequence run = bfs.run(0);
                 graphSequence = run;
 
+                System.out.println(graphSequence);
 //                startTimer("BFS", bfs);
             }
         });
@@ -640,7 +641,7 @@ public class GraphActivity extends AppCompatActivity {
                             for(Edge edge : graphAnimationStateShadow.edges){
                                 Rect rect1 = graphWrapper.board.getRect(edge.src);
                                 Rect rect2 = graphWrapper.board.getRect(edge.des);
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge);
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.directed);
                             }
                         }
 
@@ -694,7 +695,7 @@ public class GraphActivity extends AppCompatActivity {
                             for(Edge edge : graphAnimationStateShadow.edges){
                                 Rect rect1 = graphWrapper.board.getRect(edge.src);
                                 Rect rect2 = graphWrapper.board.getRect(edge.des);
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge);
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.directed);
                             }
                         }
 
@@ -728,6 +729,9 @@ public class GraphActivity extends AppCompatActivity {
 
     private void initViews() {
 
+        final boolean startDirected = false;
+        final boolean startWeighted = false;
+
         graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
         graphControls.updateDrawables();
 
@@ -742,7 +746,7 @@ public class GraphActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim, iv_coordinates);
-                                graphWrapper = new GraphWrapper(context, customCanvas, true, false);
+                                graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
                                 updateGraphViewState();
                             }
                         });
