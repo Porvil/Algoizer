@@ -327,8 +327,8 @@ public class GraphActivity extends AppCompatActivity {
         btn_custominput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = et_customgraphinput.getText().toString();
-                parseAndShowCustomInput(s);
+                String customGraphString = et_customgraphinput.getText().toString();
+                parseAndShowCustomInput(customGraphString);
             }
         });
 
@@ -357,7 +357,6 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graphWrapper.board.clearCanvasAnim();
-
                 resetGraphSequence();
             }
         });
@@ -366,15 +365,6 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                customCanvas.canvasGraph.scale(2,2);
-                customCanvas.imageViewGraph.postInvalidate();
-
-//                customCanvas.canvasGraph.save();
-//                customCanvas.canvasGraph.scale(2, 2);
-//                customCanvas.canvasGraph.drawBitmap(customCanvas.bitmapGraph, 0, 0, null);
-//                customCanvas.canvasGraph.restore();
-
-
             }
         });
 
@@ -382,7 +372,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String customInput =
+                String customGraphString =
                         "D 1\n" +
                         "W 0\n" +
                         "VC 5\n" +
@@ -397,9 +387,8 @@ public class GraphActivity extends AppCompatActivity {
                         "E 2 3 1\n" +
                         "E 3 4 1\n";
 
-
                 graphWrapper.reset();
-                parseAndShowCustomInput(customInput);
+                parseAndShowCustomInput(customGraphString);
 
 //                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
 //                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
@@ -415,7 +404,7 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper.graph.addEdge(3, 4, 1);
 
 
-//                graphWrapper.board.update(graphWrapper.graph);
+//                graphWrapper.board.update(graphWrapper.graph)
             }
         });
 
@@ -1006,8 +995,8 @@ public class GraphActivity extends AppCompatActivity {
         }
     }
 
-    public void parseAndShowCustomInput(String s){
-        String[] ss = s.split("\\n");
+    public void parseAndShowCustomInput(String customGraphString){
+        String[] ss = customGraphString.split("\\n");
 
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
