@@ -14,15 +14,19 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class BFS {
-    Graph g;
+    Graph graph;
     GraphSequence graphSequence;
 
-    public BFS(Graph g){
-        this.g = g;
+    public BFS(Graph graph){
+        this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
     }
 
     public GraphSequence run(int s) {
+
+        if(graph == null || graph.vertexMap.size() == 0){
+            return graphSequence;
+        }
 
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
@@ -38,13 +42,13 @@ public class BFS {
         }
 
         HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Edge>> entry : g.map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : graph.map.entrySet()){
             visited.put(entry.getKey(), false);
         }
 
         LinkedList<Integer> queue = new LinkedList<>();
 
-        Vertex vertex = g.vertexMap.get(s);
+        Vertex vertex = graph.vertexMap.get(s);
         visited.put(s, true);
         queue.add(s);
 
@@ -57,16 +61,16 @@ public class BFS {
 
 
         while (queue.size() != 0) {
-            s = queue.poll();
+            s = queue.pop();
             System.out.println(s + " ");
 
-            ArrayList<Edge> i = g.map.get(s);
-            for(Edge edge : i){
+            ArrayList<Edge> edgeArrayList = graph.map.get(s);
+            for(Edge edge : edgeArrayList){
                 if(!visited.get(edge.des)){
                     visited.put(edge.des, true);
                     System.out.println("EDGE IN BFS :-    " + s + " --> " + edge.des);
                     queue.add(edge.des);
-                    Vertex vertex1 = g.vertexMap.get(edge.des);
+                    Vertex vertex1 = graph.vertexMap.get(edge.des);
 
                     vertices.add(vertex1);
                     edges.add(edge);

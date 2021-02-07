@@ -42,6 +42,7 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
+import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.io.File;
@@ -284,11 +285,16 @@ public class GraphActivity extends AppCompatActivity {
         btn_bfs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                resetGraphSequence();
+                graphWrapper.board.clearCanvasAnim();
+
                 BFS bfs = new BFS(graphWrapper.graph);
                 GraphSequence run = bfs.run(0);
                 graphSequence = run;
 
                 System.out.println(graphSequence);
+                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
 //                startTimer("BFS", bfs);
             }
         });
@@ -332,9 +338,11 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper.graph.clearGraph();
 //                graphWrapper.board.reset(graphWrapper.graph);
                 graphWrapper.reset();
+                graphWrapper.board.clearCanvasAnim();
+                graphSequence = null;
+                resetGraphSequence();
 //                graphWrapper.board.clearCanvasGraph();
 
-                // MUST ALSO RESET ANIM GRAPH [currently doesn't]
             }
         });
 
@@ -349,6 +357,8 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graphWrapper.board.clearCanvasAnim();
+
+                resetGraphSequence();
             }
         });
 
@@ -501,6 +511,8 @@ public class GraphActivity extends AppCompatActivity {
 //                graphWrapper = new GraphWrapper(context, customCanvas, directed, false);
 
                 graphWrapper.changeDirected(directed);
+                graphSequence = null;
+                resetGraphSequence();
 
             }
         });
@@ -520,6 +532,9 @@ public class GraphActivity extends AppCompatActivity {
                 // Clear everything
                 Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeWeighted(weighted);
+                graphSequence = null;
+                resetGraphSequence();
+
             }
         });
 
@@ -681,6 +696,7 @@ public class GraphActivity extends AppCompatActivity {
                 public void run() {
 
                     if(curSeqNo < graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
+                        UtilUI.setText(tv_seqno, curSeqNo + "/" + graphSequence.size);
 
                         graphWrapper.board.clearCanvasAnim();
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
@@ -695,7 +711,7 @@ public class GraphActivity extends AppCompatActivity {
                             for(Edge edge : graphAnimationStateShadow.edges){
                                 Rect rect1 = graphWrapper.board.getRect(edge.src);
                                 Rect rect2 = graphWrapper.board.getRect(edge.des);
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.directed);
+                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted);
                             }
                         }
 
@@ -950,7 +966,10 @@ public class GraphActivity extends AppCompatActivity {
                     et_graphsavename.setError("Cant be empty");
                 }
                 else {
-                    writeGraphToStorage(graphString, fileName);
+                    boolean success = Util.writeGraphToStorage(graphString, fileName);
+                    if(success){
+                        Toast.makeText(context, "Graph saved", Toast.LENGTH_SHORT).show();
+                    }
                     dialog.dismiss();
                 }
 
@@ -1161,6 +1180,8 @@ public class GraphActivity extends AppCompatActivity {
                     rg_directed.check(R.id.rb_undirected);
                 }
 
+                graphSequence = null;
+                resetGraphSequence();
                 graphWrapper.changeDirectedWeighted(directed, weighted);
                 graphWrapper.customInput(vertices, edges);
 
@@ -1195,6 +1216,19 @@ public class GraphActivity extends AppCompatActivity {
                     showSaveGraphDialog(graphString);
                 }
             }
+        }
+    }
+
+    public void resetGraphSequence(){
+        graphWrapper.board.clearCanvasAnim();
+
+        if(graphSequence != null){
+            graphSequence.curSeqNo = 0;
+            UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
+        }
+        else{
+            UtilUI.setText(tv_info, "-");
+            UtilUI.setText(tv_seqno, "0");
         }
     }
 
@@ -1244,42 +1278,6 @@ public class GraphActivity extends AppCompatActivity {
         else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    public boolean writeGraphToStorage(String graphString, String fileName){
-        //Checking the availability state of the External Storage.
-        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            System.out.println("Storage is not mounted, returning!!");
-            return false;
-        }
-
-        String path = AppSettings.getExternalStoragePath() + AppSettings.DIRECTORY;
-        File rootFile = new File(path);
-        if(!rootFile.exists()){
-            boolean mkdir = rootFile.mkdirs();
-            if(!mkdir){
-                System.out.println("Path/file couldn't be created");
-                return false;
-            }
-        }
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
-        String currentTimeStamp = dateFormat.format(new Date());
-        if(fileName == null)
-            fileName = "graph-" + currentTimeStamp + ".txt";
-        String filePath = path + AppSettings.SEPARATOR + fileName;
-
-        PrintWriter out = null;
-        try {
-           out = new PrintWriter(filePath);
-            out.write(graphString);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }finally {
-            out.close();
-        }
-
-        return true;
     }
 
 }

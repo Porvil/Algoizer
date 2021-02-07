@@ -1,8 +1,17 @@
 package com.iiitd.dsavisualizer.utility;
 
+import android.os.Environment;
+
 import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortData;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortData;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortData;
+import com.iiitd.dsavisualizer.constants.AppSettings;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Util {
 
@@ -48,4 +57,42 @@ public class Util {
         startRadians += ((x2 >= x1) ? 90 : -90) * Math.PI / 180;
         return Math.toDegrees(startRadians);
     }
+
+    public static boolean writeGraphToStorage(String graphString, String fileName){
+        //Checking the availability state of the External Storage.
+        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            System.out.println("Storage is not mounted, returning!!");
+            return false;
+        }
+
+        String path = AppSettings.getExternalStoragePath() + AppSettings.DIRECTORY;
+        File rootFile = new File(path);
+        if(!rootFile.exists()){
+            boolean mkdir = rootFile.mkdirs();
+            if(!mkdir){
+                System.out.println("Path/file couldn't be created");
+                return false;
+            }
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
+        String currentTimeStamp = dateFormat.format(new Date());
+        if(fileName == null)
+            fileName = "graph-" + currentTimeStamp + ".txt";
+        String filePath = path + AppSettings.SEPARATOR + fileName;
+
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(filePath);
+            out.write(graphString);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            out.close();
+        }
+
+        return true;
+    }
+
 }
