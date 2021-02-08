@@ -364,7 +364,24 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String customGraphString =
+                        "D 1\n" +
+                                "W 0\n" +
+                                "VC 5\n" +
+                                "VA 0 0 0\n" +
+                                "VA 1 0 3\n" +
+                                "VA 2 2 0\n" +
+                                "VA 3 2 4\n" +
+                                "VA 4 4 3\n" +
+                                "E 0 1 1\n" +
+                                "E 0 2 1\n" +
+                                "E 1 2 1\n" +
+                                "E 2 3 1\n" +
+                                "E 3 4 1\n" +
+                                "E 3 0 1\n";
 
+                graphWrapper.reset();
+                parseAndShowCustomInput(customGraphString);
             }
         });
 
@@ -419,7 +436,7 @@ public class GraphActivity extends AppCompatActivity {
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = false; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, 300, 300, focusable);
+                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
 
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window tolken
@@ -546,7 +563,7 @@ public class GraphActivity extends AppCompatActivity {
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (graphSequence.curSeqNo < graphSequence.getSize()){
+                                if (graphSequence.curSeqNo < graphSequence.getSize()-1){
                                     graphSequence.forward();
                                     taskStep(graphSequence.curSeqNo);
                                 }
