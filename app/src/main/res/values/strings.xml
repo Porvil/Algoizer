@@ -42,4 +42,5 @@
     <string name="binary_search_tree">Binary Search Tree</string>
     <string name="avl_tree">AVL Tree</string>
     <string name="traversals">Traversals</string>
+    <string name="icon">Icon</string>
 </resources>

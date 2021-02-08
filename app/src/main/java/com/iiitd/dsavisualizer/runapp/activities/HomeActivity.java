@@ -52,16 +52,15 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
                 ViewGroup.LayoutParams.MATCH_PARENT);
 
-        for(int i = 0; i< activityItemData.length; i++){
-            final ActivityItemData activityItemData = this.activityItemData[i];
-            View view = getLayoutInflater().inflate(R.layout.layout_sortingitem, null);
+        for (final ActivityItemData activityItemData : activityItemData) {
+            View view = getLayoutInflater().inflate(R.layout.layout_activity_item, null);
             ImageView imageView = view.findViewById(R.id.iv_sorticon);
             TextView textView = view.findViewById(R.id.tv_sortname);
 
             imageView.setImageDrawable(ContextCompat.getDrawable(context, activityItemData.drawable));
             textView.setText(activityItemData.text);
 
-            layoutParams.setMargins(5,5,5,5);
+            layoutParams.setMargins(15, 0, 15, 0);
             view.setLayoutParams(layoutParams);
 
             linearLayout.addView(view);
@@ -72,8 +71,7 @@ public class HomeActivity extends AppCompatActivity {
                     try {
                         Class<?> aClass = Class.forName(activityItemData.activityClassName);
                         startActivity(new Intent(context, aClass));
-                    }
-                    catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }

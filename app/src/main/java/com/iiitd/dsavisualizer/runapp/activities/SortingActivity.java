@@ -3,6 +3,8 @@ package com.iiitd.dsavisualizer.runapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,6 +21,7 @@ import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivit
 import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivity;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.runapp.others.ActivityItemData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -40,25 +43,26 @@ public class SortingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setEnterTransition(new Slide());
+        getWindow().setExitTransition(new Fade());
         setContentView(R.layout.activity_sorting);
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);
 
-        int width = (int) UtilUI.dpToPx(context, 250);
+        int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
                 ViewGroup.LayoutParams.MATCH_PARENT);
 
-        for(int i = 0; i< activityItemData.length; i++){
-            final ActivityItemData activityItemData = this.activityItemData[i];
-            View view = getLayoutInflater().inflate(R.layout.layout_sortingitem, null);
+        for (final ActivityItemData activityItemData : activityItemData) {
+            View view = getLayoutInflater().inflate(R.layout.layout_activity_item, null);
             ImageView imageView = view.findViewById(R.id.iv_sorticon);
             TextView textView = view.findViewById(R.id.tv_sortname);
 
             imageView.setImageDrawable(ContextCompat.getDrawable(context, activityItemData.drawable));
             textView.setText(activityItemData.text);
 
-            layoutParams.setMargins(5,5,5,5);
+            layoutParams.setMargins(15, 0, 15, 0);
             view.setLayoutParams(layoutParams);
 
             linearLayout.addView(view);
@@ -69,8 +73,7 @@ public class SortingActivity extends AppCompatActivity {
                     try {
                         Class<?> aClass = Class.forName(activityItemData.activityClassName);
                         startActivity(new Intent(context, aClass));
-                    }
-                    catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
