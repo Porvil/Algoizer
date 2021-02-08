@@ -23,6 +23,7 @@ public class AppSettings {
     public static final int SORTING_ELEMENT_BOUND = 20;
     public static final int TEXT_SMALL = 12;
     public static final int TEXT_MEDIUM = 14;
+    public static final int ACTIVITY_ITEM_WIDTH = 250;
 
     // Drawable ID's
     public static final int BACK_BUTTON = R.drawable.ic_baseline_arrow_back_24;

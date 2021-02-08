@@ -15,11 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".runapp.activities.TreesActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity
             android:name=".datastructures.graphs.GraphActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,6 +35,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,6 +45,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,6 +55,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,6 +63,7 @@
             android:name=".algorithms.sorting.bubble.BubbleSortActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -63,6 +73,7 @@
             android:name=".algorithms.sorting.selection.SelectionSortActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -72,6 +83,7 @@
             android:name=".algorithms.sorting.insertion.InsertionSortActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -81,6 +93,7 @@
             android:name=".algorithms.sorting.merge.MergeSortActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -90,6 +103,7 @@
             android:name=".algorithms.sorting.quick.QuickSortActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -101,6 +115,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -110,6 +125,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

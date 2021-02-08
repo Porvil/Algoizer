@@ -1,10 +1,11 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.View;
@@ -13,29 +14,23 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
+import com.iiitd.dsavisualizer.datastructures.trees.avl.AVLActivity;
+import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
 import com.iiitd.dsavisualizer.runapp.others.ActivityItemData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-public class HomeActivity extends AppCompatActivity {
+public class TreesActivity extends AppCompatActivity {
 
     Context context;
     LinearLayout linearLayout;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_sorting),
-            new ActivityItemData(TreesActivity.class.getName(), "Trees", R.drawable.ic_trees),
-            new ActivityItemData(GraphActivity.class.getName(), "Graph", R.drawable.ic_graphs)
+            new ActivityItemData(BSTActivity.class.getName(), "BST", R.drawable.ic_bst),
+            new ActivityItemData(AVLActivity.class.getName(), "AVL", R.drawable.ic_avl)
     };
-
-    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setEnterTransition(new Slide());
         getWindow().setExitTransition(new Fade());
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_trees);
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);
@@ -80,25 +75,5 @@ public class HomeActivity extends AppCompatActivity {
             });
 
         }
-
     }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
-    }
-
 }
