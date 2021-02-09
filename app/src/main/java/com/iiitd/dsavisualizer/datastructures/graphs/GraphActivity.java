@@ -7,12 +7,14 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,9 +47,6 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -430,13 +429,45 @@ public class GraphActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup, null);
+                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
+
+                ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
+                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
+                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
+                final ImageView iv_popupgraph = popupView.findViewById(R.id.iv_popupgraph);
+
+
+
+
+                iv_popupgraph.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int width = iv_popupgraph.getWidth();
+                        int height = iv_popupgraph.getHeight();
+
+                        System.out.println("Canvas Pop Up = " + width + "x" + height);
+
+                        Canvas canvas;
+                        Bitmap bitmap;
+
+                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        iv_popupgraph.setImageBitmap(bitmap);
+                        canvas = new Canvas(bitmap);
+
+                        canvas.drawCircle(50,50,20, new Paint(Color.RED));
+
+                    }
+                });
+
 
                 // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final int width = 800;
+                final int height = ll_anim.getHeight();
                 boolean focusable = false; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
 
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window tolken
@@ -472,6 +503,30 @@ public class GraphActivity extends AppCompatActivity {
                         }
                         return true;
                     }});
+
+                btn_minimize.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(iv_popupgraph.getVisibility() == View.VISIBLE){
+                            iv_popupgraph.setVisibility(View.GONE);
+                            int curWidth = width;
+                            int curHeight = height - iv_popupgraph.getHeight();
+                            curHeight = curHeight <= 0 ? 200 : curHeight;
+                            popupWindow.update(curWidth, curHeight);
+                        }
+                        else{
+                            iv_popupgraph.setVisibility(View.VISIBLE);
+                            popupWindow.update(width, height);
+                        }
+                    }
+                });
+
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
 
             }
         });
@@ -706,9 +761,11 @@ public class GraphActivity extends AppCompatActivity {
 
                         graphWrapper.board.clearCanvasAnim();
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
-                        System.out.println(graphAnimationState);
+//                        System.out.println(graphAnimationState);
+
 
                         for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
+                            System.out.println(graphAnimationStateShadow.queues);
                             for(Vertex vertex : graphAnimationStateShadow.vertices){
                                 Rect rect = graphWrapper.board.getRect(vertex.data);
                                 graphWrapper.board.drawNodeAnim(rect, vertex.data);

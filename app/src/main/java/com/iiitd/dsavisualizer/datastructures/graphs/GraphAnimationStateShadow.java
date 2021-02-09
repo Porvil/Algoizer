@@ -6,10 +6,12 @@ public class GraphAnimationStateShadow {
 
     public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
+    public ArrayList<Integer> queues;
 
     public GraphAnimationStateShadow() {
         this.vertices = new ArrayList<>();
         this.edges = new ArrayList<>();
+        this.queues = new ArrayList<>();
     }
 
     @Override
@@ -17,6 +19,8 @@ public class GraphAnimationStateShadow {
         return "GraphAnimationStateShadow{" +
                 "vertices=" + vertices +
                 ", edges=" + edges +
+                ", queues=" + queues +
                 '}';
     }
+
 }
