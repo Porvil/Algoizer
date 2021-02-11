@@ -9,6 +9,7 @@ public class VertexBFS implements Comparable<VertexBFS> {
     public String color;
     public int dist;
     public int parent;
+    public int f;
 
     public VertexBFS(int data, int row, int col) {
         this.data = data;
@@ -27,12 +28,27 @@ public class VertexBFS implements Comparable<VertexBFS> {
 
     @Override
     public String toString() {
-        return "Vertex{" +
+        return "VertexBFS{" +
                 "data=" + data +
                 ", row=" + row +
                 ", col=" + col +
+                ", color='" + color + '\'' +
+                ", dist=" + dist +
+                ", parent=" + parent +
+                ", f=" + f +
                 '}';
     }
+
+    public VertexBFS(Vertex vertex, String color, int dist, int parent, int f) {
+        this.data = vertex.data;
+        this.row = vertex.row;
+        this.col = vertex.col;
+        this.color = color;
+        this.dist = dist;
+        this.parent = parent;
+        this.f = f;
+    }
+
 
     @Override
     public int compareTo(VertexBFS o2) {

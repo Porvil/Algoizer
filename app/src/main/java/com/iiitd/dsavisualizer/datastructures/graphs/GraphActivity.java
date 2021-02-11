@@ -43,6 +43,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
+import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -301,7 +302,15 @@ public class GraphActivity extends AppCompatActivity {
         btn_dfs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startTimer("PREORDER", -1);
+                resetGraphSequence();
+                graphWrapper.board.clearCanvasAnim();
+
+                DFS dfs = new DFS(graphWrapper.graph);
+                GraphSequence run = dfs.dfs();
+                graphSequence = run;
+
+//                System.out.println(graphSequence);
+//                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
             }
         });
 
