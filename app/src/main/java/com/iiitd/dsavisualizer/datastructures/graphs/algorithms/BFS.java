@@ -167,15 +167,41 @@ public class BFS {
 
                 }
 
+                if(map.get(v).dist == map.get(u).dist + 1){
+                    System.out.println("TREE EDGE : " + u + " -> " + v);
+                }
+                else{
+                    int src = u;
+                    int des = v;
+
+                    int srcDepth = map.get(u).dist;
+                    int desDepth = map.get(v).dist;
+
+                    while (map.get(src).dist > 0 && map.get(src).dist > map.get(des).dist){
+                        src = map.get(src).parent;
+                    }
+                    while (map.get(des).dist > 0 && map.get(des).dist > map.get(src).dist){
+                        des = map.get(des).parent;
+                    }
+
+                    if(src == des){
+                        System.out.println("BACK EDGE : " + u + " -> " + v);
+                    }
+                    else{
+                        System.out.println("CROSS EDGE : " + u + " -> " + v);
+                    }
+
+                }
 //                if(map.get(v).dist == map.get(u).dist + 1){
 //                    System.out.println("TREE EDGE : " + u + " -> " + v);
 //                }
-//                if(map.get(v).dist <= map.get(u).dist + 1){
-//                    System.out.println("CROSS EDGE : " + u + " -> " + v);
-//                }
-//                if( 0 <= map.get(v).dist &&  map.get(v).dist <= map.get(u).dist){
+//                else if( 0 <= map.get(v).dist &&  map.get(v).dist <= map.get(u).dist){
 //                    System.out.println("BACK EDGE : " + u + " -> " + v);
 //                }
+//                else if(map.get(v).dist <= map.get(u).dist + 1){
+//                    System.out.println("CROSS EDGE : " + u + " -> " + v);
+//                }
+
 
             }
             map.get(u).color = "BLACK";
