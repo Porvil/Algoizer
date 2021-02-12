@@ -60,7 +60,20 @@ public class DFS {
         for(Edge edge : graph.map.get(u)) {
             int v = edge.des;
 
-            if (map.get(v).color.equals("WHITE")) {
+            if(map.get(v).color.equals("BLACK")){
+                if (map.get(u).dist < map.get(v).dist) {
+                    System.out.println("FORWARD EDGE : " + u + " -> " + v);
+                }
+                else {
+                    System.out.println("CROSS EDGE : " + u + " -> " + v);
+                }
+            }
+            else if (map.get(v).color.equals("GRAY")) {
+                System.out.println("BACK EDGE : " + u + " -> " + v);
+            }
+            else if (map.get(v).color.equals("WHITE")) {
+                System.out.println("TREE EDGE : " + u + " -> " + v);
+
                 map.get(v).parent = u;
                 dfs_visit(v);
             }
