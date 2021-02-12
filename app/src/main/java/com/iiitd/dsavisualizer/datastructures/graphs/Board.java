@@ -222,7 +222,7 @@ public class Board {
         }
 
         //Edges
-        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.map.entrySet() ){
+        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.edgeListMap.entrySet() ){
 
             for (Edge edge : vertex.getValue()) {
                 System.out.println(vertex.getKey() + ":" + edge);

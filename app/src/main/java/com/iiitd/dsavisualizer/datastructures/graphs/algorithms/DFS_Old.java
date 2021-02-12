@@ -25,7 +25,7 @@ public class DFS_Old {
         System.out.print(v + " ");
 
 
-        ArrayList<Edge> edgeArrayList = graph.map.get(v);
+        ArrayList<Edge> edgeArrayList = graph.edgeListMap.get(v);
         
         for(Edge edge : edgeArrayList){
             if(visited.get(edge.des) == false){
@@ -44,7 +44,7 @@ public class DFS_Old {
         // not visited(set as
         // false by default in java)
         HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Edge>> entry : graph.map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : graph.edgeListMap.entrySet()){
             visited.put(entry.getKey(), false);
         }
         // Call the recursive helper

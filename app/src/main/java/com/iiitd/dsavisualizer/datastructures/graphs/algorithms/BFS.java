@@ -7,7 +7,9 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateShadow;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
-import com.iiitd.dsavisualizer.datastructures.graphs.VertexBFS;
+import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
+
+import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,72 +23,6 @@ public class BFS {
     public BFS(Graph graph){
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
-    }
-
-    public GraphSequence runOld(int s) {
-
-        if(graph == null || graph.vertexMap.size() == 0){
-            return graphSequence;
-        }
-
-        ArrayList<Vertex> vertices = new ArrayList<>();
-        ArrayList<Edge> edges = new ArrayList<>();
-
-        {
-            GraphAnimationState graphAnimationState = new GraphAnimationState("start");
-
-            GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
-            graphAnimationStateShadow.vertices.addAll(vertices);
-            graphAnimationStateShadow.edges.addAll(edges);
-            graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
-
-        HashMap<Integer, Boolean> visited = new HashMap<>();
-        for(Map.Entry<Integer, ArrayList<Edge>> entry : graph.map.entrySet()){
-            visited.put(entry.getKey(), false);
-        }
-
-        LinkedList<Integer> queue = new LinkedList<>();
-
-        Vertex vertex = graph.vertexMap.get(s);
-        visited.put(s, true);
-        queue.add(s);
-
-        vertices.add(vertex);
-        GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
-        GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
-        graphAnimationStateShadow.vertices.addAll(vertices);
-        graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
-        graphSequence.addGraphAnimationState(graphAnimationState);
-
-
-        while (queue.size() != 0) {
-            s = queue.pop();
-            System.out.println(s + " ");
-
-            ArrayList<Edge> edgeArrayList = graph.map.get(s);
-            for(Edge edge : edgeArrayList){
-                if(!visited.get(edge.des)){
-                    visited.put(edge.des, true);
-                    System.out.println("EDGE IN BFS :-    " + s + " --> " + edge.des);
-                    queue.add(edge.des);
-                    Vertex vertex1 = graph.vertexMap.get(edge.des);
-
-                    vertices.add(vertex1);
-                    edges.add(edge);
-                    GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + edge.des);
-                    GraphAnimationStateShadow graphAnimationStateShadow1 = new GraphAnimationStateShadow();
-                    graphAnimationStateShadow1.vertices.addAll(vertices);
-                    graphAnimationStateShadow1.edges.addAll(edges);
-                    graphAnimationState1.graphAnimationStateShadow.add(graphAnimationStateShadow1);
-                    graphSequence.addGraphAnimationState(graphAnimationState1);
-                }
-            }
-
-        }
-
-        return graphSequence;
     }
 
     public GraphSequence run(int s) {
@@ -112,16 +48,16 @@ public class BFS {
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
 
-        HashMap<Integer, VertexBFS> map = new HashMap<>();
+        HashMap<Integer, VertexCLRS> map = new HashMap<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexBFS vertexBFS = new VertexBFS(entry.getValue(), "WHITE", Integer.MAX_VALUE, -1);
-            map.put(entry.getKey(), vertexBFS);
+            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1);
+            map.put(entry.getKey(), vertexCLRS);
         }
         queue.add(s);
 
         Vertex vertex = graph.vertexMap.get(s);
-        map.get(s).color = "GRAY";
+        map.get(s).color = GRAY;
         map.get(s).dist = 0;
         map.get(s).parent = -1;
 
@@ -144,10 +80,10 @@ public class BFS {
             System.out.println(queue);
             System.out.println("___________");
 
-            for(Edge edge : graph.map.get(u)) {
+            for(Edge edge : graph.edgeListMap.get(u)) {
                 int v = edge.des;
-                if (map.get(v).color.equals("WHITE")) {
-                    map.get(v).color = "GRAY";
+                if (map.get(v).color == WHITE) {
+                    map.get(v).color = GRAY;
                     map.get(v).dist = map.get(u).dist + 1;
                     map.get(v).parent = u;
 
@@ -173,9 +109,6 @@ public class BFS {
                 else{
                     int src = u;
                     int des = v;
-
-                    int srcDepth = map.get(u).dist;
-                    int desDepth = map.get(v).dist;
 
                     while (map.get(src).dist > 0 && map.get(src).dist > map.get(des).dist){
                         src = map.get(src).parent;
@@ -205,7 +138,7 @@ public class BFS {
 
 
             }
-            map.get(u).color = "BLACK";
+            map.get(u).color = BLACK;
 
         }
 

@@ -344,7 +344,7 @@ public class GraphWrapper {
         }
 
         //edges
-        for (Map.Entry<Integer, ArrayList<Edge>> entry : graph.map.entrySet()) {
+        for (Map.Entry<Integer, ArrayList<Edge>> entry : graph.edgeListMap.entrySet()) {
             for (Edge i : entry.getValue()) {
                 stringBuilder.append("E ")
                         .append(i.src)

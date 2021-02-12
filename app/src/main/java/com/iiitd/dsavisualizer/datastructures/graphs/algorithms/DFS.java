@@ -5,10 +5,15 @@ import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
-import com.iiitd.dsavisualizer.datastructures.graphs.VertexBFS;
+import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
-import java.util.ArrayList;
+import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class DFS {
@@ -16,7 +21,7 @@ public class DFS {
     Graph graph;
     GraphSequence graphSequence;
     int time;
-    HashMap<Integer, VertexBFS> map;
+    HashMap<Integer, VertexCLRS> map;
 
     public DFS(Graph graph){
         this.graph = graph;
@@ -29,21 +34,40 @@ public class DFS {
         map = new HashMap<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexBFS vertexBFS = new VertexBFS(entry.getValue(), "WHITE", Integer.MAX_VALUE, -1, -1);
-            map.put(entry.getKey(), vertexBFS);
+            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1, -1);
+            map.put(entry.getKey(), vertexCLRS);
         }
 
         time = 0;
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexBFS vertexBFS = map.get(entry.getKey());
-            if(vertexBFS.color.equals("WHITE")){
+            VertexCLRS vertexCLRS = map.get(entry.getKey());
+            if(vertexCLRS.color == WHITE){
                 dfs_visit(entry.getKey());
             }
         }
 
         // ALL DONE
-        for(Map.Entry<Integer, VertexBFS> entry : map.entrySet()){
+        for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+        }
+
+        System.out.println("______________________________________");
+        System.out.println("______________________________________");
+
+        // TOPOLOGICAL SORT HERE
+        List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<Integer, VertexCLRS> >() {
+            public int compare(Map.Entry<Integer, VertexCLRS> o1,
+                               Map.Entry<Integer, VertexCLRS> o2)
+            {
+                return o2.getValue().f - o1.getValue().f;
+            }
+        });
+
+        for(Map.Entry<Integer, VertexCLRS> entry : list){
             System.out.println(entry.getValue());
         }
 
@@ -53,14 +77,14 @@ public class DFS {
     private void dfs_visit(int u) {// u = src, v = des
         time++;
 
-        VertexBFS vertexBFS = map.get(u);
-        vertexBFS.dist = time;
-        vertexBFS.color = "GRAY";
+        VertexCLRS vertexCLRS = map.get(u);
+        vertexCLRS.dist = time;
+        vertexCLRS.color = GRAY;
 
-        for(Edge edge : graph.map.get(u)) {
+        for(Edge edge : graph.edgeListMap.get(u)) {
             int v = edge.des;
 
-            if(map.get(v).color.equals("BLACK")){
+            if(map.get(v).color == BLACK){
                 if (map.get(u).dist < map.get(v).dist) {
                     System.out.println("FORWARD EDGE : " + u + " -> " + v);
                 }
@@ -68,10 +92,10 @@ public class DFS {
                     System.out.println("CROSS EDGE : " + u + " -> " + v);
                 }
             }
-            else if (map.get(v).color.equals("GRAY")) {
+            else if (map.get(v).color == GRAY) {
                 System.out.println("BACK EDGE : " + u + " -> " + v);
             }
-            else if (map.get(v).color.equals("WHITE")) {
+            else if (map.get(v).color == WHITE) {
                 System.out.println("TREE EDGE : " + u + " -> " + v);
 
                 map.get(v).parent = u;
@@ -79,9 +103,9 @@ public class DFS {
             }
         }
 
-        vertexBFS.color = "BLACK";
+        vertexCLRS.color = BLACK;
         time++;
-        vertexBFS.f = time;
+        vertexCLRS.f = time;
     }
 
 }

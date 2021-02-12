@@ -8,21 +8,21 @@ public class Graph {
     public boolean directed;
     public boolean weighted;
     public int noOfVertices;
-    public Map<Integer, ArrayList<Edge>> map;
-    public Map<Integer, Vertex> vertexMap;
+    public Map<Integer, ArrayList<Edge>> edgeListMap;        // Vertex number -> all (edges object)
+    public Map<Integer, Vertex> vertexMap;                   // Vertex number -> vertex object
 
     public Graph(boolean directed, boolean weighted) {
         this.directed = directed;
         this.weighted = weighted;
         this.noOfVertices = 0;
-        map = new HashMap<>();
+        edgeListMap = new HashMap<>();
         vertexMap = new HashMap<>();
     }
 
     // Add edges to the graph
     boolean addEdge(int src, int des, int weight) {
         if(checkContainsVertices(src, des)) {
-            map.get(src).add(new Edge(src, des, weight));
+            edgeListMap.get(src).add(new Edge(src, des, weight));
             return true;
         }
 
@@ -31,13 +31,13 @@ public class Graph {
 
     // Add edges to the graph
     boolean addVertex(int v, int row, int col) {
-        if(map.containsKey(v)){
+        if(edgeListMap.containsKey(v)){
             System.out.println("Vertex present already");
             return false;
         }
 
         noOfVertices++;
-        map.put(v, new ArrayList<Edge>());
+        edgeListMap.put(v, new ArrayList<Edge>());
         vertexMap.put(v, new Vertex(v, row, col));
 
         return true;
@@ -45,15 +45,15 @@ public class Graph {
 
     // Remove vertex from the graph, also removes edges associated with it
     void removeVertex(int v, int row, int col) {
-        if(!map.containsKey(v)){
+        if(!edgeListMap.containsKey(v)){
             System.out.println("Vertex not present already");
             return;
         }
 
         noOfVertices--;
-        map.remove(v);
+        edgeListMap.remove(v);
         vertexMap.remove(v);
-        for(Map.Entry<Integer, ArrayList<Edge>> entry : map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
             for(Edge i : new ArrayList<>(entry.getValue())){
                 if(i.des == v)
                     entry.getValue().remove(i);
@@ -64,9 +64,9 @@ public class Graph {
 
     // Remove edges from the graph
     void removeEdge(int src, int des) {
-        for(Edge i : new ArrayList<>(map.get(src))){
+        for(Edge i : new ArrayList<>(edgeListMap.get(src))){
             if(i.des == des)
-                map.get(src).remove(i);
+                edgeListMap.get(src).remove(i);
         }
 //        map.get(src).removeIf(i -> i == des);
 
@@ -83,7 +83,7 @@ public class Graph {
             return true;
 
         for(int vertex : vertices){
-            if(!map.containsKey(vertex))
+            if(!edgeListMap.containsKey(vertex))
                 return false;
         }
 
@@ -93,7 +93,7 @@ public class Graph {
     void print(){
         System.out.println("no of vertices = " + noOfVertices);
 
-        for(Map.Entry<Integer, ArrayList<Edge>> entry : map.entrySet()){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
             System.out.println();
             System.out.print(entry.getKey() + " -> ");
             for(Edge i : entry.getValue()){
@@ -115,7 +115,7 @@ public class Graph {
 
     public void clearGraph(){
         this.noOfVertices = 0;
-        map = new HashMap<>();
+        edgeListMap = new HashMap<>();
         vertexMap = new HashMap<>();
     }
 
