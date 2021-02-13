@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,8 +11,10 @@ import android.graphics.Typeface;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 
@@ -63,28 +66,17 @@ public class BoardTree {
     private Paint paintEdgeArrowsAnim;
     private Paint paintTextAnim;
 
-    public BoardTree(Context context, GraphTree graphTree) {
+    BiDirectionScrollView bdsv_popupgraph;
+    ImageView imageView;
+    Canvas canvas;
+    Bitmap bitmap;
+
+    public BoardTree(Context context, GraphTree graphTree, BiDirectionScrollView bdsv_popupgraph) {
         this.context = context;
+        this.bdsv_popupgraph = bdsv_popupgraph;
 
         this.xCount = graphTree.noOfCols;
         this.yCount = graphTree.noOfRows;
-
-        // px = 1mm
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
-                context.getResources().getDisplayMetrics());
-        float cm = px * nodeSize;
-
-        // not used
-        xSize = (int) cm;
-        ySize = (int) cm;
-
-        this.X = xCount * xSize;
-        this.Y = yCount * ySize;
-
-        System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
-        System.out.println("X = " + X + " | " + " Y = " + Y);
-        System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
-        System.out.println("max count = " + yCount * xCount );
 
         float minSide = Math.min(xSize, ySize);
         this.nodeRadius = ( minSide * circleRatio) / 2;
@@ -103,11 +95,54 @@ public class BoardTree {
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
         this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
 
+    }
+
+    public void startInit(){
+        // px = 1mm
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
+                context.getResources().getDisplayMetrics());
+        float cm = px * nodeSize;
+
+        // not used
+        xSize = (int) cm;
+        ySize = (int) cm;
+
+        this.X = xCount * xSize;
+        this.Y = yCount * ySize;
+
+        System.out.println("bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
+                + " | " + " ySize = " + bdsv_popupgraph.getHeight());
+        System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
+        System.out.println("X = " + X + " | " + " Y = " + Y);
+        System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
+        System.out.println("max count = " + yCount * xCount );
+
+
+        imageView = new ImageView(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)X, (int)Y);
+        imageView.setLayoutParams(layoutParams);
+
+
+        bitmap = Bitmap.createBitmap((int)X, (int)Y, Bitmap.Config.ARGB_8888);
+        imageView.setImageBitmap(bitmap);
+        canvas = new Canvas(bitmap);
+
+        canvas.drawCircle(50,50,20, new Paint(Color.RED));
+
+//        imageView.getLayoutParams().width = (int) X;
+//        imageView.getLayoutParams().height = (int) Y;
+
+
+        bdsv_popupgraph.addView(imageView);
+
+
+
+
         // Initializes all Paint Variables
         initPaints();
 
         // Draw Grid on Grid ImageView
-//        drawGrid();
+        drawGrid();
     }
 
     private void initPaints(){
@@ -176,7 +211,7 @@ public class BoardTree {
             int top = 0;
             int bottom = (int) Y;
             rect.set(left, top, right, bottom);
-            customCanvas.canvasGrid.drawRect(rect, paintGrid);
+            canvas.drawRect(rect, paintGrid);
         }
 
         for(int i=0; i<yCount+1; i++){
@@ -185,7 +220,7 @@ public class BoardTree {
             int left = 0;
             int right = (int) X;
             rect.set(left, top, right, bottom);
-            customCanvas.canvasGrid.drawRect(rect, paintGrid);
+            canvas.drawRect(rect, paintGrid);
         }
 
         for (int r = 0; r < yCount; r++) {
@@ -196,7 +231,7 @@ public class BoardTree {
                 int y = (int) (rect1.top + (rect1.height() * coordinatesOffset));
                 Rect rectText = new Rect();
                 paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
-                customCanvas.canvasCoordinates.drawText(text, x, y , paintGridCoordinates);
+                canvas.drawText(text, x, y , paintGridCoordinates);
             }
         }
 

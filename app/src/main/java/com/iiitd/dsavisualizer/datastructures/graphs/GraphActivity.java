@@ -44,6 +44,7 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
+import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -110,6 +111,7 @@ public class GraphActivity extends AppCompatActivity {
     CustomCanvas customCanvas;
     GraphControls graphControls;
     GraphSequence graphSequence;
+    GraphTree graphTree;
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
@@ -293,9 +295,14 @@ public class GraphActivity extends AppCompatActivity {
                 GraphSequence run = bfs.run(0);
                 graphSequence = run;
 
-                GraphTree graphTree = bfs.graphTree;
+                GraphTree rungt = bfs.graphTree;
+
+                graphTree = rungt;
+                graphTree.noOfCols = 3;
+                graphTree.noOfRows = 7;
 
                 graphTree.printEdges();
+                graphTree.printVertices();
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -309,17 +316,141 @@ public class GraphActivity extends AppCompatActivity {
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 
+
+
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
+
+                final ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
+                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
+                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
+
+                final BiDirectionScrollView bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
+
+
+
                 DFS dfs = new DFS(graphWrapper.graph);
                 GraphSequence run = dfs.dfs();
                 graphSequence = run;
 
-                GraphTree graphTree = dfs.graphTree;
+                GraphTree rungt = dfs.graphTree;
+
+                graphTree = rungt;
                 graphTree.noOfCols = 3;
                 graphTree.noOfRows = 7;
 
-                BoardTree boardTree = new BoardTree(context, graphTree);
+
+                final BoardTree boardTree = new BoardTree(context, graphTree, bdsv_popupgraph);
                 graphTree.printEdges();
                 graphTree.printVertices();
+
+
+                bdsv_popupgraph.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        boardTree.startInit();
+                    }
+                });
+
+
+
+
+//
+//                iv_popupgraph.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        int width = iv_popupgraph.getWidth();
+//                        int height = iv_popupgraph.getHeight();
+//
+//                        System.out.println("Canvas Pop Up = " + width + "x" + height);
+//
+//                        Canvas canvas;
+//                        Bitmap bitmap;
+//
+//                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+//                        iv_popupgraph.setImageBitmap(bitmap);
+//                        canvas = new Canvas(bitmap);
+//
+//                        canvas.drawCircle(50,50,20, new Paint(Color.RED));
+//
+//                    }
+//                });
+
+
+                // create the popup window
+//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final int width = 528;
+//                final int width = 800;
+                final int height = ll_anim.getHeight();
+                boolean focusable = false; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window tolken
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
+//popupWindow.showAsDropDown(view);
+                // dismiss the popup window when touched
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    int orgX, orgY;
+                    int offsetX, offsetY;
+
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                orgX = (int) event.getX();
+                                orgY = (int) event.getY();
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                offsetX = (int)event.getRawX() - orgX;
+                                offsetY = (int)event.getRawY() - orgY;
+                                System.out.println(offsetX + "x" + offsetY);
+                                popupWindow.update(offsetX, offsetY, -1, -1, true);
+                                break;
+                        }
+                        return true;
+                    }});
+
+                btn_minimize.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(bdsv_popupgraph.getVisibility() == View.VISIBLE){
+                            bdsv_popupgraph.setVisibility(View.GONE);
+                            int curWidth = width;
+                            int curHeight = height - bdsv_popupgraph.getHeight();
+                            curHeight = curHeight <= 0 ? 200 : curHeight;
+                            popupWindow.update(curWidth, curHeight);
+
+                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_open_in_full_24));
+
+                        }
+                        else{
+                            bdsv_popupgraph.setVisibility(View.VISIBLE);
+                            popupWindow.update(width, height);
+                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_remove_24));
+                        }
+                    }
+                });
+
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
 
 //                System.out.println(graphSequence);
 //                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -459,106 +590,133 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
 
-                ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
-                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
-                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
-                final ImageView iv_popupgraph = popupView.findViewById(R.id.iv_popupgraph);
+                String customGraphString = "D 1\n" +
+                        "W 0\n" +
+                        "VC 7\n" +
+                        "VA 0 3 7\n" +
+                        "VA 1 3 5\n" +
+                        "VA 2 5 5\n" +
+                        "VA 3 1 7\n" +
+                        "VA 4 1 10\n" +
+                        "VA 5 3 10\n" +
+                        "VA 6 5 10\n" +
+                        "E 0 1 1\n" +
+                        "E 0 5 1\n" +
+                        "E 0 2 1\n" +
+                        "E 1 2 1\n" +
+                        "E 3 0 1\n" +
+                        "E 3 5 1\n" +
+                        "E 3 4 1\n" +
+                        "E 4 5 1\n" +
+                        "E 5 6 1\n" +
+                        "E 6 2 1\n" +
+                        "E 6 0 1\n";
 
-
-
-
-                iv_popupgraph.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int width = iv_popupgraph.getWidth();
-                        int height = iv_popupgraph.getHeight();
-
-                        System.out.println("Canvas Pop Up = " + width + "x" + height);
-
-                        Canvas canvas;
-                        Bitmap bitmap;
-
-                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        iv_popupgraph.setImageBitmap(bitmap);
-                        canvas = new Canvas(bitmap);
-
-                        canvas.drawCircle(50,50,20, new Paint(Color.RED));
-
-                    }
-                });
+                graphWrapper.reset();
+                parseAndShowCustomInput(customGraphString);
 
 
-                // create the popup window
-//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final int width = 800;
-                final int height = ll_anim.getHeight();
-                boolean focusable = false; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
-
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
-//popupWindow.showAsDropDown(view);
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    int orgX, orgY;
-                    int offsetX, offsetY;
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                orgX = (int) event.getX();
-                                orgY = (int) event.getY();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                offsetX = (int)event.getRawX() - orgX;
-                                offsetY = (int)event.getRawY() - orgY;
-                                System.out.println(offsetX + "x" + offsetY);
-                                popupWindow.update(offsetX, offsetY, -1, -1, true);
-                                break;
-                        }
-                        return true;
-                    }});
-
-                btn_minimize.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(iv_popupgraph.getVisibility() == View.VISIBLE){
-                            iv_popupgraph.setVisibility(View.GONE);
-                            int curWidth = width;
-                            int curHeight = height - iv_popupgraph.getHeight();
-                            curHeight = curHeight <= 0 ? 200 : curHeight;
-                            popupWindow.update(curWidth, curHeight);
-                        }
-                        else{
-                            iv_popupgraph.setVisibility(View.VISIBLE);
-                            popupWindow.update(width, height);
-                        }
-                    }
-                });
-
-                btn_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
+//                LayoutInflater inflater = (LayoutInflater)
+//                        getSystemService(LAYOUT_INFLATER_SERVICE);
+//                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
+//
+//                ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
+//                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
+//                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
+////                final ImageView iv_popupgraph = popupView.findViewById(R.id.iv_popupgraph);
+//
+//
+//
+//
+////                iv_popupgraph.post(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        int width = iv_popupgraph.getWidth();
+////                        int height = iv_popupgraph.getHeight();
+////
+////                        System.out.println("Canvas Pop Up = " + width + "x" + height);
+////
+////                        Canvas canvas;
+////                        Bitmap bitmap;
+////
+////                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+////                        iv_popupgraph.setImageBitmap(bitmap);
+////                        canvas = new Canvas(bitmap);
+////
+////                        canvas.drawCircle(50,50,20, new Paint(Color.RED));
+////
+////                    }
+////                });
+//
+//
+//                // create the popup window
+////                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+////                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                final int width = 800;
+//                final int height = ll_anim.getHeight();
+//                boolean focusable = false; // lets taps outside the popup also dismiss it
+//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+////                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
+//
+//                // show the popup window
+//                // which view you pass in doesn't matter, it is only used for the window tolken
+////                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+//                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
+////popupWindow.showAsDropDown(view);
+//                // dismiss the popup window when touched
+//                popupView.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        popupWindow.dismiss();
+//                        return true;
+//                    }
+//                });
+//
+//                popupView.setOnTouchListener(new View.OnTouchListener() {
+//                    int orgX, orgY;
+//                    int offsetX, offsetY;
+//
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        switch (event.getAction()) {
+//                            case MotionEvent.ACTION_DOWN:
+//                                orgX = (int) event.getX();
+//                                orgY = (int) event.getY();
+//                                break;
+//                            case MotionEvent.ACTION_MOVE:
+//                                offsetX = (int)event.getRawX() - orgX;
+//                                offsetY = (int)event.getRawY() - orgY;
+//                                System.out.println(offsetX + "x" + offsetY);
+//                                popupWindow.update(offsetX, offsetY, -1, -1, true);
+//                                break;
+//                        }
+//                        return true;
+//                    }});
+//
+//                btn_minimize.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                        if(iv_popupgraph.getVisibility() == View.VISIBLE){
+////                            iv_popupgraph.setVisibility(View.GONE);
+////                            int curWidth = width;
+////                            int curHeight = height - iv_popupgraph.getHeight();
+////                            curHeight = curHeight <= 0 ? 200 : curHeight;
+////                            popupWindow.update(curWidth, curHeight);
+////                        }
+////                        else{
+////                            iv_popupgraph.setVisibility(View.VISIBLE);
+////                            popupWindow.update(width, height);
+////                        }
+//                    }
+//                });
+//
+//                btn_close.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        popupWindow.dismiss();
+//                    }
+//                });
 
             }
         });
