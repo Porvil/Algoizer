@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Random;
 
 // Used by GraphActivity Class
-public class Board {
+public class BoardTree {
 
     Context context;
 
@@ -63,25 +63,23 @@ public class Board {
     private Paint paintEdgeArrowsAnim;
     private Paint paintTextAnim;
 
-    public Board(Context context, CustomCanvas customCanvas) {
+    public BoardTree(Context context, GraphTree graphTree) {
         this.context = context;
-        this.X = customCanvas.imageViewGraph.getWidth();
-        this.Y = customCanvas.imageViewGraph.getHeight();
-        this.customCanvas = customCanvas;
+
+        this.xCount = graphTree.noOfCols;
+        this.yCount = graphTree.noOfRows;
 
         // px = 1mm
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
                 context.getResources().getDisplayMetrics());
         float cm = px * nodeSize;
-        float x = (X / cm);
-        float y = (Y / cm);
 
-        xCount = (int) Math.ceil(x);
-        yCount = (int) Math.ceil(y);
+        // not used
+        xSize = (int) cm;
+        ySize = (int) cm;
 
-        xSize = (this.X / xCount);
-        ySize = (this.Y / yCount);
-        maxVertices = yCount * xCount;
+        this.X = xCount * xSize;
+        this.Y = yCount * ySize;
 
         System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
         System.out.println("X = " + X + " | " + " Y = " + Y);
@@ -109,7 +107,7 @@ public class Board {
         initPaints();
 
         // Draw Grid on Grid ImageView
-        drawGrid();
+//        drawGrid();
     }
 
     private void initPaints(){

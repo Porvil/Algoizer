@@ -1,15 +1,18 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
+import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateShadow;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
+import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +22,12 @@ import java.util.Map;
 public class BFS {
     Graph graph;
     GraphSequence graphSequence;
+    public GraphTree graphTree;
 
     public BFS(Graph graph){
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BFS);
+        this.graphTree = new GraphTree(graph.directed, graph.weighted);
     }
 
     public GraphSequence run(int s) {
@@ -105,6 +110,7 @@ public class BFS {
 
                 if(map.get(v).dist == map.get(u).dist + 1){
                     System.out.println("TREE EDGE : " + u + " -> " + v);
+                    graphTree.edgePros.add(new EdgePro(edge, TREE));
                 }
                 else{
                     int src = u;
@@ -120,9 +126,11 @@ public class BFS {
                     System.out.println("[[[[ " + src + " | " + des + " ]]]]");
                     if(src == des){
                         System.out.println("BACK EDGE : " + u + " -> " + v);
+                        graphTree.edgePros.add(new EdgePro(edge, BACK));
                     }
                     else{
                         System.out.println("CROSS EDGE : " + u + " -> " + v);
+                        graphTree.edgePros.add(new EdgePro(edge, CROSS));
                     }
 
                 }

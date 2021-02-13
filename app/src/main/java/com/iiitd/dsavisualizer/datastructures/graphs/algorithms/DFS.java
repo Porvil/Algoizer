@@ -1,12 +1,17 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
+import android.util.Pair;
+
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
+import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
+import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.*;
 import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
 
 import java.util.Collections;
@@ -22,11 +27,13 @@ public class DFS {
     GraphSequence graphSequence;
     int time;
     HashMap<Integer, VertexCLRS> map;
+    public GraphTree graphTree;
 
     public DFS(Graph graph){
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.DFS);
         this.time = 0;
+        this.graphTree = new GraphTree(graph.directed, graph.weighted);
     }
 
     public GraphSequence dfs(){
@@ -67,9 +74,15 @@ public class DFS {
             }
         });
 
+        int row = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
             System.out.println(entry.getValue());
+            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
+
+            row++;
         }
+
+
 
         return graphSequence;
     }
@@ -87,16 +100,20 @@ public class DFS {
             if(map.get(v).color == BLACK){
                 if (map.get(u).dist < map.get(v).dist) {
                     System.out.println("FORWARD EDGE : " + u + " -> " + v);
+                    graphTree.edgePros.add(new EdgePro(edge, TREE));
                 }
                 else {
                     System.out.println("CROSS EDGE : " + u + " -> " + v);
+                    graphTree.edgePros.add(new EdgePro(edge, CROSS));
                 }
             }
             else if (map.get(v).color == GRAY) {
                 System.out.println("BACK EDGE : " + u + " -> " + v);
+                graphTree.edgePros.add(new EdgePro(edge, BACK));
             }
             else if (map.get(v).color == WHITE) {
                 System.out.println("TREE EDGE : " + u + " -> " + v);
+                graphTree.edgePros.add(new EdgePro(edge, TREE));
 
                 map.get(v).parent = u;
                 dfs_visit(v);

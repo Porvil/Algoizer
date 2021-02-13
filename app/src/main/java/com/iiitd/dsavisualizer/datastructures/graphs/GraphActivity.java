@@ -293,6 +293,10 @@ public class GraphActivity extends AppCompatActivity {
                 GraphSequence run = bfs.run(0);
                 graphSequence = run;
 
+                GraphTree graphTree = bfs.graphTree;
+
+                graphTree.printEdges();
+
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
 //                startTimer("BFS", bfs);
@@ -308,6 +312,14 @@ public class GraphActivity extends AppCompatActivity {
                 DFS dfs = new DFS(graphWrapper.graph);
                 GraphSequence run = dfs.dfs();
                 graphSequence = run;
+
+                GraphTree graphTree = dfs.graphTree;
+                graphTree.noOfCols = 3;
+                graphTree.noOfRows = 7;
+
+                BoardTree boardTree = new BoardTree(context, graphTree);
+                graphTree.printEdges();
+                graphTree.printVertices();
 
 //                System.out.println(graphSequence);
 //                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -396,6 +408,17 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                View view = getLayoutInflater().inflate(R.layout.layout_test, null);
+//                View view = getLayoutInflater().inflate(R.layout.layout_test2, null);
+
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(view);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+
 
                 String customGraphString =
                         "D 1\n" +

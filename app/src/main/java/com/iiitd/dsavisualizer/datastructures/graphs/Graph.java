@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Graph {
+
     public boolean directed;
     public boolean weighted;
     public int noOfVertices;

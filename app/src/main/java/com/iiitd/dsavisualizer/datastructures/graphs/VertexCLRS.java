@@ -10,10 +10,10 @@ public class VertexCLRS {
     public int col;
 
     // Vertex CLRS Variables
-    public VertexVisitState color;           //
-    public int dist;               //
-    public int parent;             //
-    public int f;                  //
+    public VertexVisitState color;         //
+    public int dist;                       //
+    public int parent;                     //
+    public int f;                          //
 
     // Used by BFS
     public VertexCLRS(Vertex vertex, VertexVisitState color, int dist, int parent) {
