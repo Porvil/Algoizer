@@ -15,6 +15,19 @@ import android.widget.Scroller;
  *
  *         Extends Framelayout and uses its first children as a scrollable view.
  */
+
+/* @ Porvil
+ * Updated scrolling to work even when child view's size < parent view's child
+ * Earlier,
+ * 1) if child view's width < parent view's width,
+ *    it had infinite scrolling in positive direction of x-axis[width]
+ * 2) if child view's height < parent view's height,
+ *    it had infinite scrolling in positive direction of y-axis[height]
+ *
+ * Now, This update prevents infinite scrolling
+ *      if child view's size < parent view's child
+ */
+
 public class BiDirectionScrollView extends FrameLayout {
     public static class AndroidUtils{
         public static float dipToPixels(final Context _context, final float _dipValue) {
@@ -162,14 +175,17 @@ public class BiDirectionScrollView extends FrameLayout {
         return res;
     }
 
+    // Updated scrollTo and deleted "fixScrollIfOutOfBounds" function
+    // and added that function's functionality to this function
+    // and prevent recursive calls to scrollTo function
     @Override
     public void scrollTo(final int x, final int y) {
         final View firstChild = getChildAt(0);
 
-        // No child in parent view, irrespective of scroll values, move to (0, 0)
+        // No child in parent view
+        // Irrespective of scroll values, move view to (0, 0) [default value]
         if (firstChild == null) {
             super.scrollTo(0, 0);
-            System.out.println("scroll called");
             return;
         }
 
@@ -177,65 +193,77 @@ public class BiDirectionScrollView extends FrameLayout {
         int childWidth = firstChild.getWidth();
         int childHeight = firstChild.getHeight();
 
-        System.out.println("getScroll (X|Y) | " + getScrollX() + " x " + getScrollY());
-        System.out.println("Child dimensions | " + childWidth + " x " + childHeight);
-        System.out.println("Parent dimensions | " + getWidth() + " x " + getHeight());
-
-        // Call to Super
+        // Call to Super and let the super function handle scrolling
         super.scrollTo(x, y);
 
-        // Fix views if out of bounds
-        // Width
+        // Fix views, if child view moves out of bounds in the parent view
+
+        // Width [X-axis]
+        // if child view's width is <= parent view's width
         if(childWidth <= getWidth()){
-            // Right Side
+            // if child view moves out of bounds in right side of parent view
+            // then bring child view back to max possible position
+            // in parent view right side
             if(childWidth - getScrollX() > getWidth()){
                 super.scrollTo(childWidth - getWidth(), getScrollY());
             }
-            // Left Side
+            // if child view moves out of bounds in left side of parent view
+            // then bring child view back to max possible position
+            // in parent view left side
             else if(getScrollX() > 0){
                 super.scrollTo(0, getScrollY());
             }
         }
+        // if child view's width is > parent view's width
         else{
-            // Right Side
+            // if child view moves out of bounds in right side of parent view
+            // then bring child view back to max possible position
+            // in parent view right side
             if(getScrollX() > childWidth - getWidth() ){
                 super.scrollTo(childWidth - getWidth() , getScrollY());
             }
-            // Left Side
+            // if child view moves out of bounds in left side of parent view
+            // then bring child view back to max possible position
+            // in parent view left side
             else if(getScrollX() < 0){
                 super.scrollTo(0, getScrollY());
             }
         }
 
-        // Height
+        // Height [Y-axis]
+        // if child view's height is <= parent view's height
         if(childHeight <= getHeight()){
-            // Right Side
+            // if child view moves out of bounds in bottom side of parent view
+            // then bring child view back to max possible position
+            // in parent view bottom side
             if(childHeight - getScrollY() > getHeight()){
                 super.scrollTo(getScrollX(), childHeight - getHeight());
             }
-            // Left Side
+            // if child view moves out of bounds in top side of parent view
+            // then bring child view back to max possible position
+            // in parent view top side
             else if(getScrollY() > 0){
                 super.scrollTo(getScrollX(), 0);
             }
         }
         else{
-            // Right Side
+            // if child view moves out of bounds in bottom side of parent view
+            // then bring child view back to max possible position
+            // in parent view bottom side
             if(getScrollY() > childHeight - getHeight() ){
                 super.scrollTo(getScrollX(), childHeight - getHeight());
             }
-            // Left Side
+            // if child view moves out of bounds in top side of parent view
+            // then bring child view back to max possible position
+            // in parent view top side
             else if(getScrollY() < 0){
                 super.scrollTo(getScrollX(), 0);
             }
         }
 
-
-
-//        super.scrollTo(x, y);
-//        System.out.println("Scroll to + "+ x + " | " + y);
-//        fixScrollIfOutOfBounds();
     }
 
+    // Updated ScrollView to directly call super.scrollBy
     @Override
     public void scrollBy(final int x, final int y) {
         super.scrollBy(x, y);
