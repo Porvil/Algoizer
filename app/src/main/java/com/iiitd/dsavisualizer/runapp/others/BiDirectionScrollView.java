@@ -1,6 +1,5 @@
 package com.iiitd.dsavisualizer.runapp.others;
 
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -165,40 +164,81 @@ public class BiDirectionScrollView extends FrameLayout {
 
     @Override
     public void scrollTo(final int x, final int y) {
+        final View firstChild = getChildAt(0);
+
+        // No child in parent view, irrespective of scroll values, move to (0, 0)
+        if (firstChild == null) {
+            super.scrollTo(0, 0);
+            System.out.println("scroll called");
+            return;
+        }
+
+        // Parent view has a child
+        int childWidth = firstChild.getWidth();
+        int childHeight = firstChild.getHeight();
+
+        System.out.println("getScroll (X|Y) | " + getScrollX() + " x " + getScrollY());
+        System.out.println("Child dimensions | " + childWidth + " x " + childHeight);
+        System.out.println("Parent dimensions | " + getWidth() + " x " + getHeight());
+
+        // Call to Super
         super.scrollTo(x, y);
-        fixScrollIfOutOfBounds();
+
+        // Fix views if out of bounds
+        // Width
+        if(childWidth <= getWidth()){
+            // Right Side
+            if(childWidth - getScrollX() > getWidth()){
+                super.scrollTo(childWidth - getWidth(), getScrollY());
+            }
+            // Left Side
+            else if(getScrollX() > 0){
+                super.scrollTo(0, getScrollY());
+            }
+        }
+        else{
+            // Right Side
+            if(getScrollX() > childWidth - getWidth() ){
+                super.scrollTo(childWidth - getWidth() , getScrollY());
+            }
+            // Left Side
+            else if(getScrollX() < 0){
+                super.scrollTo(0, getScrollY());
+            }
+        }
+
+        // Height
+        if(childHeight <= getHeight()){
+            // Right Side
+            if(childHeight - getScrollY() > getHeight()){
+                super.scrollTo(getScrollX(), childHeight - getHeight());
+            }
+            // Left Side
+            else if(getScrollY() > 0){
+                super.scrollTo(getScrollX(), 0);
+            }
+        }
+        else{
+            // Right Side
+            if(getScrollY() > childHeight - getHeight() ){
+                super.scrollTo(getScrollX(), childHeight - getHeight());
+            }
+            // Left Side
+            else if(getScrollY() < 0){
+                super.scrollTo(getScrollX(), 0);
+            }
+        }
+
+
+
+//        super.scrollTo(x, y);
+//        System.out.println("Scroll to + "+ x + " | " + y);
+//        fixScrollIfOutOfBounds();
     }
 
     @Override
     public void scrollBy(final int x, final int y) {
         super.scrollBy(x, y);
-        fixScrollIfOutOfBounds();
-    }
-
-    private void fixScrollIfOutOfBounds() {
-        if (getScrollX() < 0) {
-            scrollTo(0, getScrollY());
-        }
-
-        if (getScrollY() < 0) {
-            scrollTo(getScrollX(), 0);
-        }
-
-        final View firstChild = getChildAt(0);
-        if (firstChild == null) {
-            return;
-        }
-
-        int childWidth = firstChild.getWidth();
-        int childHeight = firstChild.getHeight();
-
-        if (childWidth > getWidth() && getScrollX() + getWidth() > childWidth) {
-            scrollTo(childWidth - getWidth(), getScrollY());
-        }
-
-        if (childHeight > getHeight() && getScrollY() + getHeight() > childHeight) {
-            scrollTo(getScrollX(), childHeight - getHeight());
-        }
     }
 
     private boolean currentScrollGestureBroken = false;

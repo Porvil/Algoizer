@@ -10,8 +10,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
@@ -67,9 +67,9 @@ public class BoardTree {
     private Paint paintTextAnim;
 
     BiDirectionScrollView bdsv_popupgraph;
-    ImageView imageView;
-    Canvas canvas;
-    Bitmap bitmap;
+    ImageView iv_graphtree;
+    Canvas canvasGraphTree;
+    Bitmap bitmapGraphTree;
 
     public BoardTree(Context context, GraphTree graphTree, BiDirectionScrollView bdsv_popupgraph) {
         this.context = context;
@@ -77,6 +77,18 @@ public class BoardTree {
 
         this.xCount = graphTree.noOfCols;
         this.yCount = graphTree.noOfRows;
+
+        // px = 1mm
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
+                context.getResources().getDisplayMetrics());
+        float cm = px * nodeSize;
+
+        // not used
+        xSize = (int) cm;
+        ySize = (int) cm;
+
+        this.X = xCount * xSize;
+        this.Y = yCount * ySize;
 
         float minSide = Math.min(xSize, ySize);
         this.nodeRadius = ( minSide * circleRatio) / 2;
@@ -95,54 +107,79 @@ public class BoardTree {
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
         this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
 
+        // Initializes all Paint Variables
+        initPaints();
     }
 
     public void startInit(){
-        // px = 1mm
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
-                context.getResources().getDisplayMetrics());
-        float cm = px * nodeSize;
 
-        // not used
-        xSize = (int) cm;
-        ySize = (int) cm;
-
-        this.X = xCount * xSize;
-        this.Y = yCount * ySize;
 
         System.out.println("bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
-                + " | " + " ySize = " + bdsv_popupgraph.getHeight());
+                + " | " + bdsv_popupgraph.getHeight());
         System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
         System.out.println("X = " + X + " | " + " Y = " + Y);
         System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
         System.out.println("max count = " + yCount * xCount );
 
 
-        imageView = new ImageView(context);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)X, (int)Y);
-        imageView.setLayoutParams(layoutParams);
+//        imageView = new ImageView(context);
+        iv_graphtree = bdsv_popupgraph.findViewById(R.id.iv_graphtree);
+//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams((int)X, (int)Y);
+//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams(100,100);
+//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams(
+//                BiDirectionScrollView.LayoutParams.WRAP_CONTENT, BiDirectionScrollView.LayoutParams.WRAP_CONTENT
+//        );
+//        imageView.setLayoutParams(layoutParams);
+
+//        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) imageView.getLayoutParams();
+//        System.out.println(layoutParams.width + "x" + layoutParams.height);
+//
+//        layoutParams.height = 1000;
+//        layoutParams.width = 1000;
+//
+//        System.out.println(layoutParams.width + "x" + layoutParams.height);
+//
+//        bdsv_popupgraph.updateViewLayout(imageView, layoutParams);
+
+        iv_graphtree.post(new Runnable() {
+            @Override
+            public void run() {
+
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_graphtree.getLayoutParams();
+                System.out.println(layoutParams.width + "x" + layoutParams.height);
 
 
-        bitmap = Bitmap.createBitmap((int)X, (int)Y, Bitmap.Config.ARGB_8888);
-        imageView.setImageBitmap(bitmap);
-        canvas = new Canvas(bitmap);
+                layoutParams.height = (int) Y;
+                layoutParams.width  = (int) X;
 
-        canvas.drawCircle(50,50,20, new Paint(Color.RED));
+                System.out.println(layoutParams.width + "x" + layoutParams.height);
 
-//        imageView.getLayoutParams().width = (int) X;
-//        imageView.getLayoutParams().height = (int) Y;
-
-
-        bdsv_popupgraph.addView(imageView);
+                iv_graphtree.setLayoutParams(layoutParams);
+//                bdsv_popupgraph.updateViewLayout(imageView, layoutParams);
+//                imageView.requestLayout();
+//                bdsv_popupgraph.requestLayout();
 
 
+                iv_graphtree.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("imagegraph pop up graph tree = " + iv_graphtree.getWidth()
+                                + " | " + iv_graphtree.getHeight());
+                        System.out.println("########999 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
+                                + " | " + bdsv_popupgraph.getHeight());
 
+                        bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
+                        iv_graphtree.setImageBitmap(bitmapGraphTree);
+                        canvasGraphTree = new Canvas(bitmapGraphTree);
 
-        // Initializes all Paint Variables
-        initPaints();
+                        canvasGraphTree.drawRect(0,0, iv_graphtree.getWidth(), iv_graphtree.getHeight(), paintEdge);
+                        drawGrid();
+                    }
+                });
 
-        // Draw Grid on Grid ImageView
-        drawGrid();
+            }
+        });
+
     }
 
     private void initPaints(){
@@ -211,7 +248,7 @@ public class BoardTree {
             int top = 0;
             int bottom = (int) Y;
             rect.set(left, top, right, bottom);
-            canvas.drawRect(rect, paintGrid);
+            canvasGraphTree.drawRect(rect, paintGrid);
         }
 
         for(int i=0; i<yCount+1; i++){
@@ -220,7 +257,7 @@ public class BoardTree {
             int left = 0;
             int right = (int) X;
             rect.set(left, top, right, bottom);
-            canvas.drawRect(rect, paintGrid);
+            canvasGraphTree.drawRect(rect, paintGrid);
         }
 
         for (int r = 0; r < yCount; r++) {
@@ -231,7 +268,7 @@ public class BoardTree {
                 int y = (int) (rect1.top + (rect1.height() * coordinatesOffset));
                 Rect rectText = new Rect();
                 paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
-                canvas.drawText(text, x, y , paintGridCoordinates);
+                canvasGraphTree.drawText(text, x, y , paintGridCoordinates);
             }
         }
 

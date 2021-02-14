@@ -349,7 +349,13 @@ public class GraphActivity extends AppCompatActivity {
                 bdsv_popupgraph.post(new Runnable() {
                     @Override
                     public void run() {
+
+                        System.out.println("########333 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
+                                + " | " + bdsv_popupgraph.getHeight());
                         boardTree.startInit();
+
+                        System.out.println("########6666 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
+                                + " | " + bdsv_popupgraph.getHeight());
                     }
                 });
 
@@ -381,8 +387,8 @@ public class GraphActivity extends AppCompatActivity {
                 // create the popup window
 //                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
 //                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final int width = 528;
-//                final int width = 800;
+//                final int width = 528;
+                final int width = 800;
                 final int height = ll_anim.getHeight();
                 boolean focusable = false; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
@@ -542,11 +548,12 @@ public class GraphActivity extends AppCompatActivity {
 
                 View view = getLayoutInflater().inflate(R.layout.layout_test, null);
 //                View view = getLayoutInflater().inflate(R.layout.layout_test2, null);
+//                View view = getLayoutInflater().inflate(R.layout.layout_test3, null);
 
 
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(view);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
 
