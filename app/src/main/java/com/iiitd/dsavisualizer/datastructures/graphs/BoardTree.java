@@ -30,7 +30,7 @@ public class BoardTree {
     // Constants
     private final int topAngle = 45;               // in degrees
     private final int bottomAngle = 45;            // in degrees
-    private final int nodeSize = 8;                // in mm
+    private final int nodeSize = 5;                // in mm
     private final float circleRatio = 0.66f;       // in ratio [0,1]
     private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
     private final float nodeRadius;                // in pixels [Radius of one node]
@@ -50,7 +50,7 @@ public class BoardTree {
     public float ySize;                            // One Row Height
     public BoardElement[][] boardElements;         // Contains data about board elements
     public int maxVertices;                        // Max No. of Vertices possible
-    public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
+//    public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
 
     // Paint Variables
     private Paint paintGrid;
@@ -70,9 +70,11 @@ public class BoardTree {
     ImageView iv_graphtree;
     Canvas canvasGraphTree;
     Bitmap bitmapGraphTree;
+    GraphTree graphTree;
 
     public BoardTree(Context context, GraphTree graphTree, BiDirectionScrollView bdsv_popupgraph) {
         this.context = context;
+        this.graphTree = graphTree;
         this.bdsv_popupgraph = bdsv_popupgraph;
 
         this.xCount = graphTree.noOfCols;
@@ -102,6 +104,11 @@ public class BoardTree {
             }
         }
 
+        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
+            Pair<Integer, Integer> value = entry.getValue();
+            addVertex(value.first, value.second, entry.getKey());
+        }
+
         this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
         this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
@@ -121,25 +128,7 @@ public class BoardTree {
         System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
         System.out.println("max count = " + yCount * xCount );
 
-
-//        imageView = new ImageView(context);
         iv_graphtree = bdsv_popupgraph.findViewById(R.id.iv_graphtree);
-//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams((int)X, (int)Y);
-//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams(100,100);
-//        BiDirectionScrollView.LayoutParams layoutParams = new BiDirectionScrollView.LayoutParams(
-//                BiDirectionScrollView.LayoutParams.WRAP_CONTENT, BiDirectionScrollView.LayoutParams.WRAP_CONTENT
-//        );
-//        imageView.setLayoutParams(layoutParams);
-
-//        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) imageView.getLayoutParams();
-//        System.out.println(layoutParams.width + "x" + layoutParams.height);
-//
-//        layoutParams.height = 1000;
-//        layoutParams.width = 1000;
-//
-//        System.out.println(layoutParams.width + "x" + layoutParams.height);
-//
-//        bdsv_popupgraph.updateViewLayout(imageView, layoutParams);
 
         iv_graphtree.post(new Runnable() {
             @Override
@@ -147,7 +136,6 @@ public class BoardTree {
 
                 FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_graphtree.getLayoutParams();
                 System.out.println(layoutParams.width + "x" + layoutParams.height);
-
 
                 layoutParams.height = (int) Y;
                 layoutParams.width  = (int) X;
@@ -172,8 +160,10 @@ public class BoardTree {
                         iv_graphtree.setImageBitmap(bitmapGraphTree);
                         canvasGraphTree = new Canvas(bitmapGraphTree);
 
-                        canvasGraphTree.drawRect(0,0, iv_graphtree.getWidth(), iv_graphtree.getHeight(), paintEdge);
+//                        canvasGraphTree.drawRect(0,0, iv_graphtree.getWidth(), iv_graphtree.getHeight(), paintEdge);
                         drawGrid();
+
+                        update();
                     }
                 });
 
@@ -275,51 +265,34 @@ public class BoardTree {
     }
 
     // Re-Draws the complete graphOld
-    public void update(Graph graph){
+    public void update(){
 
-        System.out.println("REDRAWING CANVAS");
-        // clears canvas
-        clearCanvasGraph();
-
-        boolean weighted = graph.weighted;
-
-        // Nodes
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                if(boardElements[r][c].occupied){
-                    Rect rect = getRect(r, c);
-                    drawNodeGraph(rect, boardElements[r][c].value);
-                }
-            }
+        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
+            Pair<Integer, Integer> value = entry.getValue();
+            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
+            Rect rect = getRect(value.first, value.second);
+            drawNodeGraph(rect, entry.getKey());
         }
 
-        //Edges
-        for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.edgeListMap.entrySet() ){
+        for(EdgePro edgePro: graphTree.edgePros){
+            System.out.println(edgePro);
 
-            for (Edge edge : vertex.getValue()) {
-                System.out.println(vertex.getKey() + ":" + edge);
+            int[] vertex1 = getCoordinates(edgePro.src);
+            int[] vertex2 = getCoordinates(edgePro.des);
 
-                int[] vertex1 = getCoordinates(vertex.getKey());
-                int[] vertex2 = getCoordinates(edge.des);
+            Rect rect1 = getRect(vertex1[0], vertex1[1]);
+            Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                Rect rect1 = getRect(vertex1[0], vertex1[1]);
-                Rect rect2 = getRect(vertex2[0], vertex2[1]);
-
-                drawEdgeGraph(rect1, rect2, edge, weighted);
-            }
+            drawEdgeGraph(rect1, rect2, edgePro, graphTree.weighted);
         }
+
 
         refreshGraph();
     }
 
     // Draws a single Node
     public void drawNodeGraph(Rect rect, int name) {
-        __drawNode(customCanvas.canvasGraph, rect, name, paintVertex, paintText);
-    }
-
-    // Draws a single Node
-    public void drawNodeAnim(Rect rect, int name) {
-        __drawNode(customCanvas.canvasAnimation, rect, name, paintVertexAnim, paintTextAnim);
+        __drawNode(canvasGraphTree, rect, name, paintVertex, paintText);
     }
 
     // Draws a single Node
@@ -339,25 +312,18 @@ public class BoardTree {
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
-        __drawEdge(customCanvas.canvasGraph,
+    public void drawEdgeGraph(Rect rect1, Rect rect2, EdgePro edgePro, boolean weighted) {
+        __drawEdge(canvasGraphTree,
                 rect1, rect2,
                 paintEdge, paintEdgeArrows, paintEdgeWeight,
-                edge, weighted);
+                edgePro, weighted);
     }
 
-    // Draws a single EdgeOld
-    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
-        __drawEdge(customCanvas.canvasAnimation,
-                rect1, rect2,
-                paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim,
-                edge, weighted);
-    }
 
     public void __drawEdge(Canvas canvas,
                            Rect rect1, Rect rect2,
                            Paint paintE, Paint paintEA, Paint paintEW,
-                           Edge edge, boolean weighted) {
+                           EdgePro edgePro, boolean weighted) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -371,10 +337,10 @@ public class BoardTree {
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-        if(edge != null && weighted) {
+        if(edgePro != null && weighted) {
             canvas.save();
             canvas.rotate((float) degree, x, y);
-            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
+            canvas.drawText(String.valueOf(edgePro.weight), x, y-20, paintEW);
             canvas.restore();
         }
 
@@ -420,9 +386,9 @@ public class BoardTree {
         boardElements[row][col].occupied = true;
         boardElements[row][col].value = name;
 //        data[row][col].vertexOld = vertexOld;
-
-        Rect rect = getRect(row, col);
-        drawNodeGraph(rect, boardElements[row][col].value);
+//
+//        Rect rect = getRect(row, col);
+//        drawNodeGraph(rect, boardElements[row][col].value);
     }
 
     // Adds VertexOld element to grid element and calls drawNode
@@ -537,37 +503,8 @@ public class BoardTree {
         return available.get(new Random().nextInt(available.size()));
     }
 
-    public void reset(Graph graph){
-        this.boardElements = new BoardElement[yCount][xCount];
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                boardElements[r][c] = new BoardElement();
-            }
-        }
-
-        update(graph);
-    }
-
-    public void clearCanvasGraph(){
-        __clearCanvas(customCanvas.canvasGraph);
-        refreshGraph();
-    }
-
-    public void clearCanvasAnim(){
-        __clearCanvas(customCanvas.canvasAnimation);
-        refreshAnim();
-    }
-
-    private void __clearCanvas(Canvas canvas){
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-    }
-
-    public void refreshAnim(){
-        __refresh(customCanvas.imageViewGraph);
-    }
-
     public void refreshGraph(){
-        __refresh(customCanvas.imageViewAnimation);
+        __refresh(iv_graphtree);
     }
 
     private void __refresh(ImageView imageView){

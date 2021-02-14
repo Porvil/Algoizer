@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class DFS {
 
@@ -74,10 +75,15 @@ public class DFS {
             }
         });
 
+
+        Random random = new Random();
+
+
         int row = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
             System.out.println(entry.getValue());
-            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
+//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
+            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, random.nextInt(5)));
 
             row++;
         }

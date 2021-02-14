@@ -337,7 +337,7 @@ public class GraphActivity extends AppCompatActivity {
                 GraphTree rungt = dfs.graphTree;
 
                 graphTree = rungt;
-                graphTree.noOfCols = 3;
+                graphTree.noOfCols = 5;
                 graphTree.noOfRows = 7;
 
 
