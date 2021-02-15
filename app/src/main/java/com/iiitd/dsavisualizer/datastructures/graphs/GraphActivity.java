@@ -48,6 +48,7 @@ import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
+import com.shopgun.android.zoomlayout.ZoomLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -320,13 +321,15 @@ public class GraphActivity extends AppCompatActivity {
 
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
-                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
+//                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
+                final View popupView = inflater.inflate(R.layout.layout_popup_graph2, null);
 
                 final ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
                 ImageButton btn_close = popupView.findViewById(R.id.btn_close);
                 TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
 
-                final BiDirectionScrollView bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
+//                final BiDirectionScrollView bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
+                final ZoomLayout bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
 
 
 
@@ -352,7 +355,8 @@ public class GraphActivity extends AppCompatActivity {
 
                         System.out.println("########333 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
                                 + " | " + bdsv_popupgraph.getHeight());
-                        boardTree.startInit();
+//                        boardTree.startInit();
+                        boardTree.startInit2();
 
                         System.out.println("########6666 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
                                 + " | " + bdsv_popupgraph.getHeight());
@@ -546,7 +550,8 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                View view = getLayoutInflater().inflate(R.layout.layout_test, null);
+//                View view = getLayoutInflater().inflate(R.layout.layout_test, null);
+                View view = getLayoutInflater().inflate(R.layout.layout_popup_graph2, null);
 //                View view = getLayoutInflater().inflate(R.layout.layout_test2, null);
 //                View view = getLayoutInflater().inflate(R.layout.layout_test3, null);
 
