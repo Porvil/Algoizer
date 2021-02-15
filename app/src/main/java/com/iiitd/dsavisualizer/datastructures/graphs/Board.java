@@ -27,7 +27,7 @@ public class Board {
     // Constants
     private final int topAngle = 45;               // in degrees
     private final int bottomAngle = 45;            // in degrees
-    private final int nodeSize = 8;                // in mm
+    private final int nodeSize = 5;                // in mm
     private final float circleRatio = 0.66f;       // in ratio [0,1]
     private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
     private final float nodeRadius;                // in pixels [Radius of one node]

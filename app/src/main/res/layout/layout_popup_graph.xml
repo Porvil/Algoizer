@@ -39,20 +39,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_remove_24" />
 
-    <com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView
-        android:id="@+id/bdsv_popupgraph"
+    <com.otaliastudios.zoom.ZoomLayout
+        android:id="@+id/zl_graphtree"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="5dp"
+        android:scrollbars="vertical|horizontal"
+        app:alignment="center"
+        app:animationDuration="280"
+        app:flingEnabled="true"
+        app:hasClickableChildren="false"
+        app:horizontalPanEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname">
+        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname"
+        app:maxZoom="2.5"
+        app:maxZoomType="zoom"
+        app:minZoom="0.7"
+        app:minZoomType="zoom"
+        app:oneFingerScrollEnabled="true"
+        app:overPinchable="true"
+        app:overScrollHorizontal="true"
+        app:overScrollVertical="true"
+        app:scrollEnabled="true"
+        app:threeFingersScrollEnabled="true"
+        app:transformation="centerInside"
+        app:transformationGravity="auto"
+        app:twoFingersScrollEnabled="true"
+        app:verticalPanEnabled="true"
+        app:zoomEnabled="true">
 
+        <!-- Content here. -->
         <ImageView
             android:id="@+id/iv_graphtree"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView>
+
+    </com.otaliastudios.zoom.ZoomLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

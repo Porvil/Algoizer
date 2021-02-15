@@ -26,42 +26,74 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+
+            <com.otaliastudios.zoom.ZoomLayout
+                android:id="@+id/zl_graph"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:scrollbars="vertical|horizontal"
+                app:alignment="none"
+                app:animationDuration="280"
+                app:flingEnabled="true"
+                app:hasClickableChildren="true"
+                app:horizontalPanEnabled="true"
+                app:maxZoom="2.5"
+                app:maxZoomType="zoom"
+                app:minZoom=".7"
+                app:minZoomType="zoom"
+                app:oneFingerScrollEnabled="true"
+                app:overPinchable="true"
+                app:overScrollHorizontal="true"
+                app:overScrollVertical="true"
+                app:scrollEnabled="true"
+                app:threeFingersScrollEnabled="true"
+                app:transformation="centerInside"
+                app:transformationGravity="auto"
+                app:twoFingersScrollEnabled="true"
+                app:verticalPanEnabled="true">
 
-                <ImageView
-                    android:id="@+id/iv_grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:longClickable="false" />
+                <!-- Content here. -->
+                <FrameLayout
+                    android:id="@+id/fl_graph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#DA9191">
 
-                <ImageView
-                    android:id="@+id/iv_coordinates"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:longClickable="false" />
+                    <ImageView
+                        android:id="@+id/iv_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:longClickable="false" />
 
-                <ImageView
-                    android:id="@+id/iv_graph"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:longClickable="true" />
+                    <ImageView
+                        android:id="@+id/iv_coordinates"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:longClickable="false" />
 
-                <ImageView
-                    android:id="@+id/iv_anim"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="false"
-                    android:longClickable="false" />
+                    <ImageView
+                        android:id="@+id/iv_graph"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:longClickable="true" />
 
-            </FrameLayout>
+                    <ImageView
+                        android:id="@+id/iv_anim"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:longClickable="false" />
+
+                </FrameLayout>
+
+
+            </com.otaliastudios.zoom.ZoomLayout>
+
 
         </LinearLayout>
 
@@ -334,12 +366,12 @@
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
+            android:contentDescription="Menu"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_menu_open_24"
-            android:contentDescription="Menu" />
+            app:srcCompat="@drawable/ic_baseline_menu_open_24" />
 
         <ImageButton
             android:id="@+id/btn_code"
@@ -348,12 +380,12 @@
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
+            android:contentDescription="Show/Hide Code"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_menu"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_code_24"
-            android:contentDescription="Show/Hide Code" />
+            app:srcCompat="@drawable/ic_baseline_code_24" />
 
         <ImageButton
             android:id="@+id/btn_info"
@@ -362,13 +394,13 @@
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
+            android:contentDescription="Show Info"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_code"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_baseline_info_24"
-            android:contentDescription="Show Info" />
+            app:srcCompat="@drawable/ic_baseline_info_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

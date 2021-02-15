@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.runapp.others;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 public class CustomCanvas {
@@ -21,15 +22,21 @@ public class CustomCanvas {
     public ImageView imageViewCoordinates;
     public ImageView imageViewAnimation;
 
-    public CustomCanvas(Context context, ImageView imageViewGraph, ImageView imageViewGrid, ImageView imageViewAnimation, ImageView imageViewCoordinates) {
+    FrameLayout frameLayout;
+
+    // framelayout must have been laid out already
+    public CustomCanvas(Context context, FrameLayout frameLayout, ImageView imageViewGraph, ImageView imageViewGrid, ImageView imageViewAnimation, ImageView imageViewCoordinates) {
         this.context = context;
+        this.frameLayout = frameLayout;
         this.imageViewGraph = imageViewGraph;
         this.imageViewGrid = imageViewGrid;
         this.imageViewCoordinates = imageViewCoordinates;
         this.imageViewAnimation = imageViewAnimation;
 
-        int width = imageViewGraph.getWidth();
-        int height = imageViewGraph.getHeight();
+//        int width = imageViewGraph.getWidth();
+//        int height = imageViewGraph.getHeight();
+        int width = frameLayout.getWidth();
+        int height = frameLayout.getHeight();
 
         System.out.println("Canvas = " + width + "x" + height);
 

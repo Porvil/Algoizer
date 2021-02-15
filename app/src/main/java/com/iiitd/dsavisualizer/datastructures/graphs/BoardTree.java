@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
@@ -14,10 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
-import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
-import com.shopgun.android.zoomlayout.ZoomLayout;
+import com.otaliastudios.zoom.ZoomLayout;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -68,57 +65,10 @@ public class BoardTree {
     private Paint paintTextAnim;
 
     ZoomLayout zoomLayout;
-    BiDirectionScrollView bdsv_popupgraph;
     ImageView iv_graphtree;
     Canvas canvasGraphTree;
     Bitmap bitmapGraphTree;
     GraphTree graphTree;
-
-    public BoardTree(Context context, GraphTree graphTree, BiDirectionScrollView bdsv_popupgraph) {
-        this.context = context;
-        this.graphTree = graphTree;
-        this.bdsv_popupgraph = bdsv_popupgraph;
-
-        this.xCount = graphTree.noOfCols;
-        this.yCount = graphTree.noOfRows;
-
-        // px = 1mm
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
-                context.getResources().getDisplayMetrics());
-        float cm = px * nodeSize;
-
-        // not used
-        xSize = (int) cm;
-        ySize = (int) cm;
-
-        this.X = xCount * xSize;
-        this.Y = yCount * ySize;
-
-        float minSide = Math.min(xSize, ySize);
-        this.nodeRadius = ( minSide * circleRatio) / 2;
-        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
-        this.coordinatesOffset = 0.95f;
-
-        this.boardElements = new BoardElement[yCount][xCount];
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                boardElements[r][c] = new BoardElement();
-            }
-        }
-
-        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
-            Pair<Integer, Integer> value = entry.getValue();
-            addVertex(value.first, value.second, entry.getKey());
-        }
-
-        this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
-        this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
-        this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
-        this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
-
-        // Initializes all Paint Variables
-        initPaints();
-    }
 
     public BoardTree(Context context, GraphTree graphTree, ZoomLayout zoomLayout) {
         this.context = context;
@@ -165,61 +115,6 @@ public class BoardTree {
         // Initializes all Paint Variables
         initPaints();
     }
-
-    public void startInit(){
-
-
-        System.out.println("bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
-                + " | " + bdsv_popupgraph.getHeight());
-        System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
-        System.out.println("X = " + X + " | " + " Y = " + Y);
-        System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
-        System.out.println("max count = " + yCount * xCount );
-
-        iv_graphtree = bdsv_popupgraph.findViewById(R.id.iv_graphtree);
-
-        iv_graphtree.post(new Runnable() {
-            @Override
-            public void run() {
-
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_graphtree.getLayoutParams();
-                System.out.println(layoutParams.width + "x" + layoutParams.height);
-
-                layoutParams.height = (int) Y;
-                layoutParams.width  = (int) X;
-
-                System.out.println(layoutParams.width + "x" + layoutParams.height);
-
-                iv_graphtree.setLayoutParams(layoutParams);
-//                bdsv_popupgraph.updateViewLayout(imageView, layoutParams);
-//                imageView.requestLayout();
-//                bdsv_popupgraph.requestLayout();
-
-
-                iv_graphtree.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("imagegraph pop up graph tree = " + iv_graphtree.getWidth()
-                                + " | " + iv_graphtree.getHeight());
-                        System.out.println("########999 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
-                                + " | " + bdsv_popupgraph.getHeight());
-
-                        bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
-                        iv_graphtree.setImageBitmap(bitmapGraphTree);
-                        canvasGraphTree = new Canvas(bitmapGraphTree);
-
-//                        canvasGraphTree.drawRect(0,0, iv_graphtree.getWidth(), iv_graphtree.getHeight(), paintEdge);
-                        drawGrid();
-
-                        update();
-                    }
-                });
-
-            }
-        });
-
-    }
-
 
     public void startInit2(){
 

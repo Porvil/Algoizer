@@ -7,10 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -24,6 +21,7 @@ import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,11 +42,10 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
-import com.iiitd.dsavisualizer.runapp.others.BiDirectionScrollView;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
-import com.shopgun.android.zoomlayout.ZoomLayout;
+import com.otaliastudios.zoom.ZoomLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,6 +84,8 @@ public class GraphActivity extends AppCompatActivity {
     TextView tv_seqno;
     TextView tv_info;
     ImageButton btn_grid;
+    ZoomLayout zl_graph;
+    FrameLayout fl_graph;
 
     ImageButton btn_closemenu;
     RadioGroup rg_weighted;
@@ -118,6 +117,7 @@ public class GraphActivity extends AppCompatActivity {
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT = R.layout.activity_graph;
+//    final int LAYOUT = R.layout.activity_graph2;
     final int CONTROL = R.layout.controls_graph;
     boolean isAutoPlay = false;
 
@@ -159,6 +159,8 @@ public class GraphActivity extends AppCompatActivity {
         tv_info = v_main.findViewById(R.id.tv_info);
         btn_grid = v_main.findViewById(R.id.btn_grid);
         cl_info = v_main.findViewById(R.id.cl_info);
+        zl_graph = v_main.findViewById(R.id.zl_graph);
+        fl_graph = v_main.findViewById(R.id.fl_graph);
 
         btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
         rg_weighted = v_menu.findViewById(R.id.rg_weighted);
@@ -322,14 +324,13 @@ public class GraphActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
 //                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
-                final View popupView = inflater.inflate(R.layout.layout_popup_graph2, null);
+                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
 
                 final ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
                 ImageButton btn_close = popupView.findViewById(R.id.btn_close);
                 TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
 
-//                final BiDirectionScrollView bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
-                final ZoomLayout bdsv_popupgraph = popupView.findViewById(R.id.bdsv_popupgraph);
+                final ZoomLayout zl_graphtree = popupView.findViewById(R.id.zl_graphtree);
 
 
 
@@ -344,22 +345,22 @@ public class GraphActivity extends AppCompatActivity {
                 graphTree.noOfRows = 7;
 
 
-                final BoardTree boardTree = new BoardTree(context, graphTree, bdsv_popupgraph);
+                final BoardTree boardTree = new BoardTree(context, graphTree, zl_graphtree);
                 graphTree.printEdges();
                 graphTree.printVertices();
 
 
-                bdsv_popupgraph.post(new Runnable() {
+                zl_graphtree.post(new Runnable() {
                     @Override
                     public void run() {
 
-                        System.out.println("########333 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
-                                + " | " + bdsv_popupgraph.getHeight());
+                        System.out.println("########333 bdsv pop up graph tree = " + zl_graphtree.getWidth()
+                                + " | " + zl_graphtree.getHeight());
 //                        boardTree.startInit();
                         boardTree.startInit2();
 
-                        System.out.println("########6666 bdsv pop up graph tree = " + bdsv_popupgraph.getWidth()
-                                + " | " + bdsv_popupgraph.getHeight());
+                        System.out.println("########6666 bdsv pop up graph tree = " + zl_graphtree.getWidth()
+                                + " | " + zl_graphtree.getHeight());
                     }
                 });
 
@@ -436,10 +437,10 @@ public class GraphActivity extends AppCompatActivity {
                 btn_minimize.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(bdsv_popupgraph.getVisibility() == View.VISIBLE){
-                            bdsv_popupgraph.setVisibility(View.GONE);
+                        if(zl_graphtree.getVisibility() == View.VISIBLE){
+                            zl_graphtree.setVisibility(View.GONE);
                             int curWidth = width;
-                            int curHeight = height - bdsv_popupgraph.getHeight();
+                            int curHeight = height - zl_graphtree.getHeight();
                             curHeight = curHeight <= 0 ? 200 : curHeight;
                             popupWindow.update(curWidth, curHeight);
 
@@ -447,7 +448,7 @@ public class GraphActivity extends AppCompatActivity {
 
                         }
                         else{
-                            bdsv_popupgraph.setVisibility(View.VISIBLE);
+                            zl_graphtree.setVisibility(View.VISIBLE);
                             popupWindow.update(width, height);
                             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_remove_24));
                         }
@@ -551,7 +552,7 @@ public class GraphActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //                View view = getLayoutInflater().inflate(R.layout.layout_test, null);
-                View view = getLayoutInflater().inflate(R.layout.layout_popup_graph2, null);
+                View view = getLayoutInflater().inflate(R.layout.layout_popup_graph, null);
 //                View view = getLayoutInflater().inflate(R.layout.layout_test2, null);
 //                View view = getLayoutInflater().inflate(R.layout.layout_test3, null);
 
@@ -1017,24 +1018,44 @@ public class GraphActivity extends AppCompatActivity {
         graphControls.updateDrawables();
 
         // Draws Grid and Graph View After Layouts have been laid out
-        iv_graph.post(new Runnable() {
+
+//        zoomLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                zoomLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                zoomLayout.getHeight(); //height is ready
+//
+//                System.out.println("!!!!!!!!!!!" + zoomLayout.getWidth() + "x" + zoomLayout.getHeight());
+//                System.out.println("!!!!!!!!!" + iv_graph.getWidth());
+//            }
+//        });
+
+        zl_graph.post(new Runnable() {
             @Override
             public void run() {
-                iv_grid.post(new Runnable() {
+
+//                zoomLayout.zoomTo(5, false);
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
+                layoutParams.height = zl_graph.getHeight();
+                layoutParams.width = zl_graph.getWidth();
+
+                System.out.println("################" + layoutParams.width + "x" + layoutParams.height);
+                fl_graph.setLayoutParams(layoutParams);
+
+                fl_graph.post(new Runnable() {
                     @Override
                     public void run() {
-                        iv_anim.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                customCanvas = new CustomCanvas(context, iv_graph, iv_grid, iv_anim, iv_coordinates);
-                                graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
-                                updateGraphViewState();
-                            }
-                        });
+                        customCanvas = new CustomCanvas(context, fl_graph, iv_graph, iv_grid, iv_anim, iv_coordinates);
+                        graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
+                        updateGraphViewState();
+
+                        zl_graph.zoomTo(2, false);
+                        zl_graph.panTo(0,0, false);
                     }
                 });
             }
         });
+
 
         final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
 
