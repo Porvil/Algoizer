@@ -54,15 +54,13 @@ public class BoardTree {
     private Paint paintGrid;
     private Paint paintGridCoordinates;
     private Paint paintVertex;
-    private Paint paintEdge;
-    private Paint paintEdgeWeight;
     private Paint paintEdgeArrows;
     private Paint paintText;
-    private Paint paintVertexAnim;
-    private Paint paintEdgeAnim;
-    private Paint paintEdgeWeightAnim;
-    private Paint paintEdgeArrowsAnim;
-    private Paint paintTextAnim;
+
+    private Paint paintEdgeTree;
+    private Paint paintEdgeBack;
+    private Paint paintEdgeCross;
+    private Paint paintEdgeForward;
 
     ZoomLayout zoomLayout;
     ImageView iv_graphtree;
@@ -116,8 +114,7 @@ public class BoardTree {
         initPaints();
     }
 
-    public void startInit2(){
-
+    public void startInit(){
 
         System.out.println("bdsv pop up graph tree = " + zoomLayout.getWidth()
                 + " | " + zoomLayout.getHeight());
@@ -141,10 +138,6 @@ public class BoardTree {
                 System.out.println(layoutParams.width + "x" + layoutParams.height);
 
                 iv_graphtree.setLayoutParams(layoutParams);
-//                bdsv_popupgraph.updateViewLayout(imageView, layoutParams);
-//                imageView.requestLayout();
-//                bdsv_popupgraph.requestLayout();
-
 
                 iv_graphtree.post(new Runnable() {
                     @Override
@@ -158,10 +151,9 @@ public class BoardTree {
                         iv_graphtree.setImageBitmap(bitmapGraphTree);
                         canvasGraphTree = new Canvas(bitmapGraphTree);
 
-//                        canvasGraphTree.drawRect(0,0, iv_graphtree.getWidth(), iv_graphtree.getHeight(), paintEdge);
                         drawGrid();
 
-                        update();
+                        drawGraph();
                     }
                 });
 
@@ -189,42 +181,27 @@ public class BoardTree {
         this.paintVertex = new Paint();
         this.paintVertex.setColor(context.getResources().getColor(R.color.mainColor));
 
-        this.paintEdge = new Paint();
-        this.paintEdge.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
-        this.paintEdge.setStrokeWidth(edgeWidth);
-
         this.paintEdgeArrows = new Paint();
         this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
         this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
 
-        this.paintEdgeWeight = new Paint();
-        this.paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
-        this.paintEdgeWeight.setTextSize(textSize);
-        this.paintEdgeWeight.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
-        this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
-        this.paintTextAnim = new Paint();
-        this.paintTextAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintTextAnim.setTextSize(textSize);
-        this.paintTextAnim.setColor(Color.WHITE);
-        this.paintTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintEdgeTree = new Paint();
+        this.paintEdgeTree.setColor(context.getResources().getColor(R.color.graphEdge1));
+        this.paintEdgeTree.setStrokeWidth(edgeWidth);
 
-        this.paintVertexAnim = new Paint();
-        this.paintVertexAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeBack = new Paint();
+        this.paintEdgeBack.setColor(context.getResources().getColor(R.color.graphEdge2));
+        this.paintEdgeBack.setStrokeWidth(edgeWidth);
 
-        this.paintEdgeAnim = new Paint();
-        this.paintEdgeAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
-        this.paintEdgeAnim.setStrokeWidth(edgeWidth);
+        this.paintEdgeCross = new Paint();
+        this.paintEdgeCross.setColor(context.getResources().getColor(R.color.graphEdge3));
+        this.paintEdgeCross.setStrokeWidth(edgeWidth);
 
-        this.paintEdgeArrowsAnim = new Paint();
-        this.paintEdgeArrowsAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
-        this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
+        this.paintEdgeForward = new Paint();
+        this.paintEdgeForward.setColor(context.getResources().getColor(R.color.graphEdge4));
+        this.paintEdgeForward.setStrokeWidth(edgeWidth);
 
-        this.paintEdgeWeightAnim = new Paint();
-        this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintEdgeWeightAnim.setTextSize(textSize);
-        this.paintEdgeWeightAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
-        this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     }
 
     private void drawGrid() {
@@ -262,8 +239,8 @@ public class BoardTree {
 
     }
 
-    // Re-Draws the complete graphOld
-    public void update(){
+    // Re-Draws the complete graph
+    public void drawGraph(){
 
         for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
             Pair<Integer, Integer> value = entry.getValue();
@@ -311,10 +288,30 @@ public class BoardTree {
 
     // Draws a single EdgeOld
     public void drawEdgeGraph(Rect rect1, Rect rect2, EdgePro edgePro, boolean weighted) {
-        __drawEdge(canvasGraphTree,
-                rect1, rect2,
-                paintEdge, paintEdgeArrows, paintEdgeWeight,
-                edgePro, weighted);
+
+        switch(edgePro.edgeClass){
+            case TREE:
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeArrows, null,
+                        edgePro, weighted);
+                break;
+
+            case BACK:
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeBack, paintEdgeArrows, null,
+                        edgePro, weighted);
+                break;
+
+            case CROSS:
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeCross, paintEdgeArrows, null,
+                        edgePro, weighted);
+                break;
+
+            case FORWARD:
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeArrows, null,
+                        edgePro, weighted);
+                break;
+
+        }
+
     }
 
 

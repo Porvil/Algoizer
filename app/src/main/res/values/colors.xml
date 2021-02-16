@@ -11,4 +11,9 @@
     <color name="colorWhite">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="graphEdge1">#00A2DF</color> // TREE
+    <color name="graphEdge2">#e41234</color> // BACK
+    <color name="graphEdge3">#66a594</color> // CROSS
+    <color name="graphEdge4">#703f27</color> // FORWARD
 </resources>

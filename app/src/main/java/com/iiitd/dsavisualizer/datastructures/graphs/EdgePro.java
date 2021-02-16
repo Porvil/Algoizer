@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+import java.util.Objects;
+
 public class EdgePro {
 
     public int src;
@@ -40,4 +42,21 @@ public class EdgePro {
                 '}';
     }
 
+    // need to complete this function [ currently should only be used in undirected graphs ]
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        EdgePro edgePro = (EdgePro) o;
+
+        return (src == edgePro.src && des == edgePro.des) ||
+                (src == edgePro.des && des == edgePro.src);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(src, des, weight, isDirected);
+    }
 }

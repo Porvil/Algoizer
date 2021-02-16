@@ -25,6 +25,21 @@ public class GraphTree {
         vertexMap = new HashMap<>();
     }
 
+    public boolean addVertex(int value, int row, int col){
+        vertexMap.put(value, Pair.create(row, col));
+        return true;
+    }
+
+    public boolean addEdge(EdgePro edgePro){
+        // Only when undirected graphs
+        if(!directed && edgePros.contains(edgePro)){
+            return false;
+        }
+
+        edgePros.add(edgePro);
+        return true;
+    }
+
     public void printEdges(){
         for(EdgePro edgePro: edgePros){
             System.out.println(edgePro);

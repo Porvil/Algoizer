@@ -17,7 +17,9 @@ import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class BFS {
     Graph graph;
@@ -69,6 +71,7 @@ public class BFS {
 
         System.out.println("qu = " + queue);
 
+//        graphTree.addVertex(s, 0, 0);
         vertices.add(vertex);
         GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
         GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
@@ -80,6 +83,8 @@ public class BFS {
 
         while (queue.size() != 0) {
             int u = queue.pop();
+//            graphTree.addVertex(u, 0, 0);
+
             System.out.println("___________");
             System.out.println("("+u + ")");
             System.out.println(queue);
@@ -88,6 +93,9 @@ public class BFS {
             for(Edge edge : graph.edgeListMap.get(u)) {
                 int v = edge.des;
                 if (map.get(v).color == WHITE) {
+
+//                    graphTree.addVertex(v, 0, 0);
+
                     map.get(v).color = GRAY;
                     map.get(v).dist = map.get(u).dist + 1;
                     map.get(v).parent = u;
@@ -108,47 +116,69 @@ public class BFS {
 
                 }
 
-                if(map.get(v).dist == map.get(u).dist + 1){
+                if (map.get(v).dist == map.get(u).dist + 1) {
                     System.out.println("TREE EDGE : " + u + " -> " + v);
-                    graphTree.edgePros.add(new EdgePro(edge, TREE));
+                    graphTree.addEdge(new EdgePro(edge, TREE));
                 }
-                else{
+                else {
                     int src = u;
                     int des = v;
 
-                    while (map.get(src).dist > 0 && map.get(src).dist > map.get(des).dist){
+                    while (map.get(src).dist > 0 && map.get(src).dist > map.get(des).dist) {
                         src = map.get(src).parent;
                     }
-                    while (map.get(des).dist > 0 && map.get(des).dist > map.get(src).dist){
+                    while (map.get(des).dist > 0 && map.get(des).dist > map.get(src).dist) {
                         des = map.get(des).parent;
                     }
 
                     System.out.println("[[[[ " + src + " | " + des + " ]]]]");
-                    if(src == des){
+                    if (src == des) {
                         System.out.println("BACK EDGE : " + u + " -> " + v);
-                        graphTree.edgePros.add(new EdgePro(edge, BACK));
+                        graphTree.addEdge(new EdgePro(edge, BACK));
                     }
-                    else{
+                    else {
                         System.out.println("CROSS EDGE : " + u + " -> " + v);
-                        graphTree.edgePros.add(new EdgePro(edge, CROSS));
+                        graphTree.addEdge(new EdgePro(edge, CROSS));
                     }
 
                 }
-//                if(map.get(v).dist == map.get(u).dist + 1){
-//                    System.out.println("TREE EDGE : " + u + " -> " + v);
-//                }
-//                else if( 0 <= map.get(v).dist &&  map.get(v).dist <= map.get(u).dist){
-//                    System.out.println("BACK EDGE : " + u + " -> " + v);
-//                }
-//                else if(map.get(v).dist <= map.get(u).dist + 1){
-//                    System.out.println("CROSS EDGE : " + u + " -> " + v);
-//                }
-
 
             }
             map.get(u).color = BLACK;
 
         }
+
+
+        // add vertices to the graphtree
+        List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
+        int size = list.size();
+
+        HashMap<Integer, Integer> levelmap = new HashMap<>();
+        for(Map.Entry<Integer, VertexCLRS> entry : list){
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+//
+//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
+//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, random.nextInt(5)));
+            if(entry.getValue().dist != Integer.MAX_VALUE && entry.getValue().dist >= 0) {
+
+                if (levelmap.containsKey(entry.getValue().dist)) {
+                    levelmap.put(entry.getValue().dist, levelmap.get(entry.getValue().dist) + 1);
+                } else {
+                    levelmap.put(entry.getValue().dist, 0);
+                }
+
+                System.out.println("Vertex = " + entry.getKey() + " row = " +
+                        entry.getValue().dist + " col = " + levelmap.get(entry.getValue().dist));
+                graphTree.addVertex(entry.getKey(), entry.getValue().dist, levelmap.get(entry.getValue().dist));
+            }
+        }
+
+        graphTree.noOfRows = size;
+        graphTree.noOfCols = size;
+
+
+
 
         return graphSequence;
     }

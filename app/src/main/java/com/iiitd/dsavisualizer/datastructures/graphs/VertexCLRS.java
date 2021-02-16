@@ -10,10 +10,11 @@ public class VertexCLRS {
     public int col;
 
     // Vertex CLRS Variables
-    public VertexVisitState color;         //
-    public int dist;                       //
-    public int parent;                     //
-    public int f;                          //
+    public VertexVisitState color;         // used by both bfs and dfs
+    public int dist;                       // used as start time in dfs, and dist in case of bfs [ bfs order traversal ]
+    public int parent;                     // used by both bfs and dfs
+    public int f;                          // used by dfs end time
+//    public int l;                          // used by bfs level
 
     // Used by BFS
     public VertexCLRS(Vertex vertex, VertexVisitState color, int dist, int parent) {
@@ -23,6 +24,7 @@ public class VertexCLRS {
         this.color = color;
         this.dist = dist;
         this.parent = parent;
+//        this.l = 0;
     }
 
     // Used by DFS
