@@ -57,7 +57,7 @@
                     android:id="@+id/fl_graph"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#DA9191">
+                    android:background="#ECEFF1">
 
                     <ImageView
                         android:id="@+id/iv_grid"

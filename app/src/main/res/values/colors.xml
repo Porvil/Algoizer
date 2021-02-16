@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3FADA8</color>
+<!--    <color name="colorPrimary">#3FADA8</color>-->
     <color name="mainColor">#59D2FE</color>
     <color name="mainColorDarkerShade">#01a9e6</color>
     <color name="mainColorDone">#3700B3</color>

@@ -2,15 +2,49 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="fontFamily">@font/open_sans</item>
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mainColor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/mainColor</item>
         <item name="colorControlNormal">@color/mainColor</item>
+<!--        <item name="android:background">@color/mainColor</item>-->
 
-        <item name="android:windowContentTransitions">true</item>
-        <item name="fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="AppTheme2" parent="BaseTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainColorDarkerShade</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/mainColorDone</item>
+        <item name="colorControlNormal">@color/mainColorDone</item>
+<!--        <item name="android:background">@color/mainColorDarkerShade</item>-->
+
+    </style>
+
+    <style name="AppTheme3" parent="BaseTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainColorDone</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/mainColorDone</item>
+        <item name="colorControlNormal">@color/mainColorDone</item>
+
+    </style>
+
+    <style name="AppTheme4" parent="BaseTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainColorOpposite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/mainColorDone</item>
+        <item name="colorControlNormal">@color/mainColorDone</item>
 
     </style>
 
@@ -21,4 +55,5 @@
         <item name="android:background">@drawable/button_corner</item>
 <!--        <item name="android:background">@color/mainColorDarkerShade</item>-->
     </style>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.utility;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
@@ -264,6 +266,40 @@ public class UtilUI {
 
     public static float dpToPx(Context context, int dp){
         return dp * context.getResources().getDisplayMetrics().density;
+    }
+
+    public static int getCurrentAppTheme(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        int currentTheme = sharedPreferences.getInt(AppSettings.CURRENT_THEME_KEY, 1);
+        int currentThemeID;
+
+        switch (currentTheme){
+            case 1:
+                currentThemeID = R.style.AppTheme;
+                break;
+            case 2:
+                currentThemeID = R.style.AppTheme2;
+                break;
+            case 3:
+                currentThemeID = R.style.AppTheme3;
+                break;
+            case 4:
+                currentThemeID = R.style.AppTheme4;
+                break;
+            default:
+                currentThemeID = R.style.AppTheme;
+                break;
+        }
+
+        return currentThemeID;
+    }
+
+    public static void changeCurrentAppTheme(Context context, int themeNumber){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(AppSettings.CURRENT_THEME_KEY, themeNumber);
+        editor.apply();
     }
 
 }

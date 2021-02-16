@@ -14,6 +14,8 @@ public class AppSettings {
     // Constants
     public static final String DIRECTORY = "/DSA Visualizer";
     public static final String SEPARATOR = "/";
+    public static final String SHARED_PREFERENCES = "Shared Preferences";
+    public static final String CURRENT_THEME_KEY = "Theme";
 
     public static final int PERMISSION_ALL = 1000;
     public static final int LOGO_ANIMATION_TIME = 2000;
