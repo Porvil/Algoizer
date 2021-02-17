@@ -809,7 +809,13 @@ public class GraphActivity extends AppCompatActivity {
 //            }
 //        });
 
-        graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
+        ll_anim.post(new Runnable() {
+            @Override
+            public void run() {
+                graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
+            }
+        });
+
 
         zl_graph.post(new Runnable() {
             @Override
