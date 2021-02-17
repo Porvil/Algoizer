@@ -62,16 +62,14 @@ public class BoardTree {
     private Paint paintEdgeCross;
     private Paint paintEdgeForward;
 
-    ZoomLayout zoomLayout;
     ImageView iv_graphtree;
     Canvas canvasGraphTree;
     Bitmap bitmapGraphTree;
     GraphTree graphTree;
 
-    public BoardTree(Context context, GraphTree graphTree, ZoomLayout zoomLayout) {
+    public BoardTree(Context context, GraphTree graphTree) {
         this.context = context;
         this.graphTree = graphTree;
-        this.zoomLayout = zoomLayout;
 
         this.xCount = graphTree.noOfCols;
         this.yCount = graphTree.noOfRows;
@@ -81,7 +79,6 @@ public class BoardTree {
                 context.getResources().getDisplayMetrics());
         float cm = px * nodeSize;
 
-        // not used
         xSize = (int) cm;
         ySize = (int) cm;
 
@@ -114,51 +111,17 @@ public class BoardTree {
         initPaints();
     }
 
-    public void startInit(){
+    // Should be called only after Imagview Layout has been laid
+    public void setImageViewAndCreateCanvas(final ImageView iv_graphtree) {
+        this.iv_graphtree = iv_graphtree;
 
-        System.out.println("bdsv pop up graph tree = " + zoomLayout.getWidth()
-                + " | " + zoomLayout.getHeight());
-        System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
-        System.out.println("X = " + X + " | " + " Y = " + Y);
-        System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
-        System.out.println("max count = " + yCount * xCount );
+        bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
+        iv_graphtree.setImageBitmap(bitmapGraphTree);
+        canvasGraphTree = new Canvas(bitmapGraphTree);
 
-        iv_graphtree = zoomLayout.findViewById(R.id.iv_graphtree);
+        drawGrid();
 
-        iv_graphtree.post(new Runnable() {
-            @Override
-            public void run() {
-
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_graphtree.getLayoutParams();
-                System.out.println(layoutParams.width + "x" + layoutParams.height);
-
-                layoutParams.height = (int) Y;
-                layoutParams.width  = (int) X;
-
-                System.out.println(layoutParams.width + "x" + layoutParams.height);
-
-                iv_graphtree.setLayoutParams(layoutParams);
-
-                iv_graphtree.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("imagegraph pop up graph tree = " + iv_graphtree.getWidth()
-                                + " | " + iv_graphtree.getHeight());
-                        System.out.println("########999 bdsv pop up graph tree = " + zoomLayout.getWidth()
-                                + " | " + zoomLayout.getHeight());
-
-                        bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
-                        iv_graphtree.setImageBitmap(bitmapGraphTree);
-                        canvasGraphTree = new Canvas(bitmapGraphTree);
-
-                        drawGrid();
-
-                        drawGraph();
-                    }
-                });
-
-            }
-        });
+        drawGraph();
 
     }
 

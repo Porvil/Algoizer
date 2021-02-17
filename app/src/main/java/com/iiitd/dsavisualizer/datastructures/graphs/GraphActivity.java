@@ -112,6 +112,7 @@ public class GraphActivity extends AppCompatActivity {
     GraphControls graphControls;
     GraphSequence graphSequence;
     GraphTree graphTree;
+    GraphTreePopUp graphTreePopUp;
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
@@ -298,18 +299,6 @@ public class GraphActivity extends AppCompatActivity {
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
-
-                final ZoomLayout zl_graphtree = popupView.findViewById(R.id.zl_graphtree);
-                final ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
-                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
-                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
-
-                iv_popupgraphname.setText("BFS Tree");
-
-
                 BFS bfs = new BFS(graphWrapper.graph);
                 GraphSequence run = bfs.run(vertexNumber);
                 graphSequence = run;
@@ -319,91 +308,19 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println("--------------DONE ------------ ");
 
-                final BoardTree boardTree = new BoardTree(context, graphTree, zl_graphtree);
                 graphTree.printEdges();
                 graphTree.printVertices();
 
                 System.out.println("DONE ------------ ");
 
-                zl_graphtree.post(new Runnable() {
-                    @Override
-                    public void run() {
+//                if(graphSequence.size > 0){
+                    graphTreePopUp.create("BFS Tree", graphTree);
+                    graphTreePopUp.show();
+//                }
 
-                        System.out.println("zl_graphtree size = " + zl_graphtree.getWidth()
-                                + " | " + zl_graphtree.getHeight());
-                        boardTree.startInit();
-
-                    }
-                });
-
-
-                // create the popup window
-                final int width = 800;
-                final int height = ll_anim.getHeight();
-                boolean focusable = false; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
-
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    int orgX, orgY;
-                    int offsetX, offsetY;
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                orgX = (int) event.getX();
-                                orgY = (int) event.getY();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                offsetX = (int)event.getRawX() - orgX;
-                                offsetY = (int)event.getRawY() - orgY;
-                                System.out.println(offsetX + "x" + offsetY);
-                                popupWindow.update(offsetX, offsetY, -1, -1, true);
-                                break;
-                        }
-                        return true;
-                    }});
-
-                btn_minimize.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(zl_graphtree.getVisibility() == View.VISIBLE){
-                            zl_graphtree.setVisibility(View.GONE);
-                            int curWidth = width;
-                            int curHeight = height - zl_graphtree.getHeight();
-                            curHeight = curHeight <= 0 ? 200 : curHeight;
-                            popupWindow.update(curWidth, curHeight);
-
-                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_open_in_full_24));
-
-                        }
-                        else{
-                            zl_graphtree.setVisibility(View.VISIBLE);
-                            popupWindow.update(width, height);
-                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_remove_24));
-                        }
-                    }
-                });
-
-                btn_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
-//                startTimer("BFS", bfs);
             }
         });
 
@@ -413,18 +330,6 @@ public class GraphActivity extends AppCompatActivity {
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
-
-                final ZoomLayout zl_graphtree = popupView.findViewById(R.id.zl_graphtree);
-                final ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
-                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
-                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
-
-                iv_popupgraphname.setText("DFS Tree");
-
-
                 DFS dfs = new DFS(graphWrapper.graph);
                 GraphSequence run = dfs.dfs();
                 graphSequence = run;
@@ -432,88 +337,13 @@ public class GraphActivity extends AppCompatActivity {
                 GraphTree rungt = dfs.graphTree;
                 graphTree = rungt;
 
-                final BoardTree boardTree = new BoardTree(context, graphTree, zl_graphtree);
                 graphTree.printEdges();
                 graphTree.printVertices();
 
-                System.out.println("DONE ------------ ");
-                zl_graphtree.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        System.out.println("zl_graphtree size = " + zl_graphtree.getWidth()
-                                + " | " + zl_graphtree.getHeight());
-                        boardTree.startInit();
-
-                    }
-                });
-
-
-                // create the popup window
-                final int width = 800;
-                final int height = ll_anim.getHeight();
-                boolean focusable = false; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
-
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    int orgX, orgY;
-                    int offsetX, offsetY;
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                orgX = (int) event.getX();
-                                orgY = (int) event.getY();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                offsetX = (int)event.getRawX() - orgX;
-                                offsetY = (int)event.getRawY() - orgY;
-                                System.out.println(offsetX + "x" + offsetY);
-                                popupWindow.update(offsetX, offsetY, -1, -1, true);
-                                break;
-                        }
-                        return true;
-                    }});
-
-                btn_minimize.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(zl_graphtree.getVisibility() == View.VISIBLE){
-                            zl_graphtree.setVisibility(View.GONE);
-                            int curWidth = width;
-                            int curHeight = height - zl_graphtree.getHeight();
-                            curHeight = curHeight <= 0 ? 200 : curHeight;
-                            popupWindow.update(curWidth, curHeight);
-
-                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_open_in_full_24));
-
-                        }
-                        else{
-                            zl_graphtree.setVisibility(View.VISIBLE);
-                            popupWindow.update(width, height);
-                            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_remove_24));
-                        }
-                    }
-                });
-
-                btn_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-
-
+//                if(graphSequence.size > 0){
+                    graphTreePopUp.create("DFS Tree", graphTree);
+                    graphTreePopUp.show();
+//                }
 //                System.out.println(graphSequence);
 //                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
             }
@@ -679,108 +509,6 @@ public class GraphActivity extends AppCompatActivity {
 
                 graphWrapper.reset();
                 parseAndShowCustomInput(customGraphString);
-
-
-//                LayoutInflater inflater = (LayoutInflater)
-//                        getSystemService(LAYOUT_INFLATER_SERVICE);
-//                final View popupView = inflater.inflate(R.layout.layout_popup_graph, null);
-//
-//                ImageButton btn_minimize = popupView.findViewById(R.id.btn_minimize);
-//                ImageButton btn_close = popupView.findViewById(R.id.btn_close);
-//                TextView iv_popupgraphname = popupView.findViewById(R.id.tv_popupgraphname);
-////                final ImageView iv_popupgraph = popupView.findViewById(R.id.iv_popupgraph);
-//
-//
-//
-//
-////                iv_popupgraph.post(new Runnable() {
-////                    @Override
-////                    public void run() {
-////                        int width = iv_popupgraph.getWidth();
-////                        int height = iv_popupgraph.getHeight();
-////
-////                        System.out.println("Canvas Pop Up = " + width + "x" + height);
-////
-////                        Canvas canvas;
-////                        Bitmap bitmap;
-////
-////                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-////                        iv_popupgraph.setImageBitmap(bitmap);
-////                        canvas = new Canvas(bitmap);
-////
-////                        canvas.drawCircle(50,50,20, new Paint(Color.RED));
-////
-////                    }
-////                });
-//
-//
-//                // create the popup window
-////                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-////                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                final int width = 800;
-//                final int height = ll_anim.getHeight();
-//                boolean focusable = false; // lets taps outside the popup also dismiss it
-//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-////                final PopupWindow popupWindow = new PopupWindow(popupView, 600, 800, focusable);
-//
-//                // show the popup window
-//                // which view you pass in doesn't matter, it is only used for the window tolken
-////                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-//                popupWindow.showAtLocation(ll_anim, Gravity.NO_GRAVITY, 0, 0);
-////popupWindow.showAsDropDown(view);
-//                // dismiss the popup window when touched
-//                popupView.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        popupWindow.dismiss();
-//                        return true;
-//                    }
-//                });
-//
-//                popupView.setOnTouchListener(new View.OnTouchListener() {
-//                    int orgX, orgY;
-//                    int offsetX, offsetY;
-//
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        switch (event.getAction()) {
-//                            case MotionEvent.ACTION_DOWN:
-//                                orgX = (int) event.getX();
-//                                orgY = (int) event.getY();
-//                                break;
-//                            case MotionEvent.ACTION_MOVE:
-//                                offsetX = (int)event.getRawX() - orgX;
-//                                offsetY = (int)event.getRawY() - orgY;
-//                                System.out.println(offsetX + "x" + offsetY);
-//                                popupWindow.update(offsetX, offsetY, -1, -1, true);
-//                                break;
-//                        }
-//                        return true;
-//                    }});
-//
-//                btn_minimize.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-////                        if(iv_popupgraph.getVisibility() == View.VISIBLE){
-////                            iv_popupgraph.setVisibility(View.GONE);
-////                            int curWidth = width;
-////                            int curHeight = height - iv_popupgraph.getHeight();
-////                            curHeight = curHeight <= 0 ? 200 : curHeight;
-////                            popupWindow.update(curWidth, curHeight);
-////                        }
-////                        else{
-////                            iv_popupgraph.setVisibility(View.VISIBLE);
-////                            popupWindow.update(width, height);
-////                        }
-//                    }
-//                });
-//
-//                btn_close.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        popupWindow.dismiss();
-//                    }
-//                });
 
             }
         });
@@ -1080,6 +808,8 @@ public class GraphActivity extends AppCompatActivity {
 //                System.out.println("!!!!!!!!!" + iv_graph.getWidth());
 //            }
 //        });
+
+        graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
 
         zl_graph.post(new Runnable() {
             @Override
