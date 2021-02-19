@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class BFS {
     Graph graph;
@@ -83,12 +82,25 @@ public class BFS {
 
         while (queue.size() != 0) {
             int u = queue.pop();
-//            graphTree.addVertex(u, 0, 0);
 
-            System.out.println("___________");
-            System.out.println("("+u + ")");
-            System.out.println(queue);
-            System.out.println("___________");
+            GraphAnimationState graphAnimationState2 =
+                    GraphAnimationState.create()
+                            .setState("Vertex = " + u)
+                            .setInfo("Vertex = " + u)
+                            .addGraphAnimationStateShadow(
+                                    GraphAnimationStateShadow.create()
+                                            .addVertices(vertices)
+                                            .addEdges(edges)
+                                            .addQueues(queue)
+                            );
+
+            graphSequence.addGraphAnimationState(graphAnimationState2);
+
+//            System.out.println("___________");
+////            System.out.println("("+u + ")");
+//            System.out.println(queue);
+//            System.out.println("___________");
+            System.out.println("!!!!!queue = " + queue);
 
             for(Edge edge : graph.edgeListMap.get(u)) {
                 int v = edge.des;
@@ -106,18 +118,39 @@ public class BFS {
                     edges.add(edge);
 
                     System.out.println("queue = " + queue);
-                    GraphAnimationState graphAnimationState1 = new GraphAnimationState("Visit = " + v);
-                    GraphAnimationStateShadow graphAnimationStateShadow1 = new GraphAnimationStateShadow();
-                    graphAnimationStateShadow1.vertices.addAll(vertices);
-                    graphAnimationStateShadow1.edges.addAll(edges);
-                    graphAnimationStateShadow1.queues.addAll(new ArrayList<>(queue));
-                    graphAnimationState1.graphAnimationStateShadow.add(graphAnimationStateShadow1);
+                    GraphAnimationState graphAnimationState1 =
+                            GraphAnimationState.create()
+                                    .setState("Vertex = " + u)
+                                    .setInfo("Vertex = " + u)
+                                    .addGraphAnimationStateShadow(
+                                            GraphAnimationStateShadow.create()
+                                                    .addVertices(vertices)
+                                                    .addEdges(edges)
+                                                    .addQueues(queue)
+                                    );
+
                     graphSequence.addGraphAnimationState(graphAnimationState1);
 
                 }
+                else{
+                    System.out.println("queue = " + queue);
+                    GraphAnimationState graphAnimationState1 =
+                            GraphAnimationState.create()
+                                    .setState("Vertex = " + u)
+                                    .setInfo("Vertex = " + u)
+                                    .addGraphAnimationStateShadow(
+                                            GraphAnimationStateShadow.create()
+                                                    .addVertices(vertices)
+                                                    .addEdges(edges)
+                                                    .addQueues(queue)
+                                    );
 
+                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                }
+
+                // EDGE CLASSIFICATION
                 if (map.get(v).dist == map.get(u).dist + 1) {
-                    System.out.println("TREE EDGE : " + u + " -> " + v);
+//                    System.out.println("TREE EDGE : " + u + " -> " + v);
                     graphTree.addEdge(new EdgePro(edge, TREE));
                 }
                 else {
@@ -131,13 +164,13 @@ public class BFS {
                         des = map.get(des).parent;
                     }
 
-                    System.out.println("[[[[ " + src + " | " + des + " ]]]]");
+//                    System.out.println("[[[[ " + src + " | " + des + " ]]]]");
                     if (src == des) {
-                        System.out.println("BACK EDGE : " + u + " -> " + v);
+//                        System.out.println("BACK EDGE : " + u + " -> " + v);
                         graphTree.addEdge(new EdgePro(edge, BACK));
                     }
                     else {
-                        System.out.println("CROSS EDGE : " + u + " -> " + v);
+//                        System.out.println("CROSS EDGE : " + u + " -> " + v);
                         graphTree.addEdge(new EdgePro(edge, CROSS));
                     }
 
@@ -176,8 +209,6 @@ public class BFS {
 
         graphTree.noOfRows = size;
         graphTree.noOfCols = size;
-
-
 
 
         return graphSequence;

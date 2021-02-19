@@ -119,6 +119,8 @@ public class GraphTreePopUp{
         this.boardTree = new BoardTree(context, graphTree);
         this.iv_popupgraphname.setText(title);
 
+        zl_graphtree.zoomTo(1, false);
+
         iv_graphtree.post(new Runnable() {
             @Override
             public void run() {
@@ -151,6 +153,7 @@ public class GraphTreePopUp{
         if(popupwindow != null){
             zl_graphtree.setVisibility(View.VISIBLE);
             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+            zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();
         }
     }

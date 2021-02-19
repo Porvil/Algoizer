@@ -743,7 +743,7 @@ public class GraphActivity extends AppCompatActivity {
 
                         graphWrapper.board.clearCanvasAnim();
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
-//                        System.out.println(graphAnimationState);
+                        System.out.println(graphAnimationState);
 
 
                         for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){

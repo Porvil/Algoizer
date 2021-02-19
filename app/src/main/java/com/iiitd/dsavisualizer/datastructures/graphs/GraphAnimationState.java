@@ -12,6 +12,29 @@ public class GraphAnimationState {
         this.graphAnimationStateShadow = new ArrayList<>();
     }
 
+    public GraphAnimationState() {
+        this.graphAnimationStateShadow = new ArrayList<>();
+    }
+
+    public static GraphAnimationState create(){
+        return new GraphAnimationState();
+    }
+
+    public GraphAnimationState setState(String state){
+        this.state = state;
+        return this;
+    }
+
+    public GraphAnimationState setInfo(String info){
+        this.info = info;
+        return this;
+    }
+
+    public GraphAnimationState addGraphAnimationStateShadow(GraphAnimationStateShadow graphAnimationStateShadow){
+        this.graphAnimationStateShadow.add(graphAnimationStateShadow);
+        return this;
+    }
+
     public GraphAnimationState(String state, String info) {
         this.state = state;
         this.info = info;
