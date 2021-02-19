@@ -44,13 +44,17 @@ public class BFS {
 
 
         {
-            GraphAnimationState graphAnimationState = new GraphAnimationState("start");
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("start")
+                            .addGraphAnimationStateShadow(
+                                    GraphAnimationStateShadow.create()
+                                            .addVertices(vertices)
+                                            .addEdges(edges)
+                                            .addQueues(queue)
+                            );
 
-            GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
-            graphAnimationStateShadow.vertices.addAll(vertices);
-            graphAnimationStateShadow.edges.addAll(edges);
-            graphAnimationStateShadow.queues.addAll(new ArrayList<>(queue));
-            graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
 
@@ -72,13 +76,18 @@ public class BFS {
 
 //        graphTree.addVertex(s, 0, 0);
         vertices.add(vertex);
-        GraphAnimationState graphAnimationState = new GraphAnimationState("Visit = " + s);
-        GraphAnimationStateShadow graphAnimationStateShadow = new GraphAnimationStateShadow();
-        graphAnimationStateShadow.vertices.addAll(vertices);
-        graphAnimationStateShadow.queues.addAll(new ArrayList<>(queue));
-        graphAnimationState.graphAnimationStateShadow.add(graphAnimationStateShadow);
-        graphSequence.addGraphAnimationState(graphAnimationState);
+        GraphAnimationState graphAnimationState =
+                GraphAnimationState.create()
+                        .setState("Visit = " + s)
+                        .setInfo("Add source = " + s + " to queue")
+                        .addGraphAnimationStateShadow(
+                                GraphAnimationStateShadow.create()
+                                        .addVertices(vertices)
+                                        .addEdges(edges)
+                                        .addQueues(queue)
+                        );
 
+        graphSequence.addGraphAnimationState(graphAnimationState);
 
         while (queue.size() != 0) {
             int u = queue.pop();
@@ -86,7 +95,7 @@ public class BFS {
             GraphAnimationState graphAnimationState2 =
                     GraphAnimationState.create()
                             .setState("Vertex = " + u)
-                            .setInfo("Vertex = " + u)
+                            .setInfo("Vertex popped from queue = " + u)
                             .addGraphAnimationStateShadow(
                                     GraphAnimationStateShadow.create()
                                             .addVertices(vertices)
@@ -120,8 +129,8 @@ public class BFS {
                     System.out.println("queue = " + queue);
                     GraphAnimationState graphAnimationState1 =
                             GraphAnimationState.create()
-                                    .setState("Vertex = " + u)
-                                    .setInfo("Vertex = " + u)
+                                    .setState("Vertex = " + v)
+                                    .setInfo("Vertex visited = " + v)
                                     .addGraphAnimationStateShadow(
                                             GraphAnimationStateShadow.create()
                                                     .addVertices(vertices)
@@ -136,8 +145,8 @@ public class BFS {
                     System.out.println("queue = " + queue);
                     GraphAnimationState graphAnimationState1 =
                             GraphAnimationState.create()
-                                    .setState("Vertex = " + u)
-                                    .setInfo("Vertex = " + u)
+                                    .setState("Vertex = " + v)
+                                    .setInfo("Vertex already visited = " + v)
                                     .addGraphAnimationStateShadow(
                                             GraphAnimationStateShadow.create()
                                                     .addVertices(vertices)

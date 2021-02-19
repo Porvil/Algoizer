@@ -374,20 +374,6 @@
             app:srcCompat="@drawable/ic_baseline_menu_open_24" />
 
         <ImageButton
-            android:id="@+id/btn_code"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="Show/Hide Code"
-            android:scaleType="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_code_24" />
-
-        <ImageButton
             android:id="@+id/btn_info"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="50dp"
@@ -397,7 +383,7 @@
             android:contentDescription="Show Info"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_baseline_info_24" />

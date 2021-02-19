@@ -740,6 +740,7 @@ public class GraphActivity extends AppCompatActivity {
 
                     if(curSeqNo < graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
                         UtilUI.setText(tv_seqno, curSeqNo + "/" + graphSequence.size);
+                        UtilUI.setText(tv_info, graphSequence.graphAnimationStates.get(curSeqNo).info);
 
                         graphWrapper.board.clearCanvasAnim();
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
