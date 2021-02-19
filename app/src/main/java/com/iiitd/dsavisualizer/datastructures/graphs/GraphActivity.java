@@ -61,8 +61,10 @@ public class GraphActivity extends AppCompatActivity {
     DrawerLayout dl_main;
     View v_main;
     View v_menu;
+    View v_menu2;
     ViewStub vs_main;
     ViewStub vs_menu;
+    ViewStub vs_menu2;
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
@@ -136,10 +138,13 @@ public class GraphActivity extends AppCompatActivity {
         dl_main = findViewById(R.id.dl_main);
         vs_main = findViewById(R.id.vs_main);
         vs_menu = findViewById(R.id.vs_menu);
+        vs_menu2 = findViewById(R.id.vs_menu2);
         vs_main.setLayoutResource(LAYOUT);
         vs_menu.setLayoutResource(CONTROL);
+        vs_menu2.setLayoutResource(CONTROL);
         v_main = vs_main.inflate();
         v_menu = vs_menu.inflate();
+        v_menu2 = vs_menu2.inflate();
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         iv_grid = v_main.findViewById(R.id.iv_grid);
@@ -318,6 +323,8 @@ public class GraphActivity extends AppCompatActivity {
                     graphTreePopUp.show();
 //                }
 
+//                GraphDSPopUp graphDSPopUp = new GraphDSPopUp(context, 800, ll_anim.getHeight(), ll_anim);
+//                graphDSPopUp.create("BFS Queue", null);
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -650,6 +657,14 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+        zl_graph.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println(zl_graph.getPanX()+ " | " + zl_graph.getPanY());
+                System.out.println(zl_graph.getScaledPanX()+ " | " + zl_graph.getScaledPanY());
+                return false;
+            }
+        });
     }
 
     private void startTimer(String operation, final BFS bfs){
@@ -837,7 +852,7 @@ public class GraphActivity extends AppCompatActivity {
                         graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
                         updateGraphViewState();
 
-                        zl_graph.zoomTo(2, false);
+//                        zl_graph.zoomTo(2, false);
                         zl_graph.panTo(0,0, false);
                     }
                 });
@@ -1258,6 +1273,36 @@ public class GraphActivity extends AppCompatActivity {
                 resetGraphSequence();
                 graphWrapper.changeDirectedWeighted(directed, weighted);
                 graphWrapper.customInput(vertices, edges);
+
+
+                /*
+                // NOT COMPLETED YET, half working
+                int[] currentLimits = graphWrapper.board.getCurrentLimits();
+                float zoomRatio = graphWrapper.board.getZoomRatio();
+
+                graphWrapper.board.getZoomCentre();
+                Rect zoomCentre = graphWrapper.board.getZoomCentre();
+//                zl_graph.panTo(-zoomCentre.centerX(), -zoomCentre.centerY(), false);
+
+//                zl_graph.zoomIn();
+//                zl_graph.panTo(-379,-914, false);
+
+                float zoomLayoutCenterX = (float) (zl_graph.getWidth() / 2);
+                float zoomLayoutCenterY = (float) (zl_graph.getHeight() / 2);
+                float contentCenterX    = (float) (zoomCentre.centerX()/ 2);
+                float contentCenterY    = (float) (zoomCentre.centerY() / 2);
+                float diffX = contentCenterX - zoomLayoutCenterX;
+                float diffY = contentCenterY - zoomLayoutCenterY;
+//                zl_graph.panTo(-diffX, -diffY, true);
+                zl_graph.moveTo(1, 0,0,false);
+                zl_graph.moveTo(zoomRatio, -diffX, -diffY, true);
+
+//                zl_graph.panTo(-100,-100, false);
+//                zl_graph.zoomTo(zoomRatio, false);
+//                zl_graph.moveTo(zoomRatio, -zoomCentre.centerX(), -zoomCentre.centerY(), false);
+
+                // UPTO HERE
+                */
 
                 response = "Custom Graph input successful";
                 Toast.makeText(context, response, Toast.LENGTH_SHORT).show();

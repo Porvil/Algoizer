@@ -24,4 +24,12 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical" />
 
+    <ViewStub
+        android:id="@+id/vs_menu2"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

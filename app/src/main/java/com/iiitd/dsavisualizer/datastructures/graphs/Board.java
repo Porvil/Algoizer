@@ -514,4 +514,71 @@ public class Board {
         return angle;
     }
 
+    public int[] getCurrentLimits(){
+        int row_min = yCount-1;
+        int row_max = 0;
+        int col_min = xCount-1;
+        int col_max = 0;
+
+        for (int r = 0; r < yCount; r++) {
+            for (int c = 0; c < xCount; c++) {
+                if(boardElements[r][c].occupied){
+                    row_min = Math.min(row_min, r);
+                    row_max = Math.max(row_max, r);
+
+                    col_min = Math.min(col_min, c);
+                    col_max = Math.max(col_max, c);
+                }
+            }
+        }
+
+        return new int[]{row_min, row_max, col_min, col_max};
+    }
+
+    public float getZoomRatio(){
+        int[] currentLimits = getCurrentLimits();
+
+        int width = currentLimits[3] - currentLimits[2] + 1;
+        int height = currentLimits[1] - currentLimits[0] + 1;
+
+        System.out.println("row_min = " + currentLimits[0]);
+        System.out.println("row_max = " + currentLimits[1]);
+        System.out.println("col_min = " + currentLimits[2]);
+        System.out.println("col_max = " + currentLimits[3]);
+
+
+        System.out.println("width = " + width);
+        System.out.println("height = " + height);
+
+
+        float widthRatio = (float) xCount / width;
+        float heightRatio = (float) yCount / height;
+
+        System.out.println("&&" + widthRatio);
+        System.out.println("&&" + heightRatio);
+
+        System.out.println("zoom" + Math.min(widthRatio,  heightRatio));
+
+        return Math.min(widthRatio,  heightRatio);
+    }
+
+    public Rect getZoomCentre(){
+        int[] currentLimits = getCurrentLimits();
+
+        int width = currentLimits[3] - currentLimits[2] + 1;
+        int height = currentLimits[1] - currentLimits[0] + 1;
+
+        int widthMid = currentLimits[2] + width/2;
+        int heightMid = currentLimits[0] + height /2;
+
+        System.out.println("widthMid = " + widthMid);
+        System.out.println("heightMid = " + heightMid);
+
+        Rect rect = getRect(widthMid, heightMid);
+        System.out.println(rect.centerX());
+        System.out.println(rect.centerY());
+
+        return rect;
+    }
+
 }
