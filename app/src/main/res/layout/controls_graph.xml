@@ -33,7 +33,6 @@
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
             android:text="Graph"
-            android:textColor="@color/mainColor"
             android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -81,8 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="BFS"
-                    android:textColor="@color/mainColor" />
+                    android:text="BFS" />
 
                 <Button
                     android:id="@+id/btn_dfs"
@@ -90,8 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="DFS"
-                    android:textColor="@color/mainColor" />
+                    android:text="DFS" />
 
             </LinearLayout>
 
@@ -184,8 +181,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="@string/example_1"
-                    android:textColor="@color/mainColor" />
+                    android:text="@string/example_1" />
 
                 <Button
                     android:id="@+id/btn_tree2"
@@ -193,8 +189,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="@string/example_2"
-                    android:textColor="@color/mainColor" />
+                    android:text="@string/example_2" />
 
                 <Button
                     android:id="@+id/btn_tree3"
@@ -202,8 +197,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="@string/example_3"
-                    android:textColor="@color/mainColor" />
+                    android:text="@string/example_3" />
 
             </LinearLayout>
 
@@ -218,8 +212,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="Clear Graph"
-                    android:textColor="@color/mainColor" />
+                    android:text="Clear Graph" />
 
                 <Button
                     android:id="@+id/btn_cleargraphanim"
@@ -227,8 +220,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
-                    android:text="Clear Anim Graph"
-                    android:textColor="@color/mainColor" />
+                    android:text="Clear Anim Graph" />
 
             </LinearLayout>
 

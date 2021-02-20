@@ -163,7 +163,6 @@
                 android:gravity="left|center_vertical"
                 android:paddingStart="5dp"
                 android:text="Next : "
-                android:textColor="@color/mainColorDarkerShade"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -188,7 +187,6 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="10dp"
                 android:text="-"
-                android:textColor="@color/mainColorDarkerShade"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:typeface="normal"
@@ -204,7 +202,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="0"
-                android:textColor="@color/mainColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -259,7 +256,7 @@
                 android:onClick="onGraphControlsClick"
                 android:text="View"
                 android:textAlignment="center"
-                android:textColor="@color/mainColor" />
+                android:textColor="?colorControlNormal" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_vertex"
@@ -272,7 +269,7 @@
                 android:onClick="onGraphControlsClick"
                 android:text="Node"
                 android:textAlignment="center"
-                android:textColor="@color/mainColor" />
+                android:textColor="?colorControlNormal" />
 
             <RadioButton
                 android:id="@+id/rb_graphcontrol_edge"
@@ -284,7 +281,7 @@
                 android:onClick="onGraphControlsClick"
                 android:text="Edge"
                 android:textAlignment="center"
-                android:textColor="@color/mainColor" />
+                android:textColor="?colorControlNormal" />
 
         </RadioGroup>
 

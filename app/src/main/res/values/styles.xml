@@ -48,12 +48,86 @@
 
     </style>
 
+    // MAIN THEMES
+    <style name="Theme_Blue" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/blue_base</item>
+        <item name="android:progressTint">              @color/blue_base</item>
+        <item name="android:progressBackgroundTint">    @color/blue_light</item>
+        <item name="colorControlActivated">             @color/blue_medium</item>
+        <item name="android:textColorPrimary">          @color/blue_medium</item>
+        <item name="android:textColor">                 @color/blue_medium</item>
+        <item name="android:editTextColor">             @color/blue_medium</item>
+    </style>
+
+    <style name="Theme_Purple" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/purple_base</item>
+        <item name="android:progressTint">              @color/purple_base</item>
+        <item name="android:progressBackgroundTint">    @color/purple_light</item>
+        <item name="colorControlActivated">             @color/purple_medium</item>
+        <item name="android:textColorPrimary">          @color/purple_medium</item>
+        <item name="android:textColor">                 @color/purple_medium</item>
+        <item name="android:editTextColor">             @color/purple_medium</item>
+    </style>
+
+    <style name="Theme_Green" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/green_base</item>
+        <item name="android:progressTint">              @color/green_base</item>
+        <item name="android:progressBackgroundTint">    @color/green_light</item>
+        <item name="colorControlActivated">             @color/green_medium</item>
+        <item name="android:textColorPrimary">          @color/green_medium</item>
+        <item name="android:textColor">                 @color/green_medium</item>
+        <item name="android:editTextColor">             @color/green_medium</item>
+    </style>
+
+    <style name="Theme_Orange" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/orange_base</item>
+        <item name="android:progressTint">              @color/orange_base</item>
+        <item name="android:progressBackgroundTint">    @color/orange_light</item>
+        <item name="colorControlActivated">             @color/orange_medium</item>
+        <item name="android:textColorPrimary">          @color/orange_medium</item>
+        <item name="android:textColor">                 @color/orange_medium</item>
+        <item name="android:editTextColor">             @color/orange_medium</item>
+    </style>
+
+    <style name="Theme_Brown" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/brown_base</item>
+        <item name="android:progressTint">              @color/brown_base</item>
+        <item name="android:progressBackgroundTint">    @color/brown_light</item>
+        <item name="colorControlActivated">             @color/brown_medium</item>
+        <item name="android:textColorPrimary">          @color/brown_medium</item>
+        <item name="android:textColor">                 @color/brown_medium</item>
+        <item name="android:editTextColor">             @color/brown_medium</item>
+    </style>
+
+    <style name="Theme_Pink" parent="BaseTheme">
+        <item name="colorControlNormal">                @color/pink_base</item>
+        <item name="android:progressTint">              @color/pink_base</item>
+        <item name="android:progressBackgroundTint">    @color/pink_light</item>
+        <item name="colorControlActivated">             @color/pink_medium</item>
+        <item name="android:textColorPrimary">          @color/pink_medium</item>
+        <item name="android:textColor">                 @color/pink_medium</item>
+        <item name="android:editTextColor">             @color/pink_medium</item>
+    </style>
+
+
+    // OTHER STYLES
     <style name="Button" >
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/button_corner</item>
 <!--        <item name="android:background">@color/mainColorDarkerShade</item>-->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeBACKUP" parent="BaseTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/mainColor</item>
+        <item name="colorControlNormal">@color/mainColor</item>
+        <!--        <item name="android:background">@color/mainColor</item>-->
+
     </style>
 
 </resources>

@@ -275,19 +275,25 @@ public class UtilUI {
 
         switch (currentTheme){
             case 1:
-                currentThemeID = R.style.AppTheme;
+                currentThemeID = R.style.Theme_Blue;
                 break;
             case 2:
-                currentThemeID = R.style.AppTheme2;
+                currentThemeID = R.style.Theme_Purple;
                 break;
             case 3:
-                currentThemeID = R.style.AppTheme3;
+                currentThemeID = R.style.Theme_Green;
                 break;
             case 4:
-                currentThemeID = R.style.AppTheme4;
+                currentThemeID = R.style.Theme_Orange;
+                break;
+            case 5:
+                currentThemeID = R.style.Theme_Brown;
+                break;
+            case 6:
+                currentThemeID = R.style.Theme_Pink;
                 break;
             default:
-                currentThemeID = R.style.AppTheme;
+                currentThemeID = R.style.Theme_Blue;
                 break;
         }
 

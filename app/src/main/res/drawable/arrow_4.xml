@@ -2,11 +2,12 @@
     android:height="64dp"
     android:width="64dp"
     android:viewportHeight="600"
-    android:viewportWidth="600" >
+    android:viewportWidth="600"
+    android:tint="?attr/colorControlNormal">
 
     <path
         android:name="diagonal_line"
-        android:strokeColor="@color/mainColor"
+        android:strokeColor="@color/white"
         android:strokeWidth="10"
         android:pathData="M 600, 0 L 75, 600 z" />
 
