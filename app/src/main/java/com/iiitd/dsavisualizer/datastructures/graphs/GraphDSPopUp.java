@@ -5,15 +5,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
+
+import java.util.ArrayList;
 
 public class GraphDSPopUp {
 
@@ -27,12 +32,10 @@ public class GraphDSPopUp {
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
     ImageButton btn_close;
-    ZoomLayout zl_graphtree;
-    ImageView iv_graphtree;
+    LinearLayout ll_graphds;
+    LinearLayout.LayoutParams layoutParams;
 
     String title;
-    GraphTree graphTree;
-    BoardTree boardTree;
 
     int width;
     int height;
@@ -49,14 +52,14 @@ public class GraphDSPopUp {
         this.parent = _parent;
 
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
 
-        this.popUpView = inflater.inflate(R.layout.layout_popup_graph, null);
+        this.popUpView = inflater.inflate(R.layout.layout_popup_dsgraph, null);
 
-        this.zl_graphtree = popUpView.findViewById(R.id.zl_graphtree);
+        this.ll_graphds = popUpView.findViewById(R.id.ll_graphds);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
         this.btn_close = popUpView.findViewById(R.id.btn_close);
         this.iv_popupgraphname = popUpView.findViewById(R.id.tv_popupgraphname);
-        this.iv_graphtree = zl_graphtree.findViewById(R.id.iv_graphtree);
 
         popUpView.setOnTouchListener(new View.OnTouchListener() {
             int orgX;
@@ -84,10 +87,10 @@ public class GraphDSPopUp {
         btn_minimize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(zl_graphtree.getVisibility() == View.VISIBLE){
-                    zl_graphtree.setVisibility(View.GONE);
+                if(ll_graphds.getVisibility() == View.VISIBLE){
+                    ll_graphds.setVisibility(View.GONE);
                     int curWidth = width;
-                    int curHeight = height - zl_graphtree.getHeight();
+                    int curHeight = height - ll_graphds.getHeight();
                     curWidth = curWidth <= 0 ? MIN_WIDTH : curWidth;
                     curHeight = curHeight <= 0 ? MIN_HEIGHT : curHeight;
                     popupwindow.update(curWidth, curHeight);
@@ -96,7 +99,7 @@ public class GraphDSPopUp {
 
                 }
                 else{
-                    zl_graphtree.setVisibility(View.VISIBLE);
+                    ll_graphds.setVisibility(View.VISIBLE);
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 }
@@ -113,31 +116,54 @@ public class GraphDSPopUp {
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
-    void create(String title, GraphTree graphTree){
+    void create(String title){
         this.title = title;
-        this.graphTree = graphTree;
-        this.boardTree = new BoardTree(context, graphTree);
         this.iv_popupgraphname.setText(title);
 
-        zl_graphtree.zoomTo(1, false);
-
-        iv_graphtree.post(new Runnable() {
+        ll_graphds.post(new Runnable() {
             @Override
             public void run() {
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_graphtree.getLayoutParams();
 
-                layoutParams.height = (int) boardTree.Y;
-                layoutParams.width  = (int) boardTree.X;
+                ll_graphds.removeAllViews();
 
-                iv_graphtree.setLayoutParams(layoutParams);
-                iv_graphtree.requestLayout();
+                Button button = new Button(context);
+                button.setText("FRONT(POP)");
+                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                ll_graphds.addView(button);
 
-                iv_graphtree.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        boardTree.setImageViewAndCreateCanvas(iv_graphtree);
-                    }
-                });
+                Button button2 = new Button(context);
+                button2.setText("END(PUSH)");
+                button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                ll_graphds.addView(button2);
+            }
+        });
+
+    }
+
+    void update(final ArrayList<Integer> queue){
+
+        ll_graphds.post(new Runnable() {
+            @Override
+            public void run() {
+
+                ll_graphds.removeAllViews();
+
+                Button button = new Button(context);
+                button.setText("FRONT(POP)");
+                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                ll_graphds.addView(button);
+
+                for(Integer i : queue) {
+                    Button button1 = new Button(context);
+                    button1.setText(String.valueOf(i));
+                    button1.setLayoutParams(layoutParams);
+                    ll_graphds.addView(button1);
+                }
+
+                Button button2 = new Button(context);
+                button2.setText("END(PUSH)");
+                button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                ll_graphds.addView(button2);
             }
         });
 
@@ -151,9 +177,8 @@ public class GraphDSPopUp {
 
     void dismiss(){
         if(popupwindow != null){
-            zl_graphtree.setVisibility(View.VISIBLE);
+            ll_graphds.setVisibility(View.VISIBLE);
             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
-            zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();
         }
     }

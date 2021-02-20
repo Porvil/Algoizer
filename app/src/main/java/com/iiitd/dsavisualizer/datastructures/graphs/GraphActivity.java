@@ -115,6 +115,7 @@ public class GraphActivity extends AppCompatActivity {
     GraphSequence graphSequence;
     GraphTree graphTree;
     GraphTreePopUp graphTreePopUp;
+    GraphDSPopUp graphTreeDSPopUp;
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
@@ -764,6 +765,10 @@ public class GraphActivity extends AppCompatActivity {
 
                         for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
                             System.out.println(graphAnimationStateShadow.queues);
+
+                            graphTreeDSPopUp.create("QUEUE");
+                            graphTreeDSPopUp.update(graphAnimationStateShadow.queues);
+                            graphTreeDSPopUp.show();
                             for(Vertex vertex : graphAnimationStateShadow.vertices){
                                 Rect rect = graphWrapper.board.getRect(vertex.data);
                                 graphWrapper.board.drawNodeAnim(rect, vertex.data);
@@ -829,6 +834,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void run() {
                 graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
+                graphTreeDSPopUp = new GraphDSPopUp(context, 400, ll_anim.getHeight(), ll_anim);
             }
         });
 
