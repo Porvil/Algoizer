@@ -5,19 +5,14 @@ import java.util.ArrayList;
 public class GraphAnimationState {
     public String state;
     public String info;
-    public ArrayList<GraphAnimationStateShadow> graphAnimationStateShadow;
-
-    public GraphAnimationState(String state) {
-        this.state = state;
-        this.graphAnimationStateShadow = new ArrayList<>();
-    }
+    public ArrayList<Vertex> vertices;
+    public ArrayList<Edge> edges;
+    public GraphAnimationStateExtra graphAnimationStateExtra;
 
     public GraphAnimationState() {
-        this.graphAnimationStateShadow = new ArrayList<>();
-    }
-
-    public static GraphAnimationState create(){
-        return new GraphAnimationState();
+        this.vertices = new ArrayList<>();
+        this.edges = new ArrayList<>();
+        this.graphAnimationStateExtra = null;
     }
 
     public GraphAnimationState setState(String state){
@@ -30,26 +25,34 @@ public class GraphAnimationState {
         return this;
     }
 
-    public GraphAnimationState addGraphAnimationStateShadow(GraphAnimationStateShadow graphAnimationStateShadow){
-        this.graphAnimationStateShadow.add(graphAnimationStateShadow);
-        return this;
-    }
-
-    public GraphAnimationState(String state, String info) {
-        this.state = state;
-        this.info = info;
-    }
-
-    public void add(GraphAnimationStateShadow... graphAnimationStateShadows){
-        for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationStateShadows)
-            this.graphAnimationStateShadow.add(graphAnimationStateShadow);
-    }
-
     @Override
     public String toString() {
         return "GraphAnimationState{" +
                 "state='" + state + '\'' +
-                ", graphAnimationStateShadow=" + graphAnimationStateShadow +
+                ", info='" + info + '\'' +
+                ", vertices=" + vertices +
+                ", edges=" + edges +
+                ", graphAnimationStateExtra=" + graphAnimationStateExtra +
                 '}';
     }
+
+    public static GraphAnimationState create(){
+        return new GraphAnimationState();
+    }
+
+    public GraphAnimationState addEdges(ArrayList<Edge> edges){
+        this.edges.addAll(edges);
+        return this;
+    }
+
+    public GraphAnimationState addVertices(ArrayList<Vertex> vertices){
+        this.vertices.addAll(vertices);
+        return this;
+    }
+
+    public GraphAnimationState addGraphAnimationStateExtra(GraphAnimationStateExtra graphAnimationStateExtra){
+        this.graphAnimationStateExtra = graphAnimationStateExtra;
+        return this;
+    }
+
 }

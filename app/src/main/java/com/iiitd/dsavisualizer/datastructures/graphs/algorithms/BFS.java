@@ -5,7 +5,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateShadow;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
@@ -48,12 +48,11 @@ public class BFS {
                     GraphAnimationState.create()
                             .setState("start")
                             .setInfo("start")
-                            .addGraphAnimationStateShadow(
-                                    GraphAnimationStateShadow.create()
-                                            .addVertices(vertices)
-                                            .addEdges(edges)
-                                            .addQueues(queue)
-                            );
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addQueues(queue));
 
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
@@ -80,30 +79,28 @@ public class BFS {
                 GraphAnimationState.create()
                         .setState("Visit = " + s)
                         .setInfo("Add source = " + s + " to queue")
-                        .addGraphAnimationStateShadow(
-                                GraphAnimationStateShadow.create()
-                                        .addVertices(vertices)
-                                        .addEdges(edges)
-                                        .addQueues(queue)
-                        );
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addQueues(queue));
 
         graphSequence.addGraphAnimationState(graphAnimationState);
 
         while (queue.size() != 0) {
             int u = queue.pop();
 
-            GraphAnimationState graphAnimationState2 =
+            GraphAnimationState graphAnimationState1 =
                     GraphAnimationState.create()
                             .setState("Vertex = " + u)
                             .setInfo("Vertex popped from queue = " + u)
-                            .addGraphAnimationStateShadow(
-                                    GraphAnimationStateShadow.create()
-                                            .addVertices(vertices)
-                                            .addEdges(edges)
-                                            .addQueues(queue)
-                            );
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addQueues(queue));
 
-            graphSequence.addGraphAnimationState(graphAnimationState2);
+            graphSequence.addGraphAnimationState(graphAnimationState1);
 
 //            System.out.println("___________");
 ////            System.out.println("("+u + ")");
@@ -127,34 +124,32 @@ public class BFS {
                     edges.add(edge);
 
                     System.out.println("queue = " + queue);
-                    GraphAnimationState graphAnimationState1 =
+                    GraphAnimationState graphAnimationState2 =
                             GraphAnimationState.create()
                                     .setState("Vertex = " + v)
                                     .setInfo("Vertex visited = " + v)
-                                    .addGraphAnimationStateShadow(
-                                            GraphAnimationStateShadow.create()
-                                                    .addVertices(vertices)
-                                                    .addEdges(edges)
-                                                    .addQueues(queue)
-                                    );
+                                    .addVertices(vertices)
+                                    .addEdges(edges)
+                                    .addGraphAnimationStateExtra(
+                                            GraphAnimationStateExtra.create()
+                                                    .addQueues(queue));
 
-                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                    graphSequence.addGraphAnimationState(graphAnimationState2);
 
                 }
                 else{
                     System.out.println("queue = " + queue);
-                    GraphAnimationState graphAnimationState1 =
+                    GraphAnimationState graphAnimationState2 =
                             GraphAnimationState.create()
                                     .setState("Vertex = " + v)
                                     .setInfo("Vertex already visited = " + v)
-                                    .addGraphAnimationStateShadow(
-                                            GraphAnimationStateShadow.create()
-                                                    .addVertices(vertices)
-                                                    .addEdges(edges)
-                                                    .addQueues(queue)
-                                    );
+                                    .addVertices(vertices)
+                                    .addEdges(edges)
+                                    .addGraphAnimationStateExtra(
+                                            GraphAnimationStateExtra.create()
+                                            .addQueues(queue));
 
-                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                    graphSequence.addGraphAnimationState(graphAnimationState2);
                 }
 
                 // EDGE CLASSIFICATION

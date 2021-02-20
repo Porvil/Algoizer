@@ -1,6 +1,8 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +12,8 @@ import android.graphics.Typeface;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
@@ -128,7 +132,27 @@ public class Board {
         this.paintText.setColor(Color.WHITE);
         this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
+
+        // USE THIS LATE AFTER IMPLEMENTING CUSTOM ATTR's
+//        int[] attrs = {R.attr.colorControlNormal, android.R.attr.textColorSecondary,
+//                android.R.attr.textColorPrimaryInverse};
+//        Resources.Theme theme = context.getTheme();
+//        TypedArray ta = theme.obtainStyledAttributes(attrs);
+//
+//        int[] colors = new int[attrs.length];
+//        for (int i = 0; i < attrs.length; i++) {
+//            colors[i] = ta.getColor(i, 0);
+//        }
+//
+//        ta.recycle();
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        @ColorInt int color = typedValue.data;
+
         this.paintVertex = new Paint();
+//        this.paintVertex.setColor(color);
         this.paintVertex.setColor(context.getResources().getColor(R.color.mainColor));
 
         this.paintEdge = new Paint();

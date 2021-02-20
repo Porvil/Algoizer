@@ -35,6 +35,7 @@ public class GraphDSPopUp {
     LinearLayout ll_graphds;
     LinearLayout.LayoutParams layoutParams;
 
+    GraphAlgorithmType graphAlgorithmType;
     String title;
 
     int width;
@@ -116,8 +117,9 @@ public class GraphDSPopUp {
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
-    void create(String title){
+    void create(String title, final GraphAlgorithmType graphAlgorithmType){
         this.title = title;
+        this.graphAlgorithmType = graphAlgorithmType;
         this.iv_popupgraphname.setText(title);
 
         ll_graphds.post(new Runnable() {
@@ -126,15 +128,27 @@ public class GraphDSPopUp {
 
                 ll_graphds.removeAllViews();
 
-                Button button = new Button(context);
-                button.setText("FRONT(POP)");
-                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ll_graphds.addView(button);
+                if(graphAlgorithmType == GraphAlgorithmType.BFS) {
+                    Button button = new Button(context);
+                    button.setText("FRONT(POP)");
+                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button);
 
-                Button button2 = new Button(context);
-                button2.setText("END(PUSH)");
-                button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ll_graphds.addView(button2);
+                    Button button2 = new Button(context);
+                    button2.setText("END(PUSH)");
+                    button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button2);
+                }
+
+                else if(graphAlgorithmType == GraphAlgorithmType.DFS) {
+                    Button button = new Button(context);
+                    button.setText("TOP");
+                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button);
+
+                }
+
+
             }
         });
 
@@ -148,22 +162,40 @@ public class GraphDSPopUp {
 
                 ll_graphds.removeAllViews();
 
-                Button button = new Button(context);
-                button.setText("FRONT(POP)");
-                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ll_graphds.addView(button);
+                if(graphAlgorithmType == GraphAlgorithmType.BFS) {
+                    Button button = new Button(context);
+                    button.setText("FRONT(POP)");
+                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button);
 
-                for(Integer i : queue) {
-                    Button button1 = new Button(context);
-                    button1.setText(String.valueOf(i));
-                    button1.setLayoutParams(layoutParams);
-                    ll_graphds.addView(button1);
+                    for(Integer i : queue) {
+                        Button button1 = new Button(context);
+                        button1.setText(String.valueOf(i));
+                        button1.setLayoutParams(layoutParams);
+                        ll_graphds.addView(button1);
+                    }
+
+                    Button button2 = new Button(context);
+                    button2.setText("END(PUSH)");
+                    button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button2);
                 }
 
-                Button button2 = new Button(context);
-                button2.setText("END(PUSH)");
-                button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ll_graphds.addView(button2);
+                else if(graphAlgorithmType == GraphAlgorithmType.DFS) {
+                    Button button = new Button(context);
+                    button.setText("TOP");
+                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                    ll_graphds.addView(button);
+
+                    for(Integer i : queue) {
+                        Button button1 = new Button(context);
+                        button1.setText(String.valueOf(i));
+                        button1.setLayoutParams(layoutParams);
+                        ll_graphds.addView(button1);
+                    }
+
+                }
+
             }
         });
 

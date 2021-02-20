@@ -14,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -25,7 +24,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -679,71 +677,16 @@ public class GraphActivity extends AppCompatActivity {
 
         if(timer == null) {
 
-            final int animDurationTemp = this.animDuration;
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    task(animDurationTemp);
-                }
-            }, animStepDuration, animStepDuration);
+//            final int animDurationTemp = this.animDuration;
+//            timer = new Timer();
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    task(animDurationTemp);
+//                }
+//            }, animStepDuration, animStepDuration);
 
         }
-    }
-
-    private void task(final int animDurationTemp) {
-        if (graphSequence != null) {
-            final int curSeqNo = graphSequence.curSeqNo;
-            System.out.println("SEQ = "  + curSeqNo);
-            graphSequence.forward();
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                    graphWrapper.board.clearCanvasAnim();
-                    if(curSeqNo < graphSequence.graphAnimationStates.size()) {
-                        GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
-                        System.out.println(graphAnimationState);
-
-                        for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
-                            for(Vertex vertex : graphAnimationStateShadow.vertices){
-                                Rect rect = graphWrapper.board.getRect(vertex.data);
-                                graphWrapper.board.drawNodeAnim(rect, vertex.data);
-                            }
-
-                            for(Edge edge : graphAnimationStateShadow.edges){
-                                Rect rect1 = graphWrapper.board.getRect(edge.src);
-                                Rect rect2 = graphWrapper.board.getRect(edge.des);
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.directed);
-                            }
-                        }
-
-                        graphWrapper.board.refreshAnim();
-
-                    }
-                    else{
-                        UtilUI.setText(tv_info, "Done");
-                        System.out.println("Canceled");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                btn_menu.setEnabled(true);
-                                btn_back.setEnabled(true);
-                                btn_info.setEnabled(true);
-                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        timer.cancel();
-                        timer = null;
-                    }
-                }
-            });
-
-        }
-
     }
 
     private void taskStep(final int curSeqNo) {
@@ -762,23 +705,32 @@ public class GraphActivity extends AppCompatActivity {
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
+                        // MAY BE CHECK IF GRAPHANIMATIONSTATEEXTRA != NULL
+                        if(graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
+                            System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
 
-                        for(GraphAnimationStateShadow graphAnimationStateShadow : graphAnimationState.graphAnimationStateShadow){
-                            System.out.println(graphAnimationStateShadow.queues);
-
-                            graphTreeDSPopUp.create("QUEUE");
-                            graphTreeDSPopUp.update(graphAnimationStateShadow.queues);
+                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
                             graphTreeDSPopUp.show();
-                            for(Vertex vertex : graphAnimationStateShadow.vertices){
-                                Rect rect = graphWrapper.board.getRect(vertex.data);
-                                graphWrapper.board.drawNodeAnim(rect, vertex.data);
-                            }
+                        }
 
-                            for(Edge edge : graphAnimationStateShadow.edges){
-                                Rect rect1 = graphWrapper.board.getRect(edge.src);
-                                Rect rect2 = graphWrapper.board.getRect(edge.des);
-                                graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted);
-                            }
+                        else if(graphSequence.graphAlgorithmType == GraphAlgorithmType.DFS) {
+                            System.out.println(graphAnimationState.graphAnimationStateExtra.stacks);
+
+                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
+                            graphTreeDSPopUp.show();
+                        }
+
+                        for(Vertex vertex : graphAnimationState.vertices){
+                            Rect rect = graphWrapper.board.getRect(vertex.data);
+                            graphWrapper.board.drawNodeAnim(rect, vertex.data);
+                        }
+
+                        for(Edge edge : graphAnimationState.edges){
+                            Rect rect1 = graphWrapper.board.getRect(edge.src);
+                            Rect rect2 = graphWrapper.board.getRect(edge.des);
+                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted);
                         }
 
                         graphWrapper.board.refreshAnim();
@@ -819,25 +771,13 @@ public class GraphActivity extends AppCompatActivity {
 
         // Draws Grid and Graph View After Layouts have been laid out
 
-//        zoomLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                zoomLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                zoomLayout.getHeight(); //height is ready
-//
-//                System.out.println("!!!!!!!!!!!" + zoomLayout.getWidth() + "x" + zoomLayout.getHeight());
-//                System.out.println("!!!!!!!!!" + iv_graph.getWidth());
-//            }
-//        });
-
         ll_anim.post(new Runnable() {
             @Override
             public void run() {
                 graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
-                graphTreeDSPopUp = new GraphDSPopUp(context, 400, ll_anim.getHeight(), ll_anim);
+                graphTreeDSPopUp = new GraphDSPopUp(context, 600, ll_anim.getHeight(), ll_anim);
             }
         });
-
 
         zl_graph.post(new Runnable() {
             @Override
