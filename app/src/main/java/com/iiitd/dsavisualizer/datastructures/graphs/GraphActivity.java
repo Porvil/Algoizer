@@ -320,6 +320,8 @@ public class GraphActivity extends AppCompatActivity {
 //                if(graphSequence.size > 0){
                     graphTreePopUp.create("BFS Tree", graphTree);
                     graphTreePopUp.show();
+
+                graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
 //                }
 
 //                GraphDSPopUp graphDSPopUp = new GraphDSPopUp(context, 800, ll_anim.getHeight(), ll_anim);
@@ -341,7 +343,7 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println("______________________");
                 System.out.println("DFS RECURSIVE");
-                GraphSequence run = dfs.dfs();
+                GraphSequence run = dfs.run();
                 System.out.println("__________^^^^^^^^^^^^____________");
 //                System.out.println("______________________");
 //                System.out.println("DFS ITERATIVE");
@@ -357,6 +359,8 @@ public class GraphActivity extends AppCompatActivity {
 //                if(graphSequence.size > 0){
                     graphTreePopUp.create("DFS Tree", graphTree);
                     graphTreePopUp.show();
+
+                graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
 //                }
 //                System.out.println(graphSequence);
 //                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -713,7 +717,7 @@ public class GraphActivity extends AppCompatActivity {
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
-                        // MAY BE CHECK IF GRAPHANIMATIONSTATEEXTRA != NULL
+                        // MAY BE CHECK IF GRAPH_ANIMATION_STATE_EXTRA != NULL
                         if(graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
                             System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
 

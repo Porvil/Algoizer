@@ -1,7 +1,5 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
-import android.util.Pair;
-
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
@@ -47,7 +45,7 @@ public class DFS {
         edges = new ArrayList<>();
     }
 
-    public GraphSequence dfs(){
+    public GraphSequence run(){
 
         this.map = new HashMap<>();
         this.stack = new Stack<>();
@@ -79,19 +77,6 @@ public class DFS {
                 stack.push(entry.getKey());
                 System.out.println("pushes  = " + entry.getKey());
                 System.out.println("stack  = " + stack);
-
-//                vertices.add(vertex);
-//                GraphAnimationState graphAnimationState =
-//                        GraphAnimationState.create()
-//                                .setState("Visit = " + vertexCLRS.data)
-//                                .setInfo("Add source = " + vertexCLRS.data + " to stack")
-//                                .addVertices(vertices)
-//                                .addEdges(edges)
-//                                .addGraphAnimationStateExtra(
-//                                        GraphAnimationStateExtra.create()
-//                                                .addStacks(stack));
-//
-//                graphSequence.addGraphAnimationState(graphAnimationState);
 
                 dfs_visit(entry.getKey());
             }
@@ -125,8 +110,6 @@ public class DFS {
         int row = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
             System.out.println(entry.getValue());
-//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
-//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, random.nextInt(5)));
             graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
             row++;
         }
@@ -161,27 +144,42 @@ public class DFS {
 //        System.out.println("stack  = " + stack);
         time++;
 
-
         vertexCLRS.dist = time;
         vertexCLRS.color = GRAY;
 
         for(Edge edge : graph.edgeListMap.get(u)) {
             int v = edge.des;
 
-            if(map.get(v).color == BLACK){
-                if (map.get(u).dist < map.get(v).dist) {
-                    System.out.println("FORWARD EDGE : " + u + " -> " + v);
-                    graphTree.addEdge(new EdgePro(edge, FORWARD));
+            // Non-White
+            if(map.get(v).color != WHITE) {
+                if (map.get(v).color == BLACK) {
+                    if (map.get(u).dist < map.get(v).dist) {
+                        System.out.println("FORWARD EDGE : " + u + " -> " + v);
+                        graphTree.addEdge(new EdgePro(edge, FORWARD));
+                    }
+                    else {
+                        System.out.println("CROSS EDGE : " + u + " -> " + v);
+                        graphTree.addEdge(new EdgePro(edge, CROSS));
+                    }
                 }
-                else {
-                    System.out.println("CROSS EDGE : " + u + " -> " + v);
-                    graphTree.addEdge(new EdgePro(edge, CROSS));
+                else if (map.get(v).color == GRAY) {
+                    System.out.println("BACK EDGE : " + u + " -> " + v);
+                    graphTree.addEdge(new EdgePro(edge, BACK));
                 }
+
+                GraphAnimationState graphAnimationState2 =
+                        GraphAnimationState.create()
+                                .setState("Vertex = " + v)
+                                .setInfo("Vertex already visited = " + v)
+                                .addVertices(vertices)
+                                .addEdges(edges)
+                                .addGraphAnimationStateExtra(
+                                        GraphAnimationStateExtra.create()
+                                                .addStacks(stack));
+
+                graphSequence.addGraphAnimationState(graphAnimationState2);
             }
-            else if (map.get(v).color == GRAY) {
-                System.out.println("BACK EDGE : " + u + " -> " + v);
-                graphTree.addEdge(new EdgePro(edge, BACK));
-            }
+            // White
             else if (map.get(v).color == WHITE) {
                 System.out.println("TREE EDGE : " + u + " -> " + v);
                 graphTree.addEdge(new EdgePro(edge, TREE));
@@ -195,18 +193,6 @@ public class DFS {
                 Vertex vertex1 = graph.vertexMap.get(v);
                 vertices.add(vertex1);
                 edges.add(edge);
-
-                GraphAnimationState graphAnimationState2 =
-                        GraphAnimationState.create()
-                                .setState("Vertex = " + v)
-                                .setInfo("Vertex visited = " + v)
-                                .addVertices(vertices)
-                                .addEdges(edges)
-                                .addGraphAnimationStateExtra(
-                                        GraphAnimationStateExtra.create()
-                                                .addStacks(stack));
-
-//                graphSequence.addGraphAnimationState(graphAnimationState2);
 
                 dfs_visit(v);
             }
