@@ -18,7 +18,7 @@ DSA Visualizer is an android application for learning and visualizing the data s
 - Splay Tree [For Later Development]
 #### Graph:
 - BFS [In Progress]
-- DFS [Tentative]
+- DFS [In Progress]
 - Dijkstra [Tentative]
 - Bellman Ford [Tentative]
 - Prims [Tentative]
