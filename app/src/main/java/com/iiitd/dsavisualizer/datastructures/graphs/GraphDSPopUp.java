@@ -19,6 +19,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GraphDSPopUp {
 
@@ -187,6 +188,7 @@ public class GraphDSPopUp {
                     button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
                     ll_graphds.addView(button);
 
+                    Collections.reverse(queue);
                     for(Integer i : queue) {
                         Button button1 = new Button(context);
                         button1.setText(String.valueOf(i));

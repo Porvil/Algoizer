@@ -337,7 +337,15 @@ public class GraphActivity extends AppCompatActivity {
                 graphWrapper.board.clearCanvasAnim();
 
                 DFS dfs = new DFS(graphWrapper.graph);
+                DFS dfs2 = new DFS(graphWrapper.graph);
+
+                System.out.println("______________________");
+                System.out.println("DFS RECURSIVE");
                 GraphSequence run = dfs.dfs();
+                System.out.println("__________^^^^^^^^^^^^____________");
+//                System.out.println("______________________");
+//                System.out.println("DFS ITERATIVE");
+//                GraphSequence run2 = dfs2.run();
                 graphSequence = run;
 
                 GraphTree rungt = dfs.graphTree;

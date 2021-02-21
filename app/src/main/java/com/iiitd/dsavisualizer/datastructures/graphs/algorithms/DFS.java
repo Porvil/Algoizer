@@ -6,6 +6,8 @@ import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
@@ -14,6 +16,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.*;
 import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -21,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 public class DFS {
 
@@ -29,17 +33,24 @@ public class DFS {
     int time;
     HashMap<Integer, VertexCLRS> map;
     public GraphTree graphTree;
+    Stack<Integer> stack;
+    ArrayList<Vertex> vertices;
+    ArrayList<Edge> edges;
 
     public DFS(Graph graph){
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.DFS);
         this.time = 0;
         this.graphTree = new GraphTree(graph.directed, graph.weighted);
+        this.stack = new Stack<>();
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
     }
 
     public GraphSequence dfs(){
 
-        map = new HashMap<>();
+        this.map = new HashMap<>();
+        this.stack = new Stack<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
             VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1, -1);
@@ -47,10 +58,41 @@ public class DFS {
         }
 
         time = 0;
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("start")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addStacks(stack));
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
             VertexCLRS vertexCLRS = map.get(entry.getKey());
+            Vertex vertex = graph.vertexMap.get(entry.getKey());
             if(vertexCLRS.color == WHITE){
+                stack.push(entry.getKey());
+                System.out.println("pushes  = " + entry.getKey());
+                System.out.println("stack  = " + stack);
+
+//                vertices.add(vertex);
+//                GraphAnimationState graphAnimationState =
+//                        GraphAnimationState.create()
+//                                .setState("Visit = " + vertexCLRS.data)
+//                                .setInfo("Add source = " + vertexCLRS.data + " to stack")
+//                                .addVertices(vertices)
+//                                .addEdges(edges)
+//                                .addGraphAnimationStateExtra(
+//                                        GraphAnimationStateExtra.create()
+//                                                .addStacks(stack));
+//
+//                graphSequence.addGraphAnimationState(graphAnimationState);
+
                 dfs_visit(entry.getKey());
             }
         }
@@ -97,9 +139,29 @@ public class DFS {
     }
 
     private void dfs_visit(int u) {// u = src, v = des
+        VertexCLRS vertexCLRS = map.get(u);
+        Vertex vertex = graph.vertexMap.get(u);
+
+        vertices.add(vertex);
+        GraphAnimationState graphAnimationState =
+                GraphAnimationState.create()
+                        .setState("Visit = " + vertexCLRS.data)
+                        .setInfo("Add source = " + vertexCLRS.data + " to stack")
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addStacks(stack));
+
+        graphSequence.addGraphAnimationState(graphAnimationState);
+
+        System.out.println("dfs_visit called for " + u);
+//        Integer pop = stack.pop();
+//        System.out.println("Popped = " + pop);
+//        System.out.println("stack  = " + stack);
         time++;
 
-        VertexCLRS vertexCLRS = map.get(u);
+
         vertexCLRS.dist = time;
         vertexCLRS.color = GRAY;
 
@@ -125,6 +187,27 @@ public class DFS {
                 graphTree.addEdge(new EdgePro(edge, TREE));
 
                 map.get(v).parent = u;
+
+                stack.push(v);
+                System.out.println("pushes  = " + v);
+                System.out.println("stack  = " + stack);
+
+                Vertex vertex1 = graph.vertexMap.get(v);
+                vertices.add(vertex1);
+                edges.add(edge);
+
+                GraphAnimationState graphAnimationState2 =
+                        GraphAnimationState.create()
+                                .setState("Vertex = " + v)
+                                .setInfo("Vertex visited = " + v)
+                                .addVertices(vertices)
+                                .addEdges(edges)
+                                .addGraphAnimationStateExtra(
+                                        GraphAnimationStateExtra.create()
+                                                .addStacks(stack));
+
+//                graphSequence.addGraphAnimationState(graphAnimationState2);
+
                 dfs_visit(v);
             }
         }
@@ -132,6 +215,22 @@ public class DFS {
         vertexCLRS.color = BLACK;
         time++;
         vertexCLRS.f = time;
+
+        Integer pop = stack.pop();
+        System.out.println("Popped = " + pop);
+        System.out.println("stack  = " + stack);
+
+        GraphAnimationState graphAnimationState1 =
+                GraphAnimationState.create()
+                        .setState("Vertex = " + u)
+                        .setInfo("Vertex popped from stack = " + u)
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addStacks(stack));
+
+        graphSequence.addGraphAnimationState(graphAnimationState1);
     }
 
 }

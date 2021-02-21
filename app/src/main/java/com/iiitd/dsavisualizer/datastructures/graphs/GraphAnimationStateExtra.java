@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class GraphAnimationStateExtra {
     public ArrayList<Integer> queues;
@@ -21,7 +22,7 @@ public class GraphAnimationStateExtra {
         return this;
     }
 
-    public GraphAnimationStateExtra addStacks(LinkedList<Integer> stacks){
+    public GraphAnimationStateExtra addStacks(Stack<Integer> stacks){
         this.stacks.addAll(stacks);
         return this;
     }
