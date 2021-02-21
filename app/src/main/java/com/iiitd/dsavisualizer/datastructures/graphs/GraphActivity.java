@@ -13,7 +13,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -33,6 +32,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -58,11 +58,11 @@ public class GraphActivity extends AppCompatActivity {
 
     DrawerLayout dl_main;
     View v_main;
-    View v_menu;
-    View v_menu2;
+    View v_menu_left;
+    View v_menu_right;
     ViewStub vs_main;
-    ViewStub vs_menu;
-    ViewStub vs_menu2;
+    ViewStub vs_menu_left;
+    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
@@ -118,9 +118,9 @@ public class GraphActivity extends AppCompatActivity {
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
-    final int LAYOUT = R.layout.activity_graph;
-//    final int LAYOUT = R.layout.activity_graph2;
-    final int CONTROL = R.layout.controls_graph;
+    final int LAYOUT_MAIN = R.layout.activity_graph;
+    final int LAYOUT_LEFT = R.layout.controls_graph;
+    final int LAYOUT_RIGHT = R.layout.controls_graph;
     boolean isAutoPlay = false;
 
     @Override
@@ -136,15 +136,16 @@ public class GraphActivity extends AppCompatActivity {
         // findViewById
         dl_main = findViewById(R.id.dl_main);
         vs_main = findViewById(R.id.vs_main);
-        vs_menu = findViewById(R.id.vs_menu);
-        vs_menu2 = findViewById(R.id.vs_menu2);
-        vs_main.setLayoutResource(LAYOUT);
-        vs_menu.setLayoutResource(CONTROL);
-        vs_menu2.setLayoutResource(CONTROL);
+        vs_menu_left = findViewById(R.id.vs_menu_left);
+        vs_menu_right = findViewById(R.id.vs_menu_right);
+        vs_main.setLayoutResource(LAYOUT_MAIN);
+        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
+        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
-        v_menu = vs_menu.inflate();
-        v_menu2 = vs_menu2.inflate();
+        v_menu_right = vs_menu_right.inflate();
+        v_menu_left = vs_menu_left.inflate();
 
+        // Main Layout findViewById's
         ll_anim = v_main.findViewById(R.id.ll_anim);
         iv_grid = v_main.findViewById(R.id.iv_grid);
         iv_coordinates = v_main.findViewById(R.id.iv_coordinates);
@@ -170,26 +171,30 @@ public class GraphActivity extends AppCompatActivity {
         zl_graph = v_main.findViewById(R.id.zl_graph);
         fl_graph = v_main.findViewById(R.id.fl_graph);
 
-        btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
-        rg_weighted = v_menu.findViewById(R.id.rg_weighted);
-        rg_directed = v_menu.findViewById(R.id.rg_directed);
-        btn_bfs = v_menu.findViewById(R.id.btn_bfs);
-        btn_dfs = v_menu.findViewById(R.id.btn_dfs);
-        btn_clearcustominput = v_menu.findViewById(R.id.btn_clearcustominput);
-        btn_copygraph = v_menu.findViewById(R.id.btn_copygraph);
-        btn_pastecustominput = v_menu.findViewById(R.id.btn_pastecustominput);
-        btn_custominput = v_menu.findViewById(R.id.btn_custominput);
-        btn_savecustominput = v_menu.findViewById(R.id.btn_savecustominput );
-        btn_custominput = v_menu.findViewById(R.id.btn_custominput);
-        btn_cleargraph = v_menu.findViewById(R.id.btn_cleargraph);
-        btn_cleargraphanim = v_menu.findViewById(R.id.btn_cleargraphanim);
-        btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
-        btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
-        btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
-        et_customgraphinput = v_menu.findViewById(R.id.et_customgraphinput);
-        et_insert = v_menu.findViewById(R.id.et_insert);
-        et_search = v_menu.findViewById(R.id.et_search);
-        et_delete = v_menu.findViewById(R.id.et_delete);
+        // Left Drawer findViewById's
+
+
+        // Right Drawer findViewById's
+        btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
+        rg_directed = v_menu_right.findViewById(R.id.rg_directed);
+        btn_bfs = v_menu_right.findViewById(R.id.btn_bfs);
+        btn_dfs = v_menu_right.findViewById(R.id.btn_dfs);
+        btn_clearcustominput = v_menu_right.findViewById(R.id.btn_clearcustominput);
+        btn_copygraph = v_menu_right.findViewById(R.id.btn_copygraph);
+        btn_pastecustominput = v_menu_right.findViewById(R.id.btn_pastecustominput);
+        btn_custominput = v_menu_right.findViewById(R.id.btn_custominput);
+        btn_savecustominput = v_menu_right.findViewById(R.id.btn_savecustominput );
+        btn_custominput = v_menu_right.findViewById(R.id.btn_custominput);
+        btn_cleargraph = v_menu_right.findViewById(R.id.btn_cleargraph);
+        btn_cleargraphanim = v_menu_right.findViewById(R.id.btn_cleargraphanim);
+        btn_tree1 = v_menu_right.findViewById(R.id.btn_tree1);
+        btn_tree2 = v_menu_right.findViewById(R.id.btn_tree2);
+        btn_tree3 = v_menu_right.findViewById(R.id.btn_tree3);
+        et_customgraphinput = v_menu_right.findViewById(R.id.et_customgraphinput);
+        et_insert = v_menu_right.findViewById(R.id.et_insert);
+        et_search = v_menu_right.findViewById(R.id.et_search);
+        et_delete = v_menu_right.findViewById(R.id.et_delete);
 
         initViews();
 
@@ -275,7 +280,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
-                    dl_main.openDrawer(Gravity.RIGHT);
+                    dl_main.openDrawer(GravityCompat.END);
                 }
             }
         });
@@ -291,7 +296,7 @@ public class GraphActivity extends AppCompatActivity {
         btn_closemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(Gravity.RIGHT);
+                dl_main.closeDrawer(GravityCompat.END);
             }
         });
 
@@ -927,8 +932,8 @@ public class GraphActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(Gravity.RIGHT)){
-            dl_main.closeDrawer(Gravity.RIGHT);
+        if (dl_main.isDrawerOpen(GravityCompat.END)){
+            dl_main.closeDrawer(GravityCompat.END);
         }
         else {
             back();

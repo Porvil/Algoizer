@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.florent37.viewanimator.AnimationListener;
@@ -52,9 +53,11 @@ public class AVLActivity extends AppCompatActivity {
 
     DrawerLayout dl_main;
     View v_main;
-    View v_menu;
+    View v_menu_left;
+    View v_menu_right;
     ViewStub vs_main;
-    ViewStub vs_menu;
+    ViewStub vs_menu_left;
+    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
     ImageButton btn_back;
@@ -91,8 +94,9 @@ public class AVLActivity extends AppCompatActivity {
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
-    final int LAYOUT = R.layout.activity_tree;
-    final int CONTROL = R.layout.controls_avl;
+    final int LAYOUT_MAIN = R.layout.activity_tree;
+    final int LAYOUT_LEFT = R.layout.controls_avl;
+    final int LAYOUT_RIGHT = R.layout.controls_avl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +108,14 @@ public class AVLActivity extends AppCompatActivity {
         // findViewById
         dl_main = findViewById(R.id.dl_main);
         vs_main = findViewById(R.id.vs_main);
-        vs_menu = findViewById(R.id.vs_menu);
-        vs_main.setLayoutResource(LAYOUT);
-        vs_menu.setLayoutResource(CONTROL);
+        vs_menu_left = findViewById(R.id.vs_menu_left);
+        vs_menu_right = findViewById(R.id.vs_menu_right);
+        vs_main.setLayoutResource(LAYOUT_MAIN);
+        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
+        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
-        v_menu = vs_menu.inflate();
+        v_menu_right = vs_menu_right.inflate();
+        v_menu_left = vs_menu_left.inflate();
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
@@ -118,21 +125,21 @@ public class AVLActivity extends AppCompatActivity {
         tv_info = v_main.findViewById(R.id.tv_info);
         cl_info = v_main.findViewById(R.id.cl_info);
 
-        btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
-        btn_insert = v_menu.findViewById(R.id.btn_insert);
-        btn_insertrandom = v_menu.findViewById(R.id.btn_insertrandom);
-        btn_search = v_menu.findViewById(R.id.btn_search);
-        btn_delete = v_menu.findViewById(R.id.btn_delete);
-        btn_inorder = v_menu.findViewById(R.id.btn_inorder);
-        btn_preorder = v_menu.findViewById(R.id.btn_preorder);
-        btn_postorder = v_menu.findViewById(R.id.btn_postorder);
-        btn_cleartree = v_menu.findViewById(R.id.btn_cleartree);
-        btn_tree1 = v_menu.findViewById(R.id.btn_tree1);
-        btn_tree2 = v_menu.findViewById(R.id.btn_tree2);
-        btn_tree3 = v_menu.findViewById(R.id.btn_tree3);
-        et_insert = v_menu.findViewById(R.id.et_insert);
-        et_search = v_menu.findViewById(R.id.et_search);
-        et_delete = v_menu.findViewById(R.id.et_delete);
+        btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        btn_insert = v_menu_right.findViewById(R.id.btn_insert);
+        btn_insertrandom = v_menu_right.findViewById(R.id.btn_insertrandom);
+        btn_search = v_menu_right.findViewById(R.id.btn_search);
+        btn_delete = v_menu_right.findViewById(R.id.btn_delete);
+        btn_inorder = v_menu_right.findViewById(R.id.btn_inorder);
+        btn_preorder = v_menu_right.findViewById(R.id.btn_preorder);
+        btn_postorder = v_menu_right.findViewById(R.id.btn_postorder);
+        btn_cleartree = v_menu_right.findViewById(R.id.btn_cleartree);
+        btn_tree1 = v_menu_right.findViewById(R.id.btn_tree1);
+        btn_tree2 = v_menu_right.findViewById(R.id.btn_tree2);
+        btn_tree3 = v_menu_right.findViewById(R.id.btn_tree3);
+        et_insert = v_menu_right.findViewById(R.id.et_insert);
+        et_search = v_menu_right.findViewById(R.id.et_search);
+        et_delete = v_menu_right.findViewById(R.id.et_delete);
 
         initViews();
 
@@ -204,7 +211,7 @@ public class AVLActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!dl_main.isOpen()) {
-                    dl_main.openDrawer(Gravity.RIGHT);
+                    dl_main.openDrawer(GravityCompat.END);
                 }
             }
         });
@@ -220,7 +227,7 @@ public class AVLActivity extends AppCompatActivity {
         btn_closemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(Gravity.RIGHT);
+                dl_main.closeDrawer(GravityCompat.END);
             }
         });
 
@@ -832,7 +839,7 @@ public class AVLActivity extends AppCompatActivity {
                 }
 
                 treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
-                dl_main.openDrawer(Gravity.RIGHT);
+                dl_main.openDrawer(GravityCompat.END);
             }
         });
 
@@ -865,8 +872,8 @@ public class AVLActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(Gravity.RIGHT)){
-            dl_main.closeDrawer(Gravity.RIGHT);
+        if (dl_main.isDrawerOpen(GravityCompat.END)){
+            dl_main.closeDrawer(GravityCompat.END);
         }
         else {
             back();

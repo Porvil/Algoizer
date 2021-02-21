@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
@@ -41,9 +41,11 @@ public class BubbleSortActivity extends AppCompatActivity {
 
     DrawerLayout dl_main;
     View v_main;
-    View v_menu;
+    View v_menu_left;
+    View v_menu_right;
     ViewStub vs_main;
-    ViewStub vs_menu;
+    ViewStub vs_menu_left;
+    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
     ImageButton btn_play;
@@ -76,8 +78,9 @@ public class BubbleSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    final int LAYOUT = R.layout.activity_base;
-    final int CONTROL = R.layout.controls_bubble_sort;
+    final int LAYOUT_MAIN = R.layout.activity_base;
+    final int LAYOUT_LEFT = R.layout.controls_bubble_sort;
+    final int LAYOUT_RIGHT = R.layout.controls_bubble_sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +92,14 @@ public class BubbleSortActivity extends AppCompatActivity {
         // findViewById
         dl_main = findViewById(R.id.dl_main);
         vs_main = findViewById(R.id.vs_main);
-        vs_menu = findViewById(R.id.vs_menu);
-        vs_main.setLayoutResource(LAYOUT);
-        vs_menu.setLayoutResource(CONTROL);
+        vs_menu_left = findViewById(R.id.vs_menu_left);
+        vs_menu_right = findViewById(R.id.vs_menu_right);
+        vs_main.setLayoutResource(LAYOUT_MAIN);
+        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
+        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
-        v_menu = vs_menu.inflate();
+        v_menu_right = vs_menu_right.inflate();
+        v_menu_left = vs_menu_left.inflate();
 
         ll_anim = v_main.findViewById(R.id.ll_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
@@ -111,13 +117,13 @@ public class BubbleSortActivity extends AppCompatActivity {
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
         cl_info = v_main.findViewById(R.id.cl_info);
 
-        btn_closemenu = v_menu.findViewById(R.id.btn_closemenu);
-        sb_arraysize = v_menu.findViewById(R.id.sb_arraysize);
-        tv_arraysize = v_menu.findViewById(R.id.tv_arraysize);
-        btn_generate = v_menu.findViewById(R.id.btn_generate);
-        btn_clear = v_menu.findViewById(R.id.btn_clear);
-        sw_randomarray = v_menu.findViewById(R.id.sw_randomarray);
-        et_customarray = v_menu.findViewById(R.id.et_customarray);
+        btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        sb_arraysize = v_menu_right.findViewById(R.id.sb_arraysize);
+        tv_arraysize = v_menu_right.findViewById(R.id.tv_arraysize);
+        btn_generate = v_menu_right.findViewById(R.id.btn_generate);
+        btn_clear = v_menu_right.findViewById(R.id.btn_clear);
+        sw_randomarray = v_menu_right.findViewById(R.id.sw_randomarray);
+        et_customarray = v_menu_right.findViewById(R.id.et_customarray);
 
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
@@ -331,7 +337,7 @@ public class BubbleSortActivity extends AppCompatActivity {
                     isAutoPlay = false;
                     btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
                     timer.cancel();
-                    dl_main.openDrawer(Gravity.RIGHT);
+                    dl_main.openDrawer(GravityCompat.END);
                 }
             }
         });
@@ -361,19 +367,8 @@ public class BubbleSortActivity extends AppCompatActivity {
         sb_arraysize.setOnTouchListener(new SeekBar.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
-                        break;
-                }
-
-                v.onTouchEvent(event);
-                return true;
+                sb_arraysize.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
             }
         });
 
@@ -396,7 +391,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         btn_closemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(Gravity.RIGHT);
+                dl_main.closeDrawer(GravityCompat.END);
             }
         });
 
@@ -603,8 +598,8 @@ public class BubbleSortActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(Gravity.RIGHT)){
-            dl_main.closeDrawer(Gravity.RIGHT);
+        if (dl_main.isDrawerOpen(GravityCompat.END)){
+            dl_main.closeDrawer(GravityCompat.END);
         }
         else {
             back();

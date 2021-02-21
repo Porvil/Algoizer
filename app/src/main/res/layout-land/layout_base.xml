@@ -4,7 +4,7 @@
     android:id="@+id/dl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="right"
+    android:layout_gravity="end"
 
     android:fitsSystemWindows="true"
     tools:ignore="MissingDefaultResource"
@@ -17,18 +17,18 @@
         android:orientation="horizontal" />
 
     <ViewStub
-        android:id="@+id/vs_menu"
+        android:id="@+id/vs_menu_right"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:fitsSystemWindows="true"
         android:orientation="vertical" />
 
     <ViewStub
-        android:id="@+id/vs_menu2"
+        android:id="@+id/vs_menu_left"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:orientation="vertical" />
 
