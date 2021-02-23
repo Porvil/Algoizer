@@ -24,7 +24,7 @@
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center"
         android:paddingBottom="15dp"
-        android:textColor="@color/mainColorDone"
+        android:textColor="?attr/dark"
         android:textSize="20sp"
         android:textStyle="bold" />
 </FrameLayout>
