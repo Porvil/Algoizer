@@ -14,13 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme_Blue">
-        <activity
-            android:name=".runapp.activities.Settings"
+        <activity android:name=".runapp.activities.AboutActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="sensorLandscape">
 
+        </activity>
+        <activity
+            android:name=".runapp.activities.ThemesActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,6 +35,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

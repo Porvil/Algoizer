@@ -10,11 +10,13 @@ import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -28,6 +30,9 @@ public class HomeActivity extends AppCompatActivity {
 
     Context context;
     LinearLayout linearLayout;
+    ImageButton btn_about;
+    ImageButton btn_themes;
+    ImageButton btn_close;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
             new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_sorting),
@@ -36,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     boolean doubleBackToExitPressedOnce = false;
+    private final int REQ_CODE = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);
+        btn_about = findViewById(R.id.btn_about);
+        btn_themes = findViewById(R.id.btn_themes);
+        btn_close = findViewById(R.id.btn_close);
 
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
@@ -82,6 +91,38 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
+        btn_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, AboutActivity.class));
+            }
+        });
+
+        btn_themes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ThemesActivity.class);
+                startActivityForResult(intent, REQ_CODE);
+            }
+        });
+
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQ_CODE){
+            if(resultCode == RESULT_OK){
+                recreate();
+            }
+        }
     }
 
     @Override

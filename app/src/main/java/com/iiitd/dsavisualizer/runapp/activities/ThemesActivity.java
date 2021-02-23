@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.runapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +12,14 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-public class Settings extends AppCompatActivity {
+public class ThemesActivity extends AppCompatActivity {
 
-    Button btn_theme1;
-    Button btn_theme2;
-    Button btn_theme3;
-    Button btn_theme4;
-    Button btn_theme5;
-    Button btn_theme6;
+    Button btn_theme_blue;            // 1
+    Button btn_theme_purple;          // 2
+    Button btn_theme_green;           // 3
+    Button btn_theme_orange;          // 4
+    Button btn_theme_brown;           // 5
+    Button btn_theme_pink;            // 6
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +27,16 @@ public class Settings extends AppCompatActivity {
         setTheme(theme);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_themes);
 
-        btn_theme1 = findViewById(R.id.btn_theme1);
-        btn_theme2 = findViewById(R.id.btn_theme2);
-        btn_theme3 = findViewById(R.id.btn_theme3);
-        btn_theme4 = findViewById(R.id.btn_theme4);
-        btn_theme5 = findViewById(R.id.btn_theme5);
-        btn_theme6 = findViewById(R.id.btn_theme6);
+        btn_theme_blue = findViewById(R.id.btn_theme_blue);
+        btn_theme_purple = findViewById(R.id.btn_theme_purple);
+        btn_theme_green = findViewById(R.id.btn_theme_green);
+        btn_theme_orange = findViewById(R.id.btn_theme_orange);
+        btn_theme_brown = findViewById(R.id.btn_theme_brown);
+        btn_theme_pink = findViewById(R.id.btn_theme_pink);
 
-        btn_theme1.setOnClickListener(new View.OnClickListener() {
+        btn_theme_blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 1);
@@ -43,7 +44,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btn_theme2.setOnClickListener(new View.OnClickListener() {
+        btn_theme_purple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 2);
@@ -51,7 +52,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btn_theme3.setOnClickListener(new View.OnClickListener() {
+        btn_theme_green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 3);
@@ -59,7 +60,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btn_theme4.setOnClickListener(new View.OnClickListener() {
+        btn_theme_orange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 4);
@@ -67,7 +68,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btn_theme5.setOnClickListener(new View.OnClickListener() {
+        btn_theme_brown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 5);
@@ -75,7 +76,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btn_theme6.setOnClickListener(new View.OnClickListener() {
+        btn_theme_pink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 6);
@@ -88,9 +89,17 @@ public class Settings extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Settings.this, GraphActivity.class));
+                startActivity(new Intent(ThemesActivity.this, GraphActivity.class));
             }
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
 }

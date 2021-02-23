@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".runapp.activities.Settings"
+    tools:context=".runapp.activities.ThemesActivity"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="Change Theme"
+        android:textColor="?attr/base"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Graph Activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,46 +53,46 @@
             android:padding="10dp">
 
             <Button
-                android:id="@+id/btn_theme1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_blue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Blue" />
+                android:background="@color/blue_base" />
 
             <Button
-                android:id="@+id/btn_theme2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_purple"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Purple" />
+                android:background="@color/purple_base" />
 
             <Button
-                android:id="@+id/btn_theme3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_green"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Green" />
+                android:background="@color/green_base" />
 
             <Button
-                android:id="@+id/btn_theme4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_orange"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Orange" />
+                android:background="@color/orange_base" />
 
             <Button
-                android:id="@+id/btn_theme5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_brown"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Brown" />
+                android:background="@color/brown_base" />
 
             <Button
-                android:id="@+id/btn_theme6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_theme_pink"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Pink" />
+                android:background="@color/pink_base" />
         </LinearLayout>
 
     </HorizontalScrollView>
