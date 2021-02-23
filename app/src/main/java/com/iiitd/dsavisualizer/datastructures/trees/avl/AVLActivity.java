@@ -752,7 +752,7 @@ public class AVLActivity extends AppCompatActivity {
             public void run() {
                 final int height = tableLayout.getHeight() / TreeLayout.treeLayout.size();
 
-                final LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 int row = 0;
                 int col = 0;
@@ -761,9 +761,9 @@ public class AVLActivity extends AppCompatActivity {
                     final ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
                     col = 0;
                     for(final TreeLayoutElement layoutElement : treeLayout){
-                        final View bstView = UtilUI.getTreeNodeView(context, layoutInflater, layoutElement, height, row, col);
+                        final View treeNodeView = UtilUI.getTreeNodeView(context, layoutInflater, layoutElement, height, row, col);
                         final int finalRow = row;
-                        bstView.setOnClickListener(new View.OnClickListener() {
+                        treeNodeView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 System.out.println("Clicked");
@@ -775,8 +775,8 @@ public class AVLActivity extends AppCompatActivity {
                                     TextView count = myView.findViewById(R.id.tv_node_count);
                                     TextView name = myView.findViewById(R.id.tv_node_name);
 
-                                    TextView valueR = bstView.findViewById(R.id.tv_elementvalue);
-                                    TextView countR = bstView.findViewById(R.id.tv_elementcount);
+                                    TextView valueR = treeNodeView.findViewById(R.id.tv_elementvalue);
+                                    TextView countR = treeNodeView.findViewById(R.id.tv_elementcount);
 
                                     name.setText("AVL Node");
                                     value.setText(valueR.getText().toString().trim());
@@ -805,7 +805,7 @@ public class AVLActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        tableRow.addView(bstView);
+                        tableRow.addView(treeNodeView);
                         col++;
                     }
 

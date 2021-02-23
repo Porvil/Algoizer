@@ -97,7 +97,7 @@ public class BubbleSort {
         }
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, (int) height, 1);
-        LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for(int i=0;i<data.length;i++){
             float x = (float)data[i] / (float)MAX;
