@@ -84,6 +84,9 @@ public class BubbleSortActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
+        setTheme(theme);
+
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.layout_base);

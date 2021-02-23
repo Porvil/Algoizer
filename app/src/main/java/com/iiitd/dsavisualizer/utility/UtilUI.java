@@ -53,12 +53,12 @@ public class UtilUI {
 
     public static void highlightViews(Context context, View[] views, ArrayList<Integer> indexes){
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
         }
 
         if(indexes != null) {
             for (int i : indexes) {
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
             }
         }
     }
@@ -91,19 +91,19 @@ public class UtilUI {
 
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
         }
 
         for(Pair<Integer, Integer> pair : sortedIndexes){
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
-                        .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                        .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
             }
         }
 
@@ -114,25 +114,25 @@ public class UtilUI {
                                          View[] views, int curSeqNo, ArrayList<Integer> indexes){
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
         }
 
         if(indexes != null) {
             for (int i : indexes) {
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
             }
         }
 
         for(Pair<Integer, Integer> pair : sortedIndexes){
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
-                        .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                        .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
             }
         }
 
@@ -143,20 +143,20 @@ public class UtilUI {
                                                          View[] views, int curSeqNo, ArrayList<Integer> indexes){
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
         }
 
         ArrayList<Integer> high = new ArrayList<>();
         if(indexes != null) {
             for (int i : indexes) {
                 high.add(i);
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rectangle_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
             }
         }
 
@@ -164,7 +164,7 @@ public class UtilUI {
             if(curSeqNo >= pair.first) {
                 if (!high.contains(pair.second)) {
                     views[pair.second].findViewById(R.id.tv_elementvalue)
-                            .setBackground(getDrawable(context, R.drawable.rounded_rectangle_done));
+                            .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
                 }
             }
         }

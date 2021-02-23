@@ -152,20 +152,12 @@
 <!--        <item name="android:editTextColor">             @color/pink_medium</item>-->
 <!--    </style>-->
 
-    <style name="ImageButton" parent="@style/Widget.AppCompat.ImageButton">
-        <item name="android:textColor">?attr/base</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/button_corner</item>
-    </style>
-
     // OTHER STYLES
     <style name="Button" >
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/button_corner</item>
-<!--        <item name="android:background">@color/mainColorDarkerShade</item>-->
+        <item name="android:background">@drawable/roundedbutton</item>
     </style>
 
     <!-- Base application theme. -->

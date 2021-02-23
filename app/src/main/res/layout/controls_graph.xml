@@ -98,7 +98,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_switch_outline"
+                android:background="@drawable/customswitch_outline"
                 android:checkedButton="@id/rb_unweighted"
                 android:orientation="horizontal">
 
@@ -110,7 +110,7 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_switch_background"
+                    android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
                     android:text="Unweighted"
@@ -124,7 +124,7 @@
                     android:layout_marginRight="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_switch_background"
+                    android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
                     android:text="Weighted"
@@ -137,7 +137,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_switch_outline"
+                android:background="@drawable/customswitch_outline"
                 android:checkedButton="@id/rb_undirected"
                 android:orientation="horizontal">
 
@@ -149,7 +149,7 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_switch_background"
+                    android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
                     android:text="Undirected"
@@ -163,7 +163,7 @@
                     android:layout_marginRight="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_switch_background"
+                    android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
                     android:text="Directed"

@@ -36,7 +36,7 @@
         android:fadeScrollbars="false"
         android:scrollbarSize="10dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbHorizontal="@drawable/scrollbar"
+        android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

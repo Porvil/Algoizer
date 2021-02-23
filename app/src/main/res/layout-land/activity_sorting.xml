@@ -8,7 +8,7 @@
     android:fadeScrollbars="false"
     android:scrollbarSize="10dp"
     android:scrollbarStyle="outsideInset"
-    android:scrollbarThumbHorizontal="@drawable/scrollbar"
+    android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar"
     tools:context=".runapp.activities.HomeActivity"
     tools:ignore="MissingDefaultResource">
 

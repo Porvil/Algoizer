@@ -35,8 +35,8 @@ public class AppSettings {
     public static final int PAUSE_BUTTON = R.drawable.ic_baseline_pause_24;
     public static final int CODE_BUTTON = R.drawable.ic_baseline_code_24;
     public static final int MENU_BUTTON = R.drawable.ic_baseline_menu_open_24;
-    public static final int ROUNDED_RECT_ELEMENT = R.drawable.rounded_rectangle;
-    public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.rounded_rectangle_highlighted;
+    public static final int ROUNDED_RECT_ELEMENT = R.drawable.roundedrect_sortingelement_normal;
+    public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.roundedrect_sortingelement_highlighted;
 
     public static String getExternalStoragePath(){
         return Environment.getExternalStorageDirectory().getAbsolutePath();
