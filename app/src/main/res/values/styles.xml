@@ -137,4 +137,13 @@
         <item name="android:colorControlActivated">?attr/medium</item>
     </style>
 
+    <style name="S_RadioButton_Graph">
+        <item name="android:colorControlNormal">?attr/base</item>
+        <item name="android:colorControlActivated">?attr/medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">?attr/base</item>
+    </style>
+
 </resources>

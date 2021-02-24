@@ -103,7 +103,6 @@
         android:id="@+id/horizontalDiv"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_weight="1"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toTopOf="@+id/cl_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,169 +120,85 @@
 
         <ImageButton
             android:id="@+id/btn_nav"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="0dp"
-
-            android:background="?android:selectableItemBackground"
-            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cl_info"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_nav_open_24" />
 
 
         <View
             android:id="@+id/horizontalDiv1"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_nav"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_info"
+        <HorizontalScrollView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="5dp"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv3"
+            app:layout_constraintEnd_toStartOf="@+id/divider9"
             app:layout_constraintStart_toEndOf="@+id/horizontalDiv1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <TextView
-                android:id="@+id/tv_label_info"
+            <LinearLayout
+                android:id="@+id/ll_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
-                android:paddingStart="5dp"
-                android:text="Next : "
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="horizontal">
 
-            <View
-                android:id="@+id/horizontalDiv2"
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_label_info"
+                    style="@style/S_TextView_Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="5dp"
+                    android:text="Next : "
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_info"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="start|center_vertical"
-                android:paddingStart="10dp"
-                android:text="-"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:typeface="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/horizontalDiv2"
-                app:layout_constraintStart_toEndOf="@+id/tv_label_info"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/tv_seqno"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                <TextView
+                    android:id="@+id/tv_info"
+                    style="@style/S_TextView_Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="15dp"
+                    android:text="-"
+                    android:textSize="18sp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_grid"
-            style="@style/Widget.AppCompat.ImageButton"
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/tv_seqno"
+            style="@style/S_TextView_Normal"
             android:layout_width="50dp"
-            android:layout_height="0dp"
-
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="Show Info"
-            android:scaleType="center"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_info"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_grid_on_24" />
+            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv3"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/horizontalDiv3"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
             tools:layout_editor_absoluteY="3dp" />
-
-        <RadioGroup
-            android:id="@+id/rg_graphcontrols"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_grid"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/ic_view_off"
-                android:onClick="onGraphControlsClick"
-                android:text="View"
-                android:textAlignment="center"
-                android:textColor="?colorControlNormal" />
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_vertex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:button="@null"
-                android:clickable="true"
-                android:drawableTop="@drawable/ic_vertex_add_off"
-                android:onClick="onGraphControlsClick"
-                android:text="Node"
-                android:textAlignment="center"
-                android:textColor="?colorControlNormal" />
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_edge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:button="@null"
-                android:drawableTop="@drawable/ic_edge_add_off"
-                android:onClick="onGraphControlsClick"
-                android:text="Edge"
-                android:textAlignment="center"
-                android:textColor="?colorControlNormal" />
-
-        </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_animcontrols"
@@ -295,7 +210,7 @@
 
             <SeekBar
                 android:id="@+id/sb_animspeed"
-                style="@style/Widget.AppCompat.SeekBar"
+                style="@style/S_SeekBar_Continous"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_weight="1"
@@ -306,12 +221,11 @@
 
             <ImageButton
                 android:id="@+id/btn_backward"
+                style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:background="?android:selectableItemBackground"
                 android:contentDescription="Backward"
                 android:padding="10dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
@@ -319,12 +233,11 @@
 
             <ImageButton
                 android:id="@+id/btn_forward"
+                style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:background="?android:selectableItemBackground"
                 android:contentDescription="Forward"
                 android:padding="10dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
@@ -332,10 +245,9 @@
 
             <ImageButton
                 android:id="@+id/btn_play"
-                style="@style/Widget.AppCompat.ImageButton"
+                style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:background="?android:selectableItemBackground"
                 android:contentDescription="Play/Pause"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -350,10 +262,92 @@
             android:id="@+id/horizontalDiv4"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
+            android:layout_marginEnd="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/rg_graphcontrols"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rg_graphcontrols"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider8"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/rb_graphcontrol_view"
+                style="@style/S_RadioButton_Graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:drawableTop="@drawable/ic_view_off"
+                android:onClick="onGraphControlsClick"
+                android:text="View" />
+
+            <RadioButton
+                android:id="@+id/rb_graphcontrol_vertex"
+                style="@style/S_RadioButton_Graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableTop="@drawable/ic_vertex_add_off"
+                android:onClick="onGraphControlsClick"
+                android:text="Node" />
+
+            <RadioButton
+                android:id="@+id/rb_graphcontrol_edge"
+                style="@style/S_RadioButton_Graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_edge_add_off"
+                android:onClick="onGraphControlsClick"
+                android:text="Edge" />
+
+        </RadioGroup>
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_grid"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_grid"
+            style="@style/S_ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:contentDescription="Show Info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_info"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_baseline_grid_on_24" />
+
+        <ImageButton
+            android:id="@+id/btn_info"
+            style="@style/S_ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:contentDescription="Show Info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider7"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_baseline_info_24" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -370,20 +364,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_menu_open_24" />
 
-        <ImageButton
-            android:id="@+id/btn_info"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-
-            android:background="?android:selectableItemBackground"
-            android:contentDescription="Show Info"
-            android:scaleType="center"
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_baseline_info_24" />
+            app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

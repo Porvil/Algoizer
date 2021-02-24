@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
@@ -18,7 +17,7 @@
 
         <ImageButton
             android:id="@+id/btn_closemenu"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:background="?android:selectableItemBackground"
@@ -29,12 +28,10 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            style="@style/S_TextView_Heading"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="Graph"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="Graph"/>
     </LinearLayout>
 
     <View
@@ -51,8 +48,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,19 +76,21 @@
 
                 <Button
                     android:id="@+id/btn_bfs"
+                    style="@style/S_ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="BFS" />
+                    android:text="BFS"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_dfs"
+                    style="@style/S_ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="DFS" />
+                    android:text="DFS"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -106,7 +108,7 @@
                     android:id="@+id/rb_unweighted"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
@@ -121,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="1dp"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     android:background="@drawable/customswitch_background"
@@ -145,7 +147,7 @@
                     android:id="@+id/rb_undirected"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
@@ -160,7 +162,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="1dp"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     android:background="@drawable/customswitch_background"
@@ -177,27 +179,30 @@
 
                 <Button
                     android:id="@+id/btn_tree1"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_1" />
+                    android:text="@string/example_1"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_tree2"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_2" />
+                    android:text="@string/example_2"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_tree3"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="@string/example_3" />
+                    android:text="@string/example_3"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -208,19 +213,21 @@
 
                 <Button
                     android:id="@+id/btn_cleargraph"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Clear Graph" />
+                    android:text="Clear Graph"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_cleargraphanim"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:text="Clear Anim Graph" />
+                    android:text="Clear Anim Graph"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -236,6 +243,7 @@
 
                 <EditText
                     android:id="@+id/et_customgraphinput"
+                    style="@style/S_EditText"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="4"
@@ -243,6 +251,8 @@
                     android:gravity="start|top"
                     android:hint="Custom Input"
                     android:inputType="textMultiLine"
+                    android:paddingStart="10dp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -259,42 +269,42 @@
 
                     <ImageButton
                         android:id="@+id/btn_clearcustominput"
+                        style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_clear_24" />
 
                     <ImageButton
                         android:id="@+id/btn_copygraph"
+                        style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_copy_all_24" />
 
                     <ImageButton
                         android:id="@+id/btn_pastecustominput"
+                        style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_content_paste_24" />
 
                     <ImageButton
                         android:id="@+id/btn_custominput"
+                        style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_done_24" />
 
                     <ImageButton
                         android:id="@+id/btn_savecustominput"
+                        style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_save_24" />
 
                 </LinearLayout>
