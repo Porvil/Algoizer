@@ -92,6 +92,14 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="S_ImageButton" parent="@style/Widget.AppCompat.ImageButton">
+        <item name="android:scaleType">center</item>
+        <item name="android:textColor">?attr/base</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="S_ButtonTextOnly">
         <item name="android:textColor">?attr/base</item>
         <item name="android:background">?android:selectableItemBackground</item>
@@ -112,7 +120,13 @@
         <item name="android:textColor">?attr/base</item>
     </style>
 
-    <style name="S_SeekBar" parent="Widget.AppCompat.SeekBar.Discrete">
+    <style name="S_SeekBar_Discrete" parent="Widget.AppCompat.SeekBar.Discrete">
+        <item name="android:progressBackgroundTint">?attr/light</item>
+        <item name="android:progressTint">?attr/base</item>
+        <item name="android:thumbTint">?attr/base</item>
+    </style>
+
+    <style name="S_SeekBar_Continous" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressBackgroundTint">?attr/light</item>
         <item name="android:progressTint">?attr/base</item>
         <item name="android:thumbTint">?attr/base</item>

@@ -91,7 +91,7 @@ public class MergeSortActivity extends AppCompatActivity {
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
-    final int LAYOUT_MAIN = R.layout.activity_base;
+    final int LAYOUT_MAIN = R.layout.activity_sorting;
     final int LAYOUT_LEFT = R.layout.navigation_sorting;
     final int LAYOUT_RIGHT = R.layout.controls_merge_sort;
 
@@ -123,7 +123,7 @@ public class MergeSortActivity extends AppCompatActivity {
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_code = v_main.findViewById(R.id.btn_code);
         btn_info = v_main.findViewById(R.id.btn_info);
-        btn_back = v_main.findViewById(R.id.btn_back);
+        btn_back = v_main.findViewById(R.id.btn_nav);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);

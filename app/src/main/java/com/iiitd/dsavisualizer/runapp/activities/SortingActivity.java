@@ -48,7 +48,7 @@ public class SortingActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setEnterTransition(new Slide());
         getWindow().setExitTransition(new Fade());
-        setContentView(R.layout.activity_sorting);
+        setContentView(R.layout.activity_sortings);
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);

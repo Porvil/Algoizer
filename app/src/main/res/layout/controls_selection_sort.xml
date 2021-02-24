@@ -17,10 +17,9 @@
 
         <ImageButton
             android:id="@+id/btn_closemenu"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:background="?android:selectableItemBackground"
             android:src="@drawable/ic_baseline_close_24" />
 
         <TextView
@@ -120,7 +119,7 @@
 
             <SeekBar
                 android:id="@+id/sb_arraysize"
-                style="@style/S_SeekBar"
+                style="@style/S_SeekBar_Discrete"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"

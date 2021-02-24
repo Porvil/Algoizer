@@ -54,7 +54,7 @@
             android:layout_height="60dp"
 
             android:background="?android:selectableItemBackground"
-            android:contentDescription="About"
+            android:contentDescription="@string/about"
             android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/btn_themes"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
             android:layout_height="60dp"
 
             android:background="?android:selectableItemBackground"
-            android:contentDescription="Themes"
+            android:contentDescription="@string/themes"
             android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/btn_close"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
             android:layout_height="60dp"
 
             android:background="?android:selectableItemBackground"
-            android:contentDescription="Close Application"
+            android:contentDescription="@string/close_application"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

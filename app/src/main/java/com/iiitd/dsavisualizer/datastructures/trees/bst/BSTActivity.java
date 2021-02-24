@@ -123,7 +123,7 @@ public class BSTActivity extends AppCompatActivity {
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_info = v_main.findViewById(R.id.btn_info);
-        btn_back = v_main.findViewById(R.id.btn_back);
+        btn_back = v_main.findViewById(R.id.btn_nav);
         tv_info = v_main.findViewById(R.id.tv_info);
         cl_info = v_main.findViewById(R.id.cl_info);
 

@@ -24,10 +24,9 @@
 
     <ImageButton
         android:id="@+id/btn_closenav"
-        style="@style/Widget.AppCompat.ImageButton"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -43,4 +43,7 @@
     <string name="avl_tree">AVL Tree</string>
     <string name="traversals">Traversals</string>
     <string name="icon">Icon</string>
+    <string name="about">About</string>
+    <string name="themes">Themes</string>
+    <string name="close_application">Close Application</string>
 </resources>

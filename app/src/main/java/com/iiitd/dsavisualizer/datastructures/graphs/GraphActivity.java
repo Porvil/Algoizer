@@ -161,7 +161,7 @@ public class GraphActivity extends AppCompatActivity {
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_code = v_main.findViewById(R.id.btn_code);
         btn_info = v_main.findViewById(R.id.btn_info);
-        btn_back = v_main.findViewById(R.id.btn_back);
+        btn_back = v_main.findViewById(R.id.btn_nav);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
