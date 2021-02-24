@@ -2,266 +2,171 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="450dp"
+    android:layout_width="360dp"
     android:layout_height="350dp"
     tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="400dp"
+        style="@style/S_TextView_Heading"
+        android:layout_width="310dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/info"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name">
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="@string/time"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center|right"
-            android:paddingRight="25dp"
-            android:text="@string/insert"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center|right"
-            android:paddingRight="25dp"
-            android:text="@string/delete"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center|right"
-            android:paddingRight="25dp"
-            android:text="@string/search"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center|right"
-            android:paddingRight="25dp"
-            android:text="@string/traversals"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="@string/space"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout10"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_worst1"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@string/worst"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_best1"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@string/best"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_worst1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
-
-            <TextView
-                android:id="@+id/tv_worst_insert"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_best_insert"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_worst_insert"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
-
-            <TextView
-                android:id="@+id/tv_worst_delete"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_best_delete"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_worst_delete"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
-
-            <TextView
-                android:id="@+id/tv_worst_search"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_best_search"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_worst_search"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_traversals"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
-
-        <TextView
-            android:id="@+id/tv_space"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_traversals" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ImageButton
         android:id="@+id/btn_close"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_close_24" />
 
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="@string/time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/textView14"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:gravity="center|end"
+        android:paddingEnd="25dp"
+        android:text="@string/insert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:gravity="center|end"
+        android:paddingEnd="25dp"
+        android:text="@string/delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView12"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:gravity="center|end"
+        android:paddingEnd="25dp"
+        android:text="@string/search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="@string/traversals"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="@string/space"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_worst1"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="@string/worst"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_best1"
+        style="@style/S_TextView_Bold"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="@string/best"
+        app:layout_constraintStart_toEndOf="@+id/tv_worst1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_worst_insert"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/tv_worst1" />
+
+    <TextView
+        android:id="@+id/tv_best_insert"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_worst_insert"
+        app:layout_constraintTop_toBottomOf="@+id/tv_best1" />
+
+    <TextView
+        android:id="@+id/tv_worst_delete"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/tv_worst_insert" />
+
+    <TextView
+        android:id="@+id/tv_best_delete"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_worst_delete"
+        app:layout_constraintTop_toBottomOf="@+id/tv_best_insert" />
+
+    <TextView
+        android:id="@+id/tv_worst_search"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/tv_worst_delete" />
+
+    <TextView
+        android:id="@+id/tv_best_search"
+        style="@style/S_TextView_Normal"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_worst_search"
+        app:layout_constraintTop_toBottomOf="@+id/tv_best_delete" />
+
+    <TextView
+        android:id="@+id/tv_traversals"
+        style="@style/S_TextView_Normal"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/tv_worst_search" />
+
+    <TextView
+        android:id="@+id/tv_space"
+        style="@style/S_TextView_Normal"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/tv_traversals" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

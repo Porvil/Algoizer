@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.avl;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class AVLActivity extends AppCompatActivity {
     ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
-    ImageButton btn_back;
+    ImageButton btn_nav;
     ImageButton btn_menu;
     ImageButton btn_info;
     SeekBar sb_animspeed;
@@ -82,6 +83,11 @@ public class AVLActivity extends AppCompatActivity {
     EditText et_search;
     EditText et_delete;
 
+    ImageButton btn_closenav;
+    ConstraintLayout cl_home;
+    ConstraintLayout cl_bst;
+    ConstraintLayout cl_avl;
+
     TableLayout tableLayout;
     ArrayList<TableRow> tableRows = new ArrayList<>();
     ArrayList<ArrayList<Pair<Integer, Integer>>> tableRowsCoordinates = new ArrayList<>();
@@ -95,7 +101,7 @@ public class AVLActivity extends AppCompatActivity {
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT_MAIN = R.layout.activity_tree;
-    final int LAYOUT_LEFT = R.layout.controls_avl;
+    final int LAYOUT_LEFT = R.layout.navigation_tree;
     final int LAYOUT_RIGHT = R.layout.controls_avl;
 
     @Override
@@ -124,7 +130,7 @@ public class AVLActivity extends AppCompatActivity {
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_info = v_main.findViewById(R.id.btn_info);
-        btn_back = v_main.findViewById(R.id.btn_nav);
+        btn_nav = v_main.findViewById(R.id.btn_nav);
         tv_info = v_main.findViewById(R.id.tv_info);
         cl_info = v_main.findViewById(R.id.cl_info);
 
@@ -144,7 +150,13 @@ public class AVLActivity extends AppCompatActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
+        btn_closenav = v_menu_left.findViewById(R.id.btn_closenav);
+        cl_home = v_menu_left.findViewById(R.id.cl_home);
+        cl_bst = v_menu_left.findViewById(R.id.cl_bst);
+        cl_avl = v_menu_left.findViewById(R.id.cl_avl);
+
         initViews();
+        initNavigation();
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -219,10 +231,15 @@ public class AVLActivity extends AppCompatActivity {
             }
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back();
+                if(timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
+
+                dl_main.openDrawer(GravityCompat.START);
             }
 
         });
@@ -421,7 +438,7 @@ public class AVLActivity extends AppCompatActivity {
             System.out.println("OPEN");
             dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             btn_menu.setEnabled(false);
-            btn_back.setEnabled(false);
+            btn_nav.setEnabled(false);
             btn_info.setEnabled(false);
         }
 
@@ -722,7 +739,7 @@ public class AVLActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 btn_menu.setEnabled(true);
-                                btn_back.setEnabled(true);
+                                btn_nav.setEnabled(true);
                                 btn_info.setEnabled(true);
                                 Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
                             }
@@ -922,11 +939,47 @@ public class AVLActivity extends AppCompatActivity {
             public void onDismiss(DialogInterface dialog) {
                 System.out.println("Dismissed");
                 btn_menu.setEnabled(true);
-                btn_back.setEnabled(true);
+                btn_nav.setEnabled(true);
                 btn_info.setEnabled(true);
                 dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
+    }
+
+    private void initNavigation() {
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
+
+        cl_avl.setBackgroundColor(color);
+
+        cl_bst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, AVLActivity.class));
+            }
+        });
+
+        cl_avl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dl_main.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        cl_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btn_closenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dl_main.closeDrawer(GravityCompat.START);
+            }
+        });
+
     }
 
 }

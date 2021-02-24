@@ -12,19 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/icon"
         android:scaleType="fitCenter"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/icon" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tv_sortname"
+        style="@style/S_TextView_Heading"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom|center_horizontal"
         android:fontFamily="@font/open_sans_semibold"
-        android:gravity="center"
         android:paddingBottom="15dp"
-        android:textColor="?attr/dark"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="24sp" />
 </FrameLayout>

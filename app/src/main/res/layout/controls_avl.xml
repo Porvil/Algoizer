@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
@@ -18,24 +17,20 @@
 
         <ImageButton
             android:id="@+id/btn_closemenu"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:background="?android:selectableItemBackground"
             android:contentDescription="@string/close"
             android:src="@drawable/ic_baseline_close_24" />
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/S_TextView_Heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="@string/avl_tree"
-            android:textColor="@color/mainColor"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="@string/avl_tree" />
     </LinearLayout>
 
     <View
@@ -52,14 +47,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalDiv7">
 
 
         <LinearLayout
@@ -77,20 +75,23 @@
 
                 <EditText
                     android:id="@+id/et_insert"
+                    style="@style/S_EditText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:gravity="start|center_vertical"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:paddingStart="10dp" />
 
                 <ImageButton
                     android:id="@+id/btn_insertrandom"
+                    style="@style/S_ImageButton"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:background="?android:selectableItemBackground"
                     android:contentDescription="@string/random"
                     android:src="@drawable/ic_random_icon" />
 
@@ -102,11 +103,11 @@
 
                 <Button
                     android:id="@+id/btn_insert"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/insert"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -117,14 +118,17 @@
 
                 <EditText
                     android:id="@+id/et_search"
+                    style="@style/S_EditText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:gravity="start|center_vertical"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:paddingStart="10dp" />
 
                 <View
                     android:layout_width="2dp"
@@ -134,11 +138,11 @@
 
                 <Button
                     android:id="@+id/btn_search"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/search"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -149,14 +153,17 @@
 
                 <EditText
                     android:id="@+id/et_delete"
+                    style="@style/S_EditText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:gravity="start|center_vertical"
                     android:hint="@string/enter_number"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:paddingStart="10dp" />
 
                 <View
                     android:layout_width="2dp"
@@ -166,11 +173,11 @@
 
                 <Button
                     android:id="@+id/btn_delete"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/delete"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -181,30 +188,30 @@
 
                 <Button
                     android:id="@+id/btn_preorder"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/pre_order"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_inorder"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/in_order"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_postorder"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/post_order"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -214,40 +221,40 @@
 
                 <Button
                     android:id="@+id/btn_tree1"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/example_1"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_tree2"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/example_2"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_tree3"
+                    style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
                     android:text="@string/example_3"
-                    android:textColor="@color/mainColor" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_cleartree"
+                style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
                 android:text="@string/clear_tree"
-                android:textColor="@color/mainColor" />
+                android:textSize="14sp" />
 
 
         </LinearLayout>

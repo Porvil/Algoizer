@@ -41,7 +41,7 @@
     <string name="post_order">Post-order</string>
     <string name="binary_search_tree">Binary Search Tree</string>
     <string name="avl_tree">AVL Tree</string>
-    <string name="traversals">Traversals</string>
+    <string name="traversals">Traversals :</string>
     <string name="icon">Icon</string>
     <string name="about">About</string>
     <string name="themes">Themes</string>

@@ -79,7 +79,6 @@
         android:id="@+id/horizontalDiv"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_weight="1"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toTopOf="@+id/cl_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,18 +110,15 @@
             android:id="@+id/horizontalDiv1"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_nav"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fadeScrollbars="false"
-            android:fillViewport="true"
             android:scrollbarSize="5dp"
             android:scrollbarStyle="outsideInset"
             android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
@@ -165,21 +161,38 @@
         </HorizontalScrollView>
 
         <View
-            android:id="@+id/horizontalDiv4"
+            android:id="@+id/divider6"
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_seqno"
+            style="@style/S_TextView_Normal"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="0"
+            app:layout_constraintEnd_toStartOf="@+id/divider5"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_animcontrols"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider3">
+            app:layout_constraintEnd_toStartOf="@id/divider3">
 
             <SeekBar
                 android:id="@+id/sb_animspeed"
@@ -231,6 +244,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/btn_code"
             style="@style/S_ImageButton"
@@ -239,7 +261,7 @@
 
             android:contentDescription="Show/Hide Code"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
+            app:layout_constraintEnd_toStartOf="@+id/btn_info"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_code_24" />
@@ -252,9 +274,19 @@
 
             android:contentDescription="Show Info"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_info_24" />
+
+        <View
+            android:id="@+id/horizontalDiv4"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btn_menu"
@@ -267,42 +299,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_menu_open_24" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_info"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_seqno"
-            style="@style/S_TextView_Normal"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:text="0"
-            app:layout_constraintEnd_toStartOf="@+id/divider5"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <View
-            android:id="@+id/divider6"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

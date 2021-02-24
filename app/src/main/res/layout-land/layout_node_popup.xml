@@ -8,23 +8,19 @@
 
     <TextView
         android:id="@+id/tv_node_name"
+        style="@style/S_TextView_Heading"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/node"
-        android:textColor="@color/mainColor"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btn_bst_close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_bst_close"
-        style="@style/Widget.AppCompat.ImageButton"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/close"
         android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,45 +28,41 @@
 
     <TextView
         android:id="@+id/tv_node_value"
+        style="@style/S_TextView_Normal"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/_1"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <TextView
         android:id="@+id/tv_node_count"
+        style="@style/S_TextView_Normal"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/_1"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_value" />
 
     <TextView
         android:id="@+id/textView"
+        style="@style/S_TextView_Normal"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/value"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tv_node_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <TextView
         android:id="@+id/textView3"
+        style="@style/S_TextView_Normal"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="@string/count"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_node_count"
         app:layout_constraintStart_toStartOf="parent"
