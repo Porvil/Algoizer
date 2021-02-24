@@ -50,6 +50,7 @@
 
     // MAIN THEMES
     <style name="Theme_Blue" parent="BaseTheme">
+        <item name="shade"  >      @color/blue_shade      </item>
         <item name="light"  >      @color/blue_light      </item>
         <item name="base"   >      @color/blue_base       </item>
         <item name="medium" >      @color/blue_medium     </item>
@@ -57,6 +58,7 @@
     </style>
 
     <style name="Theme_Purple" parent="BaseTheme">
+        <item name="shade"  >      @color/purple_shade      </item>
         <item name="light"  >      @color/purple_light      </item>
         <item name="base"   >      @color/purple_base       </item>
         <item name="medium" >      @color/purple_medium     </item>
@@ -64,6 +66,7 @@
     </style>
 
     <style name="Theme_Green" parent="BaseTheme">
+        <item name="shade"  >      @color/green_shade      </item>
         <item name="light"  >      @color/green_light      </item>
         <item name="base"   >      @color/green_base       </item>
         <item name="medium" >      @color/green_medium     </item>
@@ -71,6 +74,7 @@
     </style>
 
     <style name="Theme_Orange" parent="BaseTheme">
+        <item name="shade"  >      @color/orange_shade      </item>
         <item name="light"  >      @color/orange_light      </item>
         <item name="base"   >      @color/orange_base       </item>
         <item name="medium" >      @color/orange_medium     </item>
@@ -78,6 +82,7 @@
     </style>
 
     <style name="Theme_Brown" parent="BaseTheme">
+        <item name="shade"  >      @color/brown_shade      </item>
         <item name="light"  >      @color/brown_light      </item>
         <item name="base"   >      @color/brown_base       </item>
         <item name="medium" >      @color/brown_medium     </item>
@@ -85,6 +90,7 @@
     </style>
 
     <style name="Theme_Pink" parent="BaseTheme">
+        <item name="shade"  >      @color/pink_shade      </item>
         <item name="light"  >      @color/pink_light      </item>
         <item name="base"   >      @color/pink_base       </item>
         <item name="medium" >      @color/pink_medium     </item>

@@ -658,7 +658,7 @@ public class MergeSortActivity extends AppCompatActivity {
     }
 
     private void initNavigation() {
-        int color = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
         cl_mergesort.setBackgroundColor(color);
 

@@ -667,7 +667,7 @@ public class BubbleSortActivity extends AppCompatActivity {
     }
 
     private void initNavigation() {
-        int color = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
         cl_bubblesort.setBackgroundColor(color);
 

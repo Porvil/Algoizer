@@ -663,7 +663,7 @@ public class InsertionSortActivity extends AppCompatActivity {
     }
 
     private void initNavigation() {
-        int color = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
         cl_insertionsort.setBackgroundColor(color);
 
