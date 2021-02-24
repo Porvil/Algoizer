@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     ActivityItemData[] activityItemData = new ActivityItemData[]{
             new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_sorting),
             new ActivityItemData(TreesActivity.class.getName(), "Trees", R.drawable.ic_trees),
-            new ActivityItemData(GraphActivity.class.getName(), "Graph", R.drawable.ic_graphs)
+//            new ActivityItemData(GraphActivity.class.getName(), "Graph", R.drawable.ic_graphs)
     };
 
     boolean doubleBackToExitPressedOnce = false;
