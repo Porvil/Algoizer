@@ -123,7 +123,7 @@
             android:layout_height="0dp"
             android:fadeScrollbars="false"
             android:fillViewport="true"
-            android:scrollbarSize="2dp"
+            android:scrollbarSize="5dp"
             android:scrollbarStyle="outsideInset"
             android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -145,6 +145,7 @@
                     android:gravity="start|center_vertical"
                     android:paddingStart="5dp"
                     android:text="Next : "
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -154,7 +155,9 @@
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:paddingStart="10dp"
-                    android:text="-" />
+                    android:paddingEnd="15dp"
+                    android:text="-"
+                    android:textSize="18sp" />
 
 
             </LinearLayout>

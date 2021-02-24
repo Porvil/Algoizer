@@ -2,43 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="280dp"
     android:layout_height="150dp"
     android:background="@drawable/roundedrect_border_medium"
     tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/tv_node_name"
-        android:layout_width="300dp"
+        style="@style/S_TextView_Heading"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/confirm_back"
-        android:textColor="@color/mainColor"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        style="@style/S_TextView_Normal"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:gravity="center_horizontal|top"
         android:text="@string/do_you_want_to_go_back"
-        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
 
     <Button
         android:id="@+id/btn_yes"
         style="@style/S_Button_Filled"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/yes"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_cancel"
@@ -47,12 +46,11 @@
     <Button
         android:id="@+id/btn_cancel"
         style="@style/S_Button_Filled"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/cancel"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />

@@ -42,14 +42,14 @@ public class UtilUI {
 
     public static void changeTextViewsColors(Context context, ScrollView scrollView, TextView[] textViews, Integer[] indexes){
         for(TextView textView : textViews){
-            textView.setTextColor(Color.BLACK);
+            textView.setTextColor(getCurrentThemeColor(context, R.attr.base));
         }
 
         if(indexes != null) {
-            scrollView.scrollTo(0, (int) textViews[indexes[0]].getY());
+            scrollView.smoothScrollTo(0, (int) textViews[indexes[0]].getY());
 
             for (int i : indexes) {
-                textViews[i].setTextColor(ContextCompat.getColor(context, R.color.mainColorDarkerShade));
+                textViews[i].setTextColor(getCurrentThemeColor(context, R.attr.dark));
             }
         }
     }

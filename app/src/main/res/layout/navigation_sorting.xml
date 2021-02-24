@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
@@ -11,13 +10,11 @@
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
         android:text="@string/app_name"
-        android:textColor="?attr/medium"
+        style="@style/S_TextView_Heading"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btn_closenav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -80,13 +77,13 @@
 
                 <TextView
                     android:id="@+id/textView8"
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Home"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_h"
@@ -114,13 +111,13 @@
                     app:srcCompat="@drawable/ic_bubblesort" />
 
                 <TextView
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Bubble Sort"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_bs"
@@ -142,13 +139,13 @@
                     app:srcCompat="@drawable/ic_selectionsort" />
 
                 <TextView
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Selection Sort"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_ss"
@@ -170,13 +167,13 @@
                     app:srcCompat="@drawable/ic_bubblesort" />
 
                 <TextView
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Insertion Sort"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_is"
@@ -198,13 +195,13 @@
                     app:srcCompat="@drawable/ic_mergesort" />
 
                 <TextView
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Merge Sort"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_ms"
@@ -226,17 +223,17 @@
                     app:srcCompat="@drawable/ic_quicksort" />
 
                 <TextView
+                    style="@style/S_TextView_Bold"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="Quick Sort"
-                    android:textColor="?attr/base"
-                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_qs"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="18sp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
