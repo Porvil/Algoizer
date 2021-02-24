@@ -45,9 +45,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
+        android:fadingEdgeLength="20dp"
+        android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="left"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:verticalScrollbarPosition="right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +63,7 @@
             android:background="?android:colorBackground"
             android:orientation="vertical"
             android:padding="10dp"
-            android:showDividers="middle" >
+            android:showDividers="middle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_home"
@@ -69,8 +72,8 @@
 
                 <ImageView
                     android:id="@+id/iv_h"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -94,7 +97,7 @@
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="?android:attr/listDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,8 +107,8 @@
 
                 <ImageView
                     android:id="@+id/iv_bs"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -132,8 +135,8 @@
 
                 <ImageView
                     android:id="@+id/iv_ss"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -160,8 +163,8 @@
 
                 <ImageView
                     android:id="@+id/iv_is"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -188,8 +191,8 @@
 
                 <ImageView
                     android:id="@+id/iv_ms"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -216,8 +219,8 @@
 
                 <ImageView
                     android:id="@+id/iv_qs"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

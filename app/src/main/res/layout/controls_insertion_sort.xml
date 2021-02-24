@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
@@ -26,15 +25,13 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/S_TextView_Heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="Insertion Sort"
-            android:textColor="@color/mainColor"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="Insertion Sort" />
     </LinearLayout>
 
     <View
@@ -50,8 +47,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:colorBackground"
             android:orientation="vertical"
             android:padding="10dp"
@@ -74,6 +74,7 @@
 
                 <Switch
                     android:id="@+id/sw_randomarray"
+                    style="@style/S_Switch"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="2"
@@ -82,7 +83,6 @@
                     android:showText="false"
                     android:text="Random Array"
                     android:textAllCaps="false"
-                    android:textColor="@color/mainColor"
                     android:textColorLink="#FFFFFF"
                     android:textOff="Custom Array"
                     android:textOn="Random Array" />
@@ -99,7 +99,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/array_size"
-                    android:textColor="@color/mainColor"
+                    android:textColor="?attr/base"
                     android:textStyle="bold" />
 
                 <View
@@ -115,12 +115,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1"
-                    android:textColor="@color/mainColor" />
+                    android:textColor="?attr/base" />
             </LinearLayout>
 
             <SeekBar
                 android:id="@+id/sb_arraysize"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                style="@style/S_SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
@@ -129,16 +129,15 @@
                 android:progress="3" />
 
             <TextView
+                style="@style/S_TextView_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="OR"
-                android:textColor="@color/mainColor"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:text="OR" />
 
             <EditText
                 android:id="@+id/et_customarray"
+                style="@style/S_EditText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
@@ -146,10 +145,7 @@
                 android:digits="0123456789,"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="@string/comma_separated_ve_elements"
-                android:textColor="@color/mainColor"
-                android:textColorHint="@color/mainColor"
-                android:textSize="14sp" />
+                android:hint="@string/comma_separated_ve_elements" />
 
             <View
                 android:id="@+id/horizontalDiv"
@@ -159,19 +155,17 @@
 
             <Button
                 android:id="@+id/btn_generate"
+                style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Generate"
-                android:textColor="@color/mainColor" />
+                android:text="Generate" />
 
             <Button
                 android:id="@+id/btn_clear"
+                style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Clear"
-                android:textColor="@color/mainColor" />
+                android:text="Clear" />
 
         </LinearLayout>
 

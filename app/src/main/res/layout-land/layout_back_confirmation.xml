@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/btn_yes"
-        style="@style/Button"
+        style="@style/S_Button_Filled"
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -46,7 +46,7 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        style="@style/Button"
+        style="@style/S_Button_Filled"
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"

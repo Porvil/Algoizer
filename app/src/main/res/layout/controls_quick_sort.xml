@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
@@ -25,19 +25,17 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/S_TextView_Heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="Quick Sort"
-            android:textColor="@color/mainColor"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="Quick Sort" />
     </LinearLayout>
 
     <View
-        android:id="@+id/horizontalDiv6"
+        android:id="@+id/horizontalDiv7"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="?android:attr/listDivider"
@@ -45,21 +43,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
         android:verticalScrollbarPosition="left"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalDiv6">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalDiv7">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:colorBackground"
             android:orientation="vertical"
             android:padding="10dp"
@@ -67,11 +69,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <Switch
                     android:id="@+id/sw_randomarray"
+                    style="@style/S_Switch"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="2"
@@ -80,7 +83,6 @@
                     android:showText="false"
                     android:text="Random Array"
                     android:textAllCaps="false"
-                    android:textColor="@color/mainColor"
                     android:textColorLink="#FFFFFF"
                     android:textOff="Custom Array"
                     android:textOn="Random Array" />
@@ -97,7 +99,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/array_size"
-                    android:textColor="@color/mainColor"
+                    android:textColor="?attr/base"
                     android:textStyle="bold" />
 
                 <View
@@ -113,12 +115,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1"
-                    android:textColor="@color/mainColor" />
+                    android:textColor="?attr/base" />
             </LinearLayout>
 
             <SeekBar
                 android:id="@+id/sb_arraysize"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                style="@style/S_SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
@@ -127,16 +129,15 @@
                 android:progress="3" />
 
             <TextView
+                style="@style/S_TextView_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="OR"
-                android:textColor="@color/mainColor"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:text="OR" />
 
             <EditText
                 android:id="@+id/et_customarray"
+                style="@style/S_EditText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
@@ -144,13 +145,10 @@
                 android:digits="0123456789,"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="@string/comma_separated_ve_elements"
-                android:textColor="@color/mainColor"
-                android:textColorHint="@color/mainColor"
-                android:textSize="14sp" />
+                android:hint="@string/comma_separated_ve_elements" />
 
             <View
-                android:id="@+id/horizontalDiv"
+                android:id="@+id/horizontalDiv4"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="?android:attr/listDivider" />
@@ -162,15 +160,14 @@
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:text="Select Pivot"
-                android:textColor="@color/mainColor"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                style="@style/S_TextView_Bold"/>
 
             <RadioGroup
                 android:id="@+id/rg_pivot"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:checkedButton="@id/rb_first"
+                android:theme="@style/S_RadioGroup"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -201,21 +198,25 @@
                 android:layout_height="3dp"
                 android:background="?android:attr/listDivider" />
 
+            <View
+                android:id="@+id/horizontalDiv"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
+
             <Button
                 android:id="@+id/btn_generate"
+                style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Generate"
-                android:textColor="@color/mainColor" />
+                android:text="Generate" />
 
             <Button
                 android:id="@+id/btn_clear"
+                style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?android:selectableItemBackground"
-                android:text="Clear"
-                android:textColor="@color/mainColor" />
+                android:text="Clear" />
 
         </LinearLayout>
 

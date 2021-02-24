@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="2dp"
     android:fadeScrollbars="false"
+    android:fadingEdgeLength="50dp"
+    android:requiresFadingEdge="horizontal"
     android:scrollbarSize="10dp"
     android:scrollbarStyle="outsideInset"
-    android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar"
+    android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
     tools:context=".runapp.activities.HomeActivity"
     tools:ignore="MissingDefaultResource">
 
