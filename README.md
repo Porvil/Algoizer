@@ -31,14 +31,17 @@ DSA Visualizer is an android application for learning and visualizing the data s
 
 ### Pre-Release:
 
-- v1.0 Merge + Quick Test\
-[v1.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.0-alpha/v1.0-alpha.apk)
- 
-- v1.1 Binary Search Tree (BST) Test\
-[v1.1-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.1-alpha/v1.1-alpha.apk)
+- v3.0 Test Release - 2\
+[v3.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v3.0-alpha/v3.0-alpha.apk)
 
 - v2.0 Test Release - 1\
 [v2.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v2.0-alpha/v2.0-alpha.apk)
+
+- v1.1 Binary Search Tree (BST) Test\
+[v1.1-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.1-alpha/v1.1-alpha.apk)
+
+- v1.0 Merge + Quick Test\
+[v1.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.0-alpha/v1.0-alpha.apk)
 
 
 ### Usage:
