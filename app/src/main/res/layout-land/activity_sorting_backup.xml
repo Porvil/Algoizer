@@ -93,7 +93,6 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
@@ -104,8 +103,9 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cl_info"
             app:srcCompat="@drawable/ic_baseline_nav_open_24" />
+
 
         <View
             android:id="@+id/horizontalDiv1"
@@ -115,68 +115,79 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_nav"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <HorizontalScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_info"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fadeScrollbars="false"
-            android:fillViewport="true"
-            android:scrollbarSize="2dp"
-            android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider6"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv3"
             app:layout_constraintStart_toEndOf="@+id/horizontalDiv1"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-            <LinearLayout
-                android:id="@+id/ll_parent"
+
+            <TextView
+                android:id="@+id/tv_label_info"
+                style="@style/S_TextView_Normal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:paddingStart="5dp"
+                android:text="Next : "
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_label_info"
-                    style="@style/S_TextView_Normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="5dp"
-                    android:text="Next : "
-                    android:textStyle="bold" />
+            <View
+                android:id="@+id/horizontalDiv2"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_info"
-                    style="@style/S_TextView_Normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="10dp"
-                    android:text="-" />
+            <TextView
+                android:id="@+id/tv_info"
+                style="@style/S_TextView_Normal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
+                android:text="-"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/horizontalDiv2"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_info"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_seqno"
+                style="@style/S_TextView_Normal"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
 
-            </LinearLayout>
-
-        </HorizontalScrollView>
-
-        <View
-            android:id="@+id/horizontalDiv4"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_animcontrols"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider3">
+            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
+            app:layout_constraintTop_toTopOf="parent">
 
             <SeekBar
                 android:id="@+id/sb_animspeed"
@@ -228,30 +239,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageButton
-            android:id="@+id/btn_code"
-            style="@style/S_ImageButton"
-            android:layout_width="50dp"
+        <View
+            android:id="@+id/horizontalDiv4"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
-
-            android:contentDescription="Show/Hide Code"
+            android:layout_margin="3dp"
+            android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_code_24" />
-
-        <ImageButton
-            android:id="@+id/btn_info"
-            style="@style/S_ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-
-            android:contentDescription="Show Info"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_code"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_info_24" />
+            app:layout_constraintEnd_toStartOf="@+id/btn_info"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_menu"
@@ -265,41 +261,38 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_menu_open_24" />
 
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_info"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_seqno"
-            style="@style/S_TextView_Normal"
+        <ImageButton
+            android:id="@+id/btn_code"
+            style="@style/S_ImageButton"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:text="0"
-            app:layout_constraintEnd_toStartOf="@+id/divider5"
-            tools:layout_editor_absoluteY="0dp" />
+            android:layout_height="0dp"
+
+            android:contentDescription="Show/Hide Code"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_code_24" />
+
+        <ImageButton
+            android:id="@+id/btn_info"
+            style="@style/S_ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+
+            android:contentDescription="Show Info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_code"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_info_24" />
 
         <View
-            android:id="@+id/divider6"
+            android:id="@+id/horizontalDiv3"
             android:layout_width="2dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_seqno"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/cl_animcontrols"
+            tools:layout_editor_absoluteY="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

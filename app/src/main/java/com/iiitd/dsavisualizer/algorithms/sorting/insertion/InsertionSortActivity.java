@@ -54,7 +54,7 @@ public class InsertionSortActivity extends AppCompatActivity {
     LinearLayout ll_anim;
     ConstraintLayout cl_info;
     ImageButton btn_play;
-    ImageButton btn_back;
+    ImageButton btn_nav;
     ImageButton btn_menu;
     ImageButton btn_code;
     ImageButton btn_info;
@@ -123,7 +123,7 @@ public class InsertionSortActivity extends AppCompatActivity {
         btn_menu = v_main.findViewById(R.id.btn_menu);
         btn_code = v_main.findViewById(R.id.btn_code);
         btn_info = v_main.findViewById(R.id.btn_info);
-        btn_back = v_main.findViewById(R.id.btn_nav);
+        btn_nav = v_main.findViewById(R.id.btn_nav);
         btn_backward = v_main.findViewById(R.id.btn_backward);
         btn_forward = v_main.findViewById(R.id.btn_forward);
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
@@ -472,10 +472,14 @@ public class InsertionSortActivity extends AppCompatActivity {
             }
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back();
+                isAutoPlay = false;
+                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                timer.cancel();
+
+                dl_main.openDrawer(GravityCompat.START);
             }
         });
 
