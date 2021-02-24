@@ -2,9 +2,11 @@ package com.iiitd.dsavisualizer.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
@@ -306,6 +309,16 @@ public class UtilUI {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(AppSettings.CURRENT_THEME_KEY, themeNumber);
         editor.apply();
+    }
+
+    @ColorInt
+    public static int getCurrentThemeColor(Context context, int attr){
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(attr, typedValue, true);
+        @ColorInt int color = typedValue.data;
+
+        return color;
     }
 
 }

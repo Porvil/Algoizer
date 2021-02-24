@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +30,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortActivity;
+import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivity;
+import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
+import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivity;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -73,13 +78,21 @@ public class MergeSortActivity extends AppCompatActivity {
     MergeSort mergeSort;
     TextView[] textViews;
 
+    ImageButton btn_closenav;
+    ConstraintLayout cl_home;
+    ConstraintLayout cl_bubblesort;
+    ConstraintLayout cl_selectionsort;
+    ConstraintLayout cl_insertionsort;
+    ConstraintLayout cl_mergesort;
+    ConstraintLayout cl_quicksort;
+
     Timer timer = new Timer();
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
     boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     final int LAYOUT_MAIN = R.layout.activity_base;
-    final int LAYOUT_LEFT = R.layout.controls_merge_sort;
+    final int LAYOUT_LEFT = R.layout.navigation_sorting;
     final int LAYOUT_RIGHT = R.layout.controls_merge_sort;
 
     @Override
@@ -128,10 +141,19 @@ public class MergeSortActivity extends AppCompatActivity {
         sw_randomarray = v_menu_right.findViewById(R.id.sw_randomarray);
         et_customarray = v_menu_right.findViewById(R.id.et_customarray);
 
+        btn_closenav = v_menu_left.findViewById(R.id.btn_closenav);
+        cl_home = v_menu_left.findViewById(R.id.cl_home);
+        cl_bubblesort = v_menu_left.findViewById(R.id.cl_bubblesort);
+        cl_selectionsort = v_menu_left.findViewById(R.id.cl_selectionsort);
+        cl_insertionsort = v_menu_left.findViewById(R.id.cl_insertionsort);
+        cl_mergesort = v_menu_left.findViewById(R.id.cl_mergesort);
+        cl_quicksort = v_menu_left.findViewById(R.id.cl_quicksort);
+
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
         addPseudocode();
         initViews();
+        initNavigation();
 
         sw_randomarray.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -596,7 +618,8 @@ public class MergeSortActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.END)){
+        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
+            dl_main.closeDrawer(GravityCompat.START);
             dl_main.closeDrawer(GravityCompat.END);
         }
         else {
@@ -632,6 +655,66 @@ public class MergeSortActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void initNavigation() {
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.light);
+
+        cl_mergesort.setBackgroundColor(color);
+
+        cl_bubblesort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, BubbleSortActivity.class));
+            }
+        });
+
+        cl_selectionsort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, SelectionSortActivity.class));
+            }
+        });
+
+        cl_insertionsort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, InsertionSortActivity.class));
+            }
+        });
+
+        cl_mergesort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dl_main.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        cl_quicksort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, QuickSortActivity.class));
+            }
+        });
+
+        cl_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btn_closenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dl_main.closeDrawer(GravityCompat.START);
+            }
+        });
+
     }
 
 }

@@ -875,7 +875,8 @@ public class AVLActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.END)){
+        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
+            dl_main.closeDrawer(GravityCompat.START);
             dl_main.closeDrawer(GravityCompat.END);
         }
         else {
