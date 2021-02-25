@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.Util;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ public class BoardTree {
     private Paint paintGrid;
     private Paint paintGridCoordinates;
     private Paint paintVertex;
-    private Paint paintEdgeArrows;
     private Paint paintText;
 
     private Paint paintEdgeTree;
@@ -75,8 +75,7 @@ public class BoardTree {
         this.yCount = graphTree.noOfRows;
 
         // px = 1mm
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
-                context.getResources().getDisplayMetrics());
+        float px = UtilUI.mmToPx(context, 1);
         float cm = px * nodeSize;
 
         xSize = (int) cm;
@@ -127,27 +126,29 @@ public class BoardTree {
 
     private void initPaints(){
 
+        int shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
+        int light = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        int base = UtilUI.getCurrentThemeColor(context, R.attr.base);
+        int medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
+        int dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
+        int white = Color.WHITE;
+
         this.paintGrid = new Paint();
-        this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintGrid.setColor(light);
 
         this.paintGridCoordinates = new Paint();
         this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
         this.paintGridCoordinates.setTextSize(textSizeCoordinates);
-        this.paintGridCoordinates.setColor(Color.BLACK);
+        this.paintGridCoordinates.setColor(light);
+
+        this.paintVertex = new Paint();
+        this.paintVertex.setColor(base);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
         this.paintText.setTextSize(textSize);
-        this.paintText.setColor(Color.WHITE);
+        this.paintText.setColor(white);
         this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-
-        this.paintVertex = new Paint();
-        this.paintVertex.setColor(context.getResources().getColor(R.color.mainColor));
-
-        this.paintEdgeArrows = new Paint();
-        this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
-        this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
-
 
         this.paintEdgeTree = new Paint();
         this.paintEdgeTree.setColor(context.getResources().getColor(R.color.graphEdge1));
@@ -254,22 +255,22 @@ public class BoardTree {
 
         switch(edgePro.edgeClass){
             case TREE:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeArrows, null,
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeTree, null,
                         edgePro, weighted);
                 break;
 
             case BACK:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeBack, paintEdgeArrows, null,
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeBack, paintEdgeBack, null,
                         edgePro, weighted);
                 break;
 
             case CROSS:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeCross, paintEdgeArrows, null,
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeCross, paintEdgeCross, null,
                         edgePro, weighted);
                 break;
 
             case FORWARD:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeArrows, null,
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeForward, null,
                         edgePro, weighted);
                 break;
 

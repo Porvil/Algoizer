@@ -1,8 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,11 +11,10 @@ import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.ImageView;
 
-import androidx.annotation.ColorInt;
-
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -31,7 +28,7 @@ public class Board {
     // Constants
     private final int topAngle = 45;               // in degrees
     private final int bottomAngle = 45;            // in degrees
-    private final int nodeSize = 5;                // in mm
+    private final int nodeSize = 7;                // in mm
     private final float circleRatio = 0.66f;       // in ratio [0,1]
     private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
     private final float nodeRadius;                // in pixels [Radius of one node]
@@ -54,18 +51,19 @@ public class Board {
     public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
 
     // Paint Variables
-    private Paint paintGrid;
-    private Paint paintGridCoordinates;
-    private Paint paintVertex;
-    private Paint paintEdge;
-    private Paint paintEdgeWeight;
-    private Paint paintEdgeArrows;
-    private Paint paintText;
-    private Paint paintVertexAnim;
-    private Paint paintEdgeAnim;
-    private Paint paintEdgeWeightAnim;
-    private Paint paintEdgeArrowsAnim;
-    private Paint paintTextAnim;
+    private Paint paintGrid;                       // Grid
+    private Paint paintGridCoordinates;            // Grid Coordinates
+    private Paint paintVertex;                     // Vertex
+    private Paint paintVertexText;                 // Vertex Text
+    private Paint paintEdge;                       // Edge
+    private Paint paintEdgeArrows;                 // Edge Arrows
+    private Paint paintEdgeWeight;                 // Edge Weight
+    private Paint paintVertexAnim;                 // Animation Vertex
+    private Paint paintVertexTextAnim;             // Animation Vertex Text
+    private Paint paintEdgeAnim;                   // Animation Edge
+    private Paint paintEdgeArrowsAnim;             // Animation Edge Arrows
+    private Paint paintEdgeWeightAnim;             // Animation Edge Weight
+
 
     public Board(Context context, CustomCanvas customCanvas) {
         this.context = context;
@@ -74,8 +72,7 @@ public class Board {
         this.customCanvas = customCanvas;
 
         // px = 1mm
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, 1,
-                context.getResources().getDisplayMetrics());
+        float px = UtilUI.mmToPx(context, 1);
         float cm = px * nodeSize;
         float x = (X / cm);
         float y = (Y / cm);
@@ -118,78 +115,77 @@ public class Board {
 
     private void initPaints(){
 
-        this.paintGrid = new Paint();
-        this.paintGrid.setColor(context.getResources().getColor(R.color.mainColorDone));
+        int shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
+        int light = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        int base = UtilUI.getCurrentThemeColor(context, R.attr.base);
+        int medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
+        int dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
+        int white = Color.WHITE;
 
+        // Grid Lines
+        this.paintGrid = new Paint();
+        this.paintGrid.setColor(light);
+
+        // Grid Coordinates
         this.paintGridCoordinates = new Paint();
         this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
         this.paintGridCoordinates.setTextSize(textSizeCoordinates);
-        this.paintGridCoordinates.setColor(Color.BLACK);
+        this.paintGridCoordinates.setColor(light);
 
-        this.paintText = new Paint();
-        this.paintText.setTextAlign(Paint.Align.CENTER);
-        this.paintText.setTextSize(textSize);
-        this.paintText.setColor(Color.WHITE);
-        this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-
-
-        // USE THIS LATE AFTER IMPLEMENTING CUSTOM ATTR's
-//        int[] attrs = {R.attr.colorControlNormal, android.R.attr.textColorSecondary,
-//                android.R.attr.textColorPrimaryInverse};
-//        Resources.Theme theme = context.getTheme();
-//        TypedArray ta = theme.obtainStyledAttributes(attrs);
-//
-//        int[] colors = new int[attrs.length];
-//        for (int i = 0; i < attrs.length; i++) {
-//            colors[i] = ta.getColor(i, 0);
-//        }
-//
-//        ta.recycle();
-
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-        @ColorInt int color = typedValue.data;
-
+        // Vertex
         this.paintVertex = new Paint();
-//        this.paintVertex.setColor(color);
-        this.paintVertex.setColor(context.getResources().getColor(R.color.mainColor));
+        this.paintVertex.setColor(base);
 
+        // Vertex Text
+        this.paintVertexText = new Paint();
+        this.paintVertexText.setTextAlign(Paint.Align.CENTER);
+        this.paintVertexText.setTextSize(textSize);
+        this.paintVertexText.setColor(white);
+        this.paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
+        // Edge
         this.paintEdge = new Paint();
-        this.paintEdge.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
+        this.paintEdge.setColor(medium);
         this.paintEdge.setStrokeWidth(edgeWidth);
 
+        // Edge Arrows
         this.paintEdgeArrows = new Paint();
-        this.paintEdgeArrows.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
+        this.paintEdgeArrows.setColor(medium);
         this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
 
+        // Edge Weight
         this.paintEdgeWeight = new Paint();
         this.paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
         this.paintEdgeWeight.setTextSize(textSize);
-        this.paintEdgeWeight.setColor(context.getResources().getColor(R.color.mainColorDarkerShade));
+        this.paintEdgeWeight.setColor(medium);
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
-        this.paintTextAnim = new Paint();
-        this.paintTextAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintTextAnim.setTextSize(textSize);
-        this.paintTextAnim.setColor(Color.WHITE);
-        this.paintTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-
+        // Animation Vertex
         this.paintVertexAnim = new Paint();
-        this.paintVertexAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintVertexAnim.setColor(dark);
 
+        // Animation Vertex Text
+        this.paintVertexTextAnim = new Paint();
+        this.paintVertexTextAnim.setTextAlign(Paint.Align.CENTER);
+        this.paintVertexTextAnim.setTextSize(textSize);
+        this.paintVertexTextAnim.setColor(white);
+        this.paintVertexTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
+        // Animation Edge
         this.paintEdgeAnim = new Paint();
-        this.paintEdgeAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeAnim.setColor(dark);
         this.paintEdgeAnim.setStrokeWidth(edgeWidth);
 
+        // Animation Edge Arrows
         this.paintEdgeArrowsAnim = new Paint();
-        this.paintEdgeArrowsAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeArrowsAnim.setColor(dark);
         this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
 
+        // Animation Edge Weight
         this.paintEdgeWeightAnim = new Paint();
         this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
         this.paintEdgeWeightAnim.setTextSize(textSize);
-        this.paintEdgeWeightAnim.setColor(context.getResources().getColor(R.color.mainColorDone));
+        this.paintEdgeWeightAnim.setColor(dark);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     }
 
@@ -268,12 +264,12 @@ public class Board {
 
     // Draws a single Node
     public void drawNodeGraph(Rect rect, int name) {
-        __drawNode(customCanvas.canvasGraph, rect, name, paintVertex, paintText);
+        __drawNode(customCanvas.canvasGraph, rect, name, paintVertex, paintVertexText);
     }
 
     // Draws a single Node
     public void drawNodeAnim(Rect rect, int name) {
-        __drawNode(customCanvas.canvasAnimation, rect, name, paintVertexAnim, paintTextAnim);
+        __drawNode(customCanvas.canvasAnimation, rect, name, paintVertexAnim, paintVertexTextAnim);
     }
 
     // Draws a single Node
@@ -289,7 +285,7 @@ public class Board {
 
         Rect rectText = new Rect();
         paintT.getTextBounds(text, 0, text.length(), rectText);
-        canvas.drawText(text, x, y - (paintT.descent() + paintT.ascent()) / 2, paintText);
+        canvas.drawText(text, x, y - (paintT.descent() + paintT.ascent()) / 2, paintVertexText);
     }
 
     // Draws a single EdgeOld

@@ -10,11 +10,8 @@
         android:id="@+id/tv_popupgraphname"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="Graph Tree"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        style="@style/S_TextView_Heading"
         app:layout_constraintEnd_toStartOf="@+id/btn_minimize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +20,7 @@
         android:id="@+id/btn_close"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
+        style="@style/S_ImageButton"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,11 +30,20 @@
         android:id="@+id/btn_minimize"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
+        style="@style/S_ImageButton"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toStartOf="@+id/btn_close"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_remove_24" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname" />
 
     <com.otaliastudios.zoom.ZoomLayout
         android:id="@+id/zl_graphtree"
@@ -52,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname"
+        app:layout_constraintTop_toBottomOf="@+id/divider10"
         app:maxZoom="2.5"
         app:maxZoomType="zoom"
         app:minZoom="0.7"

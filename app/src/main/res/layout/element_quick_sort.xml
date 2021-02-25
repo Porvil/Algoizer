@@ -29,23 +29,19 @@
 
         <TextView
             android:id="@+id/tv_pointer"
+            style="@style/S_TextView_Bold"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/l"
-            android:textColor="@color/mainColor"
-            android:textStyle="bold" />
+            android:text="@string/l" />
 
         <TextView
             android:id="@+id/tv_pointer2"
             android:layout_width="0dp"
+            style="@style/S_TextView_Bold"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/r"
-            android:textColor="@color/mainColor"
-            android:textStyle="bold" />
+            android:text="@string/r" />
 
     </LinearLayout>
 

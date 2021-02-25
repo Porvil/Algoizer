@@ -271,6 +271,10 @@ public class UtilUI {
         return dp * context.getResources().getDisplayMetrics().density;
     }
 
+    public static float mmToPx(Context context, int mm){
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, mm, context.getResources().getDisplayMetrics());
+    }
+
     public static int getCurrentAppTheme(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         int currentTheme = sharedPreferences.getInt(AppSettings.CURRENT_THEME_KEY, 1);

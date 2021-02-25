@@ -8,22 +8,19 @@
 
     <TextView
         android:id="@+id/tv_popupgraphname"
+        style="@style/S_TextView_Heading"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:gravity="center"
         android:text="Graph Tree"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btn_minimize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_close"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,13 +28,22 @@
 
     <ImageButton
         android:id="@+id/btn_minimize"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toStartOf="@+id/btn_close"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_remove_24" />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname" />
 
     <LinearLayout
         android:id="@+id/ll_graphds"
@@ -47,7 +53,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/divider11">
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

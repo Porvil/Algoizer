@@ -814,6 +814,7 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println("################" + layoutParams.width + "x" + layoutParams.height);
                 fl_graph.setLayoutParams(layoutParams);
+                fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
 
                 fl_graph.post(new Runnable() {
                     @Override

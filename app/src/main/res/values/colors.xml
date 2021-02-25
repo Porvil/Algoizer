@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <color name="colorPrimary">#3FADA8</color>-->
-    <color name="mainColor">#59D2FE</color>
-    <color name="mainColorDarkerShade">#01a9e6</color>
-    <color name="mainColorDone">#3700B3</color>
-<!--    <color name="colorPrimary">#6200EE</color>-->
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="mainColorOpposite">#fe8d59</color>
-    <color name="colorDivider">#03DAC5</color>
-    <color name="colorWhite">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
 
+    // Graph Tree Edges
     <color name="graphEdge1">#00A2DF</color> // TREE
     <color name="graphEdge2">#e41234</color> // BACK
     <color name="graphEdge3">#66a594</color> // CROSS
     <color name="graphEdge4">#703f27</color> // FORWARD
-
 
     // BLUE PALETTE
     <color name = "blue_shade"  > #ecf9fc </color>
@@ -60,6 +51,4 @@
     <color name = "pink_medium" > #ff5c8a </color>
     <color name = "pink_dark"   > #ff0a54 </color>
 
-
-    
 </resources>
