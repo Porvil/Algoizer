@@ -53,7 +53,6 @@ public class QuickSortActivity extends AppCompatActivity {
     ViewStub vs_menu_left;
     ViewStub vs_menu_right;
     LinearLayout ll_anim;
-    ConstraintLayout cl_info;
     ImageButton btn_play;
     ImageButton btn_nav;
     ImageButton btn_menu;
@@ -133,7 +132,6 @@ public class QuickSortActivity extends AppCompatActivity {
         cl_psuedocode = v_main.findViewById(R.id.cl_psuedocode);
         sv_psuedocode = v_main.findViewById(R.id.sv_psuedocode);
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
-        cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
         sb_arraysize = v_menu_right.findViewById(R.id.sb_arraysize);

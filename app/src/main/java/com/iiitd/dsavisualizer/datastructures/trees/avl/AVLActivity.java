@@ -60,7 +60,6 @@ public class AVLActivity extends AppCompatActivity {
     ViewStub vs_menu_left;
     ViewStub vs_menu_right;
     LinearLayout ll_anim;
-    ConstraintLayout cl_info;
     ImageButton btn_nav;
     ImageButton btn_menu;
     ImageButton btn_info;
@@ -132,7 +131,6 @@ public class AVLActivity extends AppCompatActivity {
         btn_info = v_main.findViewById(R.id.btn_info);
         btn_nav = v_main.findViewById(R.id.btn_nav);
         tv_info = v_main.findViewById(R.id.tv_info);
-        cl_info = v_main.findViewById(R.id.cl_info);
 
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
         btn_insert = v_menu_right.findViewById(R.id.btn_insert);

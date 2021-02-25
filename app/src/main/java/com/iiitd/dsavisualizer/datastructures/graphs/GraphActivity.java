@@ -70,7 +70,6 @@ public class GraphActivity extends AppCompatActivity {
     ImageView iv_coordinates;
     ImageView iv_graph;
     ImageView iv_anim;
-    ConstraintLayout cl_info;
     RadioGroup rg_graphcontrols;
     RadioButton rb_graphcontrol_view;
     RadioButton rb_graphcontrol_vertex;
@@ -172,7 +171,6 @@ public class GraphActivity extends AppCompatActivity {
         tv_seqno = v_main.findViewById(R.id.tv_seqno);
         tv_info = v_main.findViewById(R.id.tv_info);
         btn_grid = v_main.findViewById(R.id.btn_grid);
-        cl_info = v_main.findViewById(R.id.cl_info);
         zl_graph = v_main.findViewById(R.id.zl_graph);
         fl_graph = v_main.findViewById(R.id.fl_graph);
 
