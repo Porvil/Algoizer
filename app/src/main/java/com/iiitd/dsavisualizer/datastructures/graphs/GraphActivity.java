@@ -177,13 +177,13 @@ public class GraphActivity extends AppCompatActivity {
         // Left Drawer findViewById's
         btn_closenav = v_menu_left.findViewById(R.id.btn_closenav);
         cl_home = v_menu_left.findViewById(R.id.cl_home);
+        btn_bfs = v_menu_left.findViewById(R.id.btn_bfs);
+        btn_dfs = v_menu_left.findViewById(R.id.btn_dfs);
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
         rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
         rg_directed = v_menu_right.findViewById(R.id.rg_directed);
-        btn_bfs = v_menu_right.findViewById(R.id.btn_bfs);
-        btn_dfs = v_menu_right.findViewById(R.id.btn_dfs);
         btn_clearcustominput = v_menu_right.findViewById(R.id.btn_clearcustominput);
         btn_copygraph = v_menu_right.findViewById(R.id.btn_copygraph);
         btn_pastecustominput = v_menu_right.findViewById(R.id.btn_pastecustominput);
