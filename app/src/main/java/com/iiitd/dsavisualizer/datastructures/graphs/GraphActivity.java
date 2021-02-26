@@ -92,7 +92,9 @@ public class GraphActivity extends AppCompatActivity {
     RadioGroup rg_weighted;
     RadioGroup rg_directed;
     Button btn_bfs;
+    EditText et_bfs;
     Button btn_dfs;
+    EditText et_dfs;
     ImageButton btn_clearcustominput;
     ImageButton btn_copygraph;
     ImageButton btn_pastecustominput;
@@ -178,7 +180,9 @@ public class GraphActivity extends AppCompatActivity {
         btn_closenav = v_menu_left.findViewById(R.id.btn_closenav);
         cl_home = v_menu_left.findViewById(R.id.cl_home);
         btn_bfs = v_menu_left.findViewById(R.id.btn_bfs);
+        et_bfs = v_menu_left.findViewById(R.id.et_bfs);
         btn_dfs = v_menu_left.findViewById(R.id.btn_dfs);
+        et_dfs = v_menu_left.findViewById(R.id.et_dfs);
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
@@ -309,7 +313,27 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int vertexNumber = 0;
+                String s = et_bfs.getText().toString();
+                int vertexNumber;
+                if(!s.isEmpty()){
+                    vertexNumber = Integer.parseInt(s.trim());
+                }
+                else{
+                    et_bfs.setError("Cant be empty");
+                    return;
+                }
+
+                if(graphWrapper.getNoOfNodes() <= 0){
+                    et_bfs.setError("Empty Graph");
+                    return;
+                }
+                else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
+                    et_bfs.setError("Vertex not present in graph");
+                    return;
+                }
+
+
+//                int vertexNumber = 0;
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 

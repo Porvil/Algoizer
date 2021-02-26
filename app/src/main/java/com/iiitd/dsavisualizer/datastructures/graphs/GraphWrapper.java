@@ -44,6 +44,10 @@ public class GraphWrapper {
         board.reset(graph);
     }
 
+    public int getNoOfNodes(){
+        return graph.noOfVertices;
+    }
+
     public boolean addVertex(MotionEvent motionEvent, int nodeNumber){
         float x = (motionEvent.getX() / board.xSize);
         float y =  (motionEvent.getY() / board.ySize);
