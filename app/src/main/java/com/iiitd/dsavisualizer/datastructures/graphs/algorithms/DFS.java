@@ -45,7 +45,7 @@ public class DFS {
         edges = new ArrayList<>();
     }
 
-    public GraphSequence run(){
+    public GraphSequence run(int s){
 
         this.map = new HashMap<>();
         this.stack = new Stack<>();
@@ -70,17 +70,20 @@ public class DFS {
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
 
-        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexCLRS vertexCLRS = map.get(entry.getKey());
-            Vertex vertex = graph.vertexMap.get(entry.getKey());
-            if(vertexCLRS.color == WHITE){
-                stack.push(entry.getKey());
-                System.out.println("pushes  = " + entry.getKey());
-                System.out.println("stack  = " + stack);
+        stack.push(s);
+        dfs_visit(s);
 
-                dfs_visit(entry.getKey());
-            }
-        }
+//        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+//            VertexCLRS vertexCLRS = map.get(entry.getKey());
+//            Vertex vertex = graph.vertexMap.get(entry.getKey());
+//            if(vertexCLRS.color == WHITE){
+//                stack.push(entry.getKey());
+//                System.out.println("pushes  = " + entry.getKey());
+//                System.out.println("stack  = " + stack);
+//
+//                dfs_visit(entry.getKey());
+//            }
+//        }
 
         // ALL DONE
         for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
@@ -110,11 +113,13 @@ public class DFS {
         int row = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
             System.out.println(entry.getValue());
-            graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
-            row++;
+            if(entry.getValue().f >= 0) {
+                graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
+                row++;
+            }
         }
 
-        graphTree.noOfRows = size;
+        graphTree.noOfRows = row;
         graphTree.noOfCols = size;
 
 
@@ -217,6 +222,82 @@ public class DFS {
                                         .addStacks(stack));
 
         graphSequence.addGraphAnimationState(graphAnimationState1);
+    }
+
+    public GraphSequence completeDFS(){
+
+        this.map = new HashMap<>();
+        this.stack = new Stack<>();
+
+        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1, -1);
+            map.put(entry.getKey(), vertexCLRS);
+        }
+
+        time = 0;
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("start")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addStacks(stack));
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+            VertexCLRS vertexCLRS = map.get(entry.getKey());
+            Vertex vertex = graph.vertexMap.get(entry.getKey());
+            if(vertexCLRS.color == WHITE){
+                stack.push(entry.getKey());
+                System.out.println("pushes  = " + entry.getKey());
+                System.out.println("stack  = " + stack);
+
+                dfs_visit(entry.getKey());
+            }
+        }
+
+        // ALL DONE
+        for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+        }
+
+        System.out.println("______________________________________");
+        System.out.println("______________________________________");
+
+        // TOPOLOGICAL SORT HERE
+        List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<Integer, VertexCLRS> >() {
+            public int compare(Map.Entry<Integer, VertexCLRS> o1,
+                               Map.Entry<Integer, VertexCLRS> o2)
+            {
+                return o2.getValue().f - o1.getValue().f;
+            }
+        });
+
+
+        Random random = new Random();
+
+        int size = list.size();
+
+        int row = 0;
+        for(Map.Entry<Integer, VertexCLRS> entry : list){
+            System.out.println(entry.getValue());
+            graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
+            row++;
+        }
+
+        graphTree.noOfRows = size;
+        graphTree.noOfCols = size;
+
+
+        return graphSequence;
     }
 
 }

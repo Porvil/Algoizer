@@ -369,19 +369,32 @@ public class GraphActivity extends AppCompatActivity {
         btn_dfs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String s = et_dfs.getText().toString();
+                int vertexNumber;
+                if(!s.isEmpty()){
+                    vertexNumber = Integer.parseInt(s.trim());
+                }
+                else{
+                    et_bfs.setError("Cant be empty");
+                    return;
+                }
+
+                if(graphWrapper.getNoOfNodes() <= 0){
+                    et_bfs.setError("Empty Graph");
+                    return;
+                }
+                else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
+                    et_bfs.setError("Vertex not present in graph");
+                    return;
+                }
+
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 
                 DFS dfs = new DFS(graphWrapper.graph);
-                DFS dfs2 = new DFS(graphWrapper.graph);
 
-                System.out.println("______________________");
-                System.out.println("DFS RECURSIVE");
-                GraphSequence run = dfs.run();
-                System.out.println("__________^^^^^^^^^^^^____________");
-//                System.out.println("______________________");
-//                System.out.println("DFS ITERATIVE");
-//                GraphSequence run2 = dfs2.run();
+                GraphSequence run = dfs.run(vertexNumber);
                 graphSequence = run;
 
                 GraphTree rungt = dfs.graphTree;
