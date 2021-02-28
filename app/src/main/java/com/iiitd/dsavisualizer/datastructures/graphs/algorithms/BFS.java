@@ -42,7 +42,6 @@ public class BFS {
 
         LinkedList<Integer> queue = new LinkedList<>();
 
-
         {
             GraphAnimationState graphAnimationState =
                     GraphAnimationState.create()
@@ -71,9 +70,6 @@ public class BFS {
         map.get(s).parent = -1;
 
 
-        System.out.println("qu = " + queue);
-
-//        graphTree.addVertex(s, 0, 0);
         vertices.add(vertex);
         GraphAnimationState graphAnimationState =
                 GraphAnimationState.create()
@@ -102,17 +98,9 @@ public class BFS {
 
             graphSequence.addGraphAnimationState(graphAnimationState1);
 
-//            System.out.println("___________");
-////            System.out.println("("+u + ")");
-//            System.out.println(queue);
-//            System.out.println("___________");
-            System.out.println("!!!!!queue = " + queue);
-
             for(Edge edge : graph.edgeListMap.get(u)) {
                 int v = edge.des;
                 if (map.get(v).color == WHITE) {
-
-//                    graphTree.addVertex(v, 0, 0);
 
                     map.get(v).color = GRAY;
                     map.get(v).dist = map.get(u).dist + 1;
@@ -177,43 +165,68 @@ public class BFS {
 //                        System.out.println("CROSS EDGE : " + u + " -> " + v);
                         graphTree.addEdge(new EdgePro(edge, CROSS));
                     }
-
                 }
-
             }
             map.get(u).color = BLACK;
 
         }
 
 
-        // add vertices to the graphtree
+        // add vertices to the graphTree
         List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
-        int size = list.size();
 
-        HashMap<Integer, Integer> levelmap = new HashMap<>();
+        int maxRows = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
-//
-//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, 0));
-//            graphTree.vertexMap.put(entry.getKey(), Pair.create(row, random.nextInt(5)));
+            maxRows = entry.getValue().dist != Integer.MAX_VALUE ? Math.max(maxRows, entry.getValue().dist) : maxRows;
+        }
+
+        ArrayList<Integer>[] bfsLayers = new ArrayList[maxRows+1];
+
+        for(int i=0;i<maxRows+1;i++){
+            bfsLayers[i] = new ArrayList<>();
+        }
+
+        for(Map.Entry<Integer, VertexCLRS> entry : list){
             if(entry.getValue().dist != Integer.MAX_VALUE && entry.getValue().dist >= 0) {
-
-                if (levelmap.containsKey(entry.getValue().dist)) {
-                    levelmap.put(entry.getValue().dist, levelmap.get(entry.getValue().dist) + 1);
-                } else {
-                    levelmap.put(entry.getValue().dist, 0);
-                }
-
-                System.out.println("Vertex = " + entry.getKey() + " row = " +
-                        entry.getValue().dist + " col = " + levelmap.get(entry.getValue().dist));
-                graphTree.addVertex(entry.getKey(), entry.getValue().dist, levelmap.get(entry.getValue().dist));
+                bfsLayers[entry.getValue().dist].add(entry.getKey());
             }
         }
 
-        graphTree.noOfRows = size;
-        graphTree.noOfCols = size;
+        int maxCols = 0;
+        for(ArrayList<Integer> arrayList : bfsLayers){
+            maxCols = Math.max(maxCols, arrayList.size());
+        }
 
+        int[][] coordinates = new int[maxRows+1][maxCols];
+
+        for(int row=0;row<bfsLayers.length;row++) {
+            int fill = bfsLayers[row].size();
+            int gap = maxCols-fill;
+            int colIndex = 0;
+            for(int col=0;col<maxCols;col++){
+                if(fill >= gap){
+                    coordinates[row][col] = bfsLayers[row].get(colIndex);
+                    fill--;
+                    colIndex++;
+                }
+                else{
+                    coordinates[row][col] = -1;
+                    gap--;
+                }
+            }
+        }
+
+        for(int row=0;row<coordinates.length;row++) {
+            for(int col=0;col<coordinates[row].length;col++) {
+                if(coordinates[row][col] != -1) {
+                    graphTree.addVertex(coordinates[row][col], row, col);
+                }
+            }
+        }
+
+        // Rows is 0-indexed, Cols is using 1-indexed, as size() is used
+        graphTree.noOfRows = maxRows+1;
+        graphTree.noOfCols = maxCols;
 
         return graphSequence;
     }

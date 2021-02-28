@@ -2,7 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.Objects;
 
-public class EdgePro {
+public class EdgePro implements Comparable<EdgePro>{
 
     public int src;
     public int des;
@@ -58,5 +58,21 @@ public class EdgePro {
     @Override
     public int hashCode() {
         return Objects.hash(src, des, weight, isDirected);
+    }
+
+    @Override
+    public int compareTo(EdgePro o2) {
+        EdgePro o1 = this;
+
+        if(o1.edgeClass == o2.edgeClass){
+            return o1.src-o2.src;
+        }
+        else{
+            if(o1.edgeClass == EdgeClass.TREE){
+                return -1;
+            }
+
+            return 1;
+        }
     }
 }

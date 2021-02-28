@@ -18,6 +18,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -206,12 +207,15 @@ public class BoardTree {
     // Re-Draws the complete graph
     public void drawGraph(){
 
-        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
-            Pair<Integer, Integer> value = entry.getValue();
-            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
-            Rect rect = getRect(value.first, value.second);
-            drawNodeGraph(rect, entry.getKey());
-        }
+//        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
+//            Pair<Integer, Integer> value = entry.getValue();
+//            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
+//            Rect rect = getRect(value.first, value.second);
+//            drawNodeGraph(rect, entry.getKey());
+//        }
+
+        // Sort Edges in reverse order, so that tree edges are drawn first
+        Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());
 
         for(EdgePro edgePro: graphTree.edgePros){
             System.out.println(edgePro);
@@ -223,6 +227,13 @@ public class BoardTree {
             Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
             drawEdgeGraph(rect1, rect2, edgePro, graphTree.weighted);
+        }
+
+        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
+            Pair<Integer, Integer> value = entry.getValue();
+            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
+            Rect rect = getRect(value.first, value.second);
+            drawNodeGraph(rect, entry.getKey());
         }
 
 
