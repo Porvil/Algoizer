@@ -14,6 +14,7 @@ public class VertexCLRS {
     public int dist;                       // used as start time in dfs, and dist in case of bfs [ bfs order traversal ]
     public int parent;                     // used by both bfs and dfs
     public int f;                          // used by dfs end time
+    public int dfsDepth;                   // used for dfs depth
 //    public int l;                          // used by bfs level
 
     // Used by BFS
@@ -36,6 +37,7 @@ public class VertexCLRS {
         this.dist = dist;
         this.parent = parent;
         this.f = f;
+        this.dfsDepth = 0;
     }
 
     @Override
@@ -44,10 +46,11 @@ public class VertexCLRS {
                 "data=" + data +
                 ", row=" + row +
                 ", col=" + col +
-                ", color='" + color + '\'' +
+                ", color=" + color +
                 ", dist=" + dist +
                 ", parent=" + parent +
                 ", f=" + f +
+                ", dfsDepth=" + dfsDepth +
                 '}';
     }
 

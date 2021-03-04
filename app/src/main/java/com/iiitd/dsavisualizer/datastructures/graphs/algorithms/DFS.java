@@ -105,22 +105,74 @@ public class DFS {
             }
         });
 
-
-        Random random = new Random();
-
-        int size = list.size();
-
-        int row = 0;
+        int maxRows = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            System.out.println(entry.getValue());
+            maxRows = entry.getValue().f >= 0 ? Math.max(maxRows, entry.getValue().dfsDepth) : maxRows;
+        }
+
+        ArrayList<Integer>[] dfsLayers = new ArrayList[maxRows+1];
+
+        for(int i=0;i<maxRows+1;i++){
+            dfsLayers[i] = new ArrayList<>();
+        }
+
+        for(Map.Entry<Integer, VertexCLRS> entry : list){
             if(entry.getValue().f >= 0) {
-                graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
-                row++;
+                dfsLayers[entry.getValue().dfsDepth].add(entry.getKey());
             }
         }
 
-        graphTree.noOfRows = row;
-        graphTree.noOfCols = size;
+        int maxCols = 0;
+        for(ArrayList<Integer> arrayList : dfsLayers){
+            maxCols = Math.max(maxCols, arrayList.size());
+        }
+
+        int[][] coordinates = new int[maxRows+1][maxCols];
+
+        for(int row=0;row<dfsLayers.length;row++) {
+            int fill = dfsLayers[row].size();
+            int gap = maxCols-fill;
+            int colIndex = 0;
+            for(int col=0;col<maxCols;col++){
+                if(fill >= gap){
+                    coordinates[row][col] = dfsLayers[row].get(colIndex);
+                    fill--;
+                    colIndex++;
+                }
+                else{
+                    coordinates[row][col] = -1;
+                    gap--;
+                }
+            }
+        }
+
+        for(int row=0;row<coordinates.length;row++) {
+            for(int col=0;col<coordinates[row].length;col++) {
+                if(coordinates[row][col] != -1) {
+                    graphTree.addVertex(coordinates[row][col], row, col);
+                }
+            }
+        }
+
+        // Rows is 0-indexed, Cols is using 1-indexed, as size() is used
+        graphTree.noOfRows = maxRows+1;
+        graphTree.noOfCols = maxCols;
+
+//        Random random = new Random();
+//
+//        int size = list.size();
+//
+//        int row = 0;
+//        for(Map.Entry<Integer, VertexCLRS> entry : list){
+//            System.out.println(entry.getValue());
+//            if(entry.getValue().f >= 0) {
+//                graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
+//                row++;
+//            }
+//        }
+//
+//        graphTree.noOfRows = row;
+//        graphTree.noOfCols = size;
 
 
         return graphSequence;
@@ -151,6 +203,12 @@ public class DFS {
 
         vertexCLRS.dist = time;
         vertexCLRS.color = GRAY;
+        if(vertexCLRS.parent != -1){
+            vertexCLRS.dfsDepth = map.get(vertexCLRS.parent).dfsDepth + 1;
+        }
+        else {
+            vertexCLRS.dfsDepth = 0;
+        }
 
         for(Edge edge : graph.edgeListMap.get(u)) {
             int v = edge.des;
