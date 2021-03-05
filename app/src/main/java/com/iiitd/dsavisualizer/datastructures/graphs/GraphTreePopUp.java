@@ -5,11 +5,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -27,8 +31,13 @@ public class GraphTreePopUp{
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
     ImageButton btn_close;
+    ConstraintLayout cl_bottom;
     ZoomLayout zl_graphtree;
     ImageView iv_graphtree;
+    CheckBox cb_tree;
+    CheckBox cb_back;
+    CheckBox cb_forward;
+    CheckBox cb_cross;
 
     String title;
     GraphTree graphTree;
@@ -55,6 +64,11 @@ public class GraphTreePopUp{
         this.zl_graphtree = popUpView.findViewById(R.id.zl_graphtree);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
         this.btn_close = popUpView.findViewById(R.id.btn_close);
+        this.cl_bottom = popUpView.findViewById(R.id.cl_bottom);
+        this.cb_tree = popUpView.findViewById(R.id.cb_tree);
+        this.cb_back = popUpView.findViewById(R.id.cb_back);
+        this.cb_forward = popUpView.findViewById(R.id.cb_forward);
+        this.cb_cross = popUpView.findViewById(R.id.cb_cross);
         this.iv_popupgraphname = popUpView.findViewById(R.id.tv_popupgraphname);
         this.iv_graphtree = zl_graphtree.findViewById(R.id.iv_graphtree);
 
@@ -84,10 +98,10 @@ public class GraphTreePopUp{
         btn_minimize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(zl_graphtree.getVisibility() == View.VISIBLE){
-                    zl_graphtree.setVisibility(View.GONE);
+                if(cl_bottom.getVisibility() == View.VISIBLE){
+                    cl_bottom.setVisibility(View.GONE);
                     int curWidth = width;
-                    int curHeight = height - zl_graphtree.getHeight();
+                    int curHeight = height - cl_bottom.getHeight();
                     curWidth = curWidth <= 0 ? MIN_WIDTH : curWidth;
                     curHeight = curHeight <= 0 ? MIN_HEIGHT : curHeight;
                     popupwindow.update(curWidth, curHeight);
@@ -96,7 +110,7 @@ public class GraphTreePopUp{
 
                 }
                 else{
-                    zl_graphtree.setVisibility(View.VISIBLE);
+                    cl_bottom.setVisibility(View.VISIBLE);
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 }
@@ -110,6 +124,43 @@ public class GraphTreePopUp{
             }
         });
 
+        cb_tree.setChecked(true);
+        cb_back.setChecked(true);
+        cb_forward.setChecked(true);
+        cb_cross.setChecked(true);
+
+        cb_tree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boardTree.showTreeEdge = isChecked;
+                boardTree.drawGraph();
+            }
+        });
+
+        cb_back.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boardTree.showBackEdge = isChecked;
+                boardTree.drawGraph();
+            }
+        });
+
+        cb_forward.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boardTree.showForwardEdge = isChecked;
+                boardTree.drawGraph();
+            }
+        });
+
+        cb_cross.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boardTree.showCrossEdge = isChecked;
+                boardTree.drawGraph();
+            }
+        });
+
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
@@ -118,6 +169,11 @@ public class GraphTreePopUp{
         this.graphTree = graphTree;
         this.boardTree = new BoardTree(context, graphTree);
         this.iv_popupgraphname.setText(title);
+
+        cb_tree.setChecked(true);
+        cb_back.setChecked(true);
+        cb_forward.setChecked(true);
+        cb_cross.setChecked(true);
 
         zl_graphtree.zoomTo(1, false);
 
@@ -151,7 +207,7 @@ public class GraphTreePopUp{
 
     void dismiss(){
         if(popupwindow != null){
-            zl_graphtree.setVisibility(View.VISIBLE);
+            cl_bottom.setVisibility(View.VISIBLE);
             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
             zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();

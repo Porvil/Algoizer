@@ -146,4 +146,12 @@
         <item name="android:textColor">?attr/base</item>
     </style>
 
+    <style name="S_CheckBox_Graph">
+        <item name="android:drawableTop">?android:attr/listChoiceIndicatorMultiple</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:checked">true</item>
+        <item name="android:textColor">?attr/base</item>
+    </style>
+
 </resources>

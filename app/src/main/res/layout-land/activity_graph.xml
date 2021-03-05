@@ -31,6 +31,8 @@
                 android:id="@+id/zl_graph"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+                android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
                 android:scrollbars="vertical|horizontal"
                 app:alignment="none"
                 app:animationDuration="280"

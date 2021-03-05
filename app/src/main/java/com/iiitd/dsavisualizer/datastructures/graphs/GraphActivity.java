@@ -376,12 +376,12 @@ public class GraphActivity extends AppCompatActivity {
                     vertexNumber = Integer.parseInt(s.trim());
                 }
                 else{
-                    et_bfs.setError("Cant be empty");
+                    et_dfs.setError("Cant be empty");
                     return;
                 }
 
                 if(graphWrapper.getNoOfNodes() <= 0){
-                    et_bfs.setError("Empty Graph");
+                    et_dfs.setError("Empty Graph");
                     return;
                 }
                 else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){

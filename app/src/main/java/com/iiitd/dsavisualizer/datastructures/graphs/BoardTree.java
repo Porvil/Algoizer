@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
@@ -63,6 +64,11 @@ public class BoardTree {
     private Paint paintEdgeCross;
     private Paint paintEdgeForward;
 
+    boolean showTreeEdge;
+    boolean showBackEdge;
+    boolean showForwardEdge;
+    boolean showCrossEdge;
+
     ImageView iv_graphtree;
     Canvas canvasGraphTree;
     Bitmap bitmapGraphTree;
@@ -107,11 +113,17 @@ public class BoardTree {
         this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
         this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
 
+
+        showTreeEdge = true;
+        showBackEdge = true;
+        showForwardEdge = true;
+        showCrossEdge = true;
+
         // Initializes all Paint Variables
         initPaints();
     }
 
-    // Should be called only after Imagview Layout has been laid
+    // Should be called only after imageView layout has been laid
     public void setImageViewAndCreateCanvas(final ImageView iv_graphtree) {
         this.iv_graphtree = iv_graphtree;
 
@@ -144,6 +156,7 @@ public class BoardTree {
 
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
+//        this.paintVertex.setAlpha(50);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
@@ -214,19 +227,38 @@ public class BoardTree {
 //            drawNodeGraph(rect, entry.getKey());
 //        }
 
+        clearCanvasGraphTree();
+
         // Sort Edges in reverse order, so that tree edges are drawn first
         Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());
 
         for(EdgePro edgePro: graphTree.edgePros){
             System.out.println(edgePro);
 
-            int[] vertex1 = getCoordinates(edgePro.src);
-            int[] vertex2 = getCoordinates(edgePro.des);
+            boolean showCurrentEdge = false;
 
-            Rect rect1 = getRect(vertex1[0], vertex1[1]);
-            Rect rect2 = getRect(vertex2[0], vertex2[1]);
+            if(showTreeEdge && edgePro.edgeClass == EdgeClass.TREE){
+                showCurrentEdge = true;
+            }
+            else if(showBackEdge && edgePro.edgeClass == EdgeClass.BACK){
+                showCurrentEdge = true;
+            }
+            else if(showForwardEdge && edgePro.edgeClass == EdgeClass.FORWARD){
+                showCurrentEdge = true;
+            }
+            else if(showCrossEdge && edgePro.edgeClass == EdgeClass.CROSS){
+                showCurrentEdge = true;
+            }
 
-            drawEdgeGraph(rect1, rect2, edgePro, graphTree.weighted);
+            if(showCurrentEdge) {
+                int[] vertex1 = getCoordinates(edgePro.src);
+                int[] vertex2 = getCoordinates(edgePro.des);
+
+                Rect rect1 = getRect(vertex1[0], vertex1[1]);
+                Rect rect2 = getRect(vertex2[0], vertex2[1]);
+
+                drawEdgeGraph(rect1, rect2, edgePro, graphTree.weighted);
+            }
         }
 
         for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
@@ -489,6 +521,10 @@ public class BoardTree {
         }
 
         return angle;
+    }
+
+    private void clearCanvasGraphTree(){
+        canvasGraphTree.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
 
 }

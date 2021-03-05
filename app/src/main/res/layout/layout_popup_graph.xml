@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/roundedrect_border_large">
+    android:background="@drawable/roundedrect_border_large"
+    android:padding="5dp">
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_popupgraphname"
+        style="@style/S_TextView_Heading"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="Graph Tree"
-        style="@style/S_TextView_Heading"
         app:layout_constraintEnd_toStartOf="@+id/btn_minimize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_close"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         style="@style/S_ImageButton"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,60 +33,115 @@
 
     <ImageButton
         android:id="@+id/btn_minimize"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         style="@style/S_ImageButton"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toStartOf="@+id/btn_close"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_remove_24" />
 
-    <View
-        android:id="@+id/divider10"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname" />
-
-    <com.otaliastudios.zoom.ZoomLayout
-        android:id="@+id/zl_graphtree"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bottom"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical|horizontal"
-        app:alignment="center"
-        app:animationDuration="280"
-        app:flingEnabled="true"
-        app:hasClickableChildren="false"
-        app:horizontalPanEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider10"
-        app:maxZoom="2.5"
-        app:maxZoomType="zoom"
-        app:minZoom="0.7"
-        app:minZoomType="zoom"
-        app:oneFingerScrollEnabled="true"
-        app:overPinchable="true"
-        app:overScrollHorizontal="true"
-        app:overScrollVertical="true"
-        app:scrollEnabled="true"
-        app:threeFingersScrollEnabled="true"
-        app:transformation="centerInside"
-        app:transformationGravity="auto"
-        app:twoFingersScrollEnabled="true"
-        app:verticalPanEnabled="true"
-        app:zoomEnabled="true">
+        app:layout_constraintTop_toBottomOf="@+id/tv_popupgraphname">
 
-        <!-- Content here. -->
-        <ImageView
-            android:id="@+id/iv_graphtree"
+        <View
+            android:id="@+id/divider10"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.otaliastudios.zoom.ZoomLayout>
+        <com.otaliastudios.zoom.ZoomLayout
+            android:id="@+id/zl_graphtree"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="vertical|horizontal"
+            app:alignment="center"
+            app:animationDuration="280"
+            app:flingEnabled="true"
+            app:hasClickableChildren="false"
+            app:horizontalPanEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:maxZoom="2.5"
+            app:maxZoomType="zoom"
+            app:minZoom="0.7"
+            app:minZoomType="zoom"
+            app:oneFingerScrollEnabled="true"
+            app:overPinchable="true"
+            app:overScrollHorizontal="true"
+            app:overScrollVertical="true"
+            app:scrollEnabled="true"
+            app:threeFingersScrollEnabled="true"
+            app:transformation="centerInside"
+            app:transformationGravity="auto"
+            app:twoFingersScrollEnabled="true"
+            app:verticalPanEnabled="true"
+            app:zoomEnabled="true">
 
+            <!-- Content here. -->
+            <ImageView
+                android:id="@+id/iv_graphtree"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.otaliastudios.zoom.ZoomLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/shade"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <CheckBox
+                android:id="@+id/cb_tree"
+                style="@style/S_CheckBox_Graph"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Tree Edge" />
+
+            <CheckBox
+                android:id="@+id/cb_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/S_CheckBox_Graph"
+                android:text="Back Edge" />
+
+            <CheckBox
+                android:id="@+id/cb_forward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/S_CheckBox_Graph"
+                android:text="Forward Edge" />
+
+            <CheckBox
+                android:id="@+id/cb_cross"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/S_CheckBox_Graph"
+                android:text="Cross Edge" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
