@@ -1,22 +1,19 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.iiitd.dsavisualizer.R;
+import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
-import com.otaliastudios.zoom.ZoomLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +31,8 @@ public class GraphDSPopUp {
     ImageButton btn_minimize;
     ImageButton btn_close;
     LinearLayout ll_graphds;
-    LinearLayout.LayoutParams layoutParams;
+    LinearLayout.LayoutParams elementLayoutParams;
+    LinearLayout.LayoutParams otherLayoutParams;
 
     GraphAlgorithmType graphAlgorithmType;
     String title;
@@ -54,7 +52,12 @@ public class GraphDSPopUp {
         this.parent = _parent;
 
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
+        this.elementLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
+        this.elementLayoutParams.setMargins(30,10,30,10);
+
+        this.otherLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                (int) UtilUI.dpToPx(context, 40));
+        this.otherLayoutParams.setMargins(30,10,30,10);
 
         this.popUpView = inflater.inflate(R.layout.layout_popup_dsgraph, null);
 
@@ -98,7 +101,6 @@ public class GraphDSPopUp {
                     popupwindow.update(curWidth, curHeight);
 
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MAXIMIZE_ICON));
-
                 }
                 else{
                     ll_graphds.setVisibility(View.VISIBLE);
@@ -126,27 +128,32 @@ public class GraphDSPopUp {
         ll_graphds.post(new Runnable() {
             @Override
             public void run() {
-
+                // Remove all Old Views
                 ll_graphds.removeAllViews();
 
+                // BFS (Queue)
                 if(graphAlgorithmType == GraphAlgorithmType.BFS) {
-                    Button button = new Button(context);
-                    button.setText("FRONT(POP)");
-                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button);
-
-                    Button button2 = new Button(context);
-                    button2.setText("END(PUSH)");
-                    button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button2);
+                    View emptyQueueView = inflater.inflate(R.layout.element_graph_ds, null);
+                    emptyQueueView.setLayoutParams(otherLayoutParams);
+                    emptyQueueView.setPadding(5, 5, 5, 5);
+                    TextView tv_emptyQueueView = emptyQueueView.findViewById(R.id.tv_elementvalue);
+                    tv_emptyQueueView.setText("Empty");
+                    tv_emptyQueueView.setTextColor(Color.WHITE);
+                    tv_emptyQueueView.setTextSize(16);
+                    tv_emptyQueueView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                    ll_graphds.addView(emptyQueueView);
                 }
-
+                // DFS (Stack)
                 else if(graphAlgorithmType == GraphAlgorithmType.DFS) {
-                    Button button = new Button(context);
-                    button.setText("TOP");
-                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button);
-
+                    View emptyStackView = inflater.inflate(R.layout.element_graph_ds, null);
+                    emptyStackView.setLayoutParams(otherLayoutParams);
+                    emptyStackView.setPadding(5, 5, 5, 5);
+                    TextView tv_emptyStackView = emptyStackView.findViewById(R.id.tv_elementvalue);
+                    tv_emptyStackView.setText("Empty");
+                    tv_emptyStackView.setTextColor(Color.WHITE);
+                    tv_emptyStackView.setTextSize(16);
+                    tv_emptyStackView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                    ll_graphds.addView(emptyStackView);
                 }
 
             }
@@ -154,49 +161,107 @@ public class GraphDSPopUp {
 
     }
 
-    void update(final ArrayList<Integer> queue){
+    // arrayList could represent both BFS(queue) and DFS(stack) as per current DS selected
+    void update(final ArrayList<Integer> arrayList){
 
         ll_graphds.post(new Runnable() {
             @Override
             public void run() {
-
+                // Remove all Old Views
                 ll_graphds.removeAllViews();
 
+                // BFS (Queue)
                 if(graphAlgorithmType == GraphAlgorithmType.BFS) {
-                    Button button = new Button(context);
-                    button.setText("FRONT(POP)");
-                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button);
-
-                    for(Integer i : queue) {
-                        Button button1 = new Button(context);
-                        button1.setText(String.valueOf(i));
-                        button1.setLayoutParams(layoutParams);
-                        ll_graphds.addView(button1);
+                    if(arrayList.size() == 0){
+                        View emptyQueueView = inflater.inflate(R.layout.element_graph_ds, null);
+                        emptyQueueView.setLayoutParams(otherLayoutParams);
+                        emptyQueueView.setPadding(5, 5, 5, 5);
+                        TextView tv_emptyQueueView = emptyQueueView.findViewById(R.id.tv_elementvalue);
+                        tv_emptyQueueView.setText("Empty");
+                        tv_emptyQueueView.setTextColor(Color.WHITE);
+                        tv_emptyQueueView.setTextSize(16);
+                        tv_emptyQueueView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                        ll_graphds.addView(emptyQueueView);
                     }
+                    else {
+                        // Start (Pop)
+                        View queueFrontView = inflater.inflate(R.layout.element_graph_ds, null);
+                        queueFrontView.setLayoutParams(otherLayoutParams);
+                        queueFrontView.setPadding(5, 5, 5, 5);
+                        TextView tv_queueFrontView = queueFrontView.findViewById(R.id.tv_elementvalue);
+                        tv_queueFrontView.setText("Front");
+                        tv_queueFrontView.setTextColor(Color.WHITE);
+                        tv_queueFrontView.setTextSize(16);
+                        tv_queueFrontView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                        ll_graphds.addView(queueFrontView);
 
-                    Button button2 = new Button(context);
-                    button2.setText("END(PUSH)");
-                    button2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button2);
+                        // Queue elements
+                        for (Integer i : arrayList) {
+                            View myView = inflater.inflate(R.layout.element_graph_ds, null);
+                            myView.setLayoutParams(elementLayoutParams);
+                            myView.setPadding(5, 5, 5, 5);
+                            TextView tv = myView.findViewById(R.id.tv_elementvalue);
+                            tv.setText(String.valueOf(i));
+                            tv.setTextColor(Color.WHITE);
+                            tv.setTextSize(16);
+                            tv.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                            ll_graphds.addView(myView);
+                        }
+
+                        // End (Push)
+                        View queueEndView = inflater.inflate(R.layout.element_graph_ds, null);
+                        queueEndView.setLayoutParams(otherLayoutParams);
+                        queueEndView.setPadding(5, 5, 5, 5);
+                        TextView tv_queueEndView = queueEndView.findViewById(R.id.tv_elementvalue);
+                        tv_queueEndView.setText("End");
+                        tv_queueEndView.setTextColor(Color.WHITE);
+                        tv_queueEndView.setTextSize(16);
+                        tv_queueEndView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                        ll_graphds.addView(queueEndView);
+                    }
                 }
-
+                // DFS (Stack)
                 else if(graphAlgorithmType == GraphAlgorithmType.DFS) {
-                    Button button = new Button(context);
-                    button.setText("TOP");
-                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                    ll_graphds.addView(button);
-
-                    Collections.reverse(queue);
-                    for(Integer i : queue) {
-                        Button button1 = new Button(context);
-                        button1.setText(String.valueOf(i));
-                        button1.setLayoutParams(layoutParams);
-                        ll_graphds.addView(button1);
+                    if(arrayList.size() == 0){
+                        View emptyStackView = inflater.inflate(R.layout.element_graph_ds, null);
+                        emptyStackView.setLayoutParams(otherLayoutParams);
+                        emptyStackView.setPadding(5, 5, 5, 5);
+                        TextView tv_emptyStackView = emptyStackView.findViewById(R.id.tv_elementvalue);
+                        tv_emptyStackView.setText("Empty");
+                        tv_emptyStackView.setTextColor(Color.WHITE);
+                        tv_emptyStackView.setTextSize(16);
+                        tv_emptyStackView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                        ll_graphds.addView(emptyStackView);
                     }
+                    else {
+                        // Top (Push/Pop)
+                        View stackTopView = inflater.inflate(R.layout.element_graph_ds, null);
+                        stackTopView.setLayoutParams(otherLayoutParams);
+                        stackTopView.setPadding(5, 5, 5, 5);
+                        TextView tv_stackTopView = stackTopView.findViewById(R.id.tv_elementvalue);
+                        tv_stackTopView.setText("TOP");
+                        tv_stackTopView.setTextColor(Color.WHITE);
+                        tv_stackTopView.setTextSize(12);
+                        tv_stackTopView.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                        ll_graphds.addView(stackTopView);
 
+                        // Reverse Stack element to represent top down stack
+                        Collections.reverse(arrayList);
+
+                        // Stack elements
+                        for (Integer i : arrayList) {
+                            View myView = inflater.inflate(R.layout.element_graph_ds, null);
+                            myView.setLayoutParams(elementLayoutParams);
+                            myView.setPadding(5, 5, 5, 5);
+                            TextView tv_queueViewElement = myView.findViewById(R.id.tv_elementvalue);
+                            tv_queueViewElement.setText(String.valueOf(i));
+                            tv_queueViewElement.setTextColor(Color.WHITE);
+                            tv_queueViewElement.setTextSize(16);
+                            tv_queueViewElement.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                            ll_graphds.addView(myView);
+                        }
+                    }
                 }
-
             }
         });
 

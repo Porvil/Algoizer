@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/roundedrect_border_large">
+    android:background="@drawable/roundedrect_border_large"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/tv_popupgraphname"
         style="@style/S_TextView_Heading"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:text="Graph Tree"
+        android:text="Graph Tree DS"
         app:layout_constraintEnd_toStartOf="@+id/btn_minimize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +19,7 @@
     <ImageButton
         android:id="@+id/btn_close"
         style="@style/S_ImageButton"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
     <ImageButton
         android:id="@+id/btn_minimize"
         style="@style/S_ImageButton"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toStartOf="@+id/btn_close"
@@ -49,6 +49,7 @@
         android:id="@+id/ll_graphds"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="bottom"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

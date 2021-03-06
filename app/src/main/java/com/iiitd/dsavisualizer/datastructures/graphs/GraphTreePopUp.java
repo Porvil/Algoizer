@@ -124,10 +124,10 @@ public class GraphTreePopUp{
             }
         });
 
-        cb_tree.setChecked(true);
-        cb_back.setChecked(true);
-        cb_forward.setChecked(true);
-        cb_cross.setChecked(true);
+//        cb_tree.setChecked(true);
+//        cb_back.setChecked(true);
+//        cb_forward.setChecked(true);
+//        cb_cross.setChecked(true);
 
         cb_tree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -201,7 +201,7 @@ public class GraphTreePopUp{
 
     void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
-            popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
+            popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, parent.getWidth() - width, 0);
         }
     }
 

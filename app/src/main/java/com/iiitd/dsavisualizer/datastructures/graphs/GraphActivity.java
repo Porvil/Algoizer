@@ -6,7 +6,6 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -41,7 +40,6 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
-import com.iiitd.dsavisualizer.datastructures.trees.avl.AVLActivity;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -333,7 +331,6 @@ public class GraphActivity extends AppCompatActivity {
                 }
 
 
-//                int vertexNumber = 0;
                 resetGraphSequence();
                 graphWrapper.board.clearCanvasAnim();
 
@@ -351,15 +348,12 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println("DONE ------------ ");
 
-//                if(graphSequence.size > 0){
-                    graphTreePopUp.create("BFS Tree", graphTree);
-                    graphTreePopUp.show();
+                graphTreePopUp.create("BFS Tree", graphTree);
+                graphTreePopUp.show();
 
                 graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
-//                }
 
-//                GraphDSPopUp graphDSPopUp = new GraphDSPopUp(context, 800, ll_anim.getHeight(), ll_anim);
-//                graphDSPopUp.create("BFS Queue", null);
+                dl_main.closeDrawer(GravityCompat.START);
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
@@ -403,12 +397,13 @@ public class GraphActivity extends AppCompatActivity {
                 graphTree.printEdges();
                 graphTree.printVertices();
 
-//                if(graphSequence.size > 0){
-                    graphTreePopUp.create("DFS Tree", graphTree);
-                    graphTreePopUp.show();
+                graphTreePopUp.create("DFS Tree", graphTree);
+                graphTreePopUp.show();
 
                 graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
-//                }
+
+                dl_main.closeDrawer(GravityCompat.START);
+
 //                System.out.println(graphSequence);
 //                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
             }

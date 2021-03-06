@@ -489,22 +489,6 @@ public class BoardTree {
         return new double[]{a1,b1,a2,b2};
     }
 
-    public Pair<Integer, Integer> getRandomAvailableNode(){
-        ArrayList<Pair<Integer, Integer>> available = new ArrayList<>();
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                if(!boardElements[r][c].occupied){
-                    available.add(new Pair<>(r, c));
-                }
-            }
-        }
-
-        if(available.size() == 0)
-            return null;
-
-        return available.get(new Random().nextInt(available.size()));
-    }
-
     public void refreshGraph(){
         __refresh(iv_graphtree);
     }

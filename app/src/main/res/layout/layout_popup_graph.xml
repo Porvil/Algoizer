@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/roundedrect_border_large"
@@ -118,26 +117,26 @@
 
             <CheckBox
                 android:id="@+id/cb_back"
+                style="@style/S_CheckBox_Graph"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/S_CheckBox_Graph"
                 android:text="Back Edge" />
 
             <CheckBox
                 android:id="@+id/cb_forward"
+                style="@style/S_CheckBox_Graph"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/S_CheckBox_Graph"
                 android:text="Forward Edge" />
 
             <CheckBox
                 android:id="@+id/cb_cross"
+                style="@style/S_CheckBox_Graph"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/S_CheckBox_Graph"
                 android:text="Cross Edge" />
 
         </LinearLayout>
