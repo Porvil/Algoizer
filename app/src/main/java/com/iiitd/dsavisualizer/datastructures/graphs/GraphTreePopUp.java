@@ -124,11 +124,6 @@ public class GraphTreePopUp{
             }
         });
 
-//        cb_tree.setChecked(true);
-//        cb_back.setChecked(true);
-//        cb_forward.setChecked(true);
-//        cb_cross.setChecked(true);
-
         cb_tree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -167,13 +162,13 @@ public class GraphTreePopUp{
     void create(String title, GraphTree graphTree){
         this.title = title;
         this.graphTree = graphTree;
-        this.boardTree = new BoardTree(context, graphTree);
         this.iv_popupgraphname.setText(title);
-
-        cb_tree.setChecked(true);
-        cb_back.setChecked(true);
-        cb_forward.setChecked(true);
-        cb_cross.setChecked(true);
+        this.boardTree = new BoardTree(context, graphTree);
+        // Make current state of boardTree booleans as per current state of graphTreePopUp
+        this.boardTree.showTreeEdge = cb_tree.isChecked();
+        this.boardTree.showBackEdge = cb_back.isChecked();
+        this.boardTree.showForwardEdge = cb_forward.isChecked();
+        this.boardTree.showCrossEdge = cb_cross.isChecked();
 
         zl_graphtree.zoomTo(1, false);
 

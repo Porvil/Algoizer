@@ -124,8 +124,8 @@ public class BoardTree {
     }
 
     // Should be called only after imageView layout has been laid
-    public void setImageViewAndCreateCanvas(final ImageView iv_graphtree) {
-        this.iv_graphtree = iv_graphtree;
+    public void setImageViewAndCreateCanvas(final ImageView imageView) {
+        this.iv_graphtree = imageView;
 
         bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
         iv_graphtree.setImageBitmap(bitmapGraphTree);
@@ -134,7 +134,6 @@ public class BoardTree {
         drawGrid();
 
         drawGraph();
-
     }
 
     private void initPaints(){
@@ -156,7 +155,7 @@ public class BoardTree {
 
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
-//        this.paintVertex.setAlpha(50);
+        this.paintVertex.setAlpha(192);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
@@ -233,7 +232,7 @@ public class BoardTree {
         Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());
 
         for(EdgePro edgePro: graphTree.edgePros){
-            System.out.println(edgePro);
+//            System.out.println(edgePro);
 
             boolean showCurrentEdge = false;
 

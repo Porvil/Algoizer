@@ -485,6 +485,8 @@ public class GraphActivity extends AppCompatActivity {
 
                 graphWrapper.reset();
                 parseAndShowCustomInput(customGraphString);
+
+                dl_main.closeDrawer(GravityCompat.END);
             }
         });
 
@@ -523,6 +525,7 @@ public class GraphActivity extends AppCompatActivity {
                 graphWrapper.reset();
                 parseAndShowCustomInput(customGraphString);
 
+                dl_main.closeDrawer(GravityCompat.END);
 //                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
 //                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
 //                graphWrapper.graph.addVertex(2,2,0);graphWrapper.board.addVertex(2,0,2);
@@ -570,6 +573,7 @@ public class GraphActivity extends AppCompatActivity {
                 graphWrapper.reset();
                 parseAndShowCustomInput(customGraphString);
 
+                dl_main.closeDrawer(GravityCompat.END);
             }
         });
 
