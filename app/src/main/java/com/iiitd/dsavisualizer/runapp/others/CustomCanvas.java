@@ -24,7 +24,7 @@ public class CustomCanvas {
 
     FrameLayout frameLayout;
 
-    // framelayout must have been laid out already
+    // frameLayout must have been laid out already
     public CustomCanvas(Context context, FrameLayout frameLayout, ImageView imageViewGraph, ImageView imageViewGrid, ImageView imageViewAnimation, ImageView imageViewCoordinates) {
         this.context = context;
         this.frameLayout = frameLayout;
@@ -33,12 +33,8 @@ public class CustomCanvas {
         this.imageViewCoordinates = imageViewCoordinates;
         this.imageViewAnimation = imageViewAnimation;
 
-//        int width = imageViewGraph.getWidth();
-//        int height = imageViewGraph.getHeight();
         int width = frameLayout.getWidth();
         int height = frameLayout.getHeight();
-
-        System.out.println("Canvas = " + width + "x" + height);
 
         this.bitmapGraph = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         this.imageViewGraph.setImageBitmap(bitmapGraph);

@@ -192,6 +192,40 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btn_tree4"
+                    style="@style/S_ButtonTextOnly"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Example 4"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_tree5"
+                    style="@style/S_ButtonTextOnly"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Example 5"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_tree6"
+                    style="@style/S_ButtonTextOnly"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Example 6"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
                     android:id="@+id/btn_cleargraph"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
@@ -206,7 +240,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Clear Anim Graph"
+                    android:text="Clear Animation"
                     android:textSize="14sp" />
 
             </LinearLayout>

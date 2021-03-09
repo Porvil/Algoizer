@@ -103,6 +103,9 @@ public class GraphActivity extends AppCompatActivity {
     Button btn_tree1;
     Button btn_tree2;
     Button btn_tree3;
+    Button btn_tree4;
+    Button btn_tree5;
+    Button btn_tree6;
     EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
@@ -197,6 +200,9 @@ public class GraphActivity extends AppCompatActivity {
         btn_tree1 = v_menu_right.findViewById(R.id.btn_tree1);
         btn_tree2 = v_menu_right.findViewById(R.id.btn_tree2);
         btn_tree3 = v_menu_right.findViewById(R.id.btn_tree3);
+        btn_tree4 = v_menu_right.findViewById(R.id.btn_tree4);
+        btn_tree5 = v_menu_right.findViewById(R.id.btn_tree5);
+        btn_tree6 = v_menu_right.findViewById(R.id.btn_tree6);
         et_customgraphinput = v_menu_right.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu_right.findViewById(R.id.et_insert);
         et_search = v_menu_right.findViewById(R.id.et_search);
@@ -356,7 +362,7 @@ public class GraphActivity extends AppCompatActivity {
                 dl_main.closeDrawer(GravityCompat.START);
 
                 System.out.println(graphSequence);
-                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
+                UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
             }
         });
 
@@ -404,8 +410,8 @@ public class GraphActivity extends AppCompatActivity {
 
                 dl_main.closeDrawer(GravityCompat.START);
 
-//                System.out.println(graphSequence);
-//                UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
+                System.out.println(graphSequence);
+                UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
             }
         });
 
@@ -438,21 +444,15 @@ public class GraphActivity extends AppCompatActivity {
         btn_cleargraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                graphWrapper.graph.clearGraph();
-//                graphWrapper.board.reset(graphWrapper.graph);
                 graphWrapper.reset();
                 graphWrapper.board.clearCanvasAnim();
                 graphSequence = null;
+
+                // Removes the popUpWindows also
+                graphTreePopUp.dismiss();
+                graphTreeDSPopUp.dismiss();
+
                 resetGraphSequence();
-//                graphWrapper.board.clearCanvasGraph();
-
-            }
-        });
-
-        btn_clearcustominput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_customgraphinput.setText("");
             }
         });
 
@@ -461,6 +461,13 @@ public class GraphActivity extends AppCompatActivity {
             public void onClick(View v) {
                 graphWrapper.board.clearCanvasAnim();
                 resetGraphSequence();
+            }
+        });
+
+        btn_clearcustominput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_customgraphinput.setText("");
             }
         });
 
@@ -494,19 +501,6 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                View view = getLayoutInflater().inflate(R.layout.layout_test, null);
-                View view = getLayoutInflater().inflate(R.layout.layout_popup_graph, null);
-//                View view = getLayoutInflater().inflate(R.layout.layout_test2, null);
-//                View view = getLayoutInflater().inflate(R.layout.layout_test3, null);
-
-
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(view);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
-
-
-
                 String customGraphString =
                         "D 1\n" +
                         "W 0\n" +
@@ -526,21 +520,6 @@ public class GraphActivity extends AppCompatActivity {
                 parseAndShowCustomInput(customGraphString);
 
                 dl_main.closeDrawer(GravityCompat.END);
-//                graphWrapper.graph.addVertex(0,0,0);graphWrapper.board.addVertex(0,0,0);
-//                graphWrapper.graph.addVertex(1,0,3);graphWrapper.board.addVertex(0,3,1);
-//                graphWrapper.graph.addVertex(2,2,0);graphWrapper.board.addVertex(2,0,2);
-//                graphWrapper.graph.addVertex(3,2,4);graphWrapper.board.addVertex(2,4,3);
-//                graphWrapper.graph.addVertex(4,4,3);graphWrapper.board.addVertex(4,3,4);
-//
-//
-//                graphWrapper.graph.addEdge(0, 1, 1);
-//                graphWrapper.graph.addEdge(0, 2, 1);
-//                graphWrapper.graph.addEdge(1, 2, 1);
-//                graphWrapper.graph.addEdge(2, 3, 1);
-//                graphWrapper.graph.addEdge(3, 4, 1);
-
-
-//                graphWrapper.board.update(graphWrapper.graph)
             }
         });
 
@@ -569,6 +548,84 @@ public class GraphActivity extends AppCompatActivity {
                         "E 5 6 1\n" +
                         "E 6 2 1\n" +
                         "E 6 0 1\n";
+
+                graphWrapper.reset();
+                parseAndShowCustomInput(customGraphString);
+
+                dl_main.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        btn_tree4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String customGraphString = "";
+
+                graphWrapper.reset();
+                parseAndShowCustomInput(customGraphString);
+
+                dl_main.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        btn_tree5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String customGraphString = "";
+
+                graphWrapper.reset();
+                parseAndShowCustomInput(customGraphString);
+
+                dl_main.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        btn_tree6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String customGraphString = "D 0\n" +
+                        "W 1\n" +
+                        "VC 9\n" +
+                        "VA 0 3 3\n" +
+                        "VA 1 1 5\n" +
+                        "VA 2 1 8\n" +
+                        "VA 3 1 11\n" +
+                        "VA 4 3 13\n" +
+                        "VA 5 5 11\n" +
+                        "VA 6 5 8\n" +
+                        "VA 7 5 5\n" +
+                        "VA 8 3 8\n" +
+                        "E 0 1 4\n" +
+                        "E 0 7 8\n" +
+                        "E 1 0 4\n" +
+                        "E 1 7 11\n" +
+                        "E 1 2 8\n" +
+                        "E 2 1 8\n" +
+                        "E 2 8 2\n" +
+                        "E 2 3 7\n" +
+                        "E 2 5 4\n" +
+                        "E 3 2 7\n" +
+                        "E 3 5 14\n" +
+                        "E 3 4 9\n" +
+                        "E 4 3 9\n" +
+                        "E 4 5 10\n" +
+                        "E 5 2 4\n" +
+                        "E 5 6 2\n" +
+                        "E 5 3 14\n" +
+                        "E 5 4 10\n" +
+                        "E 6 7 1\n" +
+                        "E 6 8 6\n" +
+                        "E 6 5 2\n" +
+                        "E 7 0 8\n" +
+                        "E 7 1 11\n" +
+                        "E 7 8 7\n" +
+                        "E 7 6 1\n" +
+                        "E 8 7 7\n" +
+                        "E 8 2 2\n" +
+                        "E 8 6 6\n";
 
                 graphWrapper.reset();
                 parseAndShowCustomInput(customGraphString);
@@ -609,14 +666,13 @@ public class GraphActivity extends AppCompatActivity {
 
                 if (checkedId == R.id.rb_directed) {
                     directed = true;
-                } else if (checkedId == R.id.rb_undirected) {
+                }
+                else if (checkedId == R.id.rb_undirected) {
                     directed = false;
                 }
 
-                // Clear everything
+                // Clears everything
                 Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
-//                graphWrapper = new GraphWrapper(context, customCanvas, directed, false);
-
                 graphWrapper.changeDirected(directed);
                 graphSequence = null;
                 resetGraphSequence();
@@ -632,11 +688,12 @@ public class GraphActivity extends AppCompatActivity {
 
                 if (checkedId == R.id.rb_weighted) {
                     weighted = true;
-                } else if (checkedId == R.id.rb_unweighted) {
+                }
+                else if (checkedId == R.id.rb_unweighted) {
                     weighted = false;
                 }
 
-                // Clear everything
+                // Clears everything
                 Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeWeighted(weighted);
                 graphSequence = null;
@@ -714,14 +771,6 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        zl_graph.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                System.out.println(zl_graph.getPanX()+ " | " + zl_graph.getPanY());
-                System.out.println(zl_graph.getScaledPanX()+ " | " + zl_graph.getScaledPanY());
-                return false;
-            }
-        });
     }
 
     private void startTimer(String operation, final BFS bfs){
@@ -756,7 +805,7 @@ public class GraphActivity extends AppCompatActivity {
                 public void run() {
 
                     if(curSeqNo < graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
-                        UtilUI.setText(tv_seqno, curSeqNo + "/" + graphSequence.size);
+                        UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphSequence.size);
                         UtilUI.setText(tv_info, graphSequence.graphAnimationStates.get(curSeqNo).info);
 
                         graphWrapper.board.clearCanvasAnim();
@@ -828,7 +877,6 @@ public class GraphActivity extends AppCompatActivity {
         graphControls.updateDrawables();
 
         // Draws Grid and Graph View After Layouts have been laid out
-
         ll_anim.post(new Runnable() {
             @Override
             public void run() {
@@ -841,12 +889,10 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-//                zoomLayout.zoomTo(5, false);
                 FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
                 layoutParams.height = zl_graph.getHeight();
                 layoutParams.width = zl_graph.getWidth();
 
-                System.out.println("################" + layoutParams.width + "x" + layoutParams.height);
                 fl_graph.setLayoutParams(layoutParams);
                 fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
 
@@ -857,7 +903,6 @@ public class GraphActivity extends AppCompatActivity {
                         graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
                         updateGraphViewState();
 
-//                        zl_graph.zoomTo(2, false);
                         zl_graph.panTo(0,0, false);
                     }
                 });
@@ -1349,7 +1394,7 @@ public class GraphActivity extends AppCompatActivity {
 
         if(graphSequence != null){
             graphSequence.curSeqNo = 0;
-            UtilUI.setText(tv_seqno, "0/" + graphSequence.size);
+            UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
         }
         else{
             UtilUI.setText(tv_info, "-");

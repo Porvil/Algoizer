@@ -220,10 +220,12 @@ public class GraphTreePopUp{
             cb_forward.setChecked(true);
             cb_back.setChecked(true);
             cb_cross.setChecked(true);
-            isMinimized = false;
-            cl_bottom.setVisibility(View.VISIBLE);
-            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
-            popupwindow.update(width, height);
+            if(isMinimized) {
+                isMinimized = false;
+                cl_bottom.setVisibility(View.VISIBLE);
+                btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+                popupwindow.update(width, height);
+            }
             zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();
         }

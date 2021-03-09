@@ -84,10 +84,12 @@ public class Board {
         ySize = (this.Y / yCount);
         maxVertices = yCount * xCount;
 
-        System.out.println("xSize = " + xSize + " | " + " ySize = " + ySize);
-        System.out.println("X = " + X + " | " + " Y = " + Y);
-        System.out.println("no of rows(ycount) = " + yCount + " | " + "no of columns(xcount) = " + xCount);
-        System.out.println("max count = " + yCount * xCount );
+        System.out.println("----------------------------------------");
+        System.out.println("Board Width(X)     = " + X      + " | " + "Board Height(Y)    = " + Y);
+        System.out.println("No of Cols(xCount) = " + xCount + " | " + "No of Rows(yCount) = " + yCount);
+        System.out.println("Col width(xSize)   = " + xSize  + " | " + "Row height(ySize)  = " + ySize);
+        System.out.println("Max Count          = " + yCount * xCount );
+        System.out.println("----------------------------------------");
 
         float minSide = Math.min(xSize, ySize);
         this.nodeRadius = ( minSide * circleRatio) / 2;
@@ -224,10 +226,10 @@ public class Board {
 
     }
 
-    // Re-Draws the complete graphOld
+    // Re-Draws the complete graph
     public void update(Graph graph){
-
         System.out.println("REDRAWING CANVAS");
+
         // clears canvas
         clearCanvasGraph();
 
@@ -247,7 +249,6 @@ public class Board {
         for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.edgeListMap.entrySet() ){
 
             for (Edge edge : vertex.getValue()) {
-                System.out.println(vertex.getKey() + ":" + edge);
 
                 int[] vertex1 = getCoordinates(vertex.getKey());
                 int[] vertex2 = getCoordinates(edge.des);
@@ -277,8 +278,6 @@ public class Board {
         int x = rect.centerX();
         int y = rect.centerY();
 
-//        float radius = getRadius(rect);
-//        System.out.println(radius + " ==" + nodeRadius);
         String text = String.valueOf(name);
 
         canvas.drawCircle(x, y, nodeRadius, paintV);
@@ -350,21 +349,6 @@ public class Board {
     }
 
     // Adds VertexOld element to grid element and calls drawNode
-    public void addVertex(float xAxisPos, float yAxisPos, int name) {
-        // Row and Col of the vertexOld
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-
-        // Change its state and add vertexOld reference
-        boardElements[row][col].occupied = true;
-        boardElements[row][col].value = name;
-//        data[row][col].vertexOld = vertexOld;
-
-        Rect rect = getRect(row, col);
-        drawNodeGraph(rect, boardElements[row][col].value);
-    }
-
-    // Adds VertexOld element to grid element and calls drawNode
     public void addVertex(int row, int col, int name) {
         // Change its state and add vertexOld reference
         boardElements[row][col].occupied = true;
@@ -382,14 +366,6 @@ public class Board {
         boardElements[row][col].value = -1;
 //        data[row][col].vertexOld = vertexOld;
 
-    }
-
-    // Returns state of the grid element, whether it is being used or not
-    public boolean getState(float xAxisPos, float yAxisPos){
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-
-        return boardElements[row][col].occupied;
     }
 
     // Returns state of the grid element, whether it is being used or not
@@ -442,7 +418,6 @@ public class Board {
         int width = rect.width();
         int height = rect.height();
 
-//        System.out.println("rect = " + width + "x" + height);
         float diameter = Math.min(width, height) * circleRatio;
         float radius = diameter / 2;
 
@@ -534,6 +509,7 @@ public class Board {
         return angle;
     }
 
+    // Below functions not used currently
     public int[] getCurrentLimits(){
         int row_min = yCount-1;
         int row_max = 0;

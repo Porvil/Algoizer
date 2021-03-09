@@ -323,12 +323,12 @@ public class BoardTree {
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-        if(edgePro != null && weighted) {
-            canvas.save();
-            canvas.rotate((float) degree, x, y);
-            canvas.drawText(String.valueOf(edgePro.weight), x, y-20, paintEW);
-            canvas.restore();
-        }
+//        if(edgePro != null && weighted) {
+//            canvas.save();
+//            canvas.rotate((float) degree, x, y);
+//            canvas.drawText(String.valueOf(edgePro.weight), x, y-20, paintEW);
+//            canvas.restore();
+//        }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
         arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
