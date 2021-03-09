@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -30,12 +32,14 @@ public class GraphDSPopUp {
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
     ImageButton btn_close;
+    ConstraintLayout cl_bottom;
     LinearLayout ll_graphds;
     LinearLayout.LayoutParams elementLayoutParams;
     LinearLayout.LayoutParams otherLayoutParams;
 
-    GraphAlgorithmType graphAlgorithmType;
+    boolean isMinimized;
     String title;
+    GraphAlgorithmType graphAlgorithmType;
 
     int width;
     int height;
@@ -50,6 +54,7 @@ public class GraphDSPopUp {
         this.width = _width;
         this.height = _height;
         this.parent = _parent;
+        this.isMinimized = false;
 
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.elementLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
@@ -64,6 +69,7 @@ public class GraphDSPopUp {
         this.ll_graphds = popUpView.findViewById(R.id.ll_graphds);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
         this.btn_close = popUpView.findViewById(R.id.btn_close);
+        this.cl_bottom = popUpView.findViewById(R.id.cl_bottom);
         this.iv_popupgraphname = popUpView.findViewById(R.id.tv_popupgraphname);
 
         popUpView.setOnTouchListener(new View.OnTouchListener() {
@@ -92,18 +98,19 @@ public class GraphDSPopUp {
         btn_minimize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ll_graphds.getVisibility() == View.VISIBLE){
-                    ll_graphds.setVisibility(View.GONE);
+                if(cl_bottom.getVisibility() == View.VISIBLE){
+                    isMinimized = true;
+                    cl_bottom.setVisibility(View.INVISIBLE);
                     int curWidth = width;
-                    int curHeight = height - ll_graphds.getHeight();
+                    int curHeight = height - cl_bottom.getHeight();
                     curWidth = curWidth <= 0 ? MIN_WIDTH : curWidth;
                     curHeight = curHeight <= 0 ? MIN_HEIGHT : curHeight;
                     popupwindow.update(curWidth, curHeight);
-
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MAXIMIZE_ICON));
                 }
                 else{
-                    ll_graphds.setVisibility(View.VISIBLE);
+                    isMinimized = false;
+                    cl_bottom.setVisibility(View.VISIBLE);
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 }
@@ -124,6 +131,14 @@ public class GraphDSPopUp {
         this.title = title;
         this.graphAlgorithmType = graphAlgorithmType;
         this.iv_popupgraphname.setText(title);
+
+        // Restores current state of icons
+        if(isMinimized){
+            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MAXIMIZE_ICON));
+        }
+        else{
+            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+        }
 
         ll_graphds.post(new Runnable() {
             @Override
@@ -267,18 +282,21 @@ public class GraphDSPopUp {
 
     }
 
+    // Shows the popUpWindow if not already showing
     void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
             popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
         }
     }
 
+    // Reset icons and resets the state of popUp checkboxes
     void dismiss(){
         if(popupwindow != null){
-            ll_graphds.setVisibility(View.VISIBLE);
+            isMinimized = false;
+            cl_bottom.setVisibility(View.VISIBLE);
             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+            popupwindow.update(width, height);
             popupwindow.dismiss();
         }
     }
-
 }

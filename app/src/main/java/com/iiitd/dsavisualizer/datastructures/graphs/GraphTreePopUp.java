@@ -39,6 +39,7 @@ public class GraphTreePopUp{
     CheckBox cb_forward;
     CheckBox cb_cross;
 
+    boolean isMinimized;
     String title;
     GraphTree graphTree;
     BoardTree boardTree;
@@ -56,6 +57,7 @@ public class GraphTreePopUp{
         this.width = _width;
         this.height = _height;
         this.parent = _parent;
+        this.isMinimized = false;
 
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -99,17 +101,17 @@ public class GraphTreePopUp{
             @Override
             public void onClick(View v) {
                 if(cl_bottom.getVisibility() == View.VISIBLE){
-                    cl_bottom.setVisibility(View.GONE);
+                    isMinimized = true;
+                    cl_bottom.setVisibility(View.INVISIBLE);
                     int curWidth = width;
                     int curHeight = height - cl_bottom.getHeight();
                     curWidth = curWidth <= 0 ? MIN_WIDTH : curWidth;
                     curHeight = curHeight <= 0 ? MIN_HEIGHT : curHeight;
                     popupwindow.update(curWidth, curHeight);
-
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MAXIMIZE_ICON));
-
                 }
                 else{
+                    isMinimized = false;
                     cl_bottom.setVisibility(View.VISIBLE);
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
@@ -164,14 +166,22 @@ public class GraphTreePopUp{
         this.graphTree = graphTree;
         this.iv_popupgraphname.setText(title);
         this.boardTree = new BoardTree(context, graphTree);
+
         // Make current state of boardTree booleans as per current state of graphTreePopUp
         this.boardTree.showTreeEdge = cb_tree.isChecked();
         this.boardTree.showBackEdge = cb_back.isChecked();
         this.boardTree.showForwardEdge = cb_forward.isChecked();
         this.boardTree.showCrossEdge = cb_cross.isChecked();
 
-        zl_graphtree.zoomTo(1, false);
+        // Restores current state of icons
+        if(isMinimized){
+            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MAXIMIZE_ICON));
+        }
+        else{
+            btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+        }
 
+        // After imageView has been laid out, new layout params are passed and again requests layout
         iv_graphtree.post(new Runnable() {
             @Override
             public void run() {
@@ -183,10 +193,12 @@ public class GraphTreePopUp{
                 iv_graphtree.setLayoutParams(layoutParams);
                 iv_graphtree.requestLayout();
 
+                // After imageView has been laid out with new layout params, canvas is setup and zoomLayout zooms to 1
                 iv_graphtree.post(new Runnable() {
                     @Override
                     public void run() {
                         boardTree.setImageViewAndCreateCanvas(iv_graphtree);
+                        zl_graphtree.zoomTo(1, false);
                     }
                 });
             }
@@ -194,16 +206,24 @@ public class GraphTreePopUp{
 
     }
 
+    // Shows the popUpWindow if not already showing
     void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
             popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, parent.getWidth() - width, 0);
         }
     }
 
+    // Reset icons and resets the state of popUp checkboxes
     void dismiss(){
         if(popupwindow != null){
+            cb_tree.setChecked(true);
+            cb_forward.setChecked(true);
+            cb_back.setChecked(true);
+            cb_cross.setChecked(true);
+            isMinimized = false;
             cl_bottom.setVisibility(View.VISIBLE);
             btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
+            popupwindow.update(width, height);
             zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();
         }

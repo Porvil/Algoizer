@@ -7,9 +7,6 @@
     android:background="@drawable/roundedrect_border_large"
     android:padding="5dp">
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <TextView
         android:id="@+id/tv_popupgraphname"
         style="@style/S_TextView_Heading"

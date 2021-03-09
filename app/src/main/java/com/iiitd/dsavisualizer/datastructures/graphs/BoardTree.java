@@ -9,19 +9,14 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
-import android.util.TypedValue;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
-import com.otaliastudios.zoom.ZoomLayout;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Random;
 
 // Used by GraphActivity Class
 public class BoardTree {
@@ -219,21 +214,14 @@ public class BoardTree {
     // Re-Draws the complete graph
     public void drawGraph(){
 
-//        for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
-//            Pair<Integer, Integer> value = entry.getValue();
-//            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
-//            Rect rect = getRect(value.first, value.second);
-//            drawNodeGraph(rect, entry.getKey());
-//        }
-
         clearCanvasGraphTree();
+
+        drawGrid();
 
         // Sort Edges in reverse order, so that tree edges are drawn first
         Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());
 
         for(EdgePro edgePro: graphTree.edgePros){
-//            System.out.println(edgePro);
-
             boolean showCurrentEdge = false;
 
             if(showTreeEdge && edgePro.edgeClass == EdgeClass.TREE){
@@ -262,11 +250,9 @@ public class BoardTree {
 
         for(Map.Entry<Integer, Pair<Integer, Integer>> entry: graphTree.vertexMap.entrySet()){
             Pair<Integer, Integer> value = entry.getValue();
-            System.out.println(entry.getKey() + " [ " + entry.getValue().first + ", " + entry.getValue().second + " ]");
             Rect rect = getRect(value.first, value.second);
             drawNodeGraph(rect, entry.getKey());
         }
-
 
         refreshGraph();
     }
@@ -320,7 +306,6 @@ public class BoardTree {
 
     }
 
-
     public void __drawEdge(Canvas canvas,
                            Rect rect1, Rect rect2,
                            Paint paintE, Paint paintEA, Paint paintEW,
@@ -367,21 +352,6 @@ public class BoardTree {
     }
 
     // Adds VertexOld element to grid element and calls drawNode
-    public void addVertex(float xAxisPos, float yAxisPos, int name) {
-        // Row and Col of the vertexOld
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-
-        // Change its state and add vertexOld reference
-        boardElements[row][col].occupied = true;
-        boardElements[row][col].value = name;
-//        data[row][col].vertexOld = vertexOld;
-
-        Rect rect = getRect(row, col);
-        drawNodeGraph(rect, boardElements[row][col].value);
-    }
-
-    // Adds VertexOld element to grid element and calls drawNode
     public void addVertex(int row, int col, int name) {
         // Change its state and add vertexOld reference
         boardElements[row][col].occupied = true;
@@ -390,28 +360,6 @@ public class BoardTree {
 //
 //        Rect rect = getRect(row, col);
 //        drawNodeGraph(rect, boardElements[row][col].value);
-    }
-
-    // Adds VertexOld element to grid element and calls drawNode
-    public void removeVertex(int row, int col) {
-        // Change its state and add vertexOld reference
-        boardElements[row][col].occupied = false;
-        boardElements[row][col].value = -1;
-//        data[row][col].vertexOld = vertexOld;
-
-    }
-
-    // Returns state of the grid element, whether it is being used or not
-    public boolean getState(float xAxisPos, float yAxisPos){
-        int col = (int) xAxisPos;
-        int row = (int) yAxisPos;
-
-        return boardElements[row][col].occupied;
-    }
-
-    // Returns state of the grid element, whether it is being used or not
-    public boolean getState(int row, int col){
-        return boardElements[row][col].occupied;
     }
 
     public int[] getCoordinates(int key){
@@ -430,21 +378,6 @@ public class BoardTree {
     public Rect getRect(float row, float col) {
         int c = (int) col;
         int r = (int) row;
-
-        int left = (int) (c * xSize);
-        int top = (int) (r * ySize);
-        int right = (int) (left + xSize);
-        int bottom = (int) (top + ySize);
-
-        return new Rect(left, top, right, bottom);
-    }
-
-    // Returns Rect for given key value in graph's board
-    public Rect getRect(int key) {
-
-        int[] coordinates = getCoordinates(key);
-        int c = (int) coordinates[1];
-        int r = (int) coordinates[0];
 
         int left = (int) (c * xSize);
         int top = (int) (r * ySize);
