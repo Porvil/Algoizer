@@ -108,17 +108,20 @@ public class GraphWrapper {
 
     public boolean addEdge(int src, int des, int weight){
 
-        if(graph.checkContainsVertices(src, des)){
-            if(!graph.directed){
-                graph.addEdge(des, src, weight);//reverse edge
+        if(!graph.checkContainsEdge(src, des)){
+            if(graph.checkContainsVertices(src, des)){
+                if(!graph.directed){
+                    graph.addEdge(des, src, weight);//reverse edge
+                }
+
+                graph.addEdge(src, des, weight);
+
+                update();
+
+                return true;
             }
-
-            graph.addEdge(src, des, weight);
-
-            update();
-
-            return true;
         }
+
 
         return false;
     }

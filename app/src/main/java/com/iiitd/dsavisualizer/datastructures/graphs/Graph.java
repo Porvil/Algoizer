@@ -79,9 +79,11 @@ public class Graph {
 //        map.get(des).removeIf(i -> i == src);
     }
 
+    // earlier length == 0 -> returns true
+    // returns true if all vertices are present, or passed vertices length is 0
     boolean checkContainsVertices(int... vertices){
         if(vertices.length == 0)
-            return true;
+            return false;
 
         for(int vertex : vertices){
             if(!edgeListMap.containsKey(vertex))
@@ -89,6 +91,36 @@ public class Graph {
         }
 
         return true;
+    }
+
+    boolean checkContainsEdge(int src, int des){
+        if(!checkContainsVertices(src, des)){
+            return false;
+        }
+
+        // Undirected
+        if(!directed){
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des){
+                    return true;
+                }
+            }
+
+            for(Edge edge : edgeListMap.get(des)){
+                if(edge.des == src){
+                    return true;
+                }
+            }
+        }
+        else{
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     void print(){
