@@ -87,6 +87,7 @@ public class GraphActivity extends AppCompatActivity {
     FrameLayout fl_graph;
 
     ImageButton btn_closemenu;
+    RadioGroup rg_graphsize;
     RadioGroup rg_weighted;
     RadioGroup rg_directed;
     Button btn_bfs;
@@ -129,6 +130,9 @@ public class GraphActivity extends AppCompatActivity {
     final int LAYOUT_LEFT = R.layout.navigation_graph;
     final int LAYOUT_RIGHT = R.layout.controls_graph;
     boolean isAutoPlay = false;
+    boolean isLargeGraph = false;
+    boolean directed = false;
+    boolean weighted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +191,7 @@ public class GraphActivity extends AppCompatActivity {
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        rg_graphsize = v_menu_right.findViewById(R.id.rg_graphsize);
         rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
         rg_directed = v_menu_right.findViewById(R.id.rg_directed);
         btn_clearcustominput = v_menu_right.findViewById(R.id.btn_clearcustominput);
@@ -658,11 +663,32 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        rg_directed.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rg_graphsize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                boolean directed = false;
+                if (checkedId == R.id.rb_large) {
+                    isLargeGraph = true;
+                }
+                else if (checkedId == R.id.rb_small) {
+                    isLargeGraph = false;
+                }
+
+                // Clears everything
+                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
+
+                // Re-init's everything
+                initCanvasAndGraph();
+
+                graphSequence = null;
+                resetGraphSequence();
+
+            }
+        });
+
+        rg_directed.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (checkedId == R.id.rb_directed) {
                     directed = true;
@@ -683,8 +709,6 @@ public class GraphActivity extends AppCompatActivity {
         rg_weighted.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                boolean weighted = false;
 
                 if (checkedId == R.id.rb_weighted) {
                     weighted = true;
@@ -870,9 +894,6 @@ public class GraphActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        final boolean startDirected = false;
-        final boolean startWeighted = false;
-
         graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
         graphControls.updateDrawables();
 
@@ -889,23 +910,35 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
-                layoutParams.height = zl_graph.getHeight();
-                layoutParams.width = zl_graph.getWidth();
+//                isLargeGraph = true;
 
-                fl_graph.setLayoutParams(layoutParams);
-                fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
+                initCanvasAndGraph();
 
-                fl_graph.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        customCanvas = new CustomCanvas(context, fl_graph, iv_graph, iv_grid, iv_anim, iv_coordinates);
-                        graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted);
-                        updateGraphViewState();
-
-                        zl_graph.panTo(0,0, false);
-                    }
-                });
+//                int rows = GraphSettings.getNoOfRows(isLargeGraph);
+//                int cols = GraphSettings.getNoOfCols(isLargeGraph);
+//
+//                int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+//
+//                int width = cols * px;
+//                int height = rows * px;
+//
+//                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
+//                layoutParams.height = height;
+//                layoutParams.width = width;
+//
+//                fl_graph.setLayoutParams(layoutParams);
+//                fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
+//
+//                fl_graph.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        customCanvas = new CustomCanvas(context, fl_graph, iv_graph, iv_grid, iv_anim, iv_coordinates);
+//                        graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted, isLargeGraph);
+//                        updateGraphViewState();
+//
+//                        zl_graph.panTo(0,0, false);
+//                    }
+//                });
             }
         });
 
@@ -1016,6 +1049,33 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    public void initCanvasAndGraph(){
+        int rows = GraphSettings.getNoOfRows(isLargeGraph);
+        int cols = GraphSettings.getNoOfCols(isLargeGraph);
+
+        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+
+        int width = cols * px;
+        int height = rows * px;
+
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
+        layoutParams.height = height;
+        layoutParams.width = width;
+
+        fl_graph.setLayoutParams(layoutParams);
+        fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
+
+        fl_graph.post(new Runnable() {
+            @Override
+            public void run() {
+                customCanvas = new CustomCanvas(context, fl_graph, iv_graph, iv_grid, iv_anim, iv_coordinates);
+                graphWrapper = new GraphWrapper(context, customCanvas, directed, weighted, isLargeGraph);
+                updateGraphViewState();
+
+                zl_graph.panTo(0,0, false);
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {

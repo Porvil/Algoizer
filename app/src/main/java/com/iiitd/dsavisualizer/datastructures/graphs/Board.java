@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
@@ -31,14 +30,15 @@ public class Board {
     private final int nodeSize = 7;                // in mm
     private final float circleRatio = 0.66f;       // in ratio [0,1]
     private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
-    private final float nodeRadius;                // in pixels [Radius of one node]
-    private final float coordinatesOffset;         // in ratio [0,1]
-    private final int textSizeCoordinates;         // in sp
-    private final int textSize;                    // in sp
-    private final int edgeWidth;                   // in dp
-    private final int edgeArrowWidth;              // in dp
-    private final int arrowLength;                 // in pixels
-
+    private float nodeRadius;                // in pixels [Radius of one node]
+    private float coordinatesOffset;         // in ratio [0,1]
+    private int nodeTextSize;                    // in sp
+    private int coordinatesTextSize;         // in sp
+    private int edgeWidth;                   // in dp
+    private int edgeArrowWidth;              // in dp
+    private int arrowLength;                 // in pixels
+    private int edgeWeightTextSize;      // in pixels
+    
     // Board Variables
     public float X;                                // Width of Board
     public float Y;                                // Height of Board
@@ -49,6 +49,7 @@ public class Board {
     public BoardElement[][] boardElements;         // Contains data about board elements
     public int maxVertices;                        // Max No. of Vertices possible
     public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
+    public boolean isLargeGraph;                   //
 
     // Paint Variables
     private Paint paintGrid;                       // Grid
@@ -65,24 +66,23 @@ public class Board {
     private Paint paintEdgeWeightAnim;             // Animation Edge Weight
 
 
-    public Board(Context context, CustomCanvas customCanvas) {
+    public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
-        this.X = customCanvas.imageViewGraph.getWidth();
-        this.Y = customCanvas.imageViewGraph.getHeight();
         this.customCanvas = customCanvas;
+        this.isLargeGraph = isLargeGraph;
 
-        // px = 1mm
-        float px = UtilUI.mmToPx(context, 1);
-        float cm = px * nodeSize;
-        float x = (X / cm);
-        float y = (Y / cm);
+        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
 
-        xCount = (int) Math.ceil(x);
-        yCount = (int) Math.ceil(y);
+        this.yCount = GraphSettings.getNoOfRows(isLargeGraph);
+        this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
 
-        xSize = (this.X / xCount);
-        ySize = (this.Y / yCount);
-        maxVertices = yCount * xCount;
+        this.xSize = px;
+        this.ySize = px;
+
+        this.X = xCount * xSize;
+        this.Y = yCount * ySize;
+
+        this.maxVertices = yCount * xCount;
 
         System.out.println("----------------------------------------");
         System.out.println("Board Width(X)     = " + X      + " | " + "Board Height(Y)    = " + Y);
@@ -103,11 +103,15 @@ public class Board {
             }
         }
 
-        this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
-        this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
-        this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
-        this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
 
+//        this.nodeTextSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
+        this.nodeTextSize = (int) UtilUI.spToPx(context, GraphSettings.getNodeTextSize(isLargeGraph));
+        this.coordinatesTextSize = (int) UtilUI.spToPx(context, GraphSettings.getCoordinatesTextSize(isLargeGraph));
+        this.edgeWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeWidth(isLargeGraph));
+        this.edgeArrowWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeArrowWidth(isLargeGraph));
+        this.edgeWeightTextSize = (int) UtilUI.spToPx(context, GraphSettings.getEdgeWeightTextSize(isLargeGraph));
+
+        System.out.println("arrowedegewith = " + edgeArrowWidth + " | " + edgeWidth + "}} " + nodeTextSize);
         // Initializes all Paint Variables
         initPaints();
 
@@ -131,7 +135,7 @@ public class Board {
         // Grid Coordinates
         this.paintGridCoordinates = new Paint();
         this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
-        this.paintGridCoordinates.setTextSize(textSizeCoordinates);
+        this.paintGridCoordinates.setTextSize(coordinatesTextSize);
         this.paintGridCoordinates.setColor(light);
 
         // Vertex
@@ -141,7 +145,7 @@ public class Board {
         // Vertex Text
         this.paintVertexText = new Paint();
         this.paintVertexText.setTextAlign(Paint.Align.CENTER);
-        this.paintVertexText.setTextSize(textSize);
+        this.paintVertexText.setTextSize(nodeTextSize);
         this.paintVertexText.setColor(white);
         this.paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
@@ -158,7 +162,7 @@ public class Board {
         // Edge Weight
         this.paintEdgeWeight = new Paint();
         this.paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
-        this.paintEdgeWeight.setTextSize(textSize);
+        this.paintEdgeWeight.setTextSize(edgeWeightTextSize);
         this.paintEdgeWeight.setColor(medium);
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
@@ -169,7 +173,7 @@ public class Board {
         // Animation Vertex Text
         this.paintVertexTextAnim = new Paint();
         this.paintVertexTextAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintVertexTextAnim.setTextSize(textSize);
+        this.paintVertexTextAnim.setTextSize(nodeTextSize);
         this.paintVertexTextAnim.setColor(white);
         this.paintVertexTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
@@ -186,7 +190,7 @@ public class Board {
         // Animation Edge Weight
         this.paintEdgeWeightAnim = new Paint();
         this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintEdgeWeightAnim.setTextSize(textSize);
+        this.paintEdgeWeightAnim.setTextSize(edgeWeightTextSize);
         this.paintEdgeWeightAnim.setColor(dark);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     }

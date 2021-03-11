@@ -268,7 +268,12 @@ public class UtilUI {
     }
 
     public static float dpToPx(Context context, int dp){
-        return dp * context.getResources().getDisplayMetrics().density;
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+//        return dp * context.getResources().getDisplayMetrics().density;
+    }
+
+    public static float spToPx(Context context, float sp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
     public static float mmToPx(Context context, int mm){

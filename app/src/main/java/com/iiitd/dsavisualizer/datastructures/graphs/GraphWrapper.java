@@ -13,16 +13,18 @@ import java.util.Map;
 public class GraphWrapper {
     public boolean directed;
     public boolean weighted;
+    public boolean isLargeGraph;
     public Board board;
     public Graph graph;
 
     private final int MAX_BOUNDS = 1000;
 
-    public GraphWrapper(Context context, CustomCanvas customCanvas, boolean directed, boolean weighted) {
+    public GraphWrapper(Context context, CustomCanvas customCanvas, boolean directed, boolean weighted, boolean isLargeGraph) {
         this.directed = directed;
         this.weighted = weighted;
+        this.isLargeGraph = isLargeGraph;
         graph = new Graph(directed, weighted);
-        board = new Board(context, customCanvas);
+        board = new Board(context, customCanvas, isLargeGraph);
     }
 
     public void changeDirected(boolean directed){
