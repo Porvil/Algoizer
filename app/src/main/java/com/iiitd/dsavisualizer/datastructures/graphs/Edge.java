@@ -6,6 +6,7 @@ public class Edge {
     public int des;
     public int weight;
     public boolean isDirected;
+    public boolean isFirstEdge;
 
     public Edge(int src, int des) {
         this.src = src;
@@ -13,10 +14,11 @@ public class Edge {
         this.weight = 1;
     }
 
-    public Edge(int src, int des, int weight) {
+    public Edge(int src, int des, int weight, boolean isFirstEdge) {
         this.src = src;
         this.des = des;
         this.weight = weight;
+        this.isFirstEdge = isFirstEdge;
     }
 
     @Override

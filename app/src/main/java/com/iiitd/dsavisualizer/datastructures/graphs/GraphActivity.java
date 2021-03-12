@@ -40,6 +40,7 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
+import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -94,6 +95,8 @@ public class GraphActivity extends AppCompatActivity {
     EditText et_bfs;
     Button btn_dfs;
     EditText et_dfs;
+    Button btn_dijkstra;
+    EditText et_dijkstra;
     ImageButton btn_clearcustominput;
     ImageButton btn_copygraph;
     ImageButton btn_pastecustominput;
@@ -188,6 +191,8 @@ public class GraphActivity extends AppCompatActivity {
         et_bfs = v_menu_left.findViewById(R.id.et_bfs);
         btn_dfs = v_menu_left.findViewById(R.id.btn_dfs);
         et_dfs = v_menu_left.findViewById(R.id.et_dfs);
+        btn_dijkstra = v_menu_left.findViewById(R.id.btn_dijkstra);
+        et_dijkstra = v_menu_left.findViewById(R.id.et_dijkstra);
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
@@ -417,6 +422,43 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+            }
+        });
+
+        btn_dijkstra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String s = et_dijkstra.getText().toString();
+                int vertexNumber;
+                if(!s.isEmpty()){
+                    vertexNumber = Integer.parseInt(s.trim());
+                }
+                else{
+                    et_dijkstra.setError("Cant be empty");
+                    return;
+                }
+
+                if(graphWrapper.getNoOfNodes() <= 0){
+                    et_dijkstra.setError("Empty Graph");
+                    return;
+                }
+                else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
+                    et_dijkstra.setError("Vertex not present in graph");
+                    return;
+                }
+
+                resetGraphSequence();
+                graphWrapper.board.clearCanvasAnim();
+
+                Dijkstra dijkstra = new Dijkstra(graphWrapper.graph);
+                dijkstra.run(vertexNumber);
+
+
+                dl_main.closeDrawer(GravityCompat.START);
+
+//                System.out.println(graphSequence);
+//                UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
             }
         });
 
@@ -861,7 +903,7 @@ public class GraphActivity extends AppCompatActivity {
                         for(Edge edge : graphAnimationState.edges){
                             Rect rect1 = graphWrapper.board.getRect(edge.src);
                             Rect rect2 = graphWrapper.board.getRect(edge.des);
-                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted);
+                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted, graphWrapper.directed);
                         }
 
                         graphWrapper.board.refreshAnim();
@@ -901,8 +943,10 @@ public class GraphActivity extends AppCompatActivity {
         ll_anim.post(new Runnable() {
             @Override
             public void run() {
-                graphTreePopUp = new GraphTreePopUp(context, 800, ll_anim.getHeight(), ll_anim);
-                graphTreeDSPopUp = new GraphDSPopUp(context, 600, ll_anim.getHeight(), ll_anim);
+                int treePopUpWidth = (int) UtilUI.dpToPx(context, 200);
+                int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
+                graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, ll_anim.getHeight(), ll_anim);
+                graphTreeDSPopUp = new GraphDSPopUp(context, treeDSPopUpWidth, ll_anim.getHeight(), ll_anim);
             }
         });
 
@@ -1310,7 +1354,7 @@ public class GraphActivity extends AppCompatActivity {
                         int des = Integer.parseInt(chars[2]);
                         int weight = weighted ? Integer.parseInt(chars[3]) : 1;
 
-                        edges.add(new Edge(src, des, weight));
+                        edges.add(new Edge(src, des, weight, directed));
                         break;
                     }
                     default:

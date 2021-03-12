@@ -21,9 +21,9 @@ public class Graph {
     }
 
     // Add edges to the graph
-    boolean addEdge(int src, int des, int weight) {
+    boolean addEdge(int src, int des, int weight, boolean isDirectedEdgeMain) {
         if(checkContainsVertices(src, des)) {
-            edgeListMap.get(src).add(new Edge(src, des, weight));
+            edgeListMap.get(src).add(new Edge(src, des, weight, isDirectedEdgeMain));
             return true;
         }
 

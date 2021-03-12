@@ -51,7 +51,7 @@ public class DFS {
         this.stack = new Stack<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1, -1);
+            VertexCLRS vertexCLRS = VertexCLRS.dfsVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
         }
 
@@ -101,13 +101,13 @@ public class DFS {
             public int compare(Map.Entry<Integer, VertexCLRS> o1,
                                Map.Entry<Integer, VertexCLRS> o2)
             {
-                return o2.getValue().f - o1.getValue().f;
+                return o2.getValue().finishTime - o1.getValue().finishTime;
             }
         });
 
         int maxRows = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            maxRows = entry.getValue().f >= 0 ? Math.max(maxRows, entry.getValue().dfsDepth) : maxRows;
+            maxRows = entry.getValue().finishTime >= 0 ? Math.max(maxRows, entry.getValue().dfsDepth) : maxRows;
         }
 
         ArrayList<Integer>[] dfsLayers = new ArrayList[maxRows+1];
@@ -117,7 +117,7 @@ public class DFS {
         }
 
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            if(entry.getValue().f >= 0) {
+            if(entry.getValue().finishTime >= 0) {
                 dfsLayers[entry.getValue().dfsDepth].add(entry.getKey());
             }
         }
@@ -201,7 +201,7 @@ public class DFS {
 //        System.out.println("stack  = " + stack);
         time++;
 
-        vertexCLRS.dist = time;
+        vertexCLRS.startTime = time;
         vertexCLRS.color = GRAY;
         if(vertexCLRS.parent != -1){
             vertexCLRS.dfsDepth = map.get(vertexCLRS.parent).dfsDepth + 1;
@@ -216,7 +216,7 @@ public class DFS {
             // Non-White
             if(map.get(v).color != WHITE) {
                 if (map.get(v).color == BLACK) {
-                    if (map.get(u).dist < map.get(v).dist) {
+                    if (map.get(u).startTime < map.get(v).startTime) {
                         System.out.println("FORWARD EDGE : " + u + " -> " + v);
                         graphTree.addEdge(new EdgePro(edge, FORWARD));
                     }
@@ -263,7 +263,7 @@ public class DFS {
 
         vertexCLRS.color = BLACK;
         time++;
-        vertexCLRS.f = time;
+        vertexCLRS.finishTime = time;
 
         Integer pop = stack.pop();
         System.out.println("Popped = " + pop);
@@ -288,7 +288,7 @@ public class DFS {
         this.stack = new Stack<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1, -1);
+            VertexCLRS vertexCLRS = VertexCLRS.dfsVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
         }
 
@@ -335,7 +335,7 @@ public class DFS {
             public int compare(Map.Entry<Integer, VertexCLRS> o1,
                                Map.Entry<Integer, VertexCLRS> o2)
             {
-                return o2.getValue().f - o1.getValue().f;
+                return o2.getValue().finishTime - o1.getValue().finishTime;
             }
         });
 

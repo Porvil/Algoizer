@@ -59,14 +59,14 @@ public class BFS {
         HashMap<Integer, VertexCLRS> map = new HashMap<>();
 
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexCLRS vertexCLRS = new VertexCLRS(entry.getValue(), WHITE, Integer.MAX_VALUE, -1);
+            VertexCLRS vertexCLRS = VertexCLRS.bfsVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
         }
         queue.add(s);
 
         Vertex vertex = graph.vertexMap.get(s);
         map.get(s).color = GRAY;
-        map.get(s).dist = 0;
+        map.get(s).bfsDist = 0;
         map.get(s).parent = -1;
 
 
@@ -103,7 +103,7 @@ public class BFS {
                 if (map.get(v).color == WHITE) {
 
                     map.get(v).color = GRAY;
-                    map.get(v).dist = map.get(u).dist + 1;
+                    map.get(v).bfsDist = map.get(u).bfsDist + 1;
                     map.get(v).parent = u;
 
                     Vertex vertex1 = graph.vertexMap.get(v);
@@ -141,7 +141,7 @@ public class BFS {
                 }
 
                 // EDGE CLASSIFICATION
-                if (map.get(v).dist == map.get(u).dist + 1) {
+                if (map.get(v).bfsDist == map.get(u).bfsDist + 1) {
 //                    System.out.println("TREE EDGE : " + u + " -> " + v);
                     graphTree.addEdge(new EdgePro(edge, TREE));
                 }
@@ -149,10 +149,10 @@ public class BFS {
                     int src = u;
                     int des = v;
 
-                    while (map.get(src).dist > 0 && map.get(src).dist > map.get(des).dist) {
+                    while (map.get(src).bfsDist > 0 && map.get(src).bfsDist > map.get(des).bfsDist) {
                         src = map.get(src).parent;
                     }
-                    while (map.get(des).dist > 0 && map.get(des).dist > map.get(src).dist) {
+                    while (map.get(des).bfsDist > 0 && map.get(des).bfsDist > map.get(src).bfsDist) {
                         des = map.get(des).parent;
                     }
 
@@ -171,13 +171,17 @@ public class BFS {
 
         }
 
+        // ALL DONE
+        for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+        }
 
         // add vertices to the graphTree
         List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
 
         int maxRows = 0;
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            maxRows = entry.getValue().dist != Integer.MAX_VALUE ? Math.max(maxRows, entry.getValue().dist) : maxRows;
+            maxRows = entry.getValue().bfsDist != Integer.MAX_VALUE ? Math.max(maxRows, entry.getValue().bfsDist) : maxRows;
         }
 
         ArrayList<Integer>[] bfsLayers = new ArrayList[maxRows+1];
@@ -187,8 +191,8 @@ public class BFS {
         }
 
         for(Map.Entry<Integer, VertexCLRS> entry : list){
-            if(entry.getValue().dist != Integer.MAX_VALUE && entry.getValue().dist >= 0) {
-                bfsLayers[entry.getValue().dist].add(entry.getKey());
+            if(entry.getValue().bfsDist != Integer.MAX_VALUE && entry.getValue().bfsDist >= 0) {
+                bfsLayers[entry.getValue().bfsDist].add(entry.getKey());
             }
         }
 

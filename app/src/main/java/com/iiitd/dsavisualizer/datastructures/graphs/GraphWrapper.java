@@ -113,10 +113,10 @@ public class GraphWrapper {
         if(!graph.checkContainsEdge(src, des)){
             if(graph.checkContainsVertices(src, des)){
                 if(!graph.directed){
-                    graph.addEdge(des, src, weight);//reverse edge
+                    graph.addEdge(des, src, weight, false);//reverse edge
                 }
 
-                graph.addEdge(src, des, weight);
+                graph.addEdge(src, des, weight, true);
 
                 update();
 

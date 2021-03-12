@@ -260,7 +260,18 @@ public class Board {
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdgeGraph(rect1, rect2, edge, weighted);
+
+                //Undirected
+                if(!graph.directed){
+                    if(edge.isFirstEdge){
+                        drawEdgeGraph(rect1, rect2, edge, weighted, graph.directed);
+                    }
+                }
+                else{
+                    drawEdgeGraph(rect1, rect2, edge, weighted, graph.directed);
+                }
+
+//                drawEdgeGraph(rect1, rect2, edge, weighted);
             }
         }
 
@@ -292,25 +303,25 @@ public class Board {
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
+    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge, boolean weighted,boolean isDirected) {
         __drawEdge(customCanvas.canvasGraph,
                 rect1, rect2,
                 paintEdge, paintEdgeArrows, paintEdgeWeight,
-                edge, weighted);
+                edge, weighted, isDirected);
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge, boolean weighted) {
+    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge, boolean weighted, boolean isDirected) {
         __drawEdge(customCanvas.canvasAnimation,
                 rect1, rect2,
                 paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim,
-                edge, weighted);
+                edge, weighted, isDirected);
     }
 
     public void __drawEdge(Canvas canvas,
                            Rect rect1, Rect rect2,
                            Paint paintE, Paint paintEA, Paint paintEW,
-                           Edge edge, boolean weighted) {
+                           Edge edge, boolean weighted, boolean isDirected) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -332,7 +343,11 @@ public class Board {
         }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
-        arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
+
+        if(isDirected) {
+            arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
+        }
+
     }
 
     public void arrow12(float x, float y, float x1, float y1, Canvas canvas, Paint paintEA) {
