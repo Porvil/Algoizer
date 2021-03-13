@@ -58,6 +58,16 @@ public class Util {
         return Math.toDegrees(startRadians);
     }
 
+    public static float getAngle(float x1, float y1, float x2, float y2) {
+        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+
+        if(angle < 0){
+            angle += 360;
+        }
+
+        return angle;
+    }
+
     public static boolean writeGraphToStorage(String graphString, String fileName){
         //Checking the availability state of the External Storage.
         if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {

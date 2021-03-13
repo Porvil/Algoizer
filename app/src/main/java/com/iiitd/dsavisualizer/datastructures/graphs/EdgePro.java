@@ -7,7 +7,8 @@ public class EdgePro implements Comparable<EdgePro>{
     public int src;
     public int des;
     public int weight;
-    public boolean isDirected;
+//    public boolean isDirected;
+    public boolean isFirstEdge;
     public EdgeClass edgeClass;
 
     public EdgePro(int src, int des, EdgeClass edgeClass) {
@@ -29,6 +30,7 @@ public class EdgePro implements Comparable<EdgePro>{
         this.des = edge.des;
         this.weight = edge.weight;
         this.edgeClass = edgeClass;
+        this.isFirstEdge = edge.isFirstEdge;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class EdgePro implements Comparable<EdgePro>{
                 "src=" + src +
                 ", des=" + des +
                 ", weight=" + weight +
-                ", isDirected=" + isDirected +
+//                ", isDirected=" + isDirected +
                 ", edgeClass=" + edgeClass +
                 '}';
     }
@@ -57,7 +59,8 @@ public class EdgePro implements Comparable<EdgePro>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(src, des, weight, isDirected);
+        return Objects.hash(src, des, weight);
+//        return Objects.hash(src, des, weight, isDirected);
     }
 
     @Override

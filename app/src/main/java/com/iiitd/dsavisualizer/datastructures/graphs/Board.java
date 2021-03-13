@@ -103,15 +103,12 @@ public class Board {
             }
         }
 
-
-//        this.nodeTextSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
         this.nodeTextSize = (int) UtilUI.spToPx(context, GraphSettings.getNodeTextSize(isLargeGraph));
         this.coordinatesTextSize = (int) UtilUI.spToPx(context, GraphSettings.getCoordinatesTextSize(isLargeGraph));
         this.edgeWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeWidth(isLargeGraph));
         this.edgeArrowWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeArrowWidth(isLargeGraph));
         this.edgeWeightTextSize = (int) UtilUI.spToPx(context, GraphSettings.getEdgeWeightTextSize(isLargeGraph));
 
-        System.out.println("arrowedegewith = " + edgeArrowWidth + " | " + edgeWidth + "}} " + nodeTextSize);
         // Initializes all Paint Variables
         initPaints();
 
@@ -119,8 +116,8 @@ public class Board {
         drawGrid();
     }
 
+    // Initializes all Paint Variables
     private void initPaints(){
-
         int shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
         int light = UtilUI.getCurrentThemeColor(context, R.attr.light);
         int base = UtilUI.getCurrentThemeColor(context, R.attr.base);
@@ -195,6 +192,7 @@ public class Board {
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     }
 
+    // Draw the complete Grid
     private void drawGrid() {
         Rect rect = new Rect();
 
@@ -227,134 +225,149 @@ public class Board {
                 customCanvas.canvasCoordinates.drawText(text, x, y , paintGridCoordinates);
             }
         }
-
     }
 
-    // Re-Draws the complete graph
+    // Re-Draws the Complete Graph
     public void update(Graph graph){
-        System.out.println("REDRAWING CANVAS");
+        System.out.println("RE-DRAWING CANVAS");
 
-        // clears canvas
-        clearCanvasGraph();
+        // Clears Canvas
+        clearGraph(false);
 
-        boolean weighted = graph.weighted;
-
-        // Nodes
+        // Vertices
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 if(boardElements[r][c].occupied){
-                    Rect rect = getRect(r, c);
-                    drawNodeGraph(rect, boardElements[r][c].value);
+                    drawVertex(boardElements[r][c].value, false);
                 }
             }
         }
 
-        //Edges
+        // Edges
         for(Map.Entry<Integer, ArrayList<Edge>> vertex : graph.edgeListMap.entrySet() ){
-
             for (Edge edge : vertex.getValue()) {
-
-                int[] vertex1 = getCoordinates(vertex.getKey());
-                int[] vertex2 = getCoordinates(edge.des);
-
-                Rect rect1 = getRect(vertex1[0], vertex1[1]);
-                Rect rect2 = getRect(vertex2[0], vertex2[1]);
-
-
-                //Undirected
-                if(!graph.directed){
-                    if(edge.isFirstEdge){
-                        drawEdgeGraph(rect1, rect2, edge, weighted, graph.directed);
-                    }
-                }
-                else{
-                    drawEdgeGraph(rect1, rect2, edge, weighted, graph.directed);
-                }
-
-//                drawEdgeGraph(rect1, rect2, edge, weighted);
+                drawEdge(edge, graph.directed, graph.weighted, false);
             }
         }
 
-        refreshGraph();
+        refresh(false);
     }
 
-    // Draws a single Node
-    public void drawNodeGraph(Rect rect, int name) {
-        __drawNode(customCanvas.canvasGraph, rect, name, paintVertex, paintVertexText);
-    }
+    // Draws a Vertex
+    public void drawVertex(int vertexValue, boolean isAnim){
+        // Canvas and Paint Variables
+        Canvas canvas;
+        Paint pVertex;
+        Paint pVertexText;
 
-    // Draws a single Node
-    public void drawNodeAnim(Rect rect, int name) {
-        __drawNode(customCanvas.canvasAnimation, rect, name, paintVertexAnim, paintVertexTextAnim);
-    }
+        if(isAnim){
+            canvas = customCanvas.canvasAnimation;
+            pVertex = paintVertexAnim;
+            pVertexText = paintVertexTextAnim;
+        }
+        else{
+            canvas = customCanvas.canvasGraph;
+            pVertex = paintVertex;
+            pVertexText = paintVertexText;
+        }
 
-    // Draws a single Node
-    public void __drawNode(Canvas canvas, Rect rect, int name, Paint paintV, Paint paintT) {
+        Rect rect = getRect(vertexValue);
         int x = rect.centerX();
         int y = rect.centerY();
 
-        String text = String.valueOf(name);
+        String text = String.valueOf(vertexValue);
 
-        canvas.drawCircle(x, y, nodeRadius, paintV);
+        canvas.drawCircle(x, y, nodeRadius, pVertex);
 
         Rect rectText = new Rect();
-        paintT.getTextBounds(text, 0, text.length(), rectText);
-        canvas.drawText(text, x, y - (paintT.descent() + paintT.ascent()) / 2, paintVertexText);
+        pVertexText.getTextBounds(text, 0, text.length(), rectText);
+        canvas.drawText(text, x, y - (pVertexText.descent() + pVertexText.ascent()) / 2, paintVertexText);
     }
 
-    // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2, Edge edge, boolean weighted,boolean isDirected) {
-        __drawEdge(customCanvas.canvasGraph,
-                rect1, rect2,
-                paintEdge, paintEdgeArrows, paintEdgeWeight,
-                edge, weighted, isDirected);
-    }
+    // Draws an Edge
+    public void drawEdge(Edge edge, boolean isDirected, boolean isWeighted, boolean isAnim){
+        // Canvas and Paint Variables
+        Canvas canvas;
+        Paint pEdge;
+        Paint pEdgeArrow;
+        Paint pEdgeWeight;
 
-    // Draws a single EdgeOld
-    public void drawEdgeAnim(Rect rect1, Rect rect2, Edge edge, boolean weighted, boolean isDirected) {
-        __drawEdge(customCanvas.canvasAnimation,
-                rect1, rect2,
-                paintEdgeAnim, paintEdgeArrowsAnim, paintEdgeWeightAnim,
-                edge, weighted, isDirected);
-    }
+        if(isAnim){
+            canvas = customCanvas.canvasAnimation;
+            pEdge = paintEdgeAnim;
+            pEdgeArrow = paintEdgeArrowsAnim;
+            pEdgeWeight = paintEdgeWeightAnim;
+        }
+        else{
+            canvas = customCanvas.canvasGraph;
+            pEdge = paintEdge;
+            pEdgeArrow = paintEdgeArrows;
+            pEdgeWeight = paintEdgeWeight;
+        }
 
-    public void __drawEdge(Canvas canvas,
-                           Rect rect1, Rect rect2,
-                           Paint paintE, Paint paintEA, Paint paintEW,
-                           Edge edge, boolean weighted, boolean isDirected) {
-        double[] lineCoordinates = getLineCoordinates(rect1, rect2);
+        // Math Variables
+        Rect srcRect = getRect(edge.src);
+        Rect desRect = getRect(edge.des);
+
+        double[] lineCoordinates = getLineCoordinates(srcRect, desRect);
 
         float lx1 = (float) lineCoordinates[0];
         float ly1 = (float) lineCoordinates[1];
-
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
 
-        double degree = getAngle(lx1, ly1, lx2, ly2);
+        double degree = Util.getAngle(lx1, ly1, lx2, ly2);
 
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
 
-        if(edge != null && weighted) {
-            canvas.save();
-            canvas.rotate((float) degree, x, y);
-            canvas.drawText(String.valueOf(edge.weight), x, y-20, paintEW);
-            canvas.restore();
+        // Directed Graph
+        if(isDirected){
+            if(isWeighted){
+                canvas.save();
+                canvas.rotate((float) degree, x, y);
+                canvas.drawText(String.valueOf(edge.weight), x, y-20, pEdgeWeight);
+                canvas.restore();
+            }
+
+            canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
+            drawArrow(lx1, ly1, lx2, ly2, canvas, pEdgeArrow);
         }
+        // Undirected Graph
+        else{
+            // If firstEdge, then do it same as directed, except drawing arrows
+            if (edge.isFirstEdge) {
+                if (isWeighted) {
+                    canvas.save();
+                    canvas.rotate((float) degree, x, y);
+                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
+                    canvas.restore();
+                }
 
-        canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
+                canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
+            }
+            // If !first edge && is for animation then reverse the edge and recalculate values
+            else if(isAnim){
+                degree = Util.getAngle(lx2, ly2, lx1, ly1);
 
-        if(isDirected) {
-            arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
+                x = lx2 + (lx1 - lx2)/2;
+                y = ly2 + (ly1 - ly2)/2;
+
+                if (isWeighted) {
+                    canvas.save();
+                    canvas.rotate((float) degree, x, y);
+                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
+                    canvas.restore();
+                }
+
+                canvas.drawLine(lx2, ly2, lx1, ly1, pEdge);
+            }
         }
 
     }
 
-    public void arrow12(float x, float y, float x1, float y1, Canvas canvas, Paint paintEA) {
-        __arrow12(canvas, x, y, x1, y1, paintEA);
-    }
-
-    private void __arrow12(Canvas canvas, float x, float y, float x1, float y1, Paint paintEA) {
+    // Draws arrow lines for src -> des Edge
+    public void drawArrow(float x, float y, float x1, float y1, Canvas canvas, Paint paint) {
         double degree = Util.calculateDegree(x, x1, y, y1);
 
         float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
@@ -363,28 +376,22 @@ public class Board {
         float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
         float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
 
-        canvas.drawLine(x1, y1, endX1, endY1, paintEA);
-        canvas.drawLine(x1, y1, endX2, endY2, paintEA);
+        canvas.drawLine(x1, y1, endX1, endY1, paint);
+        canvas.drawLine(x1, y1, endX2, endY2, paint);
     }
 
-    // Adds VertexOld element to grid element and calls drawNode
+    // Adds a Vertex and calls drawVertex [prevents re-drawing the complete graph]
     public void addVertex(int row, int col, int name) {
-        // Change its state and add vertexOld reference
         boardElements[row][col].occupied = true;
         boardElements[row][col].value = name;
-//        data[row][col].vertexOld = vertexOld;
 
-        Rect rect = getRect(row, col);
-        drawNodeGraph(rect, boardElements[row][col].value);
+        drawVertex(boardElements[row][col].value, false);
     }
 
-    // Adds VertexOld element to grid element and calls drawNode
+    // Removes a Vertex
     public void removeVertex(int row, int col) {
-        // Change its state and add vertexOld reference
         boardElements[row][col].occupied = false;
         boardElements[row][col].value = -1;
-//        data[row][col].vertexOld = vertexOld;
-
     }
 
     // Returns state of the grid element, whether it is being used or not
@@ -392,6 +399,7 @@ public class Board {
         return boardElements[row][col].occupied;
     }
 
+    // Returns coordinates for the given key, if key is not present null is returned
     public int[] getCoordinates(int key){
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
@@ -405,31 +413,19 @@ public class Board {
     }
 
     // Returns Rect for given grid[row][col]
-    public Rect getRect(float row, float col) {
-        int c = (int) col;
-        int r = (int) row;
-
-        int left = (int) (c * xSize);
-        int top = (int) (r * ySize);
+    public Rect getRect(int row, int col) {
+        int left = (int) (col * xSize);
+        int top = (int) (row * ySize);
         int right = (int) (left + xSize);
         int bottom = (int) (top + ySize);
 
         return new Rect(left, top, right, bottom);
     }
 
-    // Returns Rect for given key value in graph's board
+    // Returns Rect for given key value in graph's board, NPE if key is not present in graph
     public Rect getRect(int key) {
-
         int[] coordinates = getCoordinates(key);
-        int c = (int) coordinates[1];
-        int r = (int) coordinates[0];
-
-        int left = (int) (c * xSize);
-        int top = (int) (r * ySize);
-        int right = (int) (left + xSize);
-        int bottom = (int) (top + ySize);
-
-        return new Rect(left, top, right, bottom);
+        return getRect(coordinates[0], coordinates[1]);
     }
 
     // Returns radius for the node
@@ -465,6 +461,7 @@ public class Board {
         return new double[]{a1,b1,a2,b2};
     }
 
+    // Returns a Random empty grid element slot for a vertex
     public Pair<Integer, Integer> getRandomAvailableNode(){
         ArrayList<Pair<Integer, Integer>> available = new ArrayList<>();
         for (int r = 0; r < yCount; r++) {
@@ -481,6 +478,7 @@ public class Board {
         return available.get(new Random().nextInt(available.size()));
     }
 
+    // Resets the graph
     public void reset(Graph graph){
         this.boardElements = new BoardElement[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
@@ -492,43 +490,38 @@ public class Board {
         update(graph);
     }
 
-    public void clearCanvasGraph(){
-        __clearCanvas(customCanvas.canvasGraph);
-        refreshGraph();
-    }
+    // Clears the graph and calls refresh
+    public void clearGraph(boolean isAnim){
+        Canvas canvas;
 
-    public void clearCanvasAnim(){
-        __clearCanvas(customCanvas.canvasAnimation);
-        refreshAnim();
-    }
+        if(isAnim){
+            canvas = customCanvas.canvasAnimation;
+        }
+        else{
+            canvas = customCanvas.canvasGraph;
+        }
 
-    private void __clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        refresh(isAnim);
     }
 
-    public void refreshAnim(){
-        __refresh(customCanvas.imageViewGraph);
-    }
+    // Refreshes the graph by calling invalidate()
+    public void refresh(boolean isAnim){
+        ImageView imageView;
 
-    public void refreshGraph(){
-        __refresh(customCanvas.imageViewAnimation);
-    }
+        if(isAnim){
+            imageView = customCanvas.imageViewAnimation;
+        }
+        else{
+            imageView = customCanvas.imageViewGraph;
+        }
 
-    private void __refresh(ImageView imageView){
         imageView.invalidate();
     }
 
-    public float getAngle(float x1, float y1, float x2, float y2) {
-        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
-
-        if(angle < 0){
-            angle += 360;
-        }
-
-        return angle;
-    }
-
-    // Below functions not used currently
+    /*
+    Below functions not used currently, DEBUGGING STAGE
+    */
     public int[] getCurrentLimits(){
         int row_min = yCount-1;
         int row_max = 0;

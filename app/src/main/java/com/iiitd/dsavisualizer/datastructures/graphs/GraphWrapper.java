@@ -182,23 +182,25 @@ public class GraphWrapper {
         return true;
     }
 
+    // Resets the graph
     public void reset(){
         this.graph = new Graph(directed, weighted);
         board.reset(graph);
     }
 
+    // Minimizes the graph
     public void minimizeGraph(ArrayList<Vertex> vertices){
 
         int maxX = -1;
         int maxY = -1;
+        int gap = 0;
 
         for(Vertex vertex : vertices){
             maxX = Math.max(maxX, vertex.col);
             maxY = Math.max(maxY, vertex.row);
         }
 
-
-        // compress
+        // Compress
         int[] row = new int[maxY+1];
         int[] col = new int[maxX+1];
 
@@ -209,47 +211,46 @@ public class GraphWrapper {
             }
         }
 
-        //rows
-        {
-            int gap = 0;
-            for (int i = row.length-1; i >= 0; i--) {
-                if (row[i] == 0) {
-                    gap++;
-                } else {
-                    if (gap > 0) {
-                        for(Vertex vertex : vertices){
-                            if(vertex.row != -1 && vertex.row > i)
-                                vertex.row -= gap;
+        // Compress Rows
+        gap = 0;
+        for (int i = row.length-1; i >= 0; i--) {
+            if (row[i] == 0) {
+                gap++;
+            }
+            else {
+                if(gap > 0) {
+                    for(Vertex vertex : vertices){
+                        if(vertex.row != -1 && vertex.row > i) {
+                            vertex.row -= gap;
                         }
                     }
-
-                    gap = 0;
                 }
+                gap = 0;
             }
         }
 
-        //cols
-        {
-            int gap = 0;
-            for (int i = col.length - 1; i >= 0; i--) {
-                if (col[i] == 0) {
-                    gap++;
-                } else {
-                    if (gap > 0) {
-                        for(Vertex vertex : vertices){
-                            if(vertex.col != -1 && vertex.col > i){
-                                vertex.col -= gap;
-                            }
+        // Compress Cols
+        gap = 0;
+
+        for (int i = col.length - 1; i >= 0; i--) {
+            if (col[i] == 0) {
+                gap++;
+            }
+            else {
+                if(gap > 0) {
+                    for(Vertex vertex : vertices){
+                        if(vertex.col != -1 && vertex.col > i){
+                            vertex.col -= gap;
                         }
                     }
-
-                    gap = 0;
                 }
+                gap = 0;
             }
         }
 
     }
 
+    // Checks if all vertices can be placed on the graph or not
     public boolean checkBounds(ArrayList<Vertex> data){
 
         if(data.size() == 0)
@@ -279,6 +280,7 @@ public class GraphWrapper {
 
     }
 
+    // Returns false if absolute location of vertices is higher than MAX_BOUNDS
     public boolean checkPerformanceBounds(ArrayList<Vertex> data){
 
         if(data.size() == 0)
@@ -292,13 +294,13 @@ public class GraphWrapper {
             if(vertex.row != -1 && vertex.col != -1) {
                 maxX = Math.max(maxX, vertex.col);
                 maxY = Math.max(maxY, vertex.row);
-
             }
         }
 
         return !(maxX < MAX_BOUNDS && maxY < MAX_BOUNDS);
     }
 
+    // Checks whether if graph can be minimized or not
     public boolean checkIfMinimizable(ArrayList<Vertex> data) {
 
         if (data.size() == 0)
@@ -327,7 +329,7 @@ public class GraphWrapper {
         StringBuilder stringBuilder = new StringBuilder();
         String newLine = "\n";
 
-        //graph type
+        // Graph Type
         stringBuilder.append("D ")
                 .append(directed ? "1" : "0")
                 .append(newLine)
@@ -335,13 +337,13 @@ public class GraphWrapper {
                 .append(weighted ? "1" : "0")
                 .append(newLine);
 
-        //vertices
+        // No of Vertices
         int noOfVertices = graph.noOfVertices;
         stringBuilder.append("VC ")
                 .append(noOfVertices)
                 .append(newLine);
 
-        //vertices
+        // Vertices
         for (Map.Entry<Integer, Vertex> vertexEntry : graph.vertexMap.entrySet()) {
             stringBuilder.append("VA ")
                     .append(vertexEntry.getKey())
@@ -352,7 +354,7 @@ public class GraphWrapper {
                     .append(newLine);
         }
 
-        //edges
+        // Edges
         for (Map.Entry<Integer, ArrayList<Edge>> entry : graph.edgeListMap.entrySet()) {
             for (Edge i : entry.getValue()) {
                 stringBuilder.append("E ")

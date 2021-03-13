@@ -348,7 +348,7 @@ public class GraphActivity extends AppCompatActivity {
 
 
                 resetGraphSequence();
-                graphWrapper.board.clearCanvasAnim();
+                graphWrapper.board.clearGraph(true);
 
                 BFS bfs = new BFS(graphWrapper.graph);
                 GraphSequence run = bfs.run(vertexNumber);
@@ -400,7 +400,7 @@ public class GraphActivity extends AppCompatActivity {
                 }
 
                 resetGraphSequence();
-                graphWrapper.board.clearCanvasAnim();
+                graphWrapper.board.clearGraph(true);
 
                 DFS dfs = new DFS(graphWrapper.graph);
 
@@ -449,7 +449,7 @@ public class GraphActivity extends AppCompatActivity {
                 }
 
                 resetGraphSequence();
-                graphWrapper.board.clearCanvasAnim();
+                graphWrapper.board.clearGraph(true);
 
                 Dijkstra dijkstra = new Dijkstra(graphWrapper.graph);
                 dijkstra.run(vertexNumber);
@@ -492,7 +492,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graphWrapper.reset();
-                graphWrapper.board.clearCanvasAnim();
+                graphWrapper.board.clearGraph(true);
                 graphSequence = null;
 
                 // Removes the popUpWindows also
@@ -506,7 +506,7 @@ public class GraphActivity extends AppCompatActivity {
         btn_cleargraphanim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graphWrapper.board.clearCanvasAnim();
+                graphWrapper.board.clearGraph(true);
                 resetGraphSequence();
             }
         });
@@ -874,7 +874,7 @@ public class GraphActivity extends AppCompatActivity {
                         UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphSequence.size);
                         UtilUI.setText(tv_info, graphSequence.graphAnimationStates.get(curSeqNo).info);
 
-                        graphWrapper.board.clearCanvasAnim();
+                        graphWrapper.board.clearGraph(true);
                         GraphAnimationState graphAnimationState = graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
 
@@ -896,17 +896,19 @@ public class GraphActivity extends AppCompatActivity {
                         }
 
                         for(Vertex vertex : graphAnimationState.vertices){
-                            Rect rect = graphWrapper.board.getRect(vertex.data);
-                            graphWrapper.board.drawNodeAnim(rect, vertex.data);
+//                            Rect rect = graphWrapper.board.getRect(vertex.data);
+//                            graphWrapper.board.drawNodeAnim(rect, vertex.data);
+                            graphWrapper.board.drawVertex(vertex.data, true);
                         }
 
                         for(Edge edge : graphAnimationState.edges){
-                            Rect rect1 = graphWrapper.board.getRect(edge.src);
-                            Rect rect2 = graphWrapper.board.getRect(edge.des);
-                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted, graphWrapper.directed);
+                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                            Rect rect1 = graphWrapper.board.getRect(edge.src);
+//                            Rect rect2 = graphWrapper.board.getRect(edge.des);
+//                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted, graphWrapper.directed);
                         }
 
-                        graphWrapper.board.refreshAnim();
+                        graphWrapper.board.refresh(true);
 
                     }
                     else{
@@ -1074,7 +1076,7 @@ public class GraphActivity extends AppCompatActivity {
                 System.out.println(graphWrapper.board.getState(row, col));
 
                 //Careful about this below line, MUST BE CALLED
-                graphWrapper.board.refreshGraph();
+                graphWrapper.board.refresh(false);
 
                 return  true;
             }
@@ -1494,7 +1496,7 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void resetGraphSequence(){
-        graphWrapper.board.clearCanvasAnim();
+        graphWrapper.board.clearGraph(true);
 
         if(graphSequence != null){
             graphSequence.curSeqNo = 0;
