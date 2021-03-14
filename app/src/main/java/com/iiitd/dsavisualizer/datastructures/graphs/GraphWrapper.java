@@ -95,7 +95,7 @@ public class GraphWrapper {
 
         if(board.getState(row, col)){
             int nodeNumber = board.boardElements[row][col].value;
-            graph.removeVertex(nodeNumber, row, col);
+            graph.removeVertex(nodeNumber);
             board.removeVertex(row, col);
             update();
             return true;
@@ -105,11 +105,10 @@ public class GraphWrapper {
     }
 
     public boolean addEdge(int src, int des){
-        return addEdge(src, des, 1);
+        return addEdge(src, des, 1, false);
     }
 
-    public boolean addEdge(int src, int des, int weight){
-
+    public boolean addEdge(int src, int des, int weight, boolean update){
         if(!graph.checkContainsEdge(src, des)){
             if(graph.checkContainsVertices(src, des)){
                 if(!graph.directed){
@@ -123,7 +122,19 @@ public class GraphWrapper {
                 return true;
             }
         }
+        else if(update){
+            if(!graph.directed){
+                graph.removeEdge(des, src);
+                graph.addEdge(des, src, weight, false);//reverse edge
+            }
 
+            graph.removeEdge(src, des);
+            graph.addEdge(src, des, weight, true);
+
+            update();
+
+            return true;
+        }
 
         return false;
     }
@@ -146,7 +157,6 @@ public class GraphWrapper {
 
     // should be called only after "changeDirectedWeighted()" method
     public boolean customInput(ArrayList<Vertex> vertices, ArrayList<Edge> edges){
-
         // Reset the graph
         reset();
 
@@ -174,7 +184,7 @@ public class GraphWrapper {
         }
 
         for(Edge edge : edges){
-            addEdge(edge.src, edge.des, edge.weight);
+            addEdge(edge.src, edge.des, edge.weight, false);
         }
 
         update();

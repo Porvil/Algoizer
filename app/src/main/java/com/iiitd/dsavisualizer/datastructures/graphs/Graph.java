@@ -20,17 +20,17 @@ public class Graph {
         vertexMap = new HashMap<>();
     }
 
-    // Add edges to the graph
-    boolean addEdge(int src, int des, int weight, boolean isDirectedEdgeMain) {
+    // Add Edge to the graph
+    boolean addEdge(int src, int des, int weight, boolean isFirstEdge) {
         if(checkContainsVertices(src, des)) {
-            edgeListMap.get(src).add(new Edge(src, des, weight, isDirectedEdgeMain));
+            edgeListMap.get(src).add(new Edge(src, des, weight, isFirstEdge));
             return true;
         }
 
         return false;
     }
 
-    // Add edges to the graph
+    // Add Vertex to the graph
     boolean addVertex(int v, int row, int col) {
         if(edgeListMap.containsKey(v)){
             System.out.println("Vertex present already");
@@ -45,7 +45,7 @@ public class Graph {
     }
 
     // Remove vertex from the graph, also removes edges associated with it
-    void removeVertex(int v, int row, int col) {
+    void removeVertex(int v) {
         if(!edgeListMap.containsKey(v)){
             System.out.println("Vertex not present already");
             return;
@@ -59,24 +59,15 @@ public class Graph {
                 if(i.des == v)
                     entry.getValue().remove(i);
             }
-//            entry.getValue().removeIf(i -> i == v);
         }
     }
 
-    // Remove edges from the graph
+    // Remove Edge from the graph
     void removeEdge(int src, int des) {
         for(Edge i : new ArrayList<>(edgeListMap.get(src))){
             if(i.des == des)
                 edgeListMap.get(src).remove(i);
         }
-//        map.get(src).removeIf(i -> i == des);
-
-        // if both sides(undirected graph)
-//        for(Integer i : new ArrayList<>(map.get(des))){
-//            if(i == src)
-//                map.get(des).remove(i);
-//        }
-//        map.get(des).removeIf(i -> i == src);
     }
 
     // earlier length == 0 -> returns true
@@ -146,10 +137,34 @@ public class Graph {
         return noOfVertices+1;
     }
 
-    public void clearGraph(){
-        this.noOfVertices = 0;
-        edgeListMap = new HashMap<>();
-        vertexMap = new HashMap<>();
+    public Edge getEdge(int src, int des){
+        if(!checkContainsVertices(src, des)){
+            return null;
+        }
+
+        // Undirected
+        if(!directed){
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des){
+                    return edge;
+                }
+            }
+
+            for(Edge edge : edgeListMap.get(des)){
+                if(edge.des == src){
+                    return edge;
+                }
+            }
+        }
+        else{
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des){
+                    return edge;
+                }
+            }
+        }
+
+        return null;
     }
 
 }

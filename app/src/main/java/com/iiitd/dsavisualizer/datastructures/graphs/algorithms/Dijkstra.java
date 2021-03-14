@@ -36,22 +36,28 @@ public class Dijkstra {
         this.graphTree = new GraphTree(graph.directed, graph.weighted);
     }
 
-    public void run(int source) {
+    public GraphSequence run(int source) {
         int size = graph.noOfVertices;
 
         if (size < 1)
-            return;
+            return graphSequence;
 
         this.map = new HashMap<>();
         int count = graph.noOfVertices;
-//        PriorityQueue<VertexCLRS> pq = new PriorityQueue<>(size, new Comparator<VertexCLRS>() {
-//            @Override
-//            public int compare(VertexCLRS o1, VertexCLRS o2) {
-//                // your codes here
-//                return o1.dijkstraDist - o2.dijkstraDist;
-//            }
-//        });
 
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("start")
+                            .addVertices(vertices)
+                            .addEdges(edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
 
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dijkstraVertexCLRS(entry.getValue());
@@ -65,6 +71,17 @@ public class Dijkstra {
             // Update the distance between neighbouring vertex and source vertex
             int cur = findMinDistance();
             if (cur >= 0) {
+                Vertex vertex = graph.vertexMap.get(cur);
+                vertices.add(vertex);
+                GraphAnimationState graphAnimationState =
+                        GraphAnimationState.create()
+                                .setState("Visit = " + cur)
+                                .setInfo("Visit = " + cur)
+                                .addVertices(vertices)
+                                .addEdges(edges);
+
+                graphSequence.addGraphAnimationState(graphAnimationState);
+
                 map.get(cur).visited = true;
                 for (Edge edge : graph.edgeListMap.get(cur)) {
                     if (!map.get(edge.des).visited) {
@@ -84,6 +101,7 @@ public class Dijkstra {
             System.out.println(entry.getValue());
         }
 
+        return graphSequence;
     }
 
     // Finding the minimum distance
