@@ -65,8 +65,9 @@ public class Dijkstra {
                 System.out.println(vertexCLRS);
                 int self = map.get(cur).data;
                 int parent = map.get(cur).parent;
-                if(parent >=0 ) {
-                    Edge edge = graph.getEdge(self, parent);
+                if(parent >= 0 ) {
+                    System.out.println(parent  + "->" + self);
+                    Edge edge = graph.getEdge(parent, self);
                     edges.add(edge);
                     System.out.println("cur Edge = " + edge);
                 }

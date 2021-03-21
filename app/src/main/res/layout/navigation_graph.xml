@@ -259,12 +259,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_kruskal"
+                    android:id="@+id/btn_kruskals"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Kruskal" />
+                    android:text="Kruskals" />
             </LinearLayout>
 
             <LinearLayout
@@ -273,12 +273,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_prim"
+                    android:id="@+id/btn_prims"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Prim" />
+                    android:text="Prims" />
             </LinearLayout>
 
         </LinearLayout>

@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -210,8 +209,8 @@ public class GraphActivity extends AppCompatActivity {
         et_dijkstra = v_menu_left.findViewById(R.id.et_dijkstra);
         btn_bellmanford = v_menu_left.findViewById(R.id.btn_bellmanford);
         et_bellmanford = v_menu_left.findViewById(R.id.et_bellmanford);
-        btn_kruskal = v_menu_left.findViewById(R.id.btn_kruskal);
-        btn_prim = v_menu_left.findViewById(R.id.btn_prim);
+        btn_kruskal = v_menu_left.findViewById(R.id.btn_kruskals);
+        btn_prim = v_menu_left.findViewById(R.id.btn_prims);
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
