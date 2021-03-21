@@ -114,6 +114,17 @@ public class Graph {
         return false;
     }
 
+    public ArrayList<Edge> getAllEdges(){
+        ArrayList<Edge> edges = new ArrayList<>();
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
+            for(Edge i : entry.getValue()){
+                edges.add(i);
+            }
+        }
+
+        return edges;
+    }
+
     void print(){
         System.out.println("no of vertices = " + noOfVertices);
 

@@ -18,6 +18,7 @@ public class VertexCLRS {
     public int finishTime;                             // used as end time in dfs
     public int dfsDepth;                               // used as depth in dfs
     public int dijkstraDist;                           // used as distance in dijkstra
+    public int bellmanFordDist;                        // used as distance in bellman-ford
     public boolean visited;                            // used by dijkstra
 
     // Used by BFS
@@ -58,6 +59,17 @@ public class VertexCLRS {
         return vertexCLRS;
     }
 
+    // Used by Bellman-Ford
+    public static VertexCLRS bellmanfordVertexCLRS(Vertex vertex) {
+        VertexCLRS vertexCLRS = new VertexCLRS(vertex);
+
+        vertexCLRS.graphAlgorithmType = GraphAlgorithmType.BELLMAN_FORD;
+        vertexCLRS.bellmanFordDist = Integer.MAX_VALUE;
+        vertexCLRS.parent = -1;
+
+        return vertexCLRS;
+    }
+
     // Used internally in this class itself
     private VertexCLRS(Vertex vertex) {
         this.data = vertex.data;
@@ -92,6 +104,13 @@ public class VertexCLRS {
                     ", parent=" + parent +
                     ", visited=" + visited +
                     ", dijkstraDist=" + dijkstraDist +
+                    '}';
+        }
+        else if (graphAlgorithmType == GraphAlgorithmType.BELLMAN_FORD) {
+            return "VertexCLRS{" +
+                    "data=" + data +
+                    ", parent=" + parent +
+                    ", bellmanFordDist=" + bellmanFordDist +
                     '}';
         }
 
