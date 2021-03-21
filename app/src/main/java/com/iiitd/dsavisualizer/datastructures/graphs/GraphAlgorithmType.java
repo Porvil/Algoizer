@@ -6,5 +6,5 @@ public enum GraphAlgorithmType {
     DIJKSTRA,
     BELLMAN_FORD,
     PRIMS,
-    KRUSKAL
+    KRUSKALS
 }
