@@ -216,7 +216,7 @@ public class BoardTree {
 
         clearCanvasGraphTree();
 
-        drawGrid();
+//        drawGrid();
 
         // Sort Edges in reverse order, so that tree edges are drawn first
         Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());

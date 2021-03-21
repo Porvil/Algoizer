@@ -5,7 +5,6 @@ public class Edge {
     public int src;
     public int des;
     public int weight;
-    public boolean isDirected;
     public boolean isFirstEdge;
 
     public Edge(int src, int des) {

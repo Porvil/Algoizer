@@ -1,11 +1,9 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
-import com.iiitd.dsavisualizer.datastructures.graphs.EdgePro;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
@@ -13,16 +11,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-
-import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.BACK;
-import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.CROSS;
-import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.TREE;
-import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.BLACK;
-import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.GRAY;
-import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.WHITE;
 
 public class Dijkstra {
     Graph graph;
@@ -67,12 +56,21 @@ public class Dijkstra {
         map.get(source).dijkstraDist = 0;
 
         for (int i = 0; i < count; i++) {
-
             // Update the distance between neighbouring vertex and source vertex
-            int cur = findMinDistance();
+            int cur = findMinDistanceIndex();
             if (cur >= 0) {
                 Vertex vertex = graph.vertexMap.get(cur);
                 vertices.add(vertex);
+                VertexCLRS vertexCLRS = map.get(cur);
+                System.out.println(vertexCLRS);
+                int self = map.get(cur).data;
+                int parent = map.get(cur).parent;
+                if(parent >=0 ) {
+                    Edge edge = graph.getEdge(self, parent);
+                    edges.add(edge);
+                    System.out.println("cur Edge = " + edge);
+                }
+
                 GraphAnimationState graphAnimationState =
                         GraphAnimationState.create()
                                 .setState("Visit = " + cur)
@@ -105,7 +103,7 @@ public class Dijkstra {
     }
 
     // Finding the minimum distance
-    private int findMinDistance() {
+    private int findMinDistanceIndex() {
         int minDistance = Integer.MAX_VALUE;
         int minDistanceVertex = -1;
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {

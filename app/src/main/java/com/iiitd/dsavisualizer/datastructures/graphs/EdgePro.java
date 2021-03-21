@@ -29,6 +29,7 @@ public class EdgePro implements Comparable<EdgePro>{
                 '}';
     }
 
+    // Used by GraphTree
     // need to complete this function [ currently should only be used in undirected graphs ]
     @Override
     public boolean equals(Object o) {
