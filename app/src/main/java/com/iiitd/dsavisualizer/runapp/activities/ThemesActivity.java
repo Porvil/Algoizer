@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
@@ -14,6 +15,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 
 public class ThemesActivity extends AppCompatActivity {
 
+    FrameLayout fl_currenttheme;
     Button btn_theme_blue;            // 1
     Button btn_theme_purple;          // 2
     Button btn_theme_green;           // 3
@@ -29,12 +31,15 @@ public class ThemesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
 
+        fl_currenttheme = findViewById(R.id.fl_currenttheme);
         btn_theme_blue = findViewById(R.id.btn_theme_blue);
         btn_theme_purple = findViewById(R.id.btn_theme_purple);
         btn_theme_green = findViewById(R.id.btn_theme_green);
         btn_theme_orange = findViewById(R.id.btn_theme_orange);
         btn_theme_brown = findViewById(R.id.btn_theme_brown);
         btn_theme_pink = findViewById(R.id.btn_theme_pink);
+
+        fl_currenttheme.setBackgroundColor(UtilUI.getCurrentThemeColor(this, R.attr.base));
 
         btn_theme_blue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,15 +86,6 @@ public class ThemesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UtilUI.changeCurrentAppTheme(getApplicationContext(), 6);
                 recreate();
-            }
-        });
-
-        Button button = findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ThemesActivity.this, GraphActivity.class));
             }
         });
 

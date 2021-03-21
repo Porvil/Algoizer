@@ -263,84 +263,102 @@
             android:id="@+id/horizontalDiv4"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="3dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/rg_graphcontrols"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/rg_graphcontrols"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider8"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_view"
-                style="@style/S_RadioButton_Graph"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:drawableTop="@drawable/ic_view_off"
-                android:onClick="onGraphControlsClick"
-                android:text="View" />
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_vertex"
-                style="@style/S_RadioButton_Graph"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:drawableTop="@drawable/ic_vertex_add_off"
-                android:onClick="onGraphControlsClick"
-                android:text="Node" />
-
-            <RadioButton
-                android:id="@+id/rb_graphcontrol_edge"
-                style="@style/S_RadioButton_Graph"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_edge_add_off"
-                android:onClick="onGraphControlsClick"
-                android:text="Edge" />
-
-        </RadioGroup>
-
-        <View
-            android:id="@+id/divider8"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_grid"
+            app:layout_constraintEnd_toStartOf="@+id/btn_controls"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_grid"
+            android:id="@+id/btn_controls"
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="0dp"
             android:contentDescription="Show Info"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_info"
+            app:layout_constraintEnd_toStartOf="@+id/cl_controls"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_grid_on_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_right_24" />
 
-        <ImageButton
-            android:id="@+id/btn_info"
-            style="@style/S_ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:contentDescription="Show Info"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_controls"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider7"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_baseline_info_24" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:id="@+id/rg_graphcontrols"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/divider8"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rb_graphcontrol_view"
+                    style="@style/S_RadioButton_Graph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableTop="@drawable/ic_view_off"
+                    android:onClick="onGraphControlsClick"
+                    android:text="View" />
+
+                <RadioButton
+                    android:id="@+id/rb_graphcontrol_vertex"
+                    style="@style/S_RadioButton_Graph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableTop="@drawable/ic_vertex_add_off"
+                    android:onClick="onGraphControlsClick"
+                    android:text="Node" />
+
+                <RadioButton
+                    android:id="@+id/rb_graphcontrol_edge"
+                    style="@style/S_RadioButton_Graph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_edge_add_off"
+                    android:onClick="onGraphControlsClick"
+                    android:text="Edge" />
+
+            </RadioGroup>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_grid"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_grid"
+                style="@style/S_ImageButton"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:contentDescription="Show Info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_info"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_grid_on_24" />
+
+            <ImageButton
+                android:id="@+id/btn_info"
+                style="@style/S_ImageButton"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:contentDescription="Show Info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_info_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:id="@+id/divider7"

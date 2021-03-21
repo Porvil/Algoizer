@@ -73,6 +73,8 @@ public class GraphActivity extends AppCompatActivity {
     ImageView iv_coordinates;
     ImageView iv_graph;
     ImageView iv_anim;
+    ImageButton btn_controls;
+    ConstraintLayout cl_controls;
     RadioGroup rg_graphcontrols;
     RadioButton rb_graphcontrol_view;
     RadioButton rb_graphcontrol_vertex;
@@ -103,6 +105,8 @@ public class GraphActivity extends AppCompatActivity {
     EditText et_dijkstra;
     Button btn_bellmanford;
     EditText et_bellmanford;
+    Button btn_kruskal;
+    Button btn_prim;
     ImageButton btn_clearcustominput;
     ImageButton btn_copygraph;
     ImageButton btn_pastecustominput;
@@ -176,6 +180,8 @@ public class GraphActivity extends AppCompatActivity {
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         rg_graphcontrols = v_main.findViewById(R.id.rg_graphcontrols);
+        cl_controls = v_main.findViewById(R.id.cl_controls);
+        btn_controls = v_main.findViewById(R.id.btn_controls);
         rb_graphcontrol_view = v_main.findViewById(R.id.rb_graphcontrol_view);
         rb_graphcontrol_vertex = v_main.findViewById(R.id.rb_graphcontrol_vertex);
         rb_graphcontrol_edge = v_main.findViewById(R.id.rb_graphcontrol_edge);
@@ -204,6 +210,8 @@ public class GraphActivity extends AppCompatActivity {
         et_dijkstra = v_menu_left.findViewById(R.id.et_dijkstra);
         btn_bellmanford = v_menu_left.findViewById(R.id.btn_bellmanford);
         et_bellmanford = v_menu_left.findViewById(R.id.et_bellmanford);
+        btn_kruskal = v_menu_left.findViewById(R.id.btn_kruskal);
+        btn_prim = v_menu_left.findViewById(R.id.btn_prim);
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
@@ -306,6 +314,20 @@ public class GraphActivity extends AppCompatActivity {
 //                        dialog.dismiss();
 //                    }
 //                });
+            }
+        });
+
+        btn_controls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cl_controls.getVisibility() == View.VISIBLE){
+                    cl_controls.setVisibility(View.GONE);
+                    btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_left_24));
+                }
+                else{
+                    cl_controls.setVisibility(View.VISIBLE);
+                    btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_right_24));
+                }
             }
         });
 
@@ -510,6 +532,54 @@ public class GraphActivity extends AppCompatActivity {
 
                 System.out.println(graphSequence);
                 UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+            }
+        });
+
+        btn_kruskal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(graphWrapper.getNoOfNodes() <= 0){
+                    et_bellmanford.setError("Empty Graph");
+                    return;
+                }
+
+                resetGraphSequence();
+                graphWrapper.board.clearGraph(true);
+
+//                BellmanFord bellmanFord = new BellmanFord(graphWrapper.graph);
+//                GraphSequence run = bellmanFord.run(vertexNumber);
+//                graphSequence = run;
+
+
+                dl_main.closeDrawer(GravityCompat.START);
+
+//                System.out.println(graphSequence);
+//                UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+            }
+        });
+
+        btn_prim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(graphWrapper.getNoOfNodes() <= 0){
+                    et_bellmanford.setError("Empty Graph");
+                    return;
+                }
+
+                resetGraphSequence();
+                graphWrapper.board.clearGraph(true);
+
+//                BellmanFord bellmanFord = new BellmanFord(graphWrapper.graph);
+//                GraphSequence run = bellmanFord.run(vertexNumber);
+//                graphSequence = run;
+
+
+                dl_main.closeDrawer(GravityCompat.START);
+
+//                System.out.println(graphSequence);
+//                UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
             }
         });
 
