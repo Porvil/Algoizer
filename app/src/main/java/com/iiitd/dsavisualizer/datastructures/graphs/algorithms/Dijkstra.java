@@ -81,7 +81,7 @@ public class Dijkstra {
                                 .addVertices(vertices)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                        .addMap(map));
+                                        .addMapDijkstra(map));
 
                 graphSequence.addGraphAnimationState(graphAnimationState);
 
@@ -106,7 +106,7 @@ public class Dijkstra {
                                             .addVertices(vertices)
                                             .addEdges(edges)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                            .addMap(map));
+                                            .addMapDijkstra(map));
 
                             graphSequence.addGraphAnimationState(graphAnimationState1);
 
@@ -121,7 +121,7 @@ public class Dijkstra {
                                             .addVertices(vertices)
                                             .addEdges(edges)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                                    .addMap(map));
+                                                    .addMapDijkstra(map));
 
                             graphSequence.addGraphAnimationState(graphAnimationState1);
                         }
