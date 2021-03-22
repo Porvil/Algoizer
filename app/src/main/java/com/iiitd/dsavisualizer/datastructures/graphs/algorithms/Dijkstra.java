@@ -9,6 +9,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,9 +86,35 @@ public class Dijkstra {
                 for (Edge edge : graph.edgeListMap.get(cur)) {
                     if (!map.get(edge.des).visited) {
                         int tempDistance = map.get(cur).dijkstraDist + edge.weight;
-                        if (tempDistance < map.get(edge.des).dijkstraDist) {
+                        int otherDistance = map.get(edge.des).dijkstraDist;
+                        String otherDist = String.valueOf(otherDistance);
+                        if(otherDistance == Integer.MAX_VALUE){
+                            otherDist = DecimalFormatSymbols.getInstance().getInfinity();
+                        }
+                        if (tempDistance < otherDistance) {
+
+                            GraphAnimationState graphAnimationState1 =
+                                    GraphAnimationState.create()
+                                            .setState("Visit = " + cur)
+                                            .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
+                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
+                                            .addVertices(vertices)
+                                            .addEdges(edges);
+
+                            graphSequence.addGraphAnimationState(graphAnimationState1);
+
                             map.get(edge.des).dijkstraDist = tempDistance;
                             map.get(edge.des).parent = map.get(cur).data;
+                        }
+                        else{
+                            GraphAnimationState graphAnimationState1 =
+                                    GraphAnimationState.create()
+                                            .setState("Visit = " + cur)
+                                            .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist)
+                                            .addVertices(vertices)
+                                            .addEdges(edges);
+
+                            graphSequence.addGraphAnimationState(graphAnimationState1);
                         }
                     }
                 }
