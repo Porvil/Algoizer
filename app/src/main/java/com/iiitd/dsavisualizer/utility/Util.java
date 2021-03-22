@@ -65,6 +65,19 @@ public class Util {
             angle += 360;
         }
 
+//        return getAngleCorrected(angle);
+        return angle;
+    }
+
+    public static float getAngleCorrected(float angle) {
+
+        if(angle == 0){
+            return angle;
+        }
+        else if(angle == 90){
+            return 0;
+        }
+
         return angle;
     }
 

@@ -111,6 +111,26 @@ public class GraphWrapper {
     public boolean addEdge(int src, int des, int weight, boolean update){
         if(!graph.checkContainsEdge(src, des)){
             if(graph.checkContainsVertices(src, des)){
+
+//                if(directed){
+//                    graph.addEdge(src, des, weight, true);
+//                }
+//                else{
+//                    double srcToDes = board.getAngleBetweenVertices(src, des);
+//                    double desToSrc = board.getAngleBetweenVertices(des, src);
+//
+//                    // bottom plane = srcToDes
+//                    if(srcToDes + 180 == desToSrc){
+//                        graph.addEdge(src, des, weight, true);
+//                        graph.addEdge(des, src, weight, false);//reverse edge
+//                    }
+//                    else{
+//                        graph.addEdge(des, src, weight, true);
+//                        graph.addEdge(src, des, weight, false);//reverse edge
+//                    }
+//                }
+
+//                double angleBetweenVertices = board.getAngleBetweenVertices(src, des);
                 if(!graph.directed){
                     graph.addEdge(des, src, weight, false);//reverse edge
                 }

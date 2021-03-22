@@ -4,6 +4,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
@@ -78,7 +79,9 @@ public class Dijkstra {
                                 .setState("Visit = " + cur)
                                 .setInfo("Visit = " + cur)
                                 .addVertices(vertices)
-                                .addEdges(edges);
+                                .addEdges(edges)
+                                .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                        .addMap(map));
 
                 graphSequence.addGraphAnimationState(graphAnimationState);
 
@@ -91,6 +94,8 @@ public class Dijkstra {
                         if(otherDistance == Integer.MAX_VALUE){
                             otherDist = DecimalFormatSymbols.getInstance().getInfinity();
                         }
+
+                        System.out.println("!!!!!!!!!!!!!!" + map);
                         if (tempDistance < otherDistance) {
 
                             GraphAnimationState graphAnimationState1 =
@@ -99,7 +104,9 @@ public class Dijkstra {
                                             .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
                                             + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
                                             .addVertices(vertices)
-                                            .addEdges(edges);
+                                            .addEdges(edges)
+                                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                            .addMap(map));
 
                             graphSequence.addGraphAnimationState(graphAnimationState1);
 
@@ -112,7 +119,9 @@ public class Dijkstra {
                                             .setState("Visit = " + cur)
                                             .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist)
                                             .addVertices(vertices)
-                                            .addEdges(edges);
+                                            .addEdges(edges)
+                                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                                    .addMap(map));
 
                             graphSequence.addGraphAnimationState(graphAnimationState1);
                         }

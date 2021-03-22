@@ -37,6 +37,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
@@ -53,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -487,7 +489,7 @@ public class GraphActivity extends AppCompatActivity {
                 GraphSequence run = dijkstra.run(vertexNumber);
                 graphSequence = run;
 
-
+                btn_controls.performClick();
                 dl_main.closeDrawer(GravityCompat.START);
 
                 System.out.println(graphSequence);
@@ -935,6 +937,16 @@ public class GraphActivity extends AppCompatActivity {
 //                            Rect rect1 = graphWrapper.board.getRect(edge.src);
 //                            Rect rect2 = graphWrapper.board.getRect(edge.des);
 //                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted, graphWrapper.directed);
+                        }
+
+                        if(graphAnimationState.graphAnimationStateExtra != null){
+                            if(graphAnimationState.graphAnimationStateExtra.map != null){
+                                System.out.println(graphAnimationState.graphAnimationStateExtra.map);
+                                for (Map.Entry<Integer, Integer> entry : graphAnimationState.graphAnimationStateExtra.map.entrySet()) {
+                                    graphWrapper.board.drawVertexWeight(
+                                            entry.getKey(), entry.getValue(), true);
+                                }
+                            }
                         }
 
                         graphWrapper.board.refresh(true);

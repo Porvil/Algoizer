@@ -15,7 +15,9 @@ import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -281,7 +283,7 @@ public class Board {
 
         Rect rectText = new Rect();
         pVertexText.getTextBounds(text, 0, text.length(), rectText);
-        canvas.drawText(text, x, y - (pVertexText.descent() + pVertexText.ascent()) / 2, paintVertexText);
+        canvas.drawText(text, x, y - (pVertexText.descent() + pVertexText.ascent()) / 2, pVertexText);
     }
 
     // Draws an Edge
@@ -317,6 +319,7 @@ public class Board {
         float ly2 = (float) lineCoordinates[3];
 
         double degree = Util.getAngle(lx1, ly1, lx2, ly2);
+        System.out.println(edge.src + " -> " + edge.des + " = " + degree + " | " + edge.isFirstEdge);
 
         float x = lx1 + (lx2 - lx1)/2;
         float y = ly1 + (ly2 - ly1)/2;
@@ -324,10 +327,12 @@ public class Board {
         // Directed Graph
         if(isDirected){
             if(isWeighted){
-                canvas.save();
-                canvas.rotate((float) degree, x, y);
-                canvas.drawText(String.valueOf(edge.weight), x, y-20, pEdgeWeight);
-                canvas.restore();
+//                canvas.save();
+//                canvas.rotate((float) degree, x, y);
+//                canvas.drawText(String.valueOf(edge.weight), x, y-20, pEdgeWeight);
+//                canvas.restore();
+
+                drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, false);
             }
 
             canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
@@ -338,32 +343,87 @@ public class Board {
             // If firstEdge, then do it same as directed, except drawing arrows
             if (edge.isFirstEdge) {
                 if (isWeighted) {
-                    canvas.save();
-                    canvas.rotate((float) degree, x, y);
-                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
-                    canvas.restore();
+//                    canvas.save();
+//                    canvas.rotate((float) degree, x, y);
+//                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
+//                    canvas.restore();
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, false);
                 }
 
                 canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
             }
             // If !first edge && is for animation then reverse the edge and recalculate values
             else if(isAnim){
-                degree = Util.getAngle(lx2, ly2, lx1, ly1);
+//                degree = Util.getAngle(lx2, ly2, lx1, ly1);
 
                 x = lx2 + (lx1 - lx2)/2;
                 y = ly2 + (ly1 - ly2)/2;
 
                 if (isWeighted) {
-                    canvas.save();
-                    canvas.rotate((float) degree, x, y);
-                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
-                    canvas.restore();
+//                    canvas.save();
+//                    canvas.rotate((float) degree, x, y);
+//                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
+//                    canvas.restore();
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, true);
                 }
 
                 canvas.drawLine(lx2, ly2, lx1, ly1, pEdge);
             }
         }
 
+    }
+
+    public double getAngleBetweenVertices(int src, int des){
+        Rect srcRect = getRect(src);
+        Rect desRect = getRect(des);
+
+        double[] lineCoordinates = getLineCoordinates(srcRect, desRect);
+
+        float lx1 = (float) lineCoordinates[0];
+        float ly1 = (float) lineCoordinates[1];
+        float lx2 = (float) lineCoordinates[2];
+        float ly2 = (float) lineCoordinates[3];
+
+        double degree = Util.getAngle(lx1, ly1, lx2, ly2);
+
+        return degree;
+    }
+
+//    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, float lx1, float ly1, float lx2, float ly2 ){
+    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
+        float lx1 = (float) lineCoordinates[0];
+        float ly1 = (float) lineCoordinates[1];
+        float lx2 = (float) lineCoordinates[2];
+        float ly2 = (float) lineCoordinates[3];
+
+        float x = lx1 + (lx2 - lx1)/2;
+        float y = ly1 + (ly2 - ly1)/2;
+
+        if( (degree > 315 && degree <=360) || ( degree >= 0 && degree <= 45)){
+            if(degree == 0 || degree == 360)
+                degree = 0;
+            y = y-20;
+        }
+        else if(degree > 45 && degree <= 135){
+            if(degree == 90)
+                degree = 0;
+            x = x+20;
+        }
+        else if(degree > 135 && degree <= 225){
+            if(degree == 180)
+                degree = 0;
+            y = y+20;
+        }
+        else if(degree > 225 && degree <= 315){
+            if(degree == 270)
+                degree = 0;
+            x = x-20;
+        }
+
+        canvas.save();
+        canvas.rotate(degree, x, y);
+        canvas.drawText(String.valueOf(weight), x, y, paint);
+        canvas.restore();
     }
 
     // Draws arrow lines for src -> des Edge
@@ -386,6 +446,41 @@ public class Board {
         boardElements[row][col].value = name;
 
         drawVertex(boardElements[row][col].value, false);
+    }
+
+    // Draws a Vertex
+    public void drawVertexWeight(int vertexValue, int vertexWeight, boolean isAnim){
+        // Canvas and Paint Variables
+        Canvas canvas;
+        Paint pVertexWeightText;
+
+        if(isAnim){
+            canvas = customCanvas.canvasAnimation;
+            pVertexWeightText = paintEdgeWeightAnim;
+        }
+        else{
+            canvas = customCanvas.canvasGraph;
+            pVertexWeightText = paintEdgeWeight;
+        }
+
+        Rect rect = getRect(vertexValue);
+        int x = rect.centerX();
+        int y = rect.top - 10;
+
+        String text = String.valueOf(vertexWeight);
+        if(vertexWeight == Integer.MAX_VALUE)
+            text = DecimalFormatSymbols.getInstance().getInfinity();
+
+        System.out.println(text);
+        Rect rectText = new Rect();
+        pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
+        canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
+
+        //Highlighted box
+        System.out.println(rectText);
+        Paint paint =new Paint();
+        paint.setColor(Color.BLACK);
+        canvas.drawRect(rectText, paint);
     }
 
     // Removes a Vertex
