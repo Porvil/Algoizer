@@ -390,7 +390,7 @@ public class Board {
     }
 
 //    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, float lx1, float ly1, float lx2, float ly2 ){
-    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
+    private void drawEdgeWeight2(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
         float lx1 = (float) lineCoordinates[0];
         float ly1 = (float) lineCoordinates[1];
         float lx2 = (float) lineCoordinates[2];
@@ -418,6 +418,56 @@ public class Board {
             if(degree == 270)
                 degree = 0;
             x = x-20;
+        }
+
+        canvas.save();
+        canvas.rotate(degree, x, y);
+        canvas.drawText(String.valueOf(weight), x, y, paint);
+        canvas.restore();
+    }
+
+
+    //    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, float lx1, float ly1, float lx2, float ly2 ){
+    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
+        float lx1 = (float) lineCoordinates[0];
+        float ly1 = (float) lineCoordinates[1];
+        float lx2 = (float) lineCoordinates[2];
+        float ly2 = (float) lineCoordinates[3];
+
+        float x = lx1 + (lx2 - lx1)/2;
+        float y = ly1 + (ly2 - ly1)/2;
+
+        float r = 15;
+
+        if( (degree > 360-r && degree <=360) || ( degree >= 0 && degree <= 0+r)){
+            degree = 0;
+            y = y-20;
+        }
+        else if(degree > 90-r && degree <= 90+r){
+            degree = 0;
+            x = x+20;
+        }
+        else if(degree > 180-r && degree <= 180+r){
+            degree = 0;
+            y = y-20;
+        }
+        else if(degree > 270-r && degree <= 270+r){
+            degree = 0;
+            x = x+20;
+        }
+        else if(degree >0 && degree<90){
+            x = x+20;
+        }
+        else if(degree >90 && degree<180){
+            degree = 315;
+            x = x+60;
+//            y = y+120;
+        }
+        else if(degree >180 && degree<270){
+            y = y-20;
+        }
+        else if(degree >270 && degree<360){
+            y = y-20;
         }
 
         canvas.save();
