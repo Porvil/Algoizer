@@ -130,6 +130,10 @@ public class VertexCLRS {
                 '}';
     }
 
+    public Vertex getVertex(){
+        return new Vertex(data, row, col);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(data);

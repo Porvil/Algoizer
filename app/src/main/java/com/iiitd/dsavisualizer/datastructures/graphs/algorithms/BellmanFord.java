@@ -65,6 +65,13 @@ public class BellmanFord {
 //                int tempDist = vertexCLRS.bellmanFordDist + edge.weight;
                 int tempDistance = vertexCLRS.bellmanFordDist + edge.weight;
                 int otherDistance = vertexCLRS1.bellmanFordDist;
+
+                vertices.clear();
+                vertices.add(graph.vertexMap.get(vertexCLRS.data));
+                vertices.add(graph.vertexMap.get(vertexCLRS1.data));
+                edges.clear();
+                edges.add(edge);
+
                 if(tempDistance < otherDistance){
 
                     GraphAnimationState graphAnimationState1 =
@@ -72,8 +79,8 @@ public class BellmanFord {
 //                                    .setState("Visit = " + cur)
 //                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
 //                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
-//                                    .addVertices(vertices)
-//                                    .addEdges(edges)
+                                    .addVertices(vertices)
+                                    .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                             .addMapBellmanford(map));
 
@@ -88,12 +95,12 @@ public class BellmanFord {
 //                                    .setState("Visit = " + cur)
 //                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
 //                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
-//                                    .addVertices(vertices)
-//                                    .addEdges(edges)
+                                    .addVertices(vertices)
+                                    .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                             .addMapBellmanford(map));
 
-//                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                    graphSequence.addGraphAnimationState(graphAnimationState1);
                 }
             }
         }
@@ -108,6 +115,30 @@ public class BellmanFord {
             }
         }
 
+        vertices.clear();
+        edges.clear();
+
+        for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
+            vertices.add(entry.getValue().getVertex());
+            if(entry.getValue().parent != -1){
+                Edge edge = graph.getEdge(entry.getValue().parent, entry.getValue().data);
+                edges.add(edge);
+            }
+        }
+
+
+        GraphAnimationState graphAnimationState1 =
+                GraphAnimationState.create()
+                                    .setState("Done")
+//                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
+//                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                .addMapBellmanford(map));
+
+        graphSequence.addGraphAnimationState(graphAnimationState1);
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
