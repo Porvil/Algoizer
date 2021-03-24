@@ -240,22 +240,7 @@ public class GraphActivity extends AppCompatActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-
-        v_main.post(new Runnable() {
-            @Override
-            public void run() {
-                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
-                if(!tutorialState) {
-                    OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context,
-                            v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY);
-                    onboardingPopUp.show();
-                }
-            }
-        });
-
-
-
+        initOnBoarding();
         initViews();
         initNavigation();
 
@@ -1749,6 +1734,21 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initOnBoarding() {
+        v_main.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
+                if(!tutorialState) {
+                    OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context,
+                            v_main.getWidth(), v_main.getHeight(),
+                            v_main, ONBOARDING_KEY);
+                    onboardingPopUp.show();
+                }
+            }
+        });
     }
 
 }
