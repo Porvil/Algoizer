@@ -46,6 +46,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BellmanFord;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
+import com.iiitd.dsavisualizer.runapp.others.OnboardingPopUp;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
@@ -237,6 +238,17 @@ public class GraphActivity extends AppCompatActivity {
         et_insert = v_menu_right.findViewById(R.id.et_insert);
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
+
+
+        v_main.post(new Runnable() {
+            @Override
+            public void run() {
+                OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context, v_main.getWidth(), v_main.getHeight(), v_main);
+                onboardingPopUp.show();
+            }
+        });
+
+
 
         initViews();
         initNavigation();

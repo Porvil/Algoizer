@@ -32,5 +32,4 @@ dependencies {
     implementation 'com.github.florent37:viewanimator:1.1.0'
 
     implementation 'com.otaliastudios:zoomlayout:1.8.0'
-
 }
