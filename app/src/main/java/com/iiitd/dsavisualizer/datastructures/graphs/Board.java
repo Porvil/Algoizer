@@ -318,21 +318,10 @@ public class Board {
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
 
-        double degree = Util.getAngle(lx1, ly1, lx2, ly2);
-        System.out.println(edge.src + " -> " + edge.des + " = " + degree + " | " + edge.isFirstEdge);
-
-        float x = lx1 + (lx2 - lx1)/2;
-        float y = ly1 + (ly2 - ly1)/2;
-
         // Directed Graph
         if(isDirected){
             if(isWeighted){
-//                canvas.save();
-//                canvas.rotate((float) degree, x, y);
-//                canvas.drawText(String.valueOf(edge.weight), x, y-20, pEdgeWeight);
-//                canvas.restore();
-
-                drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, false);
+                drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, false);
             }
 
             canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
@@ -343,28 +332,15 @@ public class Board {
             // If firstEdge, then do it same as directed, except drawing arrows
             if (edge.isFirstEdge) {
                 if (isWeighted) {
-//                    canvas.save();
-//                    canvas.rotate((float) degree, x, y);
-//                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
-//                    canvas.restore();
-                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, false);
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, false);
                 }
 
                 canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
             }
             // If !first edge && is for animation then reverse the edge and recalculate values
             else if(isAnim){
-//                degree = Util.getAngle(lx2, ly2, lx1, ly1);
-
-                x = lx2 + (lx1 - lx2)/2;
-                y = ly2 + (ly1 - ly2)/2;
-
                 if (isWeighted) {
-//                    canvas.save();
-//                    canvas.rotate((float) degree, x, y);
-//                    canvas.drawText(String.valueOf(edge.weight), x, y - 20, pEdgeWeight);
-//                    canvas.restore();
-                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, (float) degree, lineCoordinates, true);
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, true);
                 }
 
                 canvas.drawLine(lx2, ly2, lx1, ly1, pEdge);
@@ -389,89 +365,62 @@ public class Board {
         return degree;
     }
 
-//    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, float lx1, float ly1, float lx2, float ly2 ){
-    private void drawEdgeWeight2(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
-        float lx1 = (float) lineCoordinates[0];
-        float ly1 = (float) lineCoordinates[1];
-        float lx2 = (float) lineCoordinates[2];
-        float ly2 = (float) lineCoordinates[3];
+    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, double[] lineCoordinates, boolean reverseEdge){
+        double lx1 = lineCoordinates[0];
+        double ly1 = lineCoordinates[1];
+        double lx2 = lineCoordinates[2];
+        double ly2 = lineCoordinates[3];
 
-        float x = lx1 + (lx2 - lx1)/2;
-        float y = ly1 + (ly2 - ly1)/2;
-
-        if( (degree > 315 && degree <=360) || ( degree >= 0 && degree <= 45)){
-            if(degree == 0 || degree == 360)
-                degree = 0;
-            y = y-20;
-        }
-        else if(degree > 45 && degree <= 135){
-            if(degree == 90)
-                degree = 0;
-            x = x+20;
-        }
-        else if(degree > 135 && degree <= 225){
-            if(degree == 180)
-                degree = 0;
-            y = y+20;
-        }
-        else if(degree > 225 && degree <= 315){
-            if(degree == 270)
-                degree = 0;
-            x = x-20;
+        // Used for animation when we are using undirected graph
+        if(reverseEdge){
+            lx2 = lineCoordinates[0];
+            ly2 = lineCoordinates[1];
+            lx1 = lineCoordinates[2];
+            ly1 = lineCoordinates[3];
         }
 
-        canvas.save();
-        canvas.rotate(degree, x, y);
-        canvas.drawText(String.valueOf(weight), x, y, paint);
-        canvas.restore();
-    }
+        double degree = Util.getAngle(lx1, ly1, lx2, ly2);
 
+        float x = (float) (lx1 + (lx2 - lx1)/2);
+        float y = (float) (ly1 + (ly2 - ly1)/2);
 
-    //    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, float lx1, float ly1, float lx2, float ly2 ){
-    private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, float degree, double[] lineCoordinates, boolean reverseEdge){
-        float lx1 = (float) lineCoordinates[0];
-        float ly1 = (float) lineCoordinates[1];
-        float lx2 = (float) lineCoordinates[2];
-        float ly2 = (float) lineCoordinates[3];
-
-        float x = lx1 + (lx2 - lx1)/2;
-        float y = ly1 + (ly2 - ly1)/2;
-
+        float rotationX = x;
+        float rotationY = y;
         float r = 15;
 
         if( (degree > 360-r && degree <=360) || ( degree >= 0 && degree <= 0+r)){
-            degree = 0;
             y = y-20;
+            degree = 0;
         }
         else if(degree > 90-r && degree <= 90+r){
-            degree = 0;
             x = x+20;
+            degree = 0;
         }
         else if(degree > 180-r && degree <= 180+r){
+            y= y+40;
             degree = 0;
-            y = y-20;
         }
         else if(degree > 270-r && degree <= 270+r){
+            x = x-20;
             degree = 0;
-            x = x+20;
         }
         else if(degree >0 && degree<90){
-            x = x+20;
+            y = y-20;
         }
         else if(degree >90 && degree<180){
-            degree = 315;
-            x = x+60;
-//            y = y+120;
+            degree += 180;
+            y = y+40;
         }
         else if(degree >180 && degree<270){
-            y = y-20;
+            degree -= 180;
+            y = y+40;
         }
         else if(degree >270 && degree<360){
             y = y-20;
         }
 
         canvas.save();
-        canvas.rotate(degree, x, y);
+        canvas.rotate((float) degree, rotationX, rotationY);
         canvas.drawText(String.valueOf(weight), x, y, paint);
         canvas.restore();
     }

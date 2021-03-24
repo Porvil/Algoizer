@@ -59,14 +59,27 @@ public class Util {
     }
 
     public static float getAngle(float x1, float y1, float x2, float y2) {
-        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+        double angle = Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
 
+        System.out.println(angle);
         if(angle < 0){
             angle += 360;
         }
 
 //        return getAngleCorrected(angle);
-        return angle;
+        return (float) angle;
+    }
+
+    public static float getAngle(double x1, double y1, double x2, double y2) {
+        double angle = Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+
+        System.out.println(angle);
+        if(angle < 0){
+            angle += 360;
+        }
+
+//        return getAngleCorrected(angle);
+        return (float) angle;
     }
 
     public static float getAngleCorrected(float angle) {
