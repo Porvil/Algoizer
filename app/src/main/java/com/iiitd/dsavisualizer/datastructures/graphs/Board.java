@@ -371,7 +371,7 @@ public class Board {
         double lx2 = lineCoordinates[2];
         double ly2 = lineCoordinates[3];
 
-        // Used for animation when we are using undirected graph
+        // Used for animation in undirected graph
         if(reverseEdge){
             lx2 = lineCoordinates[0];
             ly2 = lineCoordinates[1];
@@ -386,37 +386,39 @@ public class Board {
 
         float rotationX = x;
         float rotationY = y;
-        float r = 15;
+        float delta = 15;
+        float offsetNormal = 20;
+        float offsetReverse = 40;
 
-        if( (degree > 360-r && degree <=360) || ( degree >= 0 && degree <= 0+r)){
-            y = y-20;
+        if( (degree > 360-delta && degree <=360) || ( degree >= 0 && degree <= 0+delta)){
+            y = y-offsetNormal;
             degree = 0;
         }
-        else if(degree > 90-r && degree <= 90+r){
-            x = x+20;
+        else if(degree > 90-delta && degree <= 90+delta){
+            x = x+offsetNormal;
             degree = 0;
         }
-        else if(degree > 180-r && degree <= 180+r){
-            y= y+40;
+        else if(degree > 180-delta && degree <= 180+delta){
+            y= y+offsetReverse;
             degree = 0;
         }
-        else if(degree > 270-r && degree <= 270+r){
-            x = x-20;
+        else if(degree > 270-delta && degree <= 270+delta){
+            x = x-offsetNormal;
             degree = 0;
         }
         else if(degree >0 && degree<90){
-            y = y-20;
+            y = y-offsetNormal;
         }
         else if(degree >90 && degree<180){
             degree += 180;
-            y = y+40;
+            y = y+offsetReverse;
         }
         else if(degree >180 && degree<270){
             degree -= 180;
-            y = y+40;
+            y = y+offsetReverse;
         }
         else if(degree >270 && degree<360){
-            y = y-20;
+            y = y-offsetNormal;
         }
 
         canvas.save();
