@@ -16,6 +16,9 @@ public class AppSettings {
     public static final String SEPARATOR = "/";
     public static final String SHARED_PREFERENCES = "Shared Preferences";
     public static final String CURRENT_THEME_KEY = "Theme";
+    public static final String SORTING_KEY = "Sorting";
+    public static final String TREE_KEY = "Tree";
+    public static final String GRAPH_KEY = "Graph";
 
     public static final int PERMISSION_ALL = 1000;
     public static final int LOGO_ANIMATION_TIME = 2000;

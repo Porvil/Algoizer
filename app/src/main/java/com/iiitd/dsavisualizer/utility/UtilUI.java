@@ -330,4 +330,20 @@ public class UtilUI {
         return color;
     }
 
+    // false == show onBoarding, true = don't show
+    public static boolean getTutorialState(Context context, String id){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        boolean state = sharedPreferences.getBoolean(id, false);
+
+        return state;
+    }
+
+    public static void setTutorialState(Context context, String id, boolean state){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(id, state);
+        editor.apply();
+    }
+
 }

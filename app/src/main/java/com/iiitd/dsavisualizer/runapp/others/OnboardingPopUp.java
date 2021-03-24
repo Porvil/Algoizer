@@ -58,11 +58,14 @@ public class OnboardingPopUp {
     // Creating Object of ViewPagerAdapter
     ViewPagerAdapter mViewPagerAdapter;
 
-    public OnboardingPopUp(Context _context, int _width, int _height, View _parent){
+    String id;
+
+    public OnboardingPopUp(Context _context, int _width, int _height, View _parent, String _id){
         this.context = _context;
         this.width = _width;
         this.height = _height;
         this.parent = _parent;
+        this.id = _id;
 
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.popUpView = inflater.inflate(R.layout.layout_onboarding, null);
@@ -85,6 +88,8 @@ public class OnboardingPopUp {
         this.cb_onboarding_remember = popUpView.findViewById(R.id.cb_onboarding_remember);
 
         updateState(mViewPager.getCurrentItem());
+        boolean tutorialState = UtilUI.getTutorialState(context, AppSettings.GRAPH_KEY);
+        cb_onboarding_remember.setChecked(tutorialState);
 
         btn_onboarding_skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +166,9 @@ public class OnboardingPopUp {
     }
 
     // Reset icons and resets the state of popUp checkboxes
-    void dismiss(){
+    private void dismiss(){
         if(popupwindow != null){
+            UtilUI.setTutorialState(context, id, cb_onboarding_remember.isChecked());
             popupwindow.dismiss();
         }
     }

@@ -145,6 +145,7 @@ public class GraphActivity extends AppCompatActivity {
     final int LAYOUT_MAIN = R.layout.activity_graph;
     final int LAYOUT_LEFT = R.layout.navigation_graph;
     final int LAYOUT_RIGHT = R.layout.controls_graph;
+    final String ONBOARDING_KEY =  AppSettings.GRAPH_KEY;
     boolean isAutoPlay = false;
     boolean isLargeGraph = false;
     boolean directed = false;
@@ -243,8 +244,13 @@ public class GraphActivity extends AppCompatActivity {
         v_main.post(new Runnable() {
             @Override
             public void run() {
-                OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context, v_main.getWidth(), v_main.getHeight(), v_main);
-                onboardingPopUp.show();
+                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
+                if(!tutorialState) {
+                    OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context,
+                            v_main.getWidth(), v_main.getHeight(),
+                            v_main, ONBOARDING_KEY);
+                    onboardingPopUp.show();
+                }
             }
         });
 
