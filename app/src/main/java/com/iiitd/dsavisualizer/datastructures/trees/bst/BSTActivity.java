@@ -32,10 +32,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortActivity;
-import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivity;
-import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortActivity;
-import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeState;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
@@ -80,9 +76,9 @@ public class BSTActivity extends AppCompatActivity {
     Button btn_preorder;
     Button btn_postorder;
     Button btn_cleartree;
-    Button btn_tree1;
-    Button btn_tree2;
-    Button btn_tree3;
+    Button btn_example1;
+    Button btn_example2;
+    Button btn_example3;
     EditText et_insert;
     EditText et_search;
     EditText et_delete;
@@ -145,9 +141,9 @@ public class BSTActivity extends AppCompatActivity {
         btn_preorder = v_menu_right.findViewById(R.id.btn_preorder);
         btn_postorder = v_menu_right.findViewById(R.id.btn_postorder);
         btn_cleartree = v_menu_right.findViewById(R.id.btn_cleartree);
-        btn_tree1 = v_menu_right.findViewById(R.id.btn_tree1);
-        btn_tree2 = v_menu_right.findViewById(R.id.btn_tree2);
-        btn_tree3 = v_menu_right.findViewById(R.id.btn_tree3);
+        btn_example1 = v_menu_right.findViewById(R.id.btn_example1);
+        btn_example2 = v_menu_right.findViewById(R.id.btn_example2);
+        btn_example3 = v_menu_right.findViewById(R.id.btn_example3);
         et_insert = v_menu_right.findViewById(R.id.et_insert);
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
@@ -341,21 +337,21 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree1.setOnClickListener(new View.OnClickListener() {
+        btn_example1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createExampleTree(BSTInfo.tree1);
             }
         });
 
-        btn_tree2.setOnClickListener(new View.OnClickListener() {
+        btn_example2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createExampleTree(BSTInfo.tree2);
             }
         });
 
-        btn_tree3.setOnClickListener(new View.OnClickListener() {
+        btn_example3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createExampleTree(BSTInfo.tree3);

@@ -117,12 +117,12 @@ public class GraphActivity extends AppCompatActivity {
     ImageButton btn_savecustominput;
     Button btn_cleargraph;
     Button btn_cleargraphanim;
-    Button btn_tree1;
-    Button btn_tree2;
-    Button btn_tree3;
-    Button btn_tree4;
-    Button btn_tree5;
-    Button btn_tree6;
+    Button btn_example1;
+    Button btn_example2;
+    Button btn_example3;
+    Button btn_example4;
+    Button btn_example5;
+    Button btn_example6;
     EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
@@ -230,12 +230,12 @@ public class GraphActivity extends AppCompatActivity {
         btn_custominput = v_menu_right.findViewById(R.id.btn_custominput);
         btn_cleargraph = v_menu_right.findViewById(R.id.btn_cleargraph);
         btn_cleargraphanim = v_menu_right.findViewById(R.id.btn_cleargraphanim);
-        btn_tree1 = v_menu_right.findViewById(R.id.btn_tree1);
-        btn_tree2 = v_menu_right.findViewById(R.id.btn_tree2);
-        btn_tree3 = v_menu_right.findViewById(R.id.btn_tree3);
-        btn_tree4 = v_menu_right.findViewById(R.id.btn_tree4);
-        btn_tree5 = v_menu_right.findViewById(R.id.btn_tree5);
-        btn_tree6 = v_menu_right.findViewById(R.id.btn_tree6);
+        btn_example1 = v_menu_right.findViewById(R.id.btn_example1);
+        btn_example2 = v_menu_right.findViewById(R.id.btn_example2);
+        btn_example3 = v_menu_right.findViewById(R.id.btn_example3);
+        btn_example4 = v_menu_right.findViewById(R.id.btn_example4);
+        btn_example5 = v_menu_right.findViewById(R.id.btn_example5);
+        btn_example6 = v_menu_right.findViewById(R.id.btn_example6);
         et_customgraphinput = v_menu_right.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu_right.findViewById(R.id.et_insert);
         et_search = v_menu_right.findViewById(R.id.et_search);
@@ -458,7 +458,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree1.setOnClickListener(new View.OnClickListener() {
+        btn_example1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example1;
@@ -470,7 +470,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree2.setOnClickListener(new View.OnClickListener() {
+        btn_example2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example2;
@@ -482,7 +482,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree3.setOnClickListener(new View.OnClickListener() {
+        btn_example3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example3;
@@ -494,7 +494,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree4.setOnClickListener(new View.OnClickListener() {
+        btn_example4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example4;
@@ -506,7 +506,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree5.setOnClickListener(new View.OnClickListener() {
+        btn_example5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example5;
@@ -518,7 +518,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        btn_tree6.setOnClickListener(new View.OnClickListener() {
+        btn_example6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String customGraphString = GraphExamples.example6;

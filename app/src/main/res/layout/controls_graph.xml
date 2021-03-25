@@ -192,7 +192,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_tree1"
+                    android:id="@+id/btn_example1"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -201,7 +201,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/btn_tree2"
+                    android:id="@+id/btn_example2"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -210,7 +210,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/btn_tree3"
+                    android:id="@+id/btn_example3"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -226,7 +226,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_tree4"
+                    android:id="@+id/btn_example4"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -235,7 +235,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/btn_tree5"
+                    android:id="@+id/btn_example5"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -244,7 +244,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/btn_tree6"
+                    android:id="@+id/btn_example6"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
