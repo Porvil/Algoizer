@@ -178,4 +178,16 @@ public class Graph {
         return null;
     }
 
+    public boolean hasNegativeEdges(){
+        for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
+            for(Edge i : entry.getValue()){
+                if(i.weight < 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
