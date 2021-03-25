@@ -44,6 +44,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BellmanFord;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
+import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Kruskals;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.Util;
@@ -550,9 +551,9 @@ public class GraphActivity extends AppCompatActivity {
                 resetGraphSequence();
                 graphWrapper.board.clearGraph(true);
 
-//                BellmanFord bellmanFord = new BellmanFord(graphWrapper.graph);
-//                GraphSequence run = bellmanFord.run(vertexNumber);
-//                graphSequence = run;
+                Kruskals kruskals = new Kruskals(graphWrapper.graph);
+                GraphSequence run = kruskals.run();
+                graphSequence = run;
 
 
                 dl_main.closeDrawer(GravityCompat.START);
