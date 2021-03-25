@@ -37,7 +37,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
@@ -46,7 +45,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BellmanFord;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
-import com.iiitd.dsavisualizer.runapp.others.OnboardingPopUp;
+import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
@@ -1742,7 +1741,7 @@ public class GraphActivity extends AppCompatActivity {
             public void run() {
                 boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
                 if(!tutorialState) {
-                    OnboardingPopUp onboardingPopUp = new OnboardingPopUp(context,
+                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
                             v_main.getWidth(), v_main.getHeight(),
                             v_main, ONBOARDING_KEY);
                     onboardingPopUp.show();

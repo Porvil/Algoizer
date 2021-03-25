@@ -1,31 +1,20 @@
 package com.iiitd.dsavisualizer.runapp.others;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-public class OnboardingPopUp {
+public class OnBoardingPopUp {
 
     Context context;
     LayoutInflater inflater;
@@ -36,51 +25,44 @@ public class OnboardingPopUp {
 
     int width;
     int height;
-    final int MIN_WIDTH = 200;
-    final int MIN_HEIGHT = 200;
-
-    final int MINIMIZE_ICON = R.drawable.ic_baseline_remove_24;
-    final int MAXIMIZE_ICON = R.drawable.ic_baseline_open_in_full_24;
+    int size;
+    String id;
+    int[] onBoardingImages;
 
     ViewPager mViewPager;
+    ViewPagerAdapter mViewPagerAdapter;
     Button btn_onboarding_back;
     Button btn_onboarding_skip;
     Button btn_onboarding_next;
     CheckBox cb_onboarding_remember;
 
-
-    // images array
-    int[] images = {R.drawable.ic_avl,
-            R.drawable.ic_bst,
-            R.drawable.ic_graphs};
-    int size;
-
-    // Creating Object of ViewPagerAdapter
-    ViewPagerAdapter mViewPagerAdapter;
-
-    String id;
-
-    public OnboardingPopUp(Context _context, int _width, int _height, View _parent, String _id){
+    public OnBoardingPopUp(Context _context, int _width, int _height, View _parent, String _id){
         this.context = _context;
         this.width = _width;
         this.height = _height;
         this.parent = _parent;
         this.id = _id;
 
+        switch (id){
+            case AppSettings.SORTING_KEY:
+                onBoardingImages = OnBoardingInfo.sortingOnBoarding;
+                break;
+            case AppSettings.TREE_KEY:
+                onBoardingImages = OnBoardingInfo.treeOnBoarding;
+                break;
+            case AppSettings.GRAPH_KEY:
+                onBoardingImages = OnBoardingInfo.graphOnBoarding;
+                break;
+        }
+
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.popUpView = inflater.inflate(R.layout.layout_onboarding, null);
 
-        // Initializing the ViewPager Object
-        mViewPager = popUpView.findViewById(R.id.viewPagerMain);
+        this.mViewPager = popUpView.findViewById(R.id.viewPagerMain);
+        this.mViewPagerAdapter = new ViewPagerAdapter(context, onBoardingImages);
+        this.mViewPager.setAdapter(mViewPagerAdapter);
 
-        // Initializing the ViewPagerAdapter
-        mViewPagerAdapter = new ViewPagerAdapter(context, images);
-
-        // Adding the Adapter to the ViewPager
-        mViewPager.setAdapter(mViewPagerAdapter);
-
-        size = mViewPager.getAdapter().getCount();
-        System.out.println("size = " + size);
+        this.size = mViewPager.getAdapter().getCount();
 
         this.btn_onboarding_back = popUpView.findViewById(R.id.btn_onboarding_back);
         this.btn_onboarding_skip = popUpView.findViewById(R.id.btn_onboarding_skip);
@@ -94,7 +76,6 @@ public class OnboardingPopUp {
         btn_onboarding_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // SAVE STATE
                 dismiss();
             }
         });
@@ -109,7 +90,7 @@ public class OnboardingPopUp {
         btn_onboarding_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mViewPager.getCurrentItem()+1 == size){
+                if(mViewPager.getCurrentItem() + 1 == size){
                     dismiss();
                     return;
                 }
@@ -120,29 +101,23 @@ public class OnboardingPopUp {
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
-            }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
 
             @Override
             public void onPageSelected(int position) {
-                System.out.println("position = " + position);
-
                 updateState(position);
             }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
-
 
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
     private void updateState(int position){
-        // last item
+
         if(position+1 == size){
             btn_onboarding_next.setText("Finish");
         }
@@ -165,7 +140,7 @@ public class OnboardingPopUp {
         }
     }
 
-    // Reset icons and resets the state of popUp checkboxes
+    // Dismisses and save state for next time to whether show onBoardingPopUp or not
     private void dismiss(){
         if(popupwindow != null){
             UtilUI.setTutorialState(context, id, cb_onboarding_remember.isChecked());
