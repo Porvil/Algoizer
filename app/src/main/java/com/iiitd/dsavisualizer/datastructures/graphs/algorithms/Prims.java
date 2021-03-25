@@ -6,7 +6,6 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
@@ -18,13 +17,11 @@ import java.util.Map;
 public class Prims {
     Graph graph;
     GraphSequence graphSequence;
-    public GraphTree graphTree;
     HashMap<Integer, VertexCLRS> map;
 
     public Prims(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.PRIMS);
-        this.graphTree = new GraphTree(graph.directed, graph.weighted);
     }
 
     public GraphSequence run() {

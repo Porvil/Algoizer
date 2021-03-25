@@ -6,7 +6,6 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
@@ -17,13 +16,11 @@ import java.util.Map;
 public class BellmanFord {
     Graph graph;
     GraphSequence graphSequence;
-    public GraphTree graphTree;
     HashMap<Integer, VertexCLRS> map;
 
     public BellmanFord(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BELLMAN_FORD);
-        this.graphTree = new GraphTree(graph.directed, graph.weighted);
     }
 
     public GraphSequence run(int source) {
@@ -33,7 +30,6 @@ public class BellmanFord {
             return graphSequence;
 
         this.map = new HashMap<>();
-        int count = graph.noOfVertices;
 
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
