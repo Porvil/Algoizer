@@ -432,22 +432,22 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graphWrapper.reset();
-                graphWrapper.board.clearGraph(true);
+//                graphWrapper.board.clearGraph(true);
                 graphSequence = null;
 
                 // Removes the popUpWindows also
-                graphTreePopUp.dismiss();
-                graphTreeDSPopUp.dismiss();
+//                graphTreePopUp.dismiss();
+//                graphTreeDSPopUp.dismiss();
 
-                resetGraphSequence();
+                resetAlgorithm();
+//                resetGraphSequence();
             }
         });
 
         btn_cleargraphanim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graphWrapper.board.clearGraph(true);
-                resetGraphSequence();
+                resetAlgorithm();
             }
         });
 
@@ -461,72 +461,42 @@ public class GraphActivity extends AppCompatActivity {
         btn_example1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example1;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example1);
             }
         });
 
         btn_example2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example2;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example2);
             }
         });
 
         btn_example3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example3;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example3);
             }
         });
 
         btn_example4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example4;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example4);
             }
         });
 
         btn_example5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example5;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example5);
             }
         });
 
         btn_example6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customGraphString = GraphExamples.example6;
-
-                graphWrapper.reset();
-                parseAndShowCustomInput(customGraphString);
-
-                closeDrawer(2);
+                example(GraphExamples.example6);
             }
         });
 
@@ -686,6 +656,20 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void example(String exampleString){
+        // Reset Graph
+        graphWrapper.reset();
+
+        // Reset Algorithm
+        resetAlgorithm();
+
+        // Parse the Example
+        parseAndShowCustomInput(exampleString);
+
+        // Close drawer
+        closeDrawer(2);
     }
 
     private void algorithm(GraphAlgorithmType graphAlgorithmType){
@@ -1715,6 +1699,31 @@ public class GraphActivity extends AppCompatActivity {
                     showSaveGraphDialog(graphString);
                 }
             }
+        }
+    }
+
+    public void resetAlgorithm(){
+
+        // Reset Animation Graph
+        graphWrapper.board.clearGraph(true);
+
+        // Reset GraphSequence
+        if(graphSequence != null){
+            graphSequence.curSeqNo = 0;
+            UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+        }
+        else{
+            UtilUI.setText(tv_info, "-");
+            UtilUI.setText(tv_seqno, "0");
+        }
+
+        // Reset PopUps If Any
+        if(graphTreePopUp != null){
+            graphTreePopUp.dismiss();
+        }
+
+        if(graphTreeDSPopUp != null){
+            graphTreeDSPopUp.dismiss();
         }
     }
 
