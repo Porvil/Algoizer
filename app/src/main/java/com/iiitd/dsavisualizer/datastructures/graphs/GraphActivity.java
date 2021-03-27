@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -241,7 +242,7 @@ public class GraphActivity extends AppCompatActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-        initOnBoarding();
+//        initOnBoarding();
         initViews();
         initNavigation();
 
@@ -1120,17 +1121,23 @@ public class GraphActivity extends AppCompatActivity {
             public boolean onSingleTapUp(MotionEvent event) {
                 System.out.println("Single touch up");
 
+
+                Rect rect = graphWrapper.board.get(event);
+                int[] aa = graphWrapper.board.get2(event);
+
+                System.out.println(aa[1]+ "  " + aa[0]);
+                System.out.println(rect);
                 float x1 = event.getX();
                 float y1 = event.getY();
-
+//
                 float x = (x1 / graphWrapper.board.xSize);
                 float y =  (y1 / graphWrapper.board.ySize);
-
+//
                 int row = (int) y;
                 int col = (int) x;
 //                System.out.println("touch = " + x + "|" + y);
-                System.out.println("touch = " + row + "|" + col);
-                System.out.println(graphWrapper.board.getState(row, col));
+//                System.out.println("touch = " + row + "|" + col);
+//                System.out.println(graphWrapper.board.getState(row, col));
 
                 switch(graphControls.getCurrentState()){
                     case VIEW:
@@ -1280,7 +1287,7 @@ public class GraphActivity extends AppCompatActivity {
                 }
 
 //                graphWrapper.update();
-                System.out.println(graphWrapper.board.getState(row, col));
+//                System.out.println(graphWrapper.board.getState(row, col));
 
                 //Careful about this below line, MUST BE CALLED
                 graphWrapper.board.refresh(false);
@@ -1310,6 +1317,18 @@ public class GraphActivity extends AppCompatActivity {
 
         int width = cols * px;
         int height = rows * px;
+
+        int yCount = GraphSettings.getNoOfRows(isLargeGraph);
+        int xCount = GraphSettings.getNoOfCols(isLargeGraph);
+
+        float xSize = px;
+        float ySize = px;
+
+        float xEmpty = (float) (px*.33);
+        float yEmpty = (float) (px*.33);
+
+        width = (int) (xCount * xSize + (xCount+1) * xEmpty);
+        height = (int) (yCount * ySize + (yCount+1) * yEmpty);
 
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
         layoutParams.height = height;

@@ -61,8 +61,11 @@ public class GraphWrapper {
     }
 
     public boolean addVertex(MotionEvent motionEvent){
-        float x = (motionEvent.getX() / board.xSize);
-        float y =  (motionEvent.getY() / board.ySize);
+        float x = (motionEvent.getX() / board.xOverall);
+        float y =  (motionEvent.getY() / board.yOverall);
+
+//        float x = (motionEvent.getX() / board.xSize);
+//        float y =  (motionEvent.getY() / board.ySize);
 
         int row = (int) y;
         int col = (int) x;
@@ -72,6 +75,13 @@ public class GraphWrapper {
     }
 
     private boolean addVertex(int row, int col, int nodeNumber){
+        if(row<0 || row>= board.yCount){
+            return false;
+        }
+        if(col<0 || col>= board.xCount){
+            return false;
+        }
+
         if(!board.getState(row, col)){
             boolean addVertex = graph.addVertex(nodeNumber, row, col);
             if(addVertex){

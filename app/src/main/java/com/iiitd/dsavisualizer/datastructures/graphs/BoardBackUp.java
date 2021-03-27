@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Pair;
-import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
@@ -18,12 +17,11 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
 // Used by GraphActivity Class
-public class Board {
+public class BoardBackUp {
 
     Context context;
 
@@ -41,7 +39,7 @@ public class Board {
     private int edgeArrowWidth;              // in dp
     private int arrowLength;                 // in pixels
     private int edgeWeightTextSize;      // in pixels
-    
+
     // Board Variables
     public float X;                                // Width of Board
     public float Y;                                // Height of Board
@@ -49,8 +47,6 @@ public class Board {
     public int yCount;                             // No. of rows
     public float xSize;                            // One Column Width
     public float ySize;                            // One Row Height
-    public float xEmpty;                            // One Column Width
-    public float yEmpty;                            // One Row Height
     public BoardElement[][] boardElements;         // Contains data about board elements
     public int maxVertices;                        // Max No. of Vertices possible
     public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
@@ -70,16 +66,13 @@ public class Board {
     private Paint paintEdgeArrowsAnim;             // Animation Edge Arrows
     private Paint paintEdgeWeightAnim;             // Animation Edge Weight
 
-    float xOverall;
-    float yOverall;
 
-    public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
+    public BoardBackUp(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
         this.customCanvas = customCanvas;
         this.isLargeGraph = isLargeGraph;
 
-        float px = UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
-//        float px = UtilUI.dpToPx(context, 15);
+        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
 
         this.yCount = GraphSettings.getNoOfRows(isLargeGraph);
         this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
@@ -87,21 +80,10 @@ public class Board {
         this.xSize = px;
         this.ySize = px;
 
-        this.xEmpty = (float) (px*.33);
-        this.yEmpty = (float) (px*.33);
-
-        System.out.println("xEmpty = " + xEmpty);
-
-        this.X = xCount * xSize + (xCount+1) * xEmpty;
-        this.Y = yCount * ySize + (yCount+1) * yEmpty;
-
-//        this.X = xCount * xSize;
-//        this.Y = yCount * ySize;
+        this.X = xCount * xSize;
+        this.Y = yCount * ySize;
 
         this.maxVertices = yCount * xCount;
-
-        xOverall = xSize + xEmpty;
-        yOverall = ySize + yEmpty;
 
         System.out.println("----------------------------------------");
         System.out.println("Board Width(X)     = " + X      + " | " + "Board Height(Y)    = " + Y);
@@ -214,47 +196,21 @@ public class Board {
     // Draw the complete Grid
     private void drawGrid() {
         Rect rect = new Rect();
-//
-//        float xOverall = xSize + xEmpty;
-//        float yOverall = ySize + yEmpty;
 
         for(int i=0; i<xCount+1; i++){
-            int left = (int) (i*xOverall);
+            int left = (int) (i*xSize);
             int right = left + 1;
             int top = 0;
             int bottom = (int) Y;
             rect.set(left, top, right, bottom);
             customCanvas.canvasGrid.drawRect(rect, paintGrid);
-
-            left = (int) (left + xEmpty);
-            right = left + 1;
-            top = 0;
-            bottom = (int) Y;
-            rect.set(left, top, right, bottom);
-            customCanvas.canvasGrid.drawRect(rect, paintGrid);
         }
 
-//        for(int i=0; i<xCount+1; i++){
-//            int left = (int) (i*xSize);
-//            int right = left + 1;
-//            int top = 0;
-//            int bottom = (int) Y;
-//            rect.set(left, top, right, bottom);
-//            customCanvas.canvasGrid.drawRect(rect, paintGrid);
-//        }
-
         for(int i=0; i<yCount+1; i++){
-            int top = (int) (i*yOverall);
+            int top = (int) (i*ySize);
             int bottom = top + 1;
             int left = 0;
             int right = (int) X;
-            rect.set(left, top, right, bottom);
-            customCanvas.canvasGrid.drawRect(rect, paintGrid);
-
-            top = (int) (top + yEmpty);
-            bottom = top + 1;
-            left = 0;
-            right = (int) X;
             rect.set(left, top, right, bottom);
             customCanvas.canvasGrid.drawRect(rect, paintGrid);
         }
@@ -492,57 +448,6 @@ public class Board {
         drawVertex(boardElements[row][col].value, false);
     }
 
-    public int[] get2(MotionEvent motionEvent) {
-        float x = (motionEvent.getX() / xOverall);
-        float y = (motionEvent.getY() / yOverall);
-
-        return new int[]{(int)x,(int)y};
-    }
-
-    public Rect get(MotionEvent motionEvent){
-        int x = (int) (motionEvent.getX() / xOverall);
-        int y = (int) (motionEvent.getY() / yOverall);
-
-        System.out.println("x = " + x + " | " + "y = " + y);
-        float lowerX = x * xOverall + xEmpty;
-        float upperX = lowerX + xSize;
-
-        float lowerY = y * yOverall + yEmpty;
-        float upperY = lowerY + ySize;
-
-        System.out.println("motionEvent x = " + motionEvent.getX() + " | " + "motionEvent y = " + motionEvent.getY());
-        System.out.println("lowerX = " + lowerX + " | " + "upperX = " + upperX);
-        System.out.println("lowerY = " + lowerY + " | " + "upperY = " + upperY);
-
-//         handle NULL RETURN
-        if( !((motionEvent.getX() >= lowerX && motionEvent.getX() <= upperX)
-                && (motionEvent.getY()>= lowerY && motionEvent.getY()<= upperY))) {
-            return null;
-        }
-
-        Rect rect = new Rect((int)lowerX,(int)lowerY,(int)upperX,(int)upperY);
-        return rect;
-    }
-
-    public Rect get(float y, float x){
-        float lowerX = x * xOverall + xEmpty;
-        float upperX = lowerX + xSize;
-
-        float lowerY = y * yOverall + yEmpty;
-        float upperY = lowerY + ySize;
-
-        // handle NULL RETURN
-//        boolean inside = (x >= lowerX && x <= upperX) && (y>= lowerY && y<= upperY);
-//        System.out.println("insdei " + inside);
-//        if( !(inside)) {
-//            System.out.println("NULLLL");
-//            return null;
-//        }
-
-        Rect rect = new Rect((int)lowerX,(int)lowerY,(int)upperX,(int)upperY);
-//        Rect rect = new Rect(0,0,0,0);
-        return rect;
-    }
     // Draws a Vertex
     public void drawVertexWeight(int vertexValue, int vertexWeight, boolean isAnim){
         // Canvas and Paint Variables
@@ -586,13 +491,6 @@ public class Board {
 
     // Returns state of the grid element, whether it is being used or not
     public boolean getState(int row, int col){
-        if(row<0 || row>= yCount){
-            return false;
-        }
-        if(col<0 || col>= xCount){
-            return false;
-        }
-
         return boardElements[row][col].occupied;
     }
 
@@ -611,15 +509,10 @@ public class Board {
 
     // Returns Rect for given grid[row][col]
     public Rect getRect(int row, int col) {
-        int left = (int) (col * xOverall);
-        int top = (int) (row * yOverall);
-        int right = (int) (left + xOverall);
-        int bottom = (int) (top + yOverall);
-
-//        int left = (int) (col * xSize);
-//        int top = (int) (row * ySize);
-//        int right = (int) (left + xSize);
-//        int bottom = (int) (top + ySize);
+        int left = (int) (col * xSize);
+        int top = (int) (row * ySize);
+        int right = (int) (left + xSize);
+        int bottom = (int) (top + ySize);
 
         return new Rect(left, top, right, bottom);
     }
@@ -627,8 +520,7 @@ public class Board {
     // Returns Rect for given key value in graph's board, NPE if key is not present in graph
     public Rect getRect(int key) {
         int[] coordinates = getCoordinates(key);
-        return get(coordinates[0], coordinates[1]);
-//        return getRect(coordinates[0], coordinates[1]);
+        return getRect(coordinates[0], coordinates[1]);
     }
 
     // Returns radius for the node
