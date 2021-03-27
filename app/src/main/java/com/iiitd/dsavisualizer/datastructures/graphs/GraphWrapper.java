@@ -50,28 +50,79 @@ public class GraphWrapper {
         return graph.noOfVertices;
     }
 
-    public boolean addVertex(MotionEvent motionEvent, int nodeNumber){
-        float x = (motionEvent.getX() / board.xSize);
-        float y =  (motionEvent.getY() / board.ySize);
+//    /public boolean addVertex(MotionEvent motionEvent, int nodeNumber){
+//        float x = (motionEvent.getX() / board.xSize);
+//        float y =  (motionEvent.getY() / board.ySize);
+//
+//        int row = (int) y;
+//        int col = (int) x;
+//
+//        return addVertex(row, col, nodeNumber);
+//    }
 
-        int row = (int) y;
-        int col = (int) x;
-
-        return addVertex(row, col, nodeNumber);
-    }
-
-    public boolean addVertex(MotionEvent motionEvent){
-        float x = (motionEvent.getX() / board.xOverall);
-        float y =  (motionEvent.getY() / board.yOverall);
+//    public boolean addVertexOLD(MotionEvent motionEvent){
+//        float x = (motionEvent.getX() / board.xOverall);
+//        float y =  (motionEvent.getY() / board.yOverall);
 
 //        float x = (motionEvent.getX() / board.xSize);
 //        float y =  (motionEvent.getY() / board.ySize);
 
-        int row = (int) y;
-        int col = (int) x;
+//        int row = (int) y;
+//        int col = (int) x;
+//
+//        int newVertexNumber = graph.getNewVertexNumber();
+//        return addVertex(row, col, newVertexNumber);
+//    }
 
-        int newVertexNumber = graph.getNewVertexNumber();
-        return addVertex(row, col, newVertexNumber);
+    public boolean addVertex(MotionEvent motionEvent){
+        TouchData touchData = board.getTouchData(motionEvent);
+
+        return addVertex(touchData);
+    }
+
+    public boolean addVertex(TouchData touchData){
+
+        if(touchData.isElement){
+            int nodeNumber = graph.getNewVertexNumber();
+            int row = touchData.row;
+            int col = touchData.col;
+
+            if(!board.getState(row, col)){
+                boolean addVertex = graph.addVertex(nodeNumber, row, col);
+                if(addVertex){
+                    board.addVertex(row, col, nodeNumber);
+                    update();
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        return  false;
+    }
+
+    public boolean addVertex(TouchData touchData, int nodeNumber){
+
+        if(touchData.isElement){
+            int row = touchData.row;
+            int col = touchData.col;
+
+            if(!board.getState(row, col)){
+                boolean addVertex = graph.addVertex(nodeNumber, row, col);
+                if(addVertex){
+                    board.addVertex(row, col, nodeNumber);
+                    update();
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        return  false;
     }
 
     private boolean addVertex(int row, int col, int nodeNumber){
@@ -82,17 +133,27 @@ public class GraphWrapper {
             return false;
         }
 
-        if(!board.getState(row, col)){
-            boolean addVertex = graph.addVertex(nodeNumber, row, col);
-            if(addVertex){
-                board.addVertex(row, col, nodeNumber);
-                update();
-                return true;
-            }
+        TouchData touchData = new TouchData();
+        touchData.row = row;
+        touchData.col = col;
+        touchData.isElement = true;
+        touchData.rect = board.get(row, col);
+        touchData.x = col;
+        touchData.y = row;
 
-        }
+        return addVertex(touchData, nodeNumber);
 
-        return false;
+//        if(!board.getState(row, col)){
+//            boolean addVertex = graph.addVertex(nodeNumber, row, col);
+//            if(addVertex){
+//                board.addVertex(row, col, nodeNumber);
+//                update();
+//                return true;
+//            }
+//
+//        }
+//
+//        return false;
     }
 
     public boolean removeVertex(MotionEvent motionEvent){

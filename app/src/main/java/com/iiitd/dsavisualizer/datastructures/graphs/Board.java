@@ -631,6 +631,46 @@ public class Board {
 //        return getRect(coordinates[0], coordinates[1]);
     }
 
+    public TouchData getTouchData(MotionEvent motionEvent){
+        int x = (int) (motionEvent.getX() / xOverall);
+        int y = (int) (motionEvent.getY() / yOverall);
+
+        System.out.println("x = " + x + " | " + "y = " + y);
+        float lowerX = x * xOverall + xEmpty;
+        float upperX = lowerX + xSize;
+
+        float lowerY = y * yOverall + yEmpty;
+        float upperY = lowerY + ySize;
+
+        System.out.println("motionEvent x = " + motionEvent.getX() + " | " + "motionEvent y = " + motionEvent.getY());
+        System.out.println("lowerX = " + lowerX + " | " + "upperX = " + upperX);
+        System.out.println("lowerY = " + lowerY + " | " + "upperY = " + upperY);
+
+        TouchData touchData = new TouchData();
+//         handle NULL RETURN
+        if( !((motionEvent.getX() >= lowerX && motionEvent.getX() <= upperX)
+                && (motionEvent.getY()>= lowerY && motionEvent.getY()<= upperY))) {
+
+            touchData.row = y;
+            touchData.col = x;
+            touchData.isElement = false;
+            touchData.rect = null;
+            touchData.x = motionEvent.getX();
+            touchData.y = motionEvent.getY();
+            return touchData;
+        }
+
+        Rect rect = new Rect((int)lowerX,(int)lowerY,(int)upperX,(int)upperY);
+        touchData.row = y;
+        touchData.col = x;
+        touchData.isElement = true;
+        touchData.rect = rect;
+        touchData.x = motionEvent.getX();
+        touchData.y = motionEvent.getY();
+
+        return touchData;
+    }
+
     // Returns radius for the node
     private float getRadius(Rect rect){
         int width = rect.width();

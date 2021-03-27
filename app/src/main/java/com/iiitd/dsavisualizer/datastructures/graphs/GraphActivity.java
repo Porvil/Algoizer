@@ -1139,6 +1139,9 @@ public class GraphActivity extends AppCompatActivity {
 //                System.out.println("touch = " + row + "|" + col);
 //                System.out.println(graphWrapper.board.getState(row, col));
 
+                TouchData touchData = graphWrapper.board.getTouchData(event);
+                System.out.println(touchData);
+
                 switch(graphControls.getCurrentState()){
                     case VIEW:
                         break;
