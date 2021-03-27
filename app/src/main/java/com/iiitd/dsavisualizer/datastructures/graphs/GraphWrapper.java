@@ -137,7 +137,7 @@ public class GraphWrapper {
         touchData.row = row;
         touchData.col = col;
         touchData.isElement = true;
-        touchData.rect = board.get(row, col);
+//        touchData.rect = board.get(row, col);
         touchData.x = col;
         touchData.y = row;
 

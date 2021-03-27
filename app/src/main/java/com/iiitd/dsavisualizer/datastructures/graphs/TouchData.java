@@ -8,7 +8,7 @@ public class TouchData {
     public int row;
     public int col;
 
-    Rect rect;
+//    Rect rect;
     boolean isElement;
 
     public static TouchData getInstance(int row, int col){
@@ -24,7 +24,7 @@ public class TouchData {
                 ", y=" + y +
                 ", row=" + row +
                 ", col=" + col +
-                ", rect=" + rect +
+//                ", rect=" + rect +
                 ", isElement=" + isElement +
                 '}';
     }

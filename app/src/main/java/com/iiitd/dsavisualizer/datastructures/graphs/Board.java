@@ -654,7 +654,7 @@ public class Board {
             touchData.row = y;
             touchData.col = x;
             touchData.isElement = false;
-            touchData.rect = null;
+//            touchData.rect = null;
             touchData.x = motionEvent.getX();
             touchData.y = motionEvent.getY();
             return touchData;
@@ -664,7 +664,7 @@ public class Board {
         touchData.row = y;
         touchData.col = x;
         touchData.isElement = true;
-        touchData.rect = rect;
+//        touchData.rect = rect;
         touchData.x = motionEvent.getX();
         touchData.y = motionEvent.getY();
 
