@@ -1314,8 +1314,12 @@ public class GraphActivity extends AppCompatActivity {
         int rows = GraphSettings.getNoOfRows(isLargeGraph);
         int cols = GraphSettings.getNoOfCols(isLargeGraph);
 
-        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+        GraphData graphData = GraphData.getInstance(isLargeGraph);
 
+//        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+        int px = 50;
+
+        px = graphData.nodeRect;
         int width = cols * px;
         int height = rows * px;
 

@@ -36,6 +36,8 @@ public class CustomCanvas {
         int width = frameLayout.getWidth();
         int height = frameLayout.getHeight();
 
+        System.out.println("FRAME LAYOUT = " + width + "x" + height);
+
         this.bitmapGraph = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         this.imageViewGraph.setImageBitmap(bitmapGraph);
         this.canvasGraph = new Canvas(bitmapGraph);

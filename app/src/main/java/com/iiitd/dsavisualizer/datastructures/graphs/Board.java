@@ -18,7 +18,6 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -78,12 +77,20 @@ public class Board {
         this.customCanvas = customCanvas;
         this.isLargeGraph = isLargeGraph;
 
-        float px = UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+        GraphData graphData = GraphData.getInstance(isLargeGraph);
+
+//        float px = UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
+        float px = 50;
 //        float px = UtilUI.dpToPx(context, 15);
+
+        px =graphData.nodeRect;
 
         this.yCount = GraphSettings.getNoOfRows(isLargeGraph);
         this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
 
+//        this.xSize = graphData.nodeRect;
+//        this.ySize = graphData.nodeRect;
+//
         this.xSize = px;
         this.ySize = px;
 
@@ -111,8 +118,10 @@ public class Board {
         System.out.println("----------------------------------------");
 
         float minSide = Math.min(xSize, ySize);
-        this.nodeRadius = ( minSide * circleRatio) / 2;
-        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
+        this.nodeRadius = graphData.nodeCircleRadius;
+//        this.nodeRadius = ( minSide * circleRatio) / 2;
+        this.arrowLength = graphData.nodeEdgeArrow;
+//        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
         this.coordinatesOffset = 0.95f;
 
         this.boardElements = new BoardElement[yCount][xCount];
@@ -121,6 +130,13 @@ public class Board {
                 boardElements[r][c] = new BoardElement();
             }
         }
+
+
+//        this.nodeTextSize        = graphData.
+//        this.coordinatesTextSize = graphData.
+//        this.edgeWidth           = graphData.
+//        this.edgeArrowWidth      = graphData.nodeEdgeArrow;
+//        this.edgeWeightTextSize  = graphData.
 
         this.nodeTextSize = (int) UtilUI.spToPx(context, GraphSettings.getNodeTextSize(isLargeGraph));
         this.coordinatesTextSize = (int) UtilUI.spToPx(context, GraphSettings.getCoordinatesTextSize(isLargeGraph));
@@ -133,6 +149,8 @@ public class Board {
 
         // Draw Grid on Grid ImageView
         drawGrid();
+
+        GraphDimensions graphDimensions = new GraphDimensions(context, isLargeGraph);
     }
 
     // Initializes all Paint Variables
@@ -157,6 +175,7 @@ public class Board {
         // Vertex
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
+//        this.paintVertex.setAntiAlias(true);
 
         // Vertex Text
         this.paintVertexText = new Paint();
@@ -169,6 +188,7 @@ public class Board {
         this.paintEdge = new Paint();
         this.paintEdge.setColor(medium);
         this.paintEdge.setStrokeWidth(edgeWidth);
+//        this.paintEdge.setAntiAlias(true);
 
         // Edge Arrows
         this.paintEdgeArrows = new Paint();
@@ -181,6 +201,7 @@ public class Board {
         this.paintEdgeWeight.setTextSize(edgeWeightTextSize);
         this.paintEdgeWeight.setColor(medium);
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//        paintEdgeWeight.setAntiAlias(true);
 
         // Animation Vertex
         this.paintVertexAnim = new Paint();
