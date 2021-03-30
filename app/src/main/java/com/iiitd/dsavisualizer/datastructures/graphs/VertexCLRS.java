@@ -138,4 +138,5 @@ public class VertexCLRS {
     public int hashCode() {
         return Objects.hash(data);
     }
+
 }

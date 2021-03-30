@@ -2,35 +2,25 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 public class GraphSettings{
 
+    // cols = 2 * rows
     // SMALL GRAPH
-    private static final int SMALL_ROWS                     = 7;
-    private static final int SMALL_COLS                     = 14;
-    private static final int SMALL_NODE_SIZE                = 21;
-    private static final int SMALL_NODE_TEXT_SIZE           = 12;
-    private static final int SMALL_COORDINATES_TEXT_SIZE    = 6;
-    private static final int SMALL_EDGE_WIDTH               = 3;
-    private static final int SMALL_EDGE_ARROW_WIDTH         = 2;
-    private static final int SMALL_EDGE_WEIGHT_TEXT_SIZE    = 10;
+    private static final int SMALL_ROWS           = 6;
+    private static final int SMALL_COLS           = 12;
 
     // LARGE GRAPH
-    private static final int LARGE_ROWS                     = 9;
-    private static final int LARGE_COLS                     = 18;
-    private static final int LARGE_NODE_SIZE                = 16;
-    private static final int LARGE_NODE_TEXT_SIZE           = 10;
-    private static final int LARGE_COORDINATES_TEXT_SIZE    = 4;
-    private static final int LARGE_EDGE_WIDTH               = 2;
-    private static final int LARGE_EDGE_ARROW_WIDTH         = 1;
-    private static final int LARGE_EDGE_WEIGHT_TEXT_SIZE    = 8;
+    private static final int LARGE_ROWS           = 8;
+    private static final int LARGE_COLS           = 16;
 
+    // nodeCircleRadius + nodeEdgeArrowLength == 50
     public static final int nodeRect              = 100;
-    public static final int nodeCircleRadius      = 30;
+    public static final int nodeCircleRadius      = 35;
     public static final int nodeEdge              = 10;
     public static final int nodeEdgeArrow         = 5;
-    public static final int nodeEdgeArrowLength   = 20;
+    public static final int nodeEdgeArrowLength   = 15;
     public static final int nodeEdgeWeight        = 30;
     public static final int nodeText              = 30;
     public static final int nodeTextCoordinates   = 20;
-    public static final float maxX = 2048;
+    public static final float maxX = 2048; // Limit in pixels
 
     public static int getNoOfRows(boolean isLargeGraph){
         return isLargeGraph ? LARGE_ROWS : SMALL_ROWS;
@@ -40,48 +30,4 @@ public class GraphSettings{
         return isLargeGraph ? LARGE_COLS : SMALL_COLS;
     }
 
-    public static int getNodeSize(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_NODE_SIZE : SMALL_NODE_SIZE;
-    }
-
-    public static int getNodeTextSize(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_NODE_TEXT_SIZE : SMALL_NODE_TEXT_SIZE;
-    }
-
-    public static int getCoordinatesTextSize(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_COORDINATES_TEXT_SIZE : SMALL_COORDINATES_TEXT_SIZE;
-    }
-
-    public static int getEdgeWidth(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_EDGE_WIDTH : SMALL_EDGE_WIDTH;
-    }
-
-    public static int getEdgeArrowWidth(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_EDGE_ARROW_WIDTH : SMALL_EDGE_ARROW_WIDTH;
-    }
-
-    public static int getEdgeWeightTextSize(boolean isLargeGraph){
-        return isLargeGraph ? LARGE_EDGE_WEIGHT_TEXT_SIZE : SMALL_EDGE_WEIGHT_TEXT_SIZE;
-    }
-
 }
-
-//    // SMALL GRAPH
-//    private static final int SMALL_ROWS                     = 7;
-//    private static final int SMALL_COLS                     = 14;
-//    private static final int SMALL_NODE_SIZE                = 25;
-//    private static final int SMALL_NODE_TEXT_SIZE           = 12;
-//    private static final int SMALL_COORDINATES_TEXT_SIZE    = 6;
-//    private static final int SMALL_EDGE_WIDTH               = 3;
-//    private static final int SMALL_EDGE_ARROW_WIDTH         = 2;
-//    private static final int SMALL_EDGE_WEIGHT_TEXT_SIZE    = 10;
-//
-//    // LARGE GRAPH
-//    private static final int LARGE_ROWS                     = 9;
-//    private static final int LARGE_COLS                     = 18;
-//    private static final int LARGE_NODE_SIZE                = 20;
-//    private static final int LARGE_NODE_TEXT_SIZE           = 10;
-//    private static final int LARGE_COORDINATES_TEXT_SIZE    = 4;
-//    private static final int LARGE_EDGE_WIDTH               = 2;
-//    private static final int LARGE_EDGE_ARROW_WIDTH         = 1;
-//    private static final int LARGE_EDGE_WEIGHT_TEXT_SIZE    = 8;

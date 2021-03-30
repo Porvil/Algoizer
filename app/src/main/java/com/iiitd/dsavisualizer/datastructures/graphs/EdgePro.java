@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.Objects;
 
+// Used by BFS, DFS
 public class EdgePro implements Comparable<EdgePro>{
 
     public int src;

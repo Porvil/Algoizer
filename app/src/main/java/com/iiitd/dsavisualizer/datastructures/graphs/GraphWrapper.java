@@ -50,30 +50,6 @@ public class GraphWrapper {
         return graph.noOfVertices;
     }
 
-//    /public boolean addVertex(MotionEvent motionEvent, int nodeNumber){
-//        float x = (motionEvent.getX() / board.xSize);
-//        float y =  (motionEvent.getY() / board.ySize);
-//
-//        int row = (int) y;
-//        int col = (int) x;
-//
-//        return addVertex(row, col, nodeNumber);
-//    }
-
-//    public boolean addVertexOLD(MotionEvent motionEvent){
-//        float x = (motionEvent.getX() / board.xOverall);
-//        float y =  (motionEvent.getY() / board.yOverall);
-
-//        float x = (motionEvent.getX() / board.xSize);
-//        float y =  (motionEvent.getY() / board.ySize);
-
-//        int row = (int) y;
-//        int col = (int) x;
-//
-//        int newVertexNumber = graph.getNewVertexNumber();
-//        return addVertex(row, col, newVertexNumber);
-//    }
-
     public boolean addVertex(MotionEvent motionEvent){
         TouchData touchData = board.getTouchData(motionEvent);
 
@@ -125,6 +101,7 @@ public class GraphWrapper {
         return  false;
     }
 
+    // Used by CustomInput in Graph
     private boolean addVertex(int row, int col, int nodeNumber){
         if(row<0 || row>= board.yCount){
             return false;
@@ -137,23 +114,10 @@ public class GraphWrapper {
         touchData.row = row;
         touchData.col = col;
         touchData.isElement = true;
-//        touchData.rect = board.get(row, col);
         touchData.x = col;
         touchData.y = row;
 
         return addVertex(touchData, nodeNumber);
-
-//        if(!board.getState(row, col)){
-//            boolean addVertex = graph.addVertex(nodeNumber, row, col);
-//            if(addVertex){
-//                board.addVertex(row, col, nodeNumber);
-//                update();
-//                return true;
-//            }
-//
-//        }
-//
-//        return false;
     }
 
     public boolean removeVertex(MotionEvent motionEvent){
@@ -183,25 +147,6 @@ public class GraphWrapper {
         if(!graph.checkContainsEdge(src, des)){
             if(graph.checkContainsVertices(src, des)){
 
-//                if(directed){
-//                    graph.addEdge(src, des, weight, true);
-//                }
-//                else{
-//                    double srcToDes = board.getAngleBetweenVertices(src, des);
-//                    double desToSrc = board.getAngleBetweenVertices(des, src);
-//
-//                    // bottom plane = srcToDes
-//                    if(srcToDes + 180 == desToSrc){
-//                        graph.addEdge(src, des, weight, true);
-//                        graph.addEdge(des, src, weight, false);//reverse edge
-//                    }
-//                    else{
-//                        graph.addEdge(des, src, weight, true);
-//                        graph.addEdge(src, des, weight, false);//reverse edge
-//                    }
-//                }
-
-//                double angleBetweenVertices = board.getAngleBetweenVertices(src, des);
                 if(!graph.directed){
                     graph.addEdge(des, src, weight, false);//reverse edge
                 }

@@ -35,12 +35,6 @@ public class GraphSequence {
     }
 
     public boolean backward(){
-//        if(getSize() <= 0)
-//            return false;
-//
-//        if(curSeqNo == 0)
-//            return false;
-
         if(curSeqNo <= 0)
             return false;
 

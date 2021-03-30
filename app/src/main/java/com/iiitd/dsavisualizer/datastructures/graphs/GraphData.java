@@ -12,8 +12,8 @@ public class GraphData {
 
     public int X;                                // Width of Board
     public int Y;                                // Height of Board
-    public int xCount;                             // No. of columns
-    public int yCount;                             // No. of rows
+    public int xCount;                           // No. of columns
+    public int yCount;                           // No. of rows
     public int xSize;                            // One Column Width
     public int ySize;                            // One Row Height
     public int xEmpty;                           // One Column Width Empty
@@ -50,9 +50,6 @@ public class GraphData {
 
         float maxX = GraphSettings.maxX;
         float cSize = (3*maxX) / (4*xCount + 1);
-
-        System.out.println(cSize);
-
 
         this.xSize = (int) cSize;
         this.ySize = (int) cSize;

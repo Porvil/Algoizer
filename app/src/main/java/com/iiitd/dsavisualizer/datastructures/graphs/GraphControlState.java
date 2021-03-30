@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// Used by GraphActivity
 public enum GraphControlState {
     VIEW,
     VERTEX_ADD,

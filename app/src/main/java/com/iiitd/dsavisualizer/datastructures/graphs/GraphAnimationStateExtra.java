@@ -32,7 +32,6 @@ public class GraphAnimationStateExtra {
     }
 
     public GraphAnimationStateExtra addMapDijkstra(HashMap<Integer, VertexCLRS> oldMap){
-        System.out.println("@@@@@@@@@@@@@@@@@" + oldMap);
         for (Map.Entry<Integer, VertexCLRS> entry : oldMap.entrySet()) {
             this.map.put(entry.getKey(), entry.getValue().dijkstraDist);
         }
@@ -41,7 +40,6 @@ public class GraphAnimationStateExtra {
     }
 
     public GraphAnimationStateExtra addMapBellmanford(HashMap<Integer, VertexCLRS> oldMap){
-        System.out.println("@@@@@@@@@@@@@@@@@" + oldMap);
         for (Map.Entry<Integer, VertexCLRS> entry : oldMap.entrySet()) {
             this.map.put(entry.getKey(), entry.getValue().bellmanFordDist);
         }

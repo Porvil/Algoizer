@@ -19,11 +19,13 @@ import java.util.Collections;
 import java.util.Map;
 
 // Used by GraphActivity Class
+// Used old Board Functions and variables [ MAY NEED TO UPDATE ]
 public class BoardTree {
 
     Context context;
 
     // Constants
+    private final boolean ANTI_ALIAS = true;       // ANTI-ALIASING is ON
     private final int topAngle = 45;               // in degrees
     private final int bottomAngle = 45;            // in degrees
     private final int nodeSize = 5;                // in mm
@@ -45,8 +47,6 @@ public class BoardTree {
     public float xSize;                            // One Column Width
     public float ySize;                            // One Row Height
     public BoardElement[][] boardElements;         // Contains data about board elements
-    public int maxVertices;                        // Max No. of Vertices possible
-//    public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
 
     // Paint Variables
     private Paint paintGrid;
@@ -142,37 +142,45 @@ public class BoardTree {
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(light);
+        this.paintGrid.setAntiAlias(ANTI_ALIAS);
 
         this.paintGridCoordinates = new Paint();
         this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
         this.paintGridCoordinates.setTextSize(textSizeCoordinates);
         this.paintGridCoordinates.setColor(light);
+        this.paintGridCoordinates.setAntiAlias(ANTI_ALIAS);
 
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
         this.paintVertex.setAlpha(192);
+        this.paintVertex.setAntiAlias(ANTI_ALIAS);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
         this.paintText.setTextSize(textSize);
         this.paintText.setColor(white);
         this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintText.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeTree = new Paint();
         this.paintEdgeTree.setColor(context.getResources().getColor(R.color.graphEdge1));
         this.paintEdgeTree.setStrokeWidth(edgeWidth);
+        this.paintEdgeTree.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeBack = new Paint();
         this.paintEdgeBack.setColor(context.getResources().getColor(R.color.graphEdge2));
         this.paintEdgeBack.setStrokeWidth(edgeWidth);
+        this.paintEdgeBack.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeCross = new Paint();
         this.paintEdgeCross.setColor(context.getResources().getColor(R.color.graphEdge3));
         this.paintEdgeCross.setStrokeWidth(edgeWidth);
+        this.paintEdgeCross.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeForward = new Paint();
         this.paintEdgeForward.setColor(context.getResources().getColor(R.color.graphEdge4));
         this.paintEdgeForward.setStrokeWidth(edgeWidth);
+        this.paintEdgeForward.setAntiAlias(ANTI_ALIAS);
 
     }
 
@@ -215,8 +223,6 @@ public class BoardTree {
     public void drawGraph(){
 
         clearCanvasGraphTree();
-
-//        drawGrid();
 
         // Sort Edges in reverse order, so that tree edges are drawn first
         Collections.sort(graphTree.edgePros, Collections.<EdgePro>reverseOrder());
@@ -267,8 +273,6 @@ public class BoardTree {
         int x = rect.centerX();
         int y = rect.centerY();
 
-//        float radius = getRadius(rect);
-//        System.out.println(radius + " ==" + nodeRadius);
         String text = String.valueOf(name);
 
         canvas.drawCircle(x, y, nodeRadius, paintV);
@@ -283,33 +287,22 @@ public class BoardTree {
 
         switch(edgePro.edgeClass){
             case TREE:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeTree, null,
-                        edgePro, weighted);
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeTree);
                 break;
-
             case BACK:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeBack, paintEdgeBack, null,
-                        edgePro, weighted);
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeBack, paintEdgeBack);
                 break;
-
             case CROSS:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeCross, paintEdgeCross, null,
-                        edgePro, weighted);
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeCross, paintEdgeCross);
                 break;
-
             case FORWARD:
-                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeForward, null,
-                        edgePro, weighted);
+                __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeForward);
                 break;
-
         }
 
     }
 
-    public void __drawEdge(Canvas canvas,
-                           Rect rect1, Rect rect2,
-                           Paint paintE, Paint paintEA, Paint paintEW,
-                           EdgePro edgePro, boolean weighted) {
+    public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA) {
         double[] lineCoordinates = getLineCoordinates(rect1, rect2);
 
         float lx1 = (float) lineCoordinates[0];
@@ -317,18 +310,6 @@ public class BoardTree {
 
         float lx2 = (float) lineCoordinates[2];
         float ly2 = (float) lineCoordinates[3];
-
-        double degree = getAngle(lx1, ly1, lx2, ly2);
-
-        float x = lx1 + (lx2 - lx1)/2;
-        float y = ly1 + (ly2 - ly1)/2;
-
-//        if(edgePro != null && weighted) {
-//            canvas.save();
-//            canvas.rotate((float) degree, x, y);
-//            canvas.drawText(String.valueOf(edgePro.weight), x, y-20, paintEW);
-//            canvas.restore();
-//        }
 
         canvas.drawLine(lx1, ly1, lx2, ly2, paintE);
         arrow12(lx1, ly1, lx2, ly2, canvas, paintEA);
@@ -351,15 +332,11 @@ public class BoardTree {
         canvas.drawLine(x1, y1, endX2, endY2, paintEA);
     }
 
-    // Adds VertexOld element to grid element and calls drawNode
+    // Adds Vertex element to grid element and calls drawNode
     public void addVertex(int row, int col, int name) {
-        // Change its state and add vertexOld reference
+        // Change its state and add vertex reference
         boardElements[row][col].occupied = true;
         boardElements[row][col].value = name;
-//        data[row][col].vertexOld = vertexOld;
-//
-//        Rect rect = getRect(row, col);
-//        drawNodeGraph(rect, boardElements[row][col].value);
     }
 
     public int[] getCoordinates(int key){
@@ -392,7 +369,6 @@ public class BoardTree {
         int width = rect.width();
         int height = rect.height();
 
-//        System.out.println("rect = " + width + "x" + height);
         float diameter = Math.min(width, height) * circleRatio;
         float radius = diameter / 2;
 
@@ -427,16 +403,6 @@ public class BoardTree {
 
     private void __refresh(ImageView imageView){
         imageView.invalidate();
-    }
-
-    public float getAngle(float x1, float y1, float x2, float y2) {
-        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
-
-        if(angle < 0){
-            angle += 360;
-        }
-
-        return angle;
     }
 
     private void clearCanvasGraphTree(){
