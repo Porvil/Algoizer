@@ -41,6 +41,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.datastructures.trees.avl.AVLActivity;
+import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public class BSTActivity extends AppCompatActivity {
     final int LAYOUT_MAIN = R.layout.activity_tree;
     final int LAYOUT_LEFT = R.layout.navigation_tree;
     final int LAYOUT_RIGHT = R.layout.controls_bst;
+    final String ONBOARDING_KEY =  AppSettings.TREE_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +155,7 @@ public class BSTActivity extends AppCompatActivity {
         cl_bst = v_menu_left.findViewById(R.id.cl_bst);
         cl_avl = v_menu_left.findViewById(R.id.cl_avl);
 
+        initOnBoarding();
         initViews();
         initNavigation();
 
@@ -923,6 +926,21 @@ public class BSTActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initOnBoarding() {
+        v_main.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
+                if(!tutorialState) {
+                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
+                            v_main.getWidth(), v_main.getHeight(),
+                            v_main, ONBOARDING_KEY);
+                    onboardingPopUp.show();
+                }
+            }
+        });
     }
 
 }

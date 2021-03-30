@@ -242,7 +242,7 @@ public class GraphActivity extends AppCompatActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-//        initOnBoarding();
+        initOnBoarding();
         initViews();
         initNavigation();
 

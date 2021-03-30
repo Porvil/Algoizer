@@ -35,6 +35,7 @@ import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivit
 import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Timer;
@@ -93,6 +94,7 @@ public class SelectionSortActivity extends AppCompatActivity {
     final int LAYOUT_MAIN = R.layout.activity_sorting;
     final int LAYOUT_LEFT = R.layout.navigation_sorting;
     final int LAYOUT_RIGHT = R.layout.controls_selection_sort;
+    final String ONBOARDING_KEY =  AppSettings.SORTING_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +151,7 @@ public class SelectionSortActivity extends AppCompatActivity {
 
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
+        initOnBoarding();
         addPseudocode();
         initViews();
         initNavigation();
@@ -723,6 +726,21 @@ public class SelectionSortActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initOnBoarding() {
+        v_main.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
+                if(!tutorialState) {
+                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
+                            v_main.getWidth(), v_main.getHeight(),
+                            v_main, ONBOARDING_KEY);
+                    onboardingPopUp.show();
+                }
+            }
+        });
     }
 
 }
