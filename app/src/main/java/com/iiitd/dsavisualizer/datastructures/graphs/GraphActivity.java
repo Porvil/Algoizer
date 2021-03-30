@@ -242,7 +242,7 @@ public class GraphActivity extends AppCompatActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-        initOnBoarding();
+//        initOnBoarding();
         initViews();
         initNavigation();
 
@@ -1311,33 +1311,11 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void initCanvasAndGraph(){
-        int rows = GraphSettings.getNoOfRows(isLargeGraph);
-        int cols = GraphSettings.getNoOfCols(isLargeGraph);
-
-        GraphData graphData = GraphData.getInstance(isLargeGraph);
-
-//        int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
-        int px = 50;
-
-        px = graphData.nodeRect;
-        int width = cols * px;
-        int height = rows * px;
-
-        int yCount = GraphSettings.getNoOfRows(isLargeGraph);
-        int xCount = GraphSettings.getNoOfCols(isLargeGraph);
-
-        float xSize = px;
-        float ySize = px;
-
-        float xEmpty = (float) (px*.33);
-        float yEmpty = (float) (px*.33);
-
-        width = (int) (xCount * xSize + (xCount+1) * xEmpty);
-        height = (int) (yCount * ySize + (yCount+1) * yEmpty);
+        GraphData graphData = new GraphData(isLargeGraph);
 
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
-        layoutParams.height = height;
-        layoutParams.width = width;
+        layoutParams.height = graphData.Y;
+        layoutParams.width = graphData.X;
 
         fl_graph.setLayoutParams(layoutParams);
         fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));

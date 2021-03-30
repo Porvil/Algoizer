@@ -1,19 +1,22 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 public class GraphData {
-    int nodeRect;
-    int nodeCircleRadius;
-    int nodeEdgeArrow;
-    int nodeText;
-    int nodeTextCoordinates;
+    public int nodeRect;
+    public int nodeCircleRadius;
+    public int nodeEdgeArrow;
+    public int nodeText;
+    public int nodeTextCoordinates;
 
-    private GraphData(int nodeRect, int nodeCircleRadius, int nodeEdgeArrow, int nodeText, int nodeTextCoordinates) {
-        this.nodeRect = nodeRect;
-        this.nodeCircleRadius = nodeCircleRadius;
-        this.nodeEdgeArrow = nodeEdgeArrow;
-        this.nodeText = nodeText;
-        this.nodeTextCoordinates = nodeTextCoordinates;
-    }
+    public int X;                                // Width of Board
+    public int Y;                                // Height of Board
+    public int xCount;                             // No. of columns
+    public int yCount;                             // No. of rows
+    public int xSize;                            // One Column Width
+    public int ySize;                            // One Row Height
+    public int xEmpty;                           // One Column Width Empty
+    public int yEmpty;                           // One Row Height Empty
+    public float xOverall;
+    public float yOverall;
 
     /*
         X = total col. size
@@ -37,14 +40,25 @@ public class GraphData {
 
         similarly for Y, r, rSize and rEmpty
      */
-    public static GraphData getInstance(boolean isLargeGraph){
-        int noOfCols = GraphSettings.getNoOfCols(isLargeGraph);
+
+    public GraphData(boolean isLargeGraph){
+        this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
+        this.yCount = GraphSettings.getNoOfRows(isLargeGraph);
 
         float maxX = GraphSettings.maxX;
-        float cSize = (3*maxX) / (4*noOfCols + 1);
+        float cSize = (3*maxX) / (4*xCount + 1);
 
         System.out.println(cSize);
 
+
+        this.xSize = (int) cSize;
+        this.ySize = (int) cSize;
+        this.xEmpty = (int) (cSize/3);
+        this.yEmpty = (int) (cSize/3);
+        this.xOverall = xSize + xEmpty;
+        this.yOverall = ySize + yEmpty;
+        this.X = (xCount * xSize) + ((xCount+1) * xEmpty);
+        this.Y = (yCount * ySize) + ((yCount+1) * yEmpty);
 
         float ratio = cSize/GraphSettings.nodeRect;
 
@@ -54,19 +68,16 @@ public class GraphData {
         float f_nodeText             = GraphSettings.nodeText  * ratio;
         float f_nodeTextCoordinates  = GraphSettings.nodeTextCoordinates * ratio;
 
-        int i_nodeRect            = (int) f_nodeRect;
-        int i_nodeCircleRadius    = (int) f_nodeCircleRadius;
-        int i_nodeEdgeArrow       = (int) f_nodeEdgeArrow;
-        int i_nodeText            = (int) f_nodeText;
-        int i_nodeTextCoordinates = (int) f_nodeTextCoordinates;
+        this.nodeRect            = (int) f_nodeRect;
+        this.nodeCircleRadius    = (int) f_nodeCircleRadius;
+        this.nodeEdgeArrow       = (int) f_nodeEdgeArrow;
+        this.nodeText            = (int) f_nodeText;
+        this.nodeTextCoordinates = (int) f_nodeTextCoordinates;
 
-
-        System.out.println(i_nodeRect            );
-        System.out.println(i_nodeCircleRadius    );
-        System.out.println(i_nodeEdgeArrow       );
-        System.out.println(i_nodeText            );
-        System.out.println(i_nodeTextCoordinates );
-
-        return new GraphData(i_nodeRect, i_nodeCircleRadius, i_nodeEdgeArrow, i_nodeText, i_nodeTextCoordinates);
+        System.out.println(nodeRect            );
+        System.out.println(nodeCircleRadius    );
+        System.out.println(nodeEdgeArrow       );
+        System.out.println(nodeText            );
+        System.out.println(nodeTextCoordinates );
     }
 }

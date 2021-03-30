@@ -48,8 +48,10 @@ public class Board {
     public int yCount;                             // No. of rows
     public float xSize;                            // One Column Width
     public float ySize;                            // One Row Height
-    public float xEmpty;                            // One Column Width
-    public float yEmpty;                            // One Row Height
+    public float xEmpty;                           // One Column Width Empty
+    public float yEmpty;                           // One Row Height Empty
+    public float xOverall;
+    public float yOverall;
     public BoardElement[][] boardElements;         // Contains data about board elements
     public int maxVertices;                        // Max No. of Vertices possible
     public CustomCanvas customCanvas;              // Custom Canvas holds all canvases
@@ -69,47 +71,28 @@ public class Board {
     private Paint paintEdgeArrowsAnim;             // Animation Edge Arrows
     private Paint paintEdgeWeightAnim;             // Animation Edge Weight
 
-    float xOverall;
-    float yOverall;
+
 
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
         this.customCanvas = customCanvas;
         this.isLargeGraph = isLargeGraph;
 
-        GraphData graphData = GraphData.getInstance(isLargeGraph);
+        GraphData graphData = new GraphData(isLargeGraph);
 
-//        float px = UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
-        float px = 50;
-//        float px = UtilUI.dpToPx(context, 15);
-
-        px =graphData.nodeRect;
-
-        this.yCount = GraphSettings.getNoOfRows(isLargeGraph);
-        this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
-
-//        this.xSize = graphData.nodeRect;
-//        this.ySize = graphData.nodeRect;
-//
-        this.xSize = px;
-        this.ySize = px;
-
-        this.xEmpty = (float) (px*.33);
-        this.yEmpty = (float) (px*.33);
-
-        System.out.println("xEmpty = " + xEmpty);
-
-        this.X = xCount * xSize + (xCount+1) * xEmpty;
-        this.Y = yCount * ySize + (yCount+1) * yEmpty;
-
-//        this.X = xCount * xSize;
-//        this.Y = yCount * ySize;
-
+        this.xCount = graphData.xCount;
+        this.yCount = graphData.yCount;
+        this.xSize = graphData.xSize;
+        this.ySize = graphData.ySize;
+        this.xEmpty = graphData.xEmpty;
+        this.yEmpty = graphData.yEmpty;
+        this.xOverall = graphData.xOverall;
+        this.yOverall = graphData.yOverall;
+        this.X = graphData.X;
+        this.Y = graphData.Y;
         this.maxVertices = yCount * xCount;
 
-        xOverall = xSize + xEmpty;
-        yOverall = ySize + yEmpty;
-
+        System.out.println("xEmpty = " + xEmpty);
         System.out.println("----------------------------------------");
         System.out.println("Board Width(X)     = " + X      + " | " + "Board Height(Y)    = " + Y);
         System.out.println("No of Cols(xCount) = " + xCount + " | " + "No of Rows(yCount) = " + yCount);
