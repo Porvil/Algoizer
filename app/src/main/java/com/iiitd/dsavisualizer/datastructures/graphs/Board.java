@@ -71,6 +71,7 @@ public class Board {
     private Paint paintEdgeArrowsAnim;             // Animation Edge Arrows
     private Paint paintEdgeWeightAnim;             // Animation Edge Weight
 
+    private final boolean ANTI_ALIAS = true;
 
 
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
@@ -92,20 +93,14 @@ public class Board {
         this.Y = graphData.Y;
         this.maxVertices = yCount * xCount;
 
-        System.out.println("xEmpty = " + xEmpty);
         System.out.println("----------------------------------------");
-        System.out.println("Board Width(X)     = " + X      + " | " + "Board Height(Y)    = " + Y);
-        System.out.println("No of Cols(xCount) = " + xCount + " | " + "No of Rows(yCount) = " + yCount);
-        System.out.println("Col width(xSize)   = " + xSize  + " | " + "Row height(ySize)  = " + ySize);
+        System.out.println("Board Width(X)     = " + X        + " | " + "Board Height(Y)    = " + Y);
+        System.out.println("No of Cols(xCount) = " + xCount   + " | " + "No of Rows(yCount) = " + yCount);
+        System.out.println("Col width(xSize)   = " + xSize    + " | " + "Row height(ySize)  = " + ySize);
+        System.out.println("Col empty(xEmpty)  = " + xEmpty   + " | " + "Row empty(yEmpty)  = " + yEmpty);
+        System.out.println("Col size(xOverall) = " + xOverall + " | " + "Row size(yOverall) = " + yOverall);
         System.out.println("Max Count          = " + yCount * xCount );
         System.out.println("----------------------------------------");
-
-        float minSide = Math.min(xSize, ySize);
-        this.nodeRadius = graphData.nodeCircleRadius;
-//        this.nodeRadius = ( minSide * circleRatio) / 2;
-        this.arrowLength = graphData.nodeEdgeArrow;
-//        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
-        this.coordinatesOffset = 0.95f;
 
         this.boardElements = new BoardElement[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
@@ -114,26 +109,20 @@ public class Board {
             }
         }
 
-
-//        this.nodeTextSize        = graphData.
-//        this.coordinatesTextSize = graphData.
-//        this.edgeWidth           = graphData.
-//        this.edgeArrowWidth      = graphData.nodeEdgeArrow;
-//        this.edgeWeightTextSize  = graphData.
-
-        this.nodeTextSize = (int) UtilUI.spToPx(context, GraphSettings.getNodeTextSize(isLargeGraph));
-        this.coordinatesTextSize = (int) UtilUI.spToPx(context, GraphSettings.getCoordinatesTextSize(isLargeGraph));
-        this.edgeWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeWidth(isLargeGraph));
-        this.edgeArrowWidth = (int) UtilUI.dpToPx(context, GraphSettings.getEdgeArrowWidth(isLargeGraph));
-        this.edgeWeightTextSize = (int) UtilUI.spToPx(context, GraphSettings.getEdgeWeightTextSize(isLargeGraph));
+        this.coordinatesOffset = 0.95f;
+        this.nodeRadius          = graphData.nodeCircleRadius;
+        this.arrowLength         = graphData.nodeEdgeArrowLength;
+        this.nodeTextSize        = graphData.nodeText;
+        this.coordinatesTextSize = graphData.nodeTextCoordinates;
+        this.edgeWidth           = graphData.nodeEdge;
+        this.edgeArrowWidth      = graphData.nodeEdgeArrow;
+        this.edgeWeightTextSize  = graphData.nodeEdgeWeight;
 
         // Initializes all Paint Variables
         initPaints();
 
         // Draw Grid on Grid ImageView
         drawGrid();
-
-        GraphDimensions graphDimensions = new GraphDimensions(context, isLargeGraph);
     }
 
     // Initializes all Paint Variables
@@ -148,17 +137,19 @@ public class Board {
         // Grid Lines
         this.paintGrid = new Paint();
         this.paintGrid.setColor(light);
+        this.paintGrid.setAntiAlias(ANTI_ALIAS);
 
         // Grid Coordinates
         this.paintGridCoordinates = new Paint();
         this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
         this.paintGridCoordinates.setTextSize(coordinatesTextSize);
         this.paintGridCoordinates.setColor(light);
+        this.paintGridCoordinates.setAntiAlias(ANTI_ALIAS);
 
         // Vertex
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
-//        this.paintVertex.setAntiAlias(true);
+        this.paintVertex.setAntiAlias(ANTI_ALIAS);
 
         // Vertex Text
         this.paintVertexText = new Paint();
@@ -166,17 +157,19 @@ public class Board {
         this.paintVertexText.setTextSize(nodeTextSize);
         this.paintVertexText.setColor(white);
         this.paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintVertexText.setAntiAlias(ANTI_ALIAS);
 
         // Edge
         this.paintEdge = new Paint();
         this.paintEdge.setColor(medium);
         this.paintEdge.setStrokeWidth(edgeWidth);
-//        this.paintEdge.setAntiAlias(true);
+        this.paintEdge.setAntiAlias(ANTI_ALIAS);
 
         // Edge Arrows
         this.paintEdgeArrows = new Paint();
         this.paintEdgeArrows.setColor(medium);
         this.paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
+        this.paintEdgeArrows.setAntiAlias(ANTI_ALIAS);
 
         // Edge Weight
         this.paintEdgeWeight = new Paint();
@@ -184,11 +177,12 @@ public class Board {
         this.paintEdgeWeight.setTextSize(edgeWeightTextSize);
         this.paintEdgeWeight.setColor(medium);
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-//        paintEdgeWeight.setAntiAlias(true);
+        this.paintEdgeWeight.setAntiAlias(ANTI_ALIAS);
 
         // Animation Vertex
         this.paintVertexAnim = new Paint();
         this.paintVertexAnim.setColor(dark);
+        this.paintVertexAnim.setAntiAlias(ANTI_ALIAS);
 
         // Animation Vertex Text
         this.paintVertexTextAnim = new Paint();
@@ -196,16 +190,19 @@ public class Board {
         this.paintVertexTextAnim.setTextSize(nodeTextSize);
         this.paintVertexTextAnim.setColor(white);
         this.paintVertexTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintVertexTextAnim.setAntiAlias(ANTI_ALIAS);
 
         // Animation Edge
         this.paintEdgeAnim = new Paint();
         this.paintEdgeAnim.setColor(dark);
         this.paintEdgeAnim.setStrokeWidth(edgeWidth);
+        this.paintEdgeAnim.setAntiAlias(ANTI_ALIAS);
 
         // Animation Edge Arrows
         this.paintEdgeArrowsAnim = new Paint();
         this.paintEdgeArrowsAnim.setColor(dark);
         this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
+        this.paintEdgeArrowsAnim.setAntiAlias(ANTI_ALIAS);
 
         // Animation Edge Weight
         this.paintEdgeWeightAnim = new Paint();
@@ -213,15 +210,14 @@ public class Board {
         this.paintEdgeWeightAnim.setTextSize(edgeWeightTextSize);
         this.paintEdgeWeightAnim.setColor(dark);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintEdgeWeightAnim.setAntiAlias(ANTI_ALIAS);
     }
 
     // Draw the complete Grid
     private void drawGrid() {
         Rect rect = new Rect();
-//
-//        float xOverall = xSize + xEmpty;
-//        float yOverall = ySize + yEmpty;
 
+        // Columns
         for(int i=0; i<xCount+1; i++){
             int left = (int) (i*xOverall);
             int right = left + 1;
@@ -238,15 +234,7 @@ public class Board {
             customCanvas.canvasGrid.drawRect(rect, paintGrid);
         }
 
-//        for(int i=0; i<xCount+1; i++){
-//            int left = (int) (i*xSize);
-//            int right = left + 1;
-//            int top = 0;
-//            int bottom = (int) Y;
-//            rect.set(left, top, right, bottom);
-//            customCanvas.canvasGrid.drawRect(rect, paintGrid);
-//        }
-
+        // Rows
         for(int i=0; i<yCount+1; i++){
             int top = (int) (i*yOverall);
             int bottom = top + 1;
@@ -263,6 +251,7 @@ public class Board {
             customCanvas.canvasGrid.drawRect(rect, paintGrid);
         }
 
+        // Coordinates
         for (int r = 0; r < yCount; r++) {
             for (int c = 0; c < xCount; c++) {
                 String text = "(" + r + "," + c + ")";
@@ -276,7 +265,7 @@ public class Board {
         }
     }
 
-    // Re-Draws the Complete Graph
+    // Re-Draws/Updates the Complete Graph
     public void update(Graph graph){
         System.out.println("RE-DRAWING CANVAS");
 
@@ -412,6 +401,7 @@ public class Board {
         return degree;
     }
 
+    // Draws Edge Weights
     private void drawEdgeWeight(Canvas canvas, Paint paint, int weight, double[] lineCoordinates, boolean reverseEdge){
         double lx1 = lineCoordinates[0];
         double ly1 = lineCoordinates[1];
@@ -494,13 +484,6 @@ public class Board {
         boardElements[row][col].value = name;
 
         drawVertex(boardElements[row][col].value, false);
-    }
-
-    public int[] get2(MotionEvent motionEvent) {
-        float x = (motionEvent.getX() / xOverall);
-        float y = (motionEvent.getY() / yOverall);
-
-        return new int[]{(int)x,(int)y};
     }
 
     public Rect get(MotionEvent motionEvent){

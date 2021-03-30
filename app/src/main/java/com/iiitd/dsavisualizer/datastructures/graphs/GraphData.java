@@ -3,7 +3,10 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 public class GraphData {
     public int nodeRect;
     public int nodeCircleRadius;
+    public int nodeEdge;
     public int nodeEdgeArrow;
+    public int nodeEdgeArrowLength;
+    public int nodeEdgeWeight;
     public int nodeText;
     public int nodeTextCoordinates;
 
@@ -62,22 +65,22 @@ public class GraphData {
 
         float ratio = cSize/GraphSettings.nodeRect;
 
-        float f_nodeRect             = GraphSettings.nodeRect  * ratio;
-        float f_nodeCircleRadius     = GraphSettings.nodeCircleRadius * ratio;
-        float f_nodeEdgeArrow        = GraphSettings.nodeEdgeArrow  * ratio;
-        float f_nodeText             = GraphSettings.nodeText  * ratio;
-        float f_nodeTextCoordinates  = GraphSettings.nodeTextCoordinates * ratio;
+        float f_nodeRect             = ratio * GraphSettings.nodeRect;
+        float f_nodeCircleRadius     = ratio * GraphSettings.nodeCircleRadius;
+        float f_nodeEdge             = ratio * GraphSettings.nodeEdge;
+        float f_nodeEdgeArrow        = ratio * GraphSettings.nodeEdgeArrow;
+        float f_nodeEdgeArrowLength  = ratio * GraphSettings.nodeEdgeArrowLength;
+        float f_nodeEdgeWeight       = ratio * GraphSettings.nodeEdgeWeight;
+        float f_nodeText             = ratio * GraphSettings.nodeText;
+        float f_nodeTextCoordinates  = ratio * GraphSettings.nodeTextCoordinates;
 
         this.nodeRect            = (int) f_nodeRect;
         this.nodeCircleRadius    = (int) f_nodeCircleRadius;
+        this.nodeEdge            = (int) f_nodeEdge;
         this.nodeEdgeArrow       = (int) f_nodeEdgeArrow;
+        this.nodeEdgeArrowLength = (int) f_nodeEdgeArrowLength;
+        this.nodeEdgeWeight      = (int) f_nodeEdgeWeight;
         this.nodeText            = (int) f_nodeText;
         this.nodeTextCoordinates = (int) f_nodeTextCoordinates;
-
-        System.out.println(nodeRect            );
-        System.out.println(nodeCircleRadius    );
-        System.out.println(nodeEdgeArrow       );
-        System.out.println(nodeText            );
-        System.out.println(nodeTextCoordinates );
     }
 }

@@ -3,7 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 public class BoardElement {
 
     public int value;
-    public boolean occupied;
+    public boolean occupied; // true = vertex is present
 
     public BoardElement() {
         this.occupied = false;

@@ -23,10 +23,13 @@ public class GraphSettings{
     private static final int LARGE_EDGE_WEIGHT_TEXT_SIZE    = 8;
 
     public static final int nodeRect              = 100;
-    public static final int nodeCircleRadius      = 25;
-    public static final int nodeEdgeArrow         = 15;
-    public static final int nodeText              = 50;
-    public static final int nodeTextCoordinates   = 25;
+    public static final int nodeCircleRadius      = 30;
+    public static final int nodeEdge              = 10;
+    public static final int nodeEdgeArrow         = 5;
+    public static final int nodeEdgeArrowLength   = 20;
+    public static final int nodeEdgeWeight        = 30;
+    public static final int nodeText              = 30;
+    public static final int nodeTextCoordinates   = 20;
     public static final float maxX = 2048;
 
     public static int getNoOfRows(boolean isLargeGraph){
