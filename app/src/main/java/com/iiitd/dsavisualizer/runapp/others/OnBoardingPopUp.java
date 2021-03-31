@@ -30,7 +30,7 @@ public class OnBoardingPopUp {
     int[] onBoardingImages;
 
     ViewPager mViewPager;
-    ViewPagerAdapter mViewPagerAdapter;
+    OnBoardingViewPagerAdapter mOnBoardingViewPagerAdapter;
     Button btn_onboarding_back;
     Button btn_onboarding_skip;
     Button btn_onboarding_next;
@@ -63,8 +63,8 @@ public class OnBoardingPopUp {
         this.popUpView = inflater.inflate(R.layout.layout_onboarding, null);
 
         this.mViewPager = popUpView.findViewById(R.id.viewPagerMain);
-        this.mViewPagerAdapter = new ViewPagerAdapter(context, onBoardingImages);
-        this.mViewPager.setAdapter(mViewPagerAdapter);
+        this.mOnBoardingViewPagerAdapter = new OnBoardingViewPagerAdapter(context, onBoardingImages);
+        this.mViewPager.setAdapter(mOnBoardingViewPagerAdapter);
 
         this.size = mViewPager.getAdapter().getCount();
 
@@ -121,11 +121,12 @@ public class OnBoardingPopUp {
     }
 
     private void updateState(int position){
-
         if(position+1 == size){
+            btn_onboarding_skip.setVisibility(View.INVISIBLE);
             btn_onboarding_next.setText("Finish");
         }
         else{
+            btn_onboarding_skip.setVisibility(View.VISIBLE);
             btn_onboarding_next.setText("Next");
         }
 

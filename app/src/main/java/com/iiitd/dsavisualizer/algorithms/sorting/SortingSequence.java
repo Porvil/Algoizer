@@ -3,8 +3,6 @@ package com.iiitd.dsavisualizer.algorithms.sorting;
 import android.content.Context;
 import android.view.View;
 
-import com.iiitd.dsavisualizer.runapp.others.AnimateViews;
-
 import java.util.ArrayList;
 
 // Abstract Class used by Sorting Algorithms, Sub-classes must provide definition for backward() and forward() methods.

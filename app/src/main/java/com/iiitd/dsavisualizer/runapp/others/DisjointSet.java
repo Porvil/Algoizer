@@ -38,10 +38,8 @@ public class DisjointSet{
         if (parent1.rank >= parent2.rank) {
             parent1.rank = (parent1.rank == parent2.rank) ? parent1.rank + 1 : parent1.rank;
             parent2.parent = parent1;
-//            parent2.id = parent1.id + 1;
         } else {
             parent1.parent = parent2;
-//            parent1.id = parent2.id + 1;
         }
         return true;
     }

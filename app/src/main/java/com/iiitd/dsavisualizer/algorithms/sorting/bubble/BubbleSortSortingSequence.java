@@ -5,7 +5,7 @@ import android.util.Pair;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingAnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
+import com.iiitd.dsavisualizer.algorithms.sorting.AnimationDirection;
 
 // BubbleSort Sequence used by BubbleSort
 public class BubbleSortSortingSequence extends SortingSequence {

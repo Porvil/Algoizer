@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Pair;
 import android.view.MotionEvent;
 
-import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;

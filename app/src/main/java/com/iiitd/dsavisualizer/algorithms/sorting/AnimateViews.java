@@ -1,4 +1,4 @@
-package com.iiitd.dsavisualizer.runapp.others;
+package com.iiitd.dsavisualizer.algorithms.sorting;
 
 import android.app.Activity;
 import android.content.Context;

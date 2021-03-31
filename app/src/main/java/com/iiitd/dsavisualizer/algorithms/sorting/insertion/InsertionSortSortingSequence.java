@@ -5,7 +5,7 @@ import android.util.Pair;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingAnimationState;
 import com.iiitd.dsavisualizer.algorithms.sorting.ElementAnimationData;
 import com.iiitd.dsavisualizer.algorithms.sorting.SortingSequence;
-import com.iiitd.dsavisualizer.runapp.others.AnimationDirection;
+import com.iiitd.dsavisualizer.algorithms.sorting.AnimationDirection;
 
 // InsertionSort Sequence used by InsertionSort
 public class InsertionSortSortingSequence extends SortingSequence {

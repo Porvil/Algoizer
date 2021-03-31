@@ -43,7 +43,6 @@ import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Kruskals;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Prims;
 import com.iiitd.dsavisualizer.runapp.activities.BaseActivity;
-import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;

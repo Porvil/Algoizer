@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
