@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme_Blue">
-        <activity android:name=".runapp.activities.AboutActivity"
+        <activity android:name=".runapp.activities.BaseActivity"></activity>
+        <activity
+            android:name=".runapp.activities.AboutActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".runapp.activities.ThemesActivity"
             android:launchMode="singleInstance"

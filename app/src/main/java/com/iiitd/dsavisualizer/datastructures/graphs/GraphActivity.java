@@ -13,10 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,7 +29,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
@@ -46,8 +43,8 @@ import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Kruskals;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Prims;
+import com.iiitd.dsavisualizer.runapp.activities.BaseActivity;
 import com.iiitd.dsavisualizer.runapp.others.CustomCanvas;
-import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
@@ -60,17 +57,17 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GraphActivity extends AppCompatActivity {
+public class GraphActivity extends BaseActivity {
 
-    Context context;
+//    Context context;
 
-    DrawerLayout dl_main;
-    View v_main;
-    View v_menu_left;
-    View v_menu_right;
-    ViewStub vs_main;
-    ViewStub vs_menu_left;
-    ViewStub vs_menu_right;
+//    DrawerLayout dl_main;
+//    View v_main;
+//    View v_menu_left;
+//    View v_menu_right;
+//    ViewStub vs_main;
+//    ViewStub vs_menu_left;
+//    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
@@ -140,7 +137,7 @@ public class GraphActivity extends AppCompatActivity {
     GraphTreePopUp graphTreePopUp;
     GraphDSPopUp graphTreeDSPopUp;
 
-    LayoutInflater layoutInflater;
+//    LayoutInflater layoutInflater;
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
@@ -155,24 +152,25 @@ public class GraphActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
-        setTheme(theme);
-
+//        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
+//        setTheme(theme);
+        configure(LAYOUT_MAIN, LAYOUT_LEFT, LAYOUT_RIGHT, ONBOARDING_KEY);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.layout_base);
-        context = this;
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        setContentView(R.layout.layout_base);
+//        context = this;
 
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // findViewById
-        dl_main = findViewById(R.id.dl_main);
-        vs_main = findViewById(R.id.vs_main);
-        vs_menu_left = findViewById(R.id.vs_menu_left);
-        vs_menu_right = findViewById(R.id.vs_menu_right);
-        vs_main.setLayoutResource(LAYOUT_MAIN);
-        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
-        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
+//        dl_main = findViewById(R.id.dl_main);
+//        vs_main = findViewById(R.id.vs_main);
+//        vs_menu_left = findViewById(R.id.vs_menu_left);
+//        vs_menu_right = findViewById(R.id.vs_menu_right);
+
+//        vs_main.setLayoutResource(LAYOUT_MAIN);
+//        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
+//        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
         v_menu_right = vs_menu_right.inflate();
         v_menu_left = vs_menu_left.inflate();
@@ -366,9 +364,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 closeDrawer(0);
-                OnBoardingPopUp.getInstance(context,
-                        v_main.getWidth(), v_main.getHeight(),
-                        v_main, ONBOARDING_KEY).show();
+                showOnBoarding();
             }
         });
 
@@ -1344,17 +1340,7 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
-            dl_main.closeDrawer(GravityCompat.START);
-            dl_main.closeDrawer(GravityCompat.END);
-        }
-        else {
-            back();
-        }
-    }
-
-    private void back(){
+    public void back(){
         if(timer != null) {
             timer.cancel();
             timer = null;
@@ -1837,33 +1823,33 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
-    // id = 0 => both, 1 => left, 2 => right
-    private void openDrawer(int id){
-        if(id == 0){
-            dl_main.openDrawer(GravityCompat.START);
-            dl_main.openDrawer(GravityCompat.END);
-        }
-        else if (id == 1) {
-            dl_main.openDrawer(GravityCompat.START);
-        }
-        else if (id == 2) {
-            dl_main.openDrawer(GravityCompat.END);
-        }
-    }
-
-    // id = 0 => both, 1 => left, 2 => right
-    private void closeDrawer(int id){
-        if(id == 0){
-            dl_main.closeDrawer(GravityCompat.START);
-            dl_main.closeDrawer(GravityCompat.END);
-        }
-        else if (id == 1) {
-            dl_main.closeDrawer(GravityCompat.START);
-        }
-        else if (id == 2) {
-            dl_main.closeDrawer(GravityCompat.END);
-        }
-    }
+//    // id = 0 => both, 1 => left, 2 => right
+//    private void openDrawer(int id){
+//        if(id == 0){
+//            dl_main.openDrawer(GravityCompat.START);
+//            dl_main.openDrawer(GravityCompat.END);
+//        }
+//        else if (id == 1) {
+//            dl_main.openDrawer(GravityCompat.START);
+//        }
+//        else if (id == 2) {
+//            dl_main.openDrawer(GravityCompat.END);
+//        }
+//    }
+//
+//    // id = 0 => both, 1 => left, 2 => right
+//    private void closeDrawer(int id){
+//        if(id == 0){
+//            dl_main.closeDrawer(GravityCompat.START);
+//            dl_main.closeDrawer(GravityCompat.END);
+//        }
+//        else if (id == 1) {
+//            dl_main.closeDrawer(GravityCompat.START);
+//        }
+//        else if (id == 2) {
+//            dl_main.closeDrawer(GravityCompat.END);
+//        }
+//    }
 
     private void initOnBoarding() {
         v_main.post(new Runnable() {
@@ -1871,9 +1857,7 @@ public class GraphActivity extends AppCompatActivity {
             public void run() {
                 boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
                 if(!tutorialState) {
-                    OnBoardingPopUp.getInstance(context,
-                            v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY).show();
+                    showOnBoarding();
                 }
             }
         });
