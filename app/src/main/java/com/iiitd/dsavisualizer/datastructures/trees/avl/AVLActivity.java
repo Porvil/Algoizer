@@ -40,6 +40,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeElementAnimationData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
+import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
 import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -958,7 +959,7 @@ public class AVLActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(context, AVLActivity.class));
+                startActivity(new Intent(context, BSTActivity.class));
             }
         });
 

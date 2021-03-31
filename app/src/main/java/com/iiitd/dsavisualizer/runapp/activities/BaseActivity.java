@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
@@ -118,6 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // must be called only after v_main is laid out
     public OnBoardingPopUp showOnBoarding(){
+        closeDrawer(0);
         OnBoardingPopUp onBoardingPopUp = OnBoardingPopUp.getInstance(context,
                 v_main.getWidth(), v_main.getHeight(),
                 v_main, ONBOARDING_KEY);
@@ -127,15 +133,72 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
-            dl_main.closeDrawer(GravityCompat.START);
-            dl_main.closeDrawer(GravityCompat.END);
+        if (isDrawerOpen(0)){
+            closeDrawer(0);
         }
         else{
             back();
         }
     }
 
+    public void initOnBoarding() {
+        v_main.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
+                if(!tutorialState) {
+                    showOnBoarding();
+                }
+            }
+        });
+    }
+
+//    public void showBackDialog(){
+//        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+//
+//        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+//        Button btn_yes = view.findViewById(R.id.btn_yes);
+//
+//        final Dialog dialog = new Dialog(context);
+//        dialog.setContentView(view);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.show();
+//
+//        btn_cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btn_menu.setEnabled(true);
+//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        btn_yes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                finish();
+//            }
+//        });
+//
+//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                System.out.println("Dismissed");
+//                btn_menu.setEnabled(true);
+//                btn_nav.setEnabled(true);
+//                btn_info.setEnabled(true);
+//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//            }
+//        });
+//    }
+
+
+    protected abstract void initPseudoCode();
+    protected abstract void initViews();
+    protected abstract void initNavigation();
     protected abstract void back();
+    protected abstract void disableUI();
+    protected abstract void enableUI();
 
 }

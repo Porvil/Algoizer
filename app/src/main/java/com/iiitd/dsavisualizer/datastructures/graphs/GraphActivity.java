@@ -241,7 +241,7 @@ public class GraphActivity extends BaseActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-//        initOnBoarding();
+        initOnBoarding();
         initViews();
         initNavigation();
 
@@ -336,20 +336,24 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
-        // Menu Button
-        btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!dl_main.isOpen()) {
-                    openDrawer(2);
-                }
-            }
-        });
-
         btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDrawer(1);
+            }
+        });
+
+        btn_closenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(1);
+            }
+        });
+
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer(2);
             }
         });
 
@@ -363,7 +367,6 @@ public class GraphActivity extends BaseActivity {
         btn_helpmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeDrawer(0);
                 showOnBoarding();
             }
         });
@@ -1050,273 +1053,6 @@ public class GraphActivity extends BaseActivity {
 
     }
 
-
-    private void initViews() {
-
-        graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
-        graphControls.updateDrawables();
-
-        // Draws Grid and Graph View After Layouts have been laid out
-        ll_anim.post(new Runnable() {
-            @Override
-            public void run() {
-                int treePopUpWidth = (int) UtilUI.dpToPx(context, 200);
-                int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
-                graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, ll_anim.getHeight(), ll_anim);
-                graphTreeDSPopUp = new GraphDSPopUp(context, treeDSPopUpWidth, ll_anim.getHeight(), ll_anim);
-            }
-        });
-
-        zl_graph.post(new Runnable() {
-            @Override
-            public void run() {
-
-//                isLargeGraph = true;
-
-                initCanvasAndGraph();
-
-//                int rows = GraphSettings.getNoOfRows(isLargeGraph);
-//                int cols = GraphSettings.getNoOfCols(isLargeGraph);
-//
-//                int px = (int) UtilUI.dpToPx(context, GraphSettings.getNodeSize(isLargeGraph));
-//
-//                int width = cols * px;
-//                int height = rows * px;
-//
-//                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fl_graph.getLayoutParams();
-//                layoutParams.height = height;
-//                layoutParams.width = width;
-//
-//                fl_graph.setLayoutParams(layoutParams);
-//                fl_graph.setBackgroundColor(UtilUI.getCurrentThemeColor(context, R.attr.shade));
-//
-//                fl_graph.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        customCanvas = new CustomCanvas(context, fl_graph, iv_graph, iv_grid, iv_anim, iv_coordinates);
-//                        graphWrapper = new GraphWrapper(context, customCanvas, startDirected, startWeighted, isLargeGraph);
-//                        updateGraphViewState();
-//
-//                        zl_graph.panTo(0,0, false);
-//                    }
-//                });
-            }
-        });
-
-
-        final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
-
-            @Override
-            public boolean onDown(MotionEvent event) {
-                System.out.println("On down");
-                return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent event) {
-                System.out.println("long");
-
-                float x1 = event.getX();
-                float y1 = event.getY();
-
-                float x = (x1 / graphWrapper.board.xSize);
-                float y =  (y1 / graphWrapper.board.ySize);
-
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent event) {
-                System.out.println("Single touch up");
-
-
-//                Rect rect = graphWrapper.board.get(event);
-//                int[] aa = graphWrapper.board.get2(event);
-//
-//                System.out.println(aa[1]+ "  " + aa[0]);
-//                System.out.println(rect);
-                float x1 = event.getX();
-                float y1 = event.getY();
-
-//                float x = (x1 / graphWrapper.board.xSize);
-//                float y =  (y1 / graphWrapper.board.ySize);
-//
-//                int row = (int) y;
-//                int col = (int) x;
-//                System.out.println("touch = " + x + "|" + y);
-//                System.out.println("touch = " + row + "|" + col);
-//                System.out.println(graphWrapper.board.getState(row, col));
-
-                TouchData touchData = graphWrapper.board.getTouchData(event);
-                System.out.println(touchData);
-                int row = touchData.row;
-                int col = touchData.col;
-
-                if(touchData.isElement) {
-                    switch (graphControls.getCurrentState()) {
-                        case VIEW:
-                            break;
-                        case VERTEX_ADD:
-                            boolean addVertex = graphWrapper.addVertex(event);
-                            if (!addVertex) {
-                                Toast.makeText(context, "Vertex already present or too close to another vertex", Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case VERTEX_REMOVE:
-                            graphWrapper.removeVertex(event);
-                            break;
-                        case EDGE_ADD:
-                            if (graphWrapper.board.getState(row, col)) {
-                                if (graphControls.startEdge != -1) {//some node already selected
-                                    final int des = graphWrapper.board.boardElements[row][col].value;
-                                    final int src = graphControls.startEdge;
-                                    if (src != des) {
-                                        if (graphWrapper.weighted) {
-                                            View myView = layoutInflater.inflate(R.layout.layout_edge_weight, null);
-
-                                            final Dialog dialog = new Dialog(context);
-
-                                            ImageButton btn_decreaseweight = myView.findViewById(R.id.btn_decreaseweight);
-                                            ImageButton btn_increaseweight = myView.findViewById(R.id.btn_increaseweight);
-                                            final EditText et_weight = myView.findViewById(R.id.et_weight);
-                                            Button btn_edge_cancel = myView.findViewById(R.id.btn_edge_cancel);
-                                            Button btn_edge_confirm = myView.findViewById(R.id.btn_edge_confirm);
-
-                                            boolean updateOldEdge = false;
-                                            if (graphWrapper.graph.checkContainsEdge(src, des)) {
-                                                updateOldEdge = true;
-                                                Edge edge = graphWrapper.graph.getEdge(src, des);
-                                                if (edge != null) {
-                                                    et_weight.setText(String.valueOf(edge.weight));
-                                                }
-                                            }
-
-                                            btn_decreaseweight.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    String s = et_weight.getText().toString();
-                                                    int edgeWeight;
-                                                    if (!s.isEmpty()) {
-                                                        edgeWeight = Integer.parseInt(s.trim());
-                                                        edgeWeight--;
-                                                        et_weight.setText(String.valueOf(edgeWeight));
-                                                    } else {
-                                                        et_weight.setText(String.valueOf(1));
-                                                    }
-                                                }
-                                            });
-
-                                            btn_increaseweight.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    String s = et_weight.getText().toString();
-                                                    int edgeWeight;
-                                                    if (!s.isEmpty()) {
-                                                        edgeWeight = Integer.parseInt(s.trim());
-                                                        edgeWeight++;
-                                                        et_weight.setText(String.valueOf(edgeWeight));
-                                                    } else {
-                                                        et_weight.setText(String.valueOf(1));
-                                                    }
-                                                }
-                                            });
-
-                                            btn_edge_cancel.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    graphControls.startEdge = -1;
-                                                    dialog.dismiss();
-                                                }
-                                            });
-
-                                            final boolean finalUpdateOldEdge = updateOldEdge;
-                                            btn_edge_confirm.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    String s = et_weight.getText().toString();
-                                                    int edgeWeight;
-                                                    if (!s.isEmpty()) {
-                                                        edgeWeight = Integer.parseInt(s.trim());
-                                                    } else {
-                                                        et_weight.setError("Cant be empty");
-                                                        return;
-                                                    }
-
-                                                    graphWrapper.addEdge(src, des, edgeWeight, finalUpdateOldEdge);
-                                                    graphControls.startEdge = -1;
-                                                    Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
-                                                    dialog.dismiss();
-                                                }
-                                            });
-
-                                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                                @Override
-                                                public void onDismiss(DialogInterface dialog) {
-                                                    graphControls.startEdge = -1;
-                                                }
-                                            });
-
-                                            Window window = dialog.getWindow();
-                                            window.setGravity(Gravity.TOP | Gravity.LEFT);
-                                            WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-                                            layoutParams.x = (int) x1;
-                                            layoutParams.y = (int) y1;
-                                            window.setAttributes(layoutParams);
-
-                                            dialog.setContentView(myView);
-                                            dialog.show();
-                                        } else {
-                                            graphWrapper.addEdge(src, des);
-                                            graphControls.startEdge = -1;
-                                            Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                } else {// first node getting selected now
-                                    int data = graphWrapper.board.boardElements[row][col].value;
-                                    graphControls.startEdge = data;
-                                    Toast.makeText(context, data + " selected", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            break;
-                        case EDGE_REMOVE:
-                            if (graphWrapper.board.getState(row, col)) {
-                                if (graphControls.startEdge != -1) {//some node already selected
-                                    int des = graphWrapper.board.boardElements[row][col].value;
-                                    int src = graphControls.startEdge;
-                                    graphWrapper.removeEdge(src, des);
-                                    graphControls.startEdge = -1;
-                                } else {// first node getting selected now
-                                    int data = graphWrapper.board.boardElements[row][col].value;
-                                    graphControls.startEdge = data;
-                                }
-                            }
-                            break;
-
-                    }
-                }
-
-//                graphWrapper.update();
-//                System.out.println(graphWrapper.board.getState(row, col));
-
-                //Careful about this below line, MUST BE CALLED
-                graphWrapper.board.refresh(false);
-
-                return  true;
-            }
-        });
-
-        iv_graph.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-
-                return true;
-            }
-        });
-
-    }
-
     public void initCanvasAndGraph(){
         GraphData graphData = new GraphData(isLargeGraph);
 
@@ -1335,52 +1071,6 @@ public class GraphActivity extends BaseActivity {
                 updateGraphViewState();
 
                 zl_graph.panTo(0,0, false);
-            }
-        });
-    }
-
-    @Override
-    public void back(){
-        if(timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-
-        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-
-        Button btn_cancel = view.findViewById(R.id.btn_cancel);
-        Button btn_yes = view.findViewById(R.id.btn_yes);
-
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_menu.setEnabled(true);
-                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                dialog.dismiss();
-            }
-        });
-
-        btn_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                System.out.println("Dismissed");
-                btn_menu.setEnabled(true);
-                btn_nav.setEnabled(true);
-                btn_info.setEnabled(true);
-                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
     }
@@ -1787,7 +1477,231 @@ public class GraphActivity extends BaseActivity {
         }
     }
 
-    private void initNavigation() {
+    @Override
+    protected void initPseudoCode() {}
+
+    @Override
+    protected void initViews() {
+
+        graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
+        graphControls.updateDrawables();
+
+        // Draws Grid and Graph View After Layouts have been laid out
+        ll_anim.post(new Runnable() {
+            @Override
+            public void run() {
+                int treePopUpWidth = (int) UtilUI.dpToPx(context, 200);
+                int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
+                graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, ll_anim.getHeight(), ll_anim);
+                graphTreeDSPopUp = new GraphDSPopUp(context, treeDSPopUpWidth, ll_anim.getHeight(), ll_anim);
+            }
+        });
+
+        zl_graph.post(new Runnable() {
+            @Override
+            public void run() {
+                initCanvasAndGraph();
+            }
+        });
+
+        final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+
+            @Override
+            public boolean onDown(MotionEvent event) {
+                System.out.println("On down");
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent event) {
+                System.out.println("long");
+
+                float x1 = event.getX();
+                float y1 = event.getY();
+
+                float x = (x1 / graphWrapper.board.xSize);
+                float y =  (y1 / graphWrapper.board.ySize);
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent event) {
+                System.out.println("Single touch up");
+
+                float x1 = event.getX();
+                float y1 = event.getY();
+
+                TouchData touchData = graphWrapper.board.getTouchData(event);
+                System.out.println(touchData);
+                int row = touchData.row;
+                int col = touchData.col;
+
+                if(touchData.isElement) {
+                    switch (graphControls.getCurrentState()) {
+                        case VIEW:
+                            break;
+                        case VERTEX_ADD:
+                            boolean addVertex = graphWrapper.addVertex(event);
+                            if (!addVertex) {
+                                Toast.makeText(context, "Vertex already present or too close to another vertex", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case VERTEX_REMOVE:
+                            graphWrapper.removeVertex(event);
+                            break;
+                        case EDGE_ADD:
+                            if (graphWrapper.board.getState(row, col)) {
+                                if (graphControls.startEdge != -1) {//some node already selected
+                                    final int des = graphWrapper.board.boardElements[row][col].value;
+                                    final int src = graphControls.startEdge;
+                                    if (src != des) {
+                                        if (graphWrapper.weighted) {
+                                            View myView = layoutInflater.inflate(R.layout.layout_edge_weight, null);
+
+                                            final Dialog dialog = new Dialog(context);
+
+                                            ImageButton btn_decreaseweight = myView.findViewById(R.id.btn_decreaseweight);
+                                            ImageButton btn_increaseweight = myView.findViewById(R.id.btn_increaseweight);
+                                            final EditText et_weight = myView.findViewById(R.id.et_weight);
+                                            Button btn_edge_cancel = myView.findViewById(R.id.btn_edge_cancel);
+                                            Button btn_edge_confirm = myView.findViewById(R.id.btn_edge_confirm);
+
+                                            boolean updateOldEdge = false;
+                                            if (graphWrapper.graph.checkContainsEdge(src, des)) {
+                                                updateOldEdge = true;
+                                                Edge edge = graphWrapper.graph.getEdge(src, des);
+                                                if (edge != null) {
+                                                    et_weight.setText(String.valueOf(edge.weight));
+                                                }
+                                            }
+
+                                            btn_decreaseweight.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    String s = et_weight.getText().toString();
+                                                    int edgeWeight;
+                                                    if (!s.isEmpty()) {
+                                                        edgeWeight = Integer.parseInt(s.trim());
+                                                        edgeWeight--;
+                                                        et_weight.setText(String.valueOf(edgeWeight));
+                                                    } else {
+                                                        et_weight.setText(String.valueOf(1));
+                                                    }
+                                                }
+                                            });
+
+                                            btn_increaseweight.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    String s = et_weight.getText().toString();
+                                                    int edgeWeight;
+                                                    if (!s.isEmpty()) {
+                                                        edgeWeight = Integer.parseInt(s.trim());
+                                                        edgeWeight++;
+                                                        et_weight.setText(String.valueOf(edgeWeight));
+                                                    } else {
+                                                        et_weight.setText(String.valueOf(1));
+                                                    }
+                                                }
+                                            });
+
+                                            btn_edge_cancel.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    graphControls.startEdge = -1;
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                            final boolean finalUpdateOldEdge = updateOldEdge;
+                                            btn_edge_confirm.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    String s = et_weight.getText().toString();
+                                                    int edgeWeight;
+                                                    if (!s.isEmpty()) {
+                                                        edgeWeight = Integer.parseInt(s.trim());
+                                                    } else {
+                                                        et_weight.setError("Cant be empty");
+                                                        return;
+                                                    }
+
+                                                    graphWrapper.addEdge(src, des, edgeWeight, finalUpdateOldEdge);
+                                                    graphControls.startEdge = -1;
+                                                    Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                                @Override
+                                                public void onDismiss(DialogInterface dialog) {
+                                                    graphControls.startEdge = -1;
+                                                }
+                                            });
+
+                                            Window window = dialog.getWindow();
+                                            window.setGravity(Gravity.TOP | Gravity.LEFT);
+                                            WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+                                            layoutParams.x = (int) x1;
+                                            layoutParams.y = (int) y1;
+                                            window.setAttributes(layoutParams);
+
+                                            dialog.setContentView(myView);
+                                            dialog.show();
+                                        } else {
+                                            graphWrapper.addEdge(src, des);
+                                            graphControls.startEdge = -1;
+                                            Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                } else {// first node getting selected now
+                                    int data = graphWrapper.board.boardElements[row][col].value;
+                                    graphControls.startEdge = data;
+                                    Toast.makeText(context, data + " selected", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            break;
+                        case EDGE_REMOVE:
+                            if (graphWrapper.board.getState(row, col)) {
+                                if (graphControls.startEdge != -1) {//some node already selected
+                                    int des = graphWrapper.board.boardElements[row][col].value;
+                                    int src = graphControls.startEdge;
+                                    graphWrapper.removeEdge(src, des);
+                                    graphControls.startEdge = -1;
+                                } else {// first node getting selected now
+                                    int data = graphWrapper.board.boardElements[row][col].value;
+                                    graphControls.startEdge = data;
+                                }
+                            }
+                            break;
+
+                    }
+                }
+
+
+                //Careful about this below line, MUST BE CALLED
+                graphWrapper.board.refresh(false);
+
+                return true;
+            }
+        });
+
+        iv_graph.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+
+                return true;
+            }
+        });
+
+    }
+
+    @Override
+    protected void initNavigation() {
         int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
 //        cl_bst.setBackgroundColor(color);
@@ -1823,44 +1737,56 @@ public class GraphActivity extends BaseActivity {
 
     }
 
-//    // id = 0 => both, 1 => left, 2 => right
-//    private void openDrawer(int id){
-//        if(id == 0){
-//            dl_main.openDrawer(GravityCompat.START);
-//            dl_main.openDrawer(GravityCompat.END);
-//        }
-//        else if (id == 1) {
-//            dl_main.openDrawer(GravityCompat.START);
-//        }
-//        else if (id == 2) {
-//            dl_main.openDrawer(GravityCompat.END);
-//        }
-//    }
-//
-//    // id = 0 => both, 1 => left, 2 => right
-//    private void closeDrawer(int id){
-//        if(id == 0){
-//            dl_main.closeDrawer(GravityCompat.START);
-//            dl_main.closeDrawer(GravityCompat.END);
-//        }
-//        else if (id == 1) {
-//            dl_main.closeDrawer(GravityCompat.START);
-//        }
-//        else if (id == 2) {
-//            dl_main.closeDrawer(GravityCompat.END);
-//        }
-//    }
+    @Override
+    protected void back(){
+        if(timer != null) {
+            timer.cancel();
+            timer = null;
+        }
 
-    private void initOnBoarding() {
-        v_main.post(new Runnable() {
+        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
-                if(!tutorialState) {
-                    showOnBoarding();
-                }
+            public void onClick(View v) {
+                btn_menu.setEnabled(true);
+                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                dialog.dismiss();
+            }
+        });
+
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                System.out.println("Dismissed");
+                btn_menu.setEnabled(true);
+                btn_nav.setEnabled(true);
+                btn_info.setEnabled(true);
+                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
     }
+
+    @Override
+    protected void disableUI() {}
+
+    @Override
+    protected void enableUI() {}
 
 }
