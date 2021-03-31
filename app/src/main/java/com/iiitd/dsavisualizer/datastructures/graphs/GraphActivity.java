@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -1700,13 +1699,6 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-        btn_closenav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.START);
             }
         });
 

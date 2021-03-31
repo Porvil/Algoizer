@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.bubble;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,8 +10,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -24,9 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
@@ -35,23 +30,14 @@ import com.iiitd.dsavisualizer.algorithms.sorting.merge.MergeSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortActivity;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
+import com.iiitd.dsavisualizer.runapp.activities.BaseActivity;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BubbleSortActivity extends AppCompatActivity {
+public class BubbleSortActivity extends BaseActivity {
 
-    Context context;
-
-    DrawerLayout dl_main;
-    View v_main;
-    View v_menu_left;
-    View v_menu_right;
-    ViewStub vs_main;
-    ViewStub vs_menu_left;
-    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ImageButton btn_play;
     ImageButton btn_nav;
@@ -99,22 +85,9 @@ public class BubbleSortActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
-        setTheme(theme);
-
+        configure(LAYOUT_MAIN, LAYOUT_LEFT, LAYOUT_RIGHT, ONBOARDING_KEY);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.layout_base);
-        context = this;
 
-        // findViewById
-        dl_main = findViewById(R.id.dl_main);
-        vs_main = findViewById(R.id.vs_main);
-        vs_menu_left = findViewById(R.id.vs_menu_left);
-        vs_menu_right = findViewById(R.id.vs_menu_right);
-        vs_main.setLayoutResource(LAYOUT_MAIN);
-        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
-        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
         v_menu_right = vs_menu_right.inflate();
         v_menu_left = vs_menu_left.inflate();
@@ -154,7 +127,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         tv_arraysize.setText(String.valueOf(sb_arraysize.getProgress() + 1));
 
         initOnBoarding();
-        addPseudocode();
+        initPseudoCode();
         initViews();
         initNavigation();
 
@@ -185,7 +158,8 @@ public class BubbleSortActivity extends AppCompatActivity {
                                     data[i] = Integer.parseInt(customInput[i]);
                                 }
                                 tv_arraysize.setText(String.valueOf(customInput.length));
-                            } catch (NumberFormatException e) {
+                            }
+                            catch (NumberFormatException e) {
                                 et_customarray.setError("Bad Input");
                                 tv_arraysize.setText("0");
                             }
@@ -357,16 +331,46 @@ public class BubbleSortActivity extends AppCompatActivity {
             }
         });
 
-        // Menu Button
+        btn_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isAutoPlay = false;
+                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                timer.cancel();
+
+                openDrawer(1);
+            }
+        });
+
+        btn_closenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(1);
+            }
+        });
+
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!dl_main.isOpen()) {
-                    isAutoPlay = false;
-                    btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                    timer.cancel();
-                    dl_main.openDrawer(GravityCompat.END);
-                }
+                isAutoPlay = false;
+                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                timer.cancel();
+
+                openDrawer(2);
+            }
+        });
+
+        btn_closemenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(2);
+            }
+        });
+
+        btn_helpmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOnBoarding();
             }
         });
 
@@ -374,7 +378,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         dl_main.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset){
-                if(slideOffset <= 0.40){
+                if(slideOffset >= 0.35){
                     isAutoPlay = false;
                     btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
                     timer.cancel();
@@ -415,14 +419,6 @@ public class BubbleSortActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Close Menu Control
-        btn_closemenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.END);
-            }
-        });
-
         // Generates Random Numbers
         btn_generate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,6 +456,8 @@ public class BubbleSortActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+                closeDrawer(0);
                 initViews();
             }
         });
@@ -472,17 +470,6 @@ public class BubbleSortActivity extends AppCompatActivity {
                     bubbleSort = null;
                 }
                 initViews();
-            }
-        });
-
-        btn_nav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isAutoPlay = false;
-                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-                timer.cancel();
-
-                dl_main.openDrawer(GravityCompat.START);
             }
         });
 
@@ -532,46 +519,6 @@ public class BubbleSortActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void initViews() {
-        if(bubbleSort != null){
-            tv_seqno.setText("0 / " + bubbleSort.sequence.sortingAnimationStates.size());
-            UtilUI.setText(tv_info, bubbleSort.sequence.sortingAnimationStates.get(0).info);
-            UtilUI.highlightViews(context, bubbleSort.sequence.views,
-                    bubbleSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
-            String state = bubbleSort.sequence.sortingAnimationStates.get(0).state;
-            if(BubbleSortInfo.map.containsKey(state)){
-                Integer[] integers = BubbleSortInfo.map.get(state);
-                UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
-            }
-        }
-        else{
-            tv_seqno.setText("0 / 0");
-            UtilUI.setText(tv_info, "-");
-            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
-        }
-
-    }
-
-    private void addPseudocode(){
-        int sizeOfPseudocode = BubbleSortInfo.psuedocode.length;
-        textViews = new TextView[sizeOfPseudocode];
-        for(int i=0;i<sizeOfPseudocode;i++){
-            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal);
-            textView.setText(BubbleSortInfo.psuedocode[i]);
-            textView.setPadding(5, 0,0,0);
-            textViews[i] = textView;
-            ll_psuedocode.addView(textView);
-        }
-
-        for(int i : BubbleSortInfo.boldIndexes){
-            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
-        }
     }
 
     private void onForwardClick(){
@@ -630,47 +577,48 @@ public class BubbleSortActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
-            dl_main.closeDrawer(GravityCompat.START);
-            dl_main.closeDrawer(GravityCompat.END);
+    protected void initPseudoCode() {
+        int sizeOfPseudocode = BubbleSortInfo.psuedocode.length;
+        textViews = new TextView[sizeOfPseudocode];
+        for(int i=0;i<sizeOfPseudocode;i++){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView textView = new TextView(this);
+            textView.setLayoutParams(lparams);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal);
+            textView.setText(BubbleSortInfo.psuedocode[i]);
+            textView.setPadding(5, 0,0,0);
+            textViews[i] = textView;
+            ll_psuedocode.addView(textView);
         }
-        else {
-            back();
+
+        for(int i : BubbleSortInfo.boldIndexes){
+            textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
         }
     }
 
-    private void back(){
-        isAutoPlay = false;
-        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-        timer.cancel();
-
-        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-
-        Button btn_cancel = view.findViewById(R.id.btn_cancel);
-        Button btn_yes = view.findViewById(R.id.btn_yes);
-
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+    @Override
+    protected void initViews() {
+        if(bubbleSort != null){
+            tv_seqno.setText("0 / " + bubbleSort.sequence.sortingAnimationStates.size());
+            UtilUI.setText(tv_info, bubbleSort.sequence.sortingAnimationStates.get(0).info);
+            UtilUI.highlightViews(context, bubbleSort.sequence.views,
+                    bubbleSort.sequence.sortingAnimationStates.get(0).highlightIndexes);
+            String state = bubbleSort.sequence.sortingAnimationStates.get(0).state;
+            if(BubbleSortInfo.map.containsKey(state)){
+                Integer[] integers = BubbleSortInfo.map.get(state);
+                UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, integers);
             }
-        });
-        btn_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                finish();
-            }
-        });
+        }
+        else{
+            tv_seqno.setText("0 / 0");
+            UtilUI.setText(tv_info, "-");
+            UtilUI.changeTextViewsColors(context, sv_psuedocode, textViews, null);
+        }
     }
 
-    private void initNavigation() {
+    @Override
+    protected void initNavigation() {
         int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
         cl_bubblesort.setBackgroundColor(color);
@@ -678,7 +626,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         cl_bubblesort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.START);
+                closeDrawer(1);
             }
         });
 
@@ -721,27 +669,43 @@ public class BubbleSortActivity extends AppCompatActivity {
             }
         });
 
-        btn_closenav.setOnClickListener(new View.OnClickListener() {
+    }
+
+    @Override
+    protected void back(){
+        isAutoPlay = false;
+        btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+        timer.cancel();
+
+        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
+
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_yes = view.findViewById(R.id.btn_yes);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.START);
+                dialog.dismiss();
             }
         });
-
-    }
-
-    private void initOnBoarding() {
-        v_main.post(new Runnable() {
+        btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
-                if(!tutorialState) {
-                    OnBoardingPopUp.getInstance(context,
-                            v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY).show();
-                }
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
             }
         });
     }
+
+    @Override
+    protected void disableUI() {}
+
+    @Override
+    protected void enableUI() {}
 
 }

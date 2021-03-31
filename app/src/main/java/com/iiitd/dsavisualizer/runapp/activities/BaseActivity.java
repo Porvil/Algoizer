@@ -1,20 +1,15 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
-import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
@@ -73,9 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         vs_main.setLayoutResource(LAYOUT_MAIN);
         vs_menu_left.setLayoutResource(LAYOUT_LEFT);
         vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
-//        v_main = vs_main.inflate();
-//        v_menu_right = vs_menu_right.inflate();
-//        v_menu_left = vs_menu_left.inflate();
     }
 
     // id = 0 => both, 1 => left, 2 => right

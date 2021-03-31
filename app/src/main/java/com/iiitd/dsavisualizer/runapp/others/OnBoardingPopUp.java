@@ -74,7 +74,7 @@ public class OnBoardingPopUp {
         this.cb_onboarding_remember = popUpView.findViewById(R.id.cb_onboarding_remember);
 
         updateState(mViewPager.getCurrentItem());
-        boolean tutorialState = UtilUI.getTutorialState(context, AppSettings.GRAPH_KEY);
+        boolean tutorialState = UtilUI.getTutorialState(context, id);
         cb_onboarding_remember.setChecked(tutorialState);
 
         btn_onboarding_skip.setOnClickListener(new View.OnClickListener() {
