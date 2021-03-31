@@ -70,6 +70,7 @@ public class SelectionSortActivity extends AppCompatActivity {
     SeekBar sb_arraysize;
     TextView tv_arraysize;
     ImageButton btn_closemenu;
+    ImageButton btn_helpmenu;
     Button btn_generate;
     Button btn_clear;
     Switch sw_randomarray;
@@ -134,6 +135,7 @@ public class SelectionSortActivity extends AppCompatActivity {
         ll_psuedocode = v_main.findViewById(R.id.ll_pseudocode);
 
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        btn_helpmenu = v_menu_right.findViewById(R.id.btn_helpmenu);
         sb_arraysize = v_menu_right.findViewById(R.id.sb_arraysize);
         tv_arraysize = v_menu_right.findViewById(R.id.tv_arraysize);
         btn_generate = v_menu_right.findViewById(R.id.btn_generate);
@@ -734,10 +736,9 @@ public class SelectionSortActivity extends AppCompatActivity {
             public void run() {
                 boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
                 if(!tutorialState) {
-                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
+                    OnBoardingPopUp.getInstance(context,
                             v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY);
-                    onboardingPopUp.show();
+                            v_main, ONBOARDING_KEY).show();
                 }
             }
         });

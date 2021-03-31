@@ -36,7 +36,11 @@ public class OnBoardingPopUp {
     Button btn_onboarding_next;
     CheckBox cb_onboarding_remember;
 
-    public OnBoardingPopUp(Context _context, int _width, int _height, View _parent, String _id){
+    public static OnBoardingPopUp getInstance(Context _context, int _width, int _height, View _parent, String _id){
+        return new OnBoardingPopUp(_context, _width, _height, _parent, _id);
+    }
+
+    private OnBoardingPopUp(Context _context, int _width, int _height, View _parent, String _id){
         this.context = _context;
         this.width = _width;
         this.height = _height;

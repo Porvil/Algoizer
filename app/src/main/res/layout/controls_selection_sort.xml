@@ -20,8 +20,16 @@
             style="@style/S_ImageButton"
             android:layout_width="40dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/close"
             android:src="@drawable/ic_baseline_close_24" />
 
+        <ImageButton
+            android:id="@+id/btn_helpmenu"
+            style="@style/S_ImageButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/help"
+            android:src="@drawable/ic_baseline_help_outline_24" />
         <TextView
             android:id="@+id/textView4"
             style="@style/S_TextView_Heading"

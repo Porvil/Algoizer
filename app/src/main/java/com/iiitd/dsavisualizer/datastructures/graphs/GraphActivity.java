@@ -97,6 +97,7 @@ public class GraphActivity extends AppCompatActivity {
     FrameLayout fl_graph;
 
     ImageButton btn_closemenu;
+    ImageButton btn_helpmenu;
     RadioGroup rg_graphsize;
     RadioGroup rg_weighted;
     RadioGroup rg_directed;
@@ -219,6 +220,7 @@ public class GraphActivity extends AppCompatActivity {
 
         // Right Drawer findViewById's
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        btn_helpmenu = v_menu_right.findViewById(R.id.btn_helpmenu);
         rg_graphsize = v_menu_right.findViewById(R.id.rg_graphsize);
         rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
         rg_directed = v_menu_right.findViewById(R.id.rg_directed);
@@ -357,6 +359,16 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 closeDrawer(2);
+            }
+        });
+
+        btn_helpmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(0);
+                OnBoardingPopUp.getInstance(context,
+                        v_main.getWidth(), v_main.getHeight(),
+                        v_main, ONBOARDING_KEY).show();
             }
         });
 
@@ -1859,10 +1871,9 @@ public class GraphActivity extends AppCompatActivity {
             public void run() {
                 boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
                 if(!tutorialState) {
-                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
+                    OnBoardingPopUp.getInstance(context,
                             v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY);
-                    onboardingPopUp.show();
+                            v_main, ONBOARDING_KEY).show();
                 }
             }
         });

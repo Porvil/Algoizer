@@ -69,6 +69,7 @@ public class BSTActivity extends AppCompatActivity {
     TextView tv_info;
 
     ImageButton btn_closemenu;
+    ImageButton btn_helpmenu;
     ImageButton btn_insertrandom;
     Button btn_insert;
     Button btn_search;
@@ -135,6 +136,7 @@ public class BSTActivity extends AppCompatActivity {
         tv_info = v_main.findViewById(R.id.tv_info);
 
         btn_closemenu = v_menu_right.findViewById(R.id.btn_closemenu);
+        btn_helpmenu = v_menu_right.findViewById(R.id.btn_helpmenu);
         btn_insert = v_menu_right.findViewById(R.id.btn_insert);
         btn_insertrandom = v_menu_right.findViewById(R.id.btn_insertrandom);
         btn_search = v_menu_right.findViewById(R.id.btn_search);
@@ -934,10 +936,9 @@ public class BSTActivity extends AppCompatActivity {
             public void run() {
                 boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
                 if(!tutorialState) {
-                    OnBoardingPopUp onboardingPopUp = new OnBoardingPopUp(context,
+                    OnBoardingPopUp.getInstance(context,
                             v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY);
-                    onboardingPopUp.show();
+                            v_main, ONBOARDING_KEY).show();
                 }
             }
         });
