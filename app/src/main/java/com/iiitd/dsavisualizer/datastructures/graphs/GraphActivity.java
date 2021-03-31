@@ -127,7 +127,6 @@ public class GraphActivity extends BaseActivity {
     GraphTreePopUp graphTreePopUp;
     GraphDSPopUp graphTreeDSPopUp;
 
-//    LayoutInflater layoutInflater;
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
@@ -921,29 +920,6 @@ public class GraphActivity extends BaseActivity {
         }
     }
 
-    private void startTimer(String operation, final BFS bfs){
-        if(!dl_main.isOpen()) {
-            System.out.println("OPEN");
-            dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            btn_menu.setEnabled(false);
-            btn_nav.setEnabled(false);
-            btn_info.setEnabled(false);
-        }
-
-        if(timer == null) {
-
-//            final int animDurationTemp = this.animDuration;
-//            timer = new Timer();
-//            timer.schedule(new TimerTask() {
-//                @Override
-//                public void run() {
-//                    task(animDurationTemp);
-//                }
-//            }, animStepDuration, animStepDuration);
-
-        }
-    }
-
     private void taskStep(final int curSeqNo) {
         if (graphSequence != null) {
             System.out.println("SEQ = "  + curSeqNo);
@@ -978,16 +954,11 @@ public class GraphActivity extends BaseActivity {
                         }
 
                         for(Vertex vertex : graphAnimationState.vertices){
-//                            Rect rect = graphWrapper.board.getRect(vertex.data);
-//                            graphWrapper.board.drawNodeAnim(rect, vertex.data);
                             graphWrapper.board.drawVertex(vertex.data, true);
                         }
 
                         for(Edge edge : graphAnimationState.edges){
                             graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-//                            Rect rect1 = graphWrapper.board.getRect(edge.src);
-//                            Rect rect2 = graphWrapper.board.getRect(edge.des);
-//                            graphWrapper.board.drawEdgeAnim(rect1, rect2, edge, graphWrapper.weighted, graphWrapper.directed);
                         }
 
                         if(graphAnimationState.graphAnimationStateExtra != null){
