@@ -59,15 +59,6 @@ import java.util.TimerTask;
 
 public class GraphActivity extends BaseActivity {
 
-//    Context context;
-
-//    DrawerLayout dl_main;
-//    View v_main;
-//    View v_menu_left;
-//    View v_menu_right;
-//    ViewStub vs_main;
-//    ViewStub vs_menu_left;
-//    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
@@ -152,25 +143,9 @@ public class GraphActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
-//        setTheme(theme);
         configure(LAYOUT_MAIN, LAYOUT_LEFT, LAYOUT_RIGHT, ONBOARDING_KEY);
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        setContentView(R.layout.layout_base);
-//        context = this;
 
-//        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        // findViewById
-//        dl_main = findViewById(R.id.dl_main);
-//        vs_main = findViewById(R.id.vs_main);
-//        vs_menu_left = findViewById(R.id.vs_menu_left);
-//        vs_menu_right = findViewById(R.id.vs_menu_right);
-
-//        vs_main.setLayoutResource(LAYOUT_MAIN);
-//        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
-//        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
         v_menu_right = vs_menu_right.inflate();
         v_menu_left = vs_menu_left.inflate();

@@ -11,7 +11,6 @@ import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,7 +23,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -41,7 +39,7 @@ import com.iiitd.dsavisualizer.datastructures.trees.TreeLayout;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutData;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 import com.iiitd.dsavisualizer.datastructures.trees.bst.BSTActivity;
-import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
+import com.iiitd.dsavisualizer.runapp.activities.BaseActivity;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
@@ -50,17 +48,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AVLActivity extends AppCompatActivity {
+public class AVLActivity extends BaseActivity {
 
-    Context context;
-
-    DrawerLayout dl_main;
-    View v_main;
-    View v_menu_left;
-    View v_menu_right;
-    ViewStub vs_main;
-    ViewStub vs_menu_left;
-    ViewStub vs_menu_right;
     LinearLayout ll_anim;
     ImageButton btn_nav;
     ImageButton btn_menu;
@@ -109,22 +98,9 @@ public class AVLActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
-        setTheme(theme);
-
+        configure(LAYOUT_MAIN, LAYOUT_LEFT, LAYOUT_RIGHT, ONBOARDING_KEY);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.layout_base);
-        context = this;
 
-        // findViewById
-        dl_main = findViewById(R.id.dl_main);
-        vs_main = findViewById(R.id.vs_main);
-        vs_menu_left = findViewById(R.id.vs_menu_left);
-        vs_menu_right = findViewById(R.id.vs_menu_right);
-        vs_main.setLayoutResource(LAYOUT_MAIN);
-        vs_menu_left.setLayoutResource(LAYOUT_LEFT);
-        vs_menu_right.setLayoutResource(LAYOUT_RIGHT);
         v_main = vs_main.inflate();
         v_menu_right = vs_menu_right.inflate();
         v_menu_left = vs_menu_left.inflate();
@@ -225,33 +201,38 @@ public class AVLActivity extends AppCompatActivity {
             }
         });
 
-        // Menu Button
-        btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!dl_main.isOpen()) {
-                    dl_main.openDrawer(GravityCompat.END);
-                }
-            }
-        });
-
         btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timer != null) {
-                    timer.cancel();
-                    timer = null;
-                }
-
-                dl_main.openDrawer(GravityCompat.START);
+                openDrawer(1);
             }
+        });
 
+        btn_closenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(1);
+            }
+        });
+
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer(2);
+            }
         });
 
         btn_closemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.END);
+                closeDrawer(2);
+            }
+        });
+
+        btn_helpmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOnBoarding();
             }
         });
 
@@ -367,7 +348,7 @@ public class AVLActivity extends AppCompatActivity {
     }
 
     private void createExampleTree(List<Integer> tree) {
-
+        closeDrawer(2);
         // Clear the Tree
         clearTree();
 
@@ -438,13 +419,8 @@ public class AVLActivity extends AppCompatActivity {
     }
 
     private void startTimer(String operation, int data){
-        if(!dl_main.isOpen()) {
-            System.out.println("OPEN");
-            dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            btn_menu.setEnabled(false);
-            btn_nav.setEnabled(false);
-            btn_info.setEnabled(false);
-        }
+        closeDrawer(0);
+        disableUI();
 
         if(timer == null) {
             switch (operation) {
@@ -742,14 +718,11 @@ public class AVLActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                btn_menu.setEnabled(true);
-                                btn_nav.setEnabled(true);
-                                btn_info.setEnabled(true);
+                                enableUI();
                                 Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
                             }
                         });
 
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         timer.cancel();
                         timer = null;
                     }
@@ -760,7 +733,36 @@ public class AVLActivity extends AppCompatActivity {
 
     }
 
-    private void initViews() {
+    // Not used, Reset All Tree Views to Default Positions
+    private void reset(){
+        int row = 0;
+        for(TableRow tableRow : tableRows){
+            int old = 0;
+            for(int i=0;i<tableRow.getChildCount();i++){
+                int weight = treeLayout.get(row).get(i).weight;
+                float v = ((float) tableRow.getWidth() / 15) * old;
+                tableRow.getChildAt(i).setX(v);
+                tableRow.getChildAt(i).setY(0);
+                NodeState state = treeLayout.get(row).get(i).state;
+                if(state == NodeState.ELEMENT_SHOWN){
+                    tableRow.getChildAt(i).setVisibility(View.VISIBLE);
+                }
+                else{
+                    tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
+                }
+
+                old += weight;
+            }
+            row++;
+        }
+
+    }
+
+    @Override
+    protected void initPseudoCode() {}
+
+    @Override
+    protected void initViews() {
         avl = new AVL();
 
         tableLayout = new TableLayout(context);
@@ -869,43 +871,38 @@ public class AVLActivity extends AppCompatActivity {
 
     }
 
-    // Not used, Reset All Tree Views to Default Positions
-    private void reset(){
-        int row = 0;
-        for(TableRow tableRow : tableRows){
-            int old = 0;
-            for(int i=0;i<tableRow.getChildCount();i++){
-                int weight = treeLayout.get(row).get(i).weight;
-                float v = ((float) tableRow.getWidth() / 15) * old;
-                tableRow.getChildAt(i).setX(v);
-                tableRow.getChildAt(i).setY(0);
-                NodeState state = treeLayout.get(row).get(i).state;
-                if(state == NodeState.ELEMENT_SHOWN){
-                    tableRow.getChildAt(i).setVisibility(View.VISIBLE);
-                }
-                else{
-                    tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
-                }
+    @Override
+    protected void initNavigation() {
+        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
 
-                old += weight;
+        cl_avl.setBackgroundColor(color);
+
+        cl_bst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(context, BSTActivity.class));
             }
-            row++;
-        }
+        });
+
+        cl_avl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer(1);
+            }
+        });
+
+        cl_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
     @Override
-    public void onBackPressed() {
-        if (dl_main.isDrawerOpen(GravityCompat.START) || dl_main.isDrawerOpen(GravityCompat.END)){
-            dl_main.closeDrawer(GravityCompat.START);
-            dl_main.closeDrawer(GravityCompat.END);
-        }
-        else {
-            back();
-        }
-    }
-
-    private void back(){
+    protected void back(){
         if(timer != null) {
             timer.cancel();
             timer = null;
@@ -950,54 +947,20 @@ public class AVLActivity extends AppCompatActivity {
         });
     }
 
-    private void initNavigation() {
-        int color = UtilUI.getCurrentThemeColor(context, R.attr.shade);
-
-        cl_avl.setBackgroundColor(color);
-
-        cl_bst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, BSTActivity.class));
-            }
-        });
-
-        cl_avl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.START);
-            }
-        });
-
-        cl_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        btn_closenav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dl_main.closeDrawer(GravityCompat.START);
-            }
-        });
-
+    @Override
+    protected void disableUI() {
+        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        btn_menu.setEnabled(false);
+        btn_nav.setEnabled(false);
+        btn_info.setEnabled(false);
     }
 
-    private void initOnBoarding() {
-        v_main.post(new Runnable() {
-            @Override
-            public void run() {
-                boolean tutorialState = UtilUI.getTutorialState(context, ONBOARDING_KEY);
-                if(!tutorialState) {
-                    OnBoardingPopUp.getInstance(context,
-                            v_main.getWidth(), v_main.getHeight(),
-                            v_main, ONBOARDING_KEY).show();
-                }
-            }
-        });
+    @Override
+    protected void enableUI() {
+        btn_menu.setEnabled(true);
+        btn_nav.setEnabled(true);
+        btn_info.setEnabled(true);
+        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
 }
