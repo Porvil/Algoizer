@@ -13,13 +13,14 @@ public class VertexCLRS {
     public GraphAlgorithmType graphAlgorithmType;      // graphAlgorithmType, used in toString()
     public VertexVisitState color;                     // used by bfs and dfs
     public int parent;                                 // used by bfs, dfs and dijkstra
-    public int bfsDist;                                // used as distance in  bfs
+    public int bfsDist;                                // used as distance in  bfs [level order]
     public int startTime;                              // used as start time in dfs
     public int finishTime;                             // used as end time in dfs
     public int dfsDepth;                               // used as depth in dfs
     public int dijkstraDist;                           // used as distance in dijkstra
     public int bellmanFordDist;                        // used as distance in bellman-ford
     public boolean visited;                            // used by dijkstra
+    public int connectedID;                            // used by bfs and dfs connected components
 
     // Used by BFS
     public static VertexCLRS bfsVertexCLRS(Vertex vertex) {
@@ -28,6 +29,18 @@ public class VertexCLRS {
         vertexCLRS.graphAlgorithmType = GraphAlgorithmType.BFS;
         vertexCLRS.color = VertexVisitState.WHITE;
         vertexCLRS.bfsDist = Integer.MAX_VALUE;
+        vertexCLRS.parent = -1;
+
+        return vertexCLRS;
+    }
+
+    // Used by BFS Connected Component
+    public static VertexCLRS bfsVertexCCCLRS(Vertex vertex) {
+        VertexCLRS vertexCLRS = new VertexCLRS(vertex);
+
+        vertexCLRS.graphAlgorithmType = GraphAlgorithmType.BFS_CC;
+        vertexCLRS.color = VertexVisitState.WHITE;
+        vertexCLRS.connectedID = -1;
         vertexCLRS.parent = -1;
 
         return vertexCLRS;

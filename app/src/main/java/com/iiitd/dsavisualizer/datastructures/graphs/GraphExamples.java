@@ -2,16 +2,69 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 public class GraphExamples {
 
-    public static String example1 = "D 1\n" +
-            "W 1\n" +
-            "VC 3\n" +
-            "VA 0 2 7\n" +
-            "VA 1 5 4\n" +
-            "VA 2 5 10\n" +
-            "E 0 1 2\n" +
-            "E 0 2 2\n" +
-            "E 1 0 4\n" +
-            "E 2 0 4\n";
+    public static String example1 = "D 0\n" +
+            "W 0\n" +
+            "VC 15\n" +
+            "VA 0 3 7\n" +
+            "VA 1 3 5\n" +
+            "VA 2 5 5\n" +
+            "VA 3 1 7\n" +
+            "VA 4 1 10\n" +
+            "VA 5 3 10\n" +
+            "VA 6 5 10\n" +
+            "VA 7 4 1\n" +
+            "VA 8 3 2\n" +
+            "VA 9 5 2\n" +
+            "VA 10 1 4\n" +
+            "VA 11 0 2\n" +
+            "VA 12 1 3\n" +
+            "VA 13 0 5\n" +
+            "VA 14 1 5\n" +
+            "E 0 1 1\n" +
+            "E 0 5 1\n" +
+            "E 0 2 1\n" +
+            "E 0 3 1\n" +
+            "E 0 6 1\n" +
+            "E 1 0 1\n" +
+            "E 1 2 1\n" +
+            "E 2 0 1\n" +
+            "E 2 1 1\n" +
+            "E 2 6 1\n" +
+            "E 3 0 1\n" +
+            "E 3 5 1\n" +
+            "E 3 4 1\n" +
+            "E 4 3 1\n" +
+            "E 4 5 1\n" +
+            "E 5 0 1\n" +
+            "E 5 3 1\n" +
+            "E 5 4 1\n" +
+            "E 5 6 1\n" +
+            "E 6 5 1\n" +
+            "E 6 2 1\n" +
+            "E 6 0 1\n" +
+            "E 7 8 1\n" +
+            "E 7 9 1\n" +
+            "E 8 7 1\n" +
+            "E 9 7 1\n" +
+            "E 10 12 1\n" +
+            "E 11 12 1\n" +
+            "E 12 11 1\n" +
+            "E 12 10 1\n" +
+            "E 12 13 1\n" +
+            "E 13 12 1\n" +
+            "E 13 14 1\n" +
+            "E 14 13 1\n";
+
+//    public static String example1 = "D 1\n" +
+//            "W 1\n" +
+//            "VC 3\n" +
+//            "VA 0 2 7\n" +
+//            "VA 1 5 4\n" +
+//            "VA 2 5 10\n" +
+//            "E 0 1 2\n" +
+//            "E 0 2 2\n" +
+//            "E 1 0 4\n" +
+//            "E 2 0 4\n";
 
 //public static String example1 = "D 1\n" +
 //            "W 0\n" +

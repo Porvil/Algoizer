@@ -89,6 +89,7 @@ public class GraphActivity extends BaseActivity {
     RadioGroup rg_directed;
     Button btn_bfs;
     EditText et_bfs;
+    Button btn_bfsCC;
     Button btn_dfs;
     EditText et_dfs;
     Button btn_dijkstra;
@@ -179,6 +180,7 @@ public class GraphActivity extends BaseActivity {
         cl_home = v_menu_left.findViewById(R.id.cl_home);
         btn_bfs = v_menu_left.findViewById(R.id.btn_bfs);
         et_bfs = v_menu_left.findViewById(R.id.et_bfs);
+        btn_bfsCC = v_menu_left.findViewById(R.id.btn_bfsCC);
         btn_dfs = v_menu_left.findViewById(R.id.btn_dfs);
         et_dfs = v_menu_left.findViewById(R.id.et_dfs);
         btn_dijkstra = v_menu_left.findViewById(R.id.btn_dijkstra);
@@ -347,6 +349,13 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 algorithm(GraphAlgorithmType.BFS);
+            }
+        });
+
+        btn_bfsCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                algorithm(GraphAlgorithmType.BFS_CC);
             }
         });
 
@@ -688,7 +697,7 @@ public class GraphActivity extends BaseActivity {
                     resetGraphSequence();
                     graphWrapper.board.clearGraph(true);
 
-                    BFS bfs = new BFS(graphWrapper.graph);
+                    BFS bfs = new BFS(graphWrapper.graph, GraphAlgorithmType.BFS);
                     GraphSequence run = bfs.run(vertexNumber);
                     graphSequence = run;
 
@@ -706,6 +715,62 @@ public class GraphActivity extends BaseActivity {
                     graphTreePopUp.show();
 
                     graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+
+                    closeDrawer(1);
+
+                    System.out.println(graphSequence);
+                    UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+                }
+                break;
+            case BFS_CC:
+                if(graphWrapper.weighted){
+                    error = true;
+                    errorMessage = "BFS needs un-weighted graph";
+                }
+                else if(graphWrapper.directed){
+                    error = true;
+                    errorMessage = "BFS needs un-directed graph";
+                }
+                else {
+//                    String s = et_bfs.getText().toString();
+//                    int vertexNumber;
+//                    if (!s.isEmpty()) {
+//                        vertexNumber = Integer.parseInt(s.trim());
+//                    } else {
+//                        et_bfs.setError("Cant be empty");
+//                        return;
+//                    }
+
+                    if (graphWrapper.getNoOfNodes() <= 0) {
+                        et_bfs.setError("Empty Graph");
+                        return;
+                    }
+//                    else if (!graphWrapper.graph.checkContainsVertices(vertexNumber)) {
+//                        et_bfs.setError("Vertex not present in graph");
+//                        return;
+//                    }
+
+                    resetGraphSequence();
+                    graphWrapper.board.clearGraph(true);
+
+                    BFS bfs = new BFS(graphWrapper.graph, GraphAlgorithmType.BFS_CC);
+                    GraphSequence run = bfs.connectedComponents();
+                    graphSequence = run;
+
+//                    GraphTree rungt = bfs.graphTree;
+//                    graphTree = rungt;
+
+//                    System.out.println("--------------DONE ------------ ");
+//
+//                    graphTree.printEdges();
+//                    graphTree.printVertices();
+//
+//                    System.out.println("DONE ------------ ");
+//
+//                    graphTreePopUp.create("BFS Tree", graphTree);
+//                    graphTreePopUp.show();
+//
+//                    graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
 
                     closeDrawer(1);
 
@@ -952,9 +1017,13 @@ public class GraphActivity extends BaseActivity {
                             graphTreeDSPopUp.show();
                         }
 
+                        System.out.println("_----------------------");
                         for(Vertex vertex : graphAnimationState.vertices){
-                            graphWrapper.board.drawVertex(vertex.data, true);
+                            System.out.println("vertex data = " + vertex.data);
+                            System.out.println("vertex = " + vertex);
+                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
                         }
+                        System.out.println("_----------------------");
 
                         for(Edge edge : graphAnimationState.edges){
                             graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);

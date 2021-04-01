@@ -131,7 +131,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/btn_bfsCC"
                     style="@style/S_ButtonTextOnly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

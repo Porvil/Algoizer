@@ -287,7 +287,7 @@ public class Board {
     }
 
     // Draws a Vertex
-    public void drawVertex(int vertexValue, boolean isAnim){
+    public void drawVertex(int vertexValue, int row, int col, boolean isAnim){
         // Canvas and Paint Variables
         Canvas canvas;
         Paint pVertex;
@@ -304,7 +304,7 @@ public class Board {
             pVertexText = paintVertexText;
         }
 
-        Rect rect = getRect(vertexValue);
+        Rect rect = getRect(row, col);
         int x = rect.centerX();
         int y = rect.centerY();
 
@@ -315,6 +315,12 @@ public class Board {
         Rect rectText = new Rect();
         pVertexText.getTextBounds(text, 0, text.length(), rectText);
         canvas.drawText(text, x, y - (pVertexText.descent() + pVertexText.ascent()) / 2, pVertexText);
+    }
+
+    // Draws a Vertex
+    public void drawVertex(int vertexValue, boolean isAnim){
+        int[] coordinates = getCoordinates(vertexValue);
+        drawVertex(vertexValue, coordinates[0], coordinates[1], isAnim);
     }
 
     // Draws an Edge
