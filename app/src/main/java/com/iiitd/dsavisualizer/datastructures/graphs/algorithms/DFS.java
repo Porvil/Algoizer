@@ -46,6 +46,7 @@ public class DFS {
         vertices = new ArrayList<>();
         currentID = 0;
         edges = new ArrayList<>();
+        this.map = new HashMap<>();
     }
 
     public GraphSequence run(int s){
@@ -366,8 +367,10 @@ public class DFS {
             return graphSequence;
         }
 
+//        stack = new Stack<>();
+
         for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-            VertexCLRS vertexCLRS = VertexCLRS.bfsVertexCCCLRS(entry.getValue());
+            VertexCLRS vertexCLRS = VertexCLRS.dfsVertexCCCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
         }
 
@@ -387,7 +390,8 @@ public class DFS {
         for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
             System.out.println(entry.getValue());
             if(entry.getValue().connectedID == -1) {
-                run2(entry.getValue().data);
+                run3(entry.getValue().data);
+                currentID++;
             }
         }
 
@@ -406,16 +410,33 @@ public class DFS {
     }
 
     private void run2(int s){
-        LinkedList<Integer> queue = new LinkedList<>();
-        queue.add(s);
-        Vertex vertex = map.get(s).getVertex();
-        Vertex vertex3 = new Vertex(currentID, vertex.row, vertex.col);
-        vertices.add(vertex3);
+        Stack<Integer> stack = new Stack<>();
+        stack.add(s);
+//        Vertex vertex = map.get(s).getVertex();
+//        Vertex vertex3 = new Vertex(currentID, vertex.row, vertex.col);
+//        vertices.add(vertex3);
 
-        while (queue.size() != 0) {
-            int u = queue.pop();
+        while (stack.size() != 0) {
+            int u = stack.pop();
             map.get(u).color = BLACK;
             map.get(u).connectedID = currentID;
+
+            Vertex vertex1 = graph.vertexMap.get(u);
+            Vertex vertex2 = new Vertex(currentID, vertex1.row, vertex1.col);
+//            stack.add(v);
+            vertices.add(vertex2);
+//            ArrayList<Edge> edges = graph.edgeListMap.get(u);
+//
+//            this.edges.add(edge);
+
+            GraphAnimationState graphAnimationState2 =
+                    GraphAnimationState.create()
+                            .setState("Vertex = " + u)
+                            .setInfo("Vertex visited = " + u)
+                            .addVertices(vertices)
+                            .addEdges(this.edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState2);
 
             for(Edge edge : graph.edgeListMap.get(u)) {
                 int v = edge.des;
@@ -425,21 +446,20 @@ public class DFS {
                     map.get(v).connectedID = currentID;
                     map.get(v).parent = u;
 
-                    Vertex vertex1 = graph.vertexMap.get(v);
-                    Vertex vertex2 = new Vertex(currentID, vertex1.row, vertex1.col);
-                    queue.add(v);
-                    vertices.add(vertex2);
-                    edges.add(edge);
+//                    Vertex vertex1 = graph.vertexMap.get(v);
+//                    Vertex vertex2 = new Vertex(currentID, vertex1.row, vertex1.col);
+                    stack.add(v);
+//                    vertices.add(vertex2);
+//                    edges.add(edge);
 
-                    System.out.println("queue = " + queue);
-                    GraphAnimationState graphAnimationState2 =
+                    GraphAnimationState graphAnimationState4 =
                             GraphAnimationState.create()
                                     .setState("Vertex = " + v)
                                     .setInfo("Vertex visited = " + v)
                                     .addVertices(vertices)
-                                    .addEdges(edges);
+                                    .addEdges(this.edges);
 
-                    graphSequence.addGraphAnimationState(graphAnimationState2);
+//                    graphSequence.addGraphAnimationState(graphAnimationState4);
 
                 }
 
@@ -449,6 +469,74 @@ public class DFS {
 
         currentID++;
 
+    }
+
+    private void run3(int u) {// u = src, v = des
+        VertexCLRS vertexCLRS = map.get(u);
+        System.out.println(vertexCLRS.data +" " + vertexCLRS.connectedID + " | " + currentID);
+        if(vertexCLRS.connectedID != -1)
+            return;
+
+        Vertex vertex = graph.vertexMap.get(u);
+        vertex.data = currentID;
+
+        vertexCLRS.color = BLACK;
+        vertexCLRS.connectedID = currentID;
+
+        vertices.add(vertex);
+        GraphAnimationState graphAnimationState =
+                GraphAnimationState.create()
+                        .setState("Visit = " + vertexCLRS.data)
+                        .setInfo("Add source = " + vertexCLRS.data + " to stack")
+                        .addVertices(vertices)
+                        .addEdges(edges);
+
+        graphSequence.addGraphAnimationState(graphAnimationState);
+
+        for (Edge edge : graph.edgeListMap.get(u)) {
+            int v = edge.des;
+
+            // Non-White
+            if (map.get(v).color != WHITE) {
+
+                GraphAnimationState graphAnimationState2 =
+                        GraphAnimationState.create()
+                                .setState("Vertex = " + v)
+                                .setInfo("Vertex already visited = " + v)
+                                .addVertices(vertices)
+                                .addEdges(edges);
+
+//                graphSequence.addGraphAnimationState(graphAnimationState2);
+            }
+            // White
+            else if (map.get(v).color == WHITE) {
+                graphTree.addEdge(new EdgePro(edge, TREE));
+
+//                map.get(v).parent = u;
+
+//                stack.push(v);
+
+                Vertex vertex1 = graph.vertexMap.get(v);
+                vertices.add(vertex1);
+                edges.add(edge);
+
+                run3(v);
+            }
+        }
+
+
+//
+//        GraphAnimationState graphAnimationState1 =
+//                GraphAnimationState.create()
+//                        .setState("Vertex = " + u)
+//                        .setInfo("Vertex popped from stack = " + u)
+//                        .addVertices(vertices)
+//                        .addEdges(edges)
+//                        .addGraphAnimationStateExtra(
+//                                GraphAnimationStateExtra.create()
+//                                        .addStacks(stack));
+//
+//        graphSequence.addGraphAnimationState(graphAnimationState1);
     }
 
 }

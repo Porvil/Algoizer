@@ -46,6 +46,18 @@ public class VertexCLRS {
         return vertexCLRS;
     }
 
+    // Used by BFS Connected Component
+    public static VertexCLRS dfsVertexCCCLRS(Vertex vertex) {
+        VertexCLRS vertexCLRS = new VertexCLRS(vertex);
+
+        vertexCLRS.graphAlgorithmType = GraphAlgorithmType.DFS_CC;
+        vertexCLRS.color = VertexVisitState.WHITE;
+        vertexCLRS.connectedID = -1;
+        vertexCLRS.parent = -1;
+
+        return vertexCLRS;
+    }
+
     // Used by DFS
     public static VertexCLRS dfsVertexCLRS(Vertex vertex) {
         VertexCLRS vertexCLRS = new VertexCLRS(vertex);

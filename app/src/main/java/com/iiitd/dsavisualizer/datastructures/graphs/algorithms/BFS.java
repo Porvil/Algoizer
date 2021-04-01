@@ -265,6 +265,7 @@ public class BFS {
             System.out.println(entry.getValue());
             if(entry.getValue().connectedID == -1) {
                 run2(entry.getValue().data);
+                currentID++;
             }
         }
 
@@ -288,6 +289,16 @@ public class BFS {
         Vertex vertex = map.get(s).getVertex();
         Vertex vertex3 = new Vertex(currentID, vertex.row, vertex.col);
         vertices.add(vertex3);
+
+        GraphAnimationState graphAnimationState1 =
+                GraphAnimationState.create()
+                        .setState("Vertex = " + s)
+                        .setInfo("Vertex visited = " + s)
+                        .addVertices(vertices)
+                        .addEdges(edges);
+
+        graphSequence.addGraphAnimationState(graphAnimationState1);
+
 
         while (queue.size() != 0) {
             int u = queue.pop();
@@ -323,8 +334,6 @@ public class BFS {
             }
 
         }
-
-        currentID++;
 
     }
 
