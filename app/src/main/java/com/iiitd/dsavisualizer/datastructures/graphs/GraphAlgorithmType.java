@@ -5,6 +5,7 @@ public enum GraphAlgorithmType {
     BFS_CC,
     DFS,
     DFS_CC,
+    DFS_TS,
     DIJKSTRA,
     BELLMAN_FORD,
     PRIMS,

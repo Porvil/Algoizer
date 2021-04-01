@@ -23,8 +23,9 @@ public class BellmanFord {
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BELLMAN_FORD);
     }
 
-    public GraphSequence run(int source) {
+    public GraphSequence run() {
         int size = graph.noOfVertices;
+//        int source = 0;
 
         if (size < 1)
             return graphSequence;
@@ -50,7 +51,12 @@ public class BellmanFord {
             map.put(entry.getKey(), vertexCLRS);
         }
 
-        map.get(source).bellmanFordDist = 0;
+        // Fixing a Source Vertex
+        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
+            map.get(entry.getKey()).bellmanFordDist = 0;
+            break;
+        }
+//        map.get(source).bellmanFordDist = 0;
 
         ArrayList<Edge> allEdges = graph.getAllEdges();
 

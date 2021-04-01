@@ -120,11 +120,22 @@ public class GraphWrapper {
 
     public boolean removeVertex(MotionEvent motionEvent){
 
-        float x = (motionEvent.getX() / board.xSize);
-        float y =  (motionEvent.getY() / board.ySize);
+        TouchData touchData = board.getTouchData(motionEvent);
+        return  removeVertex(touchData);
 
-        int row = (int) y;
-        int col = (int) x;
+    }
+
+    public boolean removeVertex(TouchData touchData) {
+        if(touchData.isElement){
+            int row = touchData.row;
+            int col = touchData.col;
+            return removeVertex(row, col);
+        }
+
+        return false;
+    }
+
+    public boolean removeVertex(int row, int col){
 
         if(board.getState(row, col)){
             int nodeNumber = board.boardElements[row][col].value;

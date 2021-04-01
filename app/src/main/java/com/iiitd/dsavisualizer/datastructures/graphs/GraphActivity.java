@@ -92,10 +92,11 @@ public class GraphActivity extends BaseActivity {
     Button btn_bfsCC;
     Button btn_dfs;
     EditText et_dfs;
+    Button btn_dfsCC;
+    Button btn_dfsTS;
     Button btn_dijkstra;
     EditText et_dijkstra;
     Button btn_bellmanford;
-    EditText et_bellmanford;
     Button btn_kruskal;
     Button btn_prim;
     ImageButton btn_clearcustominput;
@@ -183,10 +184,11 @@ public class GraphActivity extends BaseActivity {
         btn_bfsCC = v_menu_left.findViewById(R.id.btn_bfsCC);
         btn_dfs = v_menu_left.findViewById(R.id.btn_dfs);
         et_dfs = v_menu_left.findViewById(R.id.et_dfs);
+        btn_dfsCC = v_menu_left.findViewById(R.id.btn_dfsCC);
+        btn_dfsTS = v_menu_left.findViewById(R.id.btn_dfsTS);
         btn_dijkstra = v_menu_left.findViewById(R.id.btn_dijkstra);
         et_dijkstra = v_menu_left.findViewById(R.id.et_dijkstra);
         btn_bellmanford = v_menu_left.findViewById(R.id.btn_bellmanford);
-        et_bellmanford = v_menu_left.findViewById(R.id.et_bellmanford);
         btn_kruskal = v_menu_left.findViewById(R.id.btn_kruskals);
         btn_prim = v_menu_left.findViewById(R.id.btn_prims);
 
@@ -363,6 +365,20 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 algorithm(GraphAlgorithmType.DFS);
+            }
+        });
+
+        btn_dfsCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                algorithm(GraphAlgorithmType.DFS_CC);
+            }
+        });
+
+        btn_dfsTS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                algorithm(GraphAlgorithmType.DFS_TS);
             }
         });
 
@@ -686,7 +702,7 @@ public class GraphActivity extends BaseActivity {
                     }
 
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_bfs.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
@@ -732,23 +748,11 @@ public class GraphActivity extends BaseActivity {
                     errorMessage = "BFS needs un-directed graph";
                 }
                 else {
-//                    String s = et_bfs.getText().toString();
-//                    int vertexNumber;
-//                    if (!s.isEmpty()) {
-//                        vertexNumber = Integer.parseInt(s.trim());
-//                    } else {
-//                        et_bfs.setError("Cant be empty");
-//                        return;
-//                    }
-
                     if (graphWrapper.getNoOfNodes() <= 0) {
-                        et_bfs.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
                         return;
                     }
-//                    else if (!graphWrapper.graph.checkContainsVertices(vertexNumber)) {
-//                        et_bfs.setError("Vertex not present in graph");
-//                        return;
-//                    }
 
                     resetGraphSequence();
                     graphWrapper.board.clearGraph(true);
@@ -756,21 +760,6 @@ public class GraphActivity extends BaseActivity {
                     BFS bfs = new BFS(graphWrapper.graph, GraphAlgorithmType.BFS_CC);
                     GraphSequence run = bfs.connectedComponents();
                     graphSequence = run;
-
-//                    GraphTree rungt = bfs.graphTree;
-//                    graphTree = rungt;
-
-//                    System.out.println("--------------DONE ------------ ");
-//
-//                    graphTree.printEdges();
-//                    graphTree.printVertices();
-//
-//                    System.out.println("DONE ------------ ");
-//
-//                    graphTreePopUp.create("BFS Tree", graphTree);
-//                    graphTreePopUp.show();
-//
-//                    graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
 
                     closeDrawer(1);
 
@@ -795,7 +784,8 @@ public class GraphActivity extends BaseActivity {
                     }
 
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_dfs.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
                         return;
                     }
                     else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
@@ -806,7 +796,7 @@ public class GraphActivity extends BaseActivity {
                     resetGraphSequence();
                     graphWrapper.board.clearGraph(true);
 
-                    DFS dfs = new DFS(graphWrapper.graph);
+                    DFS dfs = new DFS(graphWrapper.graph, GraphAlgorithmType.DFS);
 
                     GraphSequence run = dfs.run(vertexNumber);
                     graphSequence = run;
@@ -821,6 +811,64 @@ public class GraphActivity extends BaseActivity {
                     graphTreePopUp.show();
 
                     graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+
+                    closeDrawer(1);
+
+                    System.out.println(graphSequence);
+                    UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+                }
+                break;
+            case DFS_CC:
+                if(graphWrapper.weighted){
+                    error = true;
+                    errorMessage = "DFS needs un-weighted graph";
+                }
+                else if(graphWrapper.directed){
+                    error = true;
+                    errorMessage = "DFS needs un-directed graph";
+                }
+                else {
+                    if (graphWrapper.getNoOfNodes() <= 0) {
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
+                        return;
+                    }
+
+                    resetGraphSequence();
+                    graphWrapper.board.clearGraph(true);
+
+                    DFS dfs = new DFS(graphWrapper.graph, GraphAlgorithmType.DFS_CC);
+                    GraphSequence run = dfs.connectedComponents();
+                    graphSequence = run;
+
+                    closeDrawer(1);
+
+                    System.out.println(graphSequence);
+                    UtilUI.setText(tv_seqno, "1/" + graphSequence.size);
+                }
+                break;
+            case DFS_TS:
+                if(graphWrapper.weighted){
+                    error = true;
+                    errorMessage = "DFS needs un-weighted graph";
+                }
+                else if(graphWrapper.directed){
+                    error = true;
+                    errorMessage = "DFS needs un-directed graph";
+                }
+                else {
+                    if (graphWrapper.getNoOfNodes() <= 0) {
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
+                        return;
+                    }
+
+                    resetGraphSequence();
+                    graphWrapper.board.clearGraph(true);
+
+                    DFS dfs = new DFS(graphWrapper.graph, GraphAlgorithmType.DFS_TS);
+                    GraphSequence run = dfs.connectedComponents();
+                    graphSequence = run;
 
                     closeDrawer(1);
 
@@ -849,7 +897,8 @@ public class GraphActivity extends BaseActivity {
                     }
 
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_dijkstra.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
                         return;
                     }
                     else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
@@ -877,22 +926,10 @@ public class GraphActivity extends BaseActivity {
                     errorMessage = "Bellman Ford needs weighted graph";
                 }
                 else {
-                    String s = et_bellmanford.getText().toString();
-                    int vertexNumber;
-                    if(!s.isEmpty()){
-                        vertexNumber = Integer.parseInt(s.trim());
-                    }
-                    else{
-                        et_bellmanford.setError("Cant be empty");
-                        return;
-                    }
 
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_bellmanford.setError("Empty Graph");
-                        return;
-                    }
-                    else if(!graphWrapper.graph.checkContainsVertices(vertexNumber)){
-                        et_bellmanford.setError("Vertex not present in graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
+                        closeDrawer(1);
                         return;
                     }
 
@@ -900,7 +937,7 @@ public class GraphActivity extends BaseActivity {
                     graphWrapper.board.clearGraph(true);
 
                     BellmanFord bellmanFord = new BellmanFord(graphWrapper.graph);
-                    GraphSequence run = bellmanFord.run(vertexNumber);
+                    GraphSequence run = bellmanFord.run();
                     graphSequence = run;
 
 
@@ -921,7 +958,7 @@ public class GraphActivity extends BaseActivity {
                 }
                 else {
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_bellmanford.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -950,7 +987,7 @@ public class GraphActivity extends BaseActivity {
                 }
                 else{
                     if(graphWrapper.getNoOfNodes() <= 0){
-                        et_bellmanford.setError("Empty Graph");
+                        Toast.makeText(context, "Empty Graph", Toast.LENGTH_SHORT).show();
                         return;
                     }
 

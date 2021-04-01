@@ -34,14 +34,17 @@ public class DFS {
     Stack<Integer> stack;
     ArrayList<Vertex> vertices;
     ArrayList<Edge> edges;
+    int currentID;
 
-    public DFS(Graph graph){
+
+    public DFS(Graph graph, GraphAlgorithmType graphAlgorithmType){
         this.graph = graph;
-        this.graphSequence = new GraphSequence(GraphAlgorithmType.DFS);
+        this.graphSequence = new GraphSequence(graphAlgorithmType);
         this.time = 0;
         this.graphTree = new GraphTree(graph.directed, graph.weighted);
         this.stack = new Stack<>();
         vertices = new ArrayList<>();
+        currentID = 0;
         edges = new ArrayList<>();
     }
 
@@ -356,6 +359,96 @@ public class DFS {
 
 
         return graphSequence;
+    }
+
+    public GraphSequence connectedComponents(){
+        if(graph == null || graph.vertexMap.size() == 0){
+            return graphSequence;
+        }
+
+        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+            VertexCLRS vertexCLRS = VertexCLRS.bfsVertexCCCLRS(entry.getValue());
+            map.put(entry.getKey(), vertexCLRS);
+        }
+
+        currentID = 0;
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("start")
+                            .addVertices(vertices)
+                            .addEdges(edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+        for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+            if(entry.getValue().connectedID == -1) {
+                run2(entry.getValue().data);
+            }
+        }
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("end")
+                            .setInfo("no of connected components = " + currentID)
+                            .addVertices(vertices)
+                            .addEdges(edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+        return graphSequence;
+    }
+
+    private void run2(int s){
+        LinkedList<Integer> queue = new LinkedList<>();
+        queue.add(s);
+        Vertex vertex = map.get(s).getVertex();
+        Vertex vertex3 = new Vertex(currentID, vertex.row, vertex.col);
+        vertices.add(vertex3);
+
+        while (queue.size() != 0) {
+            int u = queue.pop();
+            map.get(u).color = BLACK;
+            map.get(u).connectedID = currentID;
+
+            for(Edge edge : graph.edgeListMap.get(u)) {
+                int v = edge.des;
+                if (map.get(v).color == WHITE) {
+
+                    map.get(v).color = BLACK;
+                    map.get(v).connectedID = currentID;
+                    map.get(v).parent = u;
+
+                    Vertex vertex1 = graph.vertexMap.get(v);
+                    Vertex vertex2 = new Vertex(currentID, vertex1.row, vertex1.col);
+                    queue.add(v);
+                    vertices.add(vertex2);
+                    edges.add(edge);
+
+                    System.out.println("queue = " + queue);
+                    GraphAnimationState graphAnimationState2 =
+                            GraphAnimationState.create()
+                                    .setState("Vertex = " + v)
+                                    .setInfo("Vertex visited = " + v)
+                                    .addVertices(vertices)
+                                    .addEdges(edges);
+
+                    graphSequence.addGraphAnimationState(graphAnimationState2);
+
+                }
+
+            }
+
+        }
+
+        currentID++;
+
     }
 
 }
