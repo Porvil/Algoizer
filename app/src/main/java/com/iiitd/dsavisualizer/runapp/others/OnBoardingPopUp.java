@@ -1,11 +1,14 @@
 package com.iiitd.dsavisualizer.runapp.others;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import androidx.viewpager.widget.ViewPager;
@@ -31,6 +34,7 @@ public class OnBoardingPopUp {
 
     ViewPager mViewPager;
     OnBoardingViewPagerAdapter mOnBoardingViewPagerAdapter;
+    LinearLayout ll_count;
     Button btn_onboarding_back;
     Button btn_onboarding_skip;
     Button btn_onboarding_next;
@@ -68,10 +72,20 @@ public class OnBoardingPopUp {
 
         this.size = mViewPager.getAdapter().getCount();
 
+        this.ll_count = popUpView.findViewById(R.id.ll_count);
         this.btn_onboarding_back = popUpView.findViewById(R.id.btn_onboarding_back);
         this.btn_onboarding_skip = popUpView.findViewById(R.id.btn_onboarding_skip);
         this.btn_onboarding_next = popUpView.findViewById(R.id.btn_onboarding_next);
         this.cb_onboarding_remember = popUpView.findViewById(R.id.cb_onboarding_remember);
+
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
+        for(int i=0;i<size;i++){
+            View inflate = inflater.inflate(R.layout.layout_onboarding_count, null);
+            inflate.setBackgroundColor(Color.BLACK);
+
+            ll_count.addView(inflate, layoutParams);
+        }
 
         updateState(mViewPager.getCurrentItem());
         boolean tutorialState = UtilUI.getTutorialState(context, id);

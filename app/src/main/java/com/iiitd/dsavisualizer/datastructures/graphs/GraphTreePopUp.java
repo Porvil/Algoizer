@@ -30,7 +30,6 @@ public class GraphTreePopUp{
 
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
-    ImageButton btn_close;
     ConstraintLayout cl_bottom;
     ZoomLayout zl_graphtree;
     ImageView iv_graphtree;
@@ -65,7 +64,6 @@ public class GraphTreePopUp{
 
         this.zl_graphtree = popUpView.findViewById(R.id.zl_graphtree);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
-        this.btn_close = popUpView.findViewById(R.id.btn_close);
         this.cl_bottom = popUpView.findViewById(R.id.cl_bottom);
         this.cb_tree = popUpView.findViewById(R.id.cb_tree);
         this.cb_back = popUpView.findViewById(R.id.cb_back);
@@ -116,13 +114,6 @@ public class GraphTreePopUp{
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 }
-            }
-        });
-
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
             }
         });
 

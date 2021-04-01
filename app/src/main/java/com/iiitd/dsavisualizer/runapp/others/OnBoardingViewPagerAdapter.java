@@ -13,6 +13,8 @@ import com.iiitd.dsavisualizer.R;
 
 import java.util.Objects;
 
+import pl.droidsonroids.gif.GifImageView;
+
 class OnBoardingViewPagerAdapter extends PagerAdapter {
 
     Context context;
@@ -40,8 +42,8 @@ class OnBoardingViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.layout_onboarding_imageview, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.iv_onboarding);
-        imageView.setImageResource(images[position]);
+        GifImageView gifImageView = itemView.findViewById(R.id.gifiv_onboarding);
+        gifImageView.setImageResource(images[position]);
 
         Objects.requireNonNull(container).addView(itemView);
 

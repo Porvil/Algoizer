@@ -31,7 +31,6 @@ public class GraphDSPopUp {
 
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
-    ImageButton btn_close;
     ConstraintLayout cl_bottom;
     LinearLayout ll_graphds;
     LinearLayout.LayoutParams elementLayoutParams;
@@ -68,7 +67,6 @@ public class GraphDSPopUp {
 
         this.ll_graphds = popUpView.findViewById(R.id.ll_graphds);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
-        this.btn_close = popUpView.findViewById(R.id.btn_close);
         this.cl_bottom = popUpView.findViewById(R.id.cl_bottom);
         this.iv_popupgraphname = popUpView.findViewById(R.id.tv_popupgraphname);
 
@@ -114,13 +112,6 @@ public class GraphDSPopUp {
                     popupwindow.update(width, height);
                     btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 }
-            }
-        });
-
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
             }
         });
 

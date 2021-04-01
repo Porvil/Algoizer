@@ -2,6 +2,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/roundedrect_border_large"
@@ -18,22 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_close"
-        style="@style/S_ImageButton"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_close_24" />
-
-    <ImageButton
         android:id="@+id/btn_minimize"
         style="@style/S_ImageButton"
         android:layout_width="40dp"
         android:layout_height="50dp"
         android:contentDescription="@string/close"
-        app:layout_constraintEnd_toStartOf="@+id/btn_close"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_remove_24" />
 

@@ -50,8 +50,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="?attr/base"
-            android:text="Do not show again" />
+            android:text="Do not show again"
+            android:textColor="?attr/base" />
+
+        <LinearLayout
+            android:id="@+id/ll_count"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
         <Button
             android:id="@+id/btn_onboarding_skip"
