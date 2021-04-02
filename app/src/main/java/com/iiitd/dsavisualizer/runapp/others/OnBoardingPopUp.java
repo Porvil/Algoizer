@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -82,7 +84,6 @@ public class OnBoardingPopUp {
                 new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
         for(int i=0;i<size;i++){
             View inflate = inflater.inflate(R.layout.layout_onboarding_count, null);
-            inflate.setBackgroundColor(Color.BLACK);
 
             ll_count.addView(inflate, layoutParams);
         }
@@ -149,6 +150,21 @@ public class OnBoardingPopUp {
         }
         else {
             btn_onboarding_back.setVisibility(View.VISIBLE);
+        }
+
+
+        for(int i=0;i<ll_count.getChildCount();i++){
+            FrameLayout child = (FrameLayout) ll_count.getChildAt(i);
+            View off = child.findViewById(R.id.iv_onboarding_count_off);
+            View on = child.findViewById(R.id.iv_onboarding_count_on);
+
+            off.setVisibility(View.VISIBLE);
+            on.setVisibility(View.INVISIBLE);
+
+            if(position == i){
+                off.setVisibility(View.INVISIBLE);
+                on.setVisibility(View.VISIBLE);
+            }
         }
     }
 
