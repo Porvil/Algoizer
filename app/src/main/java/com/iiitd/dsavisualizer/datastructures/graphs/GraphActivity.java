@@ -302,12 +302,10 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(cl_controls.getVisibility() == View.VISIBLE){
-                    cl_controls.setVisibility(View.GONE);
-                    btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_left_24));
+                    hideControls();
                 }
                 else{
-                    cl_controls.setVisibility(View.VISIBLE);
-                    btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_right_24));
+                    showControls();
                 }
             }
         });

@@ -27,6 +27,7 @@ public class Prims {
     public GraphSequence run() {
         int size = graph.noOfVertices;
         int source = 0;
+        String infinity = DecimalFormatSymbols.getInstance().getInfinity();
         if (size < 1)
             return graphSequence;
 
@@ -36,23 +37,43 @@ public class Prims {
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
 
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("start")
-                            .addVertices(vertices)
-                            .addEdges(edges);
-
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
 
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dijkstraVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
         }
 
-        map.get(source).dijkstraDist = 0;
+        // Fixing a Source Vertex
+        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
+            map.get(entry.getKey()).dijkstraDist = 0;
+            source = entry.getKey();
+            break;
+        }
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("prims(source = " + source +")")
+                            .addVertices(vertices)
+                            .addEdges(edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("set " + infinity + " to all vertices, and 0 to source vertex")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                            .addMapDijkstra(map));
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
 
         for (int i = 0; i < count; i++) {
             // Update the distance between neighbouring vertex and source vertex
@@ -99,8 +120,9 @@ public class Prims {
                             GraphAnimationState graphAnimationState1 =
                                     GraphAnimationState.create()
                                             .setState("Visit = " + cur)
-                                            .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-                                                    + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
+                                            .setInfo("Vertex = " + cur + ", Edge " + cur + " --- " + edge.des + "\n"
+                                                + map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
+                                            )
                                             .addVertices(vertices)
                                             .addEdges(edges)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
@@ -115,7 +137,10 @@ public class Prims {
                             GraphAnimationState graphAnimationState1 =
                                     GraphAnimationState.create()
                                             .setState("Visit = " + cur)
-                                            .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist)
+                                            .setInfo("Vertex = " + cur + "\n"
+                                                    + "Edge " + cur + " --- " + edge.des + "\n"
+                                                    + map.get(cur).dijkstraDist + " + " + edge.weight + " >= " + otherDist
+                                            )
                                             .addVertices(vertices)
                                             .addEdges(edges)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()

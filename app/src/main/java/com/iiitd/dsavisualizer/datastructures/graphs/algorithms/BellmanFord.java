@@ -25,7 +25,7 @@ public class BellmanFord {
 
     public GraphSequence run() {
         int size = graph.noOfVertices;
-//        int source = 0;
+        int source = 0;
 
         if (size < 1)
             return graphSequence;
@@ -54,6 +54,7 @@ public class BellmanFord {
         // Fixing a Source Vertex
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             map.get(entry.getKey()).bellmanFordDist = 0;
+            source = entry.getKey();
             break;
         }
 //        map.get(source).bellmanFordDist = 0;
