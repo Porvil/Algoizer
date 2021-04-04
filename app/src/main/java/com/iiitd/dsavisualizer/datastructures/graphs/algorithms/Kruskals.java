@@ -39,7 +39,33 @@ public class Kruskals {
 
         ArrayList<Edge> allEdges = graph.getAllEdges();
 
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("kruskals()")
+                            .addVertices(vertices)
+                            .addEdges(edges);
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("sort all edges")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                    .addEdges(allEdges));
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+
         System.out.println(allEdges);
+
 
         Collections.sort(allEdges, new Comparator<Edge>() {
             @Override
@@ -47,6 +73,19 @@ public class Kruskals {
                 return o1.weight - o2.weight;
             }
         });
+
+        {
+            GraphAnimationState graphAnimationState =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("edges sorted")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                    .addEdges(allEdges));
+
+            graphSequence.addGraphAnimationState(graphAnimationState);
+        }
 
         System.out.println(allEdges);
 
@@ -64,6 +103,27 @@ public class Kruskals {
                 vertices.add(graph.vertexMap.get(second));
                 edges.add(edge);
                 ds.union(first, second);
+
+                GraphAnimationState graphAnimationState = GraphAnimationState.create()
+                        .setState("Edge(Vertices) not visited in graph")
+                        .setInfo("Edge(Vertices) not visited in graph, adding to MST")
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                .addEdges(allEdges));
+
+                graphSequence.addGraphAnimationState(graphAnimationState);
+            }
+            else{
+                GraphAnimationState graphAnimationState = GraphAnimationState.create()
+                        .setState("Edge(Vertices) already in graph")
+                        .setInfo("Edge(Vertices) already in graph")
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                .addEdges(allEdges));
+
+                graphSequence.addGraphAnimationState(graphAnimationState);
             }
         }
 
@@ -73,8 +133,7 @@ public class Kruskals {
         GraphAnimationState graphAnimationState1 =
                 GraphAnimationState.create()
                         .setState("Done")
-//                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-//                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
+                        .setInfo("Done")
                         .addVertices(vertices)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
