@@ -51,7 +51,7 @@ public class BFS {
             GraphAnimationState graphAnimationState =
                     GraphAnimationState.create()
                             .setState("start")
-                            .setInfo("start")
+                            .setInfo("bfs(source = " + s +")")
                             .addVertices(vertices)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -118,7 +118,8 @@ public class BFS {
                     GraphAnimationState graphAnimationState2 =
                             GraphAnimationState.create()
                                     .setState("Vertex = " + v)
-                                    .setInfo("Vertex visited = " + v)
+                                    .setInfo("Vertex = " + u + ", Edge " + u + " --- " + edge.des + "\n"
+                                            + "Vertex visited = " + edge.des)
                                     .addVertices(vertices)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
@@ -133,7 +134,8 @@ public class BFS {
                     GraphAnimationState graphAnimationState2 =
                             GraphAnimationState.create()
                                     .setState("Vertex = " + v)
-                                    .setInfo("Vertex already visited = " + v)
+                                    .setInfo("Vertex = " + u + ", Edge " + u + " --- " + edge.des + "\n"
+                                            + "Vertex already visited = " + edge.des)
                                     .addVertices(vertices)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
@@ -172,6 +174,21 @@ public class BFS {
             }
             map.get(u).color = BLACK;
 
+        }
+
+
+        {
+            GraphAnimationState graphAnimationState1 =
+                    GraphAnimationState.create()
+                            .setState("start")
+                            .setInfo("bfs completed)")
+                            .addVertices(vertices)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addQueues(queue));
+
+            graphSequence.addGraphAnimationState(graphAnimationState1);
         }
 
         // ALL DONE
@@ -254,7 +271,7 @@ public class BFS {
             GraphAnimationState graphAnimationState =
                     GraphAnimationState.create()
                             .setState("start")
-                            .setInfo("start")
+                            .setInfo("bfs connectedComponents()")
                             .addVertices(vertices)
                             .addEdges(edges);
 
@@ -269,15 +286,17 @@ public class BFS {
             }
         }
 
+
         {
-            GraphAnimationState graphAnimationState =
+            GraphAnimationState graphAnimationState1 =
                     GraphAnimationState.create()
-                            .setState("end")
-                            .setInfo("no of connected components = " + currentID)
+                            .setState("start")
+                            .setInfo("bfs connectedComponents() completed" + "\n" +
+                                    "no of connected components = " + currentID )
                             .addVertices(vertices)
                             .addEdges(edges);
 
-            graphSequence.addGraphAnimationState(graphAnimationState);
+            graphSequence.addGraphAnimationState(graphAnimationState1);
         }
 
         return graphSequence;

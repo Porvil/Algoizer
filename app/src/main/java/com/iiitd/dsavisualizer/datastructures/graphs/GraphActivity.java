@@ -903,6 +903,8 @@ public class GraphActivity extends BaseActivity {
                 hideControls();
                 closeDrawer(0);
                 System.out.println(graphAlgorithm.graphSequence);
+                // COULD CAUSE NPE
+                UtilUI.setText(tv_info, graphAlgorithm.graphSequence.graphAnimationStates.get(0).info);
                 UtilUI.setText(tv_seqno, "1/" + graphAlgorithm.graphSequence.size);
                 break;
             case 1: // Toast Error

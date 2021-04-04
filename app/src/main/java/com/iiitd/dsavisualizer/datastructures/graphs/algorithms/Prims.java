@@ -137,8 +137,7 @@ public class Prims {
                             GraphAnimationState graphAnimationState1 =
                                     GraphAnimationState.create()
                                             .setState("Visit = " + cur)
-                                            .setInfo("Vertex = " + cur + "\n"
-                                                    + "Edge " + cur + " --- " + edge.des + "\n"
+                                            .setInfo("Vertex = " + cur + ", Edge " + cur + " --- " + edge.des + "\n"
                                                     + map.get(cur).dijkstraDist + " + " + edge.weight + " >= " + otherDist
                                             )
                                             .addVertices(vertices)
