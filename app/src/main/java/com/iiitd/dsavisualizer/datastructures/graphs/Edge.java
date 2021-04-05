@@ -39,4 +39,21 @@ public class Edge {
 
         return edge1;
     }
+
+    public void setToNormal(){
+        this.graphAnimationStateType = GraphAnimationStateType.NORMAL;
+    }
+
+    public void setToHighlight(){
+        this.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+    }
+
+    public void setToDone(){
+        this.graphAnimationStateType = GraphAnimationStateType.DONE;
+    }
+
+    public void setGAST(GraphAnimationStateType graphAnimationStateType){
+        this.graphAnimationStateType = graphAnimationStateType;
+    }
+
 }

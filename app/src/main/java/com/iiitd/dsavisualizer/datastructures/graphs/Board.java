@@ -560,7 +560,6 @@ public class Board {
         canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
 
         //Highlighted box
-        System.out.println(rectText);
         Paint paint =new Paint();
         paint.setColor(Color.BLACK);
         canvas.drawRect(rectText, paint);

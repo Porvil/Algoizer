@@ -22,6 +22,7 @@ import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -345,4 +346,7 @@ public class UtilUI {
         editor.apply();
     }
 
+    public static String getInfinity(){
+        return DecimalFormatSymbols.getInstance().getInfinity();
+    }
 }

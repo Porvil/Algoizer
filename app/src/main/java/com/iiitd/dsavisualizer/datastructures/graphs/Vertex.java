@@ -76,4 +76,25 @@ public class Vertex implements Comparable<Vertex> {
 
         return vertex1;
     }
+
+    public void setToNone(){
+        this.graphAnimationStateType = GraphAnimationStateType.NONE;
+    }
+
+    public void setToNormal(){
+        this.graphAnimationStateType = GraphAnimationStateType.NORMAL;
+    }
+
+    public void setToHighlight(){
+        this.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+    }
+
+    public void setToDone(){
+        this.graphAnimationStateType = GraphAnimationStateType.DONE;
+    }
+
+    public void setGAST(GraphAnimationStateType graphAnimationStateType){
+        this.graphAnimationStateType = graphAnimationStateType;
+    }
+
 }

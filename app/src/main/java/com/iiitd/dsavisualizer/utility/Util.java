@@ -6,11 +6,13 @@ import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortData;
 import com.iiitd.dsavisualizer.algorithms.sorting.quick.QuickSortData;
 import com.iiitd.dsavisualizer.algorithms.sorting.selection.SelectionSortData;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Util {
@@ -130,5 +132,9 @@ public class Util {
 
         return true;
     }
+//
+//    public static Edge findEdge(ArrayList<Edge> edges, Edge edge){
+//        for(Edge)
+//    }
 
 }

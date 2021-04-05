@@ -5,9 +5,13 @@ import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
+import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.*;
+
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -18,16 +22,18 @@ public class Prims {
     Graph graph;
     GraphSequence graphSequence;
     HashMap<Integer, VertexCLRS> map;
+    HashMap<Integer, Vertex> verticesState;
 
     public Prims(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.PRIMS);
+        this.verticesState = new HashMap<>();
     }
 
     public GraphSequence run() {
         int size = graph.noOfVertices;
         int source = 0;
-        String infinity = DecimalFormatSymbols.getInstance().getInfinity();
+        String infinity = UtilUI.getInfinity();
         if (size < 1)
             return graphSequence;
 
@@ -38,15 +44,22 @@ public class Prims {
         ArrayList<Edge> edges = new ArrayList<>();
 
 
+        for(Edge edge : graph.getAllEdges()) {
+            edges.add(edge);
+        }
+
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dijkstraVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
+            verticesState.put(entry.getKey(), new Vertex(entry.getValue(), NONE));
         }
 
         // Fixing a Source Vertex
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             map.get(entry.getKey()).dijkstraDist = 0;
             source = entry.getKey();
+            Vertex vertex = verticesState.get(entry.getKey());
+            vertex.setToDone();
             break;
         }
 
@@ -56,7 +69,8 @@ public class Prims {
                             .setState("start")
                             .setInfo("prims(source = " + source +")")
                             .addVertices(vertices)
-                            .addEdges(edges);
+                            .addEdges(edges)
+                            .setVerticesState(verticesState);
 
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
@@ -68,6 +82,7 @@ public class Prims {
                             .setInfo("set " + infinity + " to all vertices, and 0 to source vertex")
                             .addVertices(vertices)
                             .addEdges(edges)
+                            .setVerticesState(verticesState)
                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                             .addMapDijkstra(map));
 
@@ -92,27 +107,42 @@ public class Prims {
                     System.out.println("cur Edge = " + edge);
                 }
 
+                Vertex visitVertex = verticesState.get(cur);
+                visitVertex.setToHighlight();
+
                 GraphAnimationState graphAnimationState =
                         GraphAnimationState.create()
                                 .setState("Visit = " + cur)
                                 .setInfo("Visit = " + cur)
                                 .addVertices(vertices)
                                 .addEdges(edges)
+                                .setVerticesState(verticesState)
                                 .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                         .addMapDijkstra(map));
 
                 graphSequence.addGraphAnimationState(graphAnimationState);
 
+                visitVertex.setToDone();
+
                 map.get(cur).visited = true;
                 for (Edge edge : graph.edgeListMap.get(cur)) {
+                    Vertex srcVertex = verticesState.get(cur);
+                    Vertex desVertex = verticesState.get(edge.des);
+                    GraphAnimationStateType srcGAST = srcVertex.graphAnimationStateType;
+                    GraphAnimationStateType desGAST = desVertex.graphAnimationStateType;
+                    GraphAnimationStateType edgeGAST = edge.graphAnimationStateType;
+
                     if (!map.get(edge.des).visited) {
-//                        int tempDistance = map.get(cur).dijkstraDist + edge.weight;
                         int tempDistance = edge.weight;
                         int otherDistance = map.get(edge.des).dijkstraDist;
                         String otherDist = String.valueOf(otherDistance);
                         if(otherDistance == Integer.MAX_VALUE){
                             otherDist = DecimalFormatSymbols.getInstance().getInfinity();
                         }
+
+                        srcVertex.setToHighlight();
+                        desVertex.setToHighlight();
+                        edge.setToHighlight();
 
                         System.out.println("!!!!!!!!!!!!!!" + map);
                         if (tempDistance < otherDistance) {
@@ -125,6 +155,7 @@ public class Prims {
                                             )
                                             .addVertices(vertices)
                                             .addEdges(edges)
+                                            .setVerticesState(verticesState)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                                     .addMapDijkstra(map));
 
@@ -132,6 +163,10 @@ public class Prims {
 
                             map.get(edge.des).dijkstraDist = tempDistance;
                             map.get(edge.des).parent = map.get(cur).data;
+
+                            srcVertex.setToDone();
+                            desVertex.setToDone();
+                            edge.setToHighlight();
                         }
                         else{
                             GraphAnimationState graphAnimationState1 =
@@ -142,16 +177,34 @@ public class Prims {
                                             )
                                             .addVertices(vertices)
                                             .addEdges(edges)
+                                            .setVerticesState(verticesState)
                                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                                     .addMapDijkstra(map));
 
                             graphSequence.addGraphAnimationState(graphAnimationState1);
+
+                            srcVertex.setGAST(srcGAST);
+                            desVertex.setGAST(desGAST);
+                            edge.setGAST(edgeGAST);
                         }
                     }
                 }
             }
 
         }
+
+
+        GraphAnimationState graphAnimationState1 =
+                GraphAnimationState.create()
+                        .setState("Done")
+                        .setInfo("Done")
+                        .addVertices(vertices)
+                        .addEdges(edges)
+                        .setVerticesState(verticesState)
+                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                                .addMapDijkstra(map));
+
+        graphSequence.addGraphAnimationState(graphAnimationState1);
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {

@@ -1,7 +1,5 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
-import androidx.core.util.Pair;
-
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
@@ -126,10 +124,10 @@ public class Kruskals {
                 edges.add(edge);
                 ds.union(first, second);
 
-                Vertex vertexPro = verticesState.get(first);
-                vertexPro.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
-                Vertex vertexPro1 = verticesState.get(second);
-                vertexPro1.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+                Vertex vertex = verticesState.get(first);
+                vertex.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+                Vertex vertex1 = verticesState.get(second);
+                vertex1.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
 
                 edge.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
 
@@ -145,8 +143,8 @@ public class Kruskals {
                 graphSequence.addGraphAnimationState(graphAnimationState);
 
                 System.out.println(graphAnimationState);
-                vertexPro.graphAnimationStateType = GraphAnimationStateType.DONE;
-                vertexPro1.graphAnimationStateType = GraphAnimationStateType.DONE;
+                vertex.graphAnimationStateType = GraphAnimationStateType.DONE;
+                vertex1.graphAnimationStateType = GraphAnimationStateType.DONE;
                 edge.graphAnimationStateType = GraphAnimationStateType.DONE;
             }
             else{
