@@ -181,7 +181,7 @@ public class BFS {
             GraphAnimationState graphAnimationState1 =
                     GraphAnimationState.create()
                             .setState("start")
-                            .setInfo("bfs completed)")
+                            .setInfo("bfs completed()")
                             .addVertices(vertices)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(

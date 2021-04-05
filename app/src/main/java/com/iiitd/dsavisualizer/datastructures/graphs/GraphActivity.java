@@ -36,13 +36,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BFS;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.BellmanFord;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.DFS;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Dijkstra;
 import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.GraphAlgorithm;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Kruskals;
-import com.iiitd.dsavisualizer.datastructures.graphs.algorithms.Prims;
 import com.iiitd.dsavisualizer.runapp.activities.BaseActivity;
 import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
@@ -904,6 +898,7 @@ public class GraphActivity extends BaseActivity {
                 closeDrawer(0);
                 System.out.println(graphAlgorithm.graphSequence);
                 // COULD CAUSE NPE
+                taskStep(0);
                 UtilUI.setText(tv_info, graphAlgorithm.graphSequence.graphAnimationStates.get(0).info);
                 UtilUI.setText(tv_seqno, "1/" + graphAlgorithm.graphSequence.size);
                 break;
@@ -950,16 +945,59 @@ public class GraphActivity extends BaseActivity {
                             graphTreeDSPopUp.show();
                         }
 
-                        System.out.println("_----------------------");
-                        for(Vertex vertex : graphAnimationState.vertices){
-                            System.out.println("vertex data = " + vertex.data);
-                            System.out.println("vertex = " + vertex);
-                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+
+                        for(Map.Entry<Integer, Vertex> entry : graphAnimationState.verticesState.entrySet()){
+                            if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                graphWrapper.board.setPaintHighlight();
+                                Vertex vertex = entry.getValue();
+                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
+                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NONE){
+//                                graphWrapper.board.setPaintNormal();
+//                                Vertex vertex = entry.getValue().getVertex();
+//                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
+                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                graphWrapper.board.setPaintNormal();
+                                Vertex vertex = entry.getValue();
+                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
+                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.DONE){
+                                graphWrapper.board.setPaintDone();
+                                Vertex vertex = entry.getValue();
+                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
                         }
+
+
+
+                        System.out.println("_----------------------");
+//                        for(Vertex vertex : graphAnimationState.vertices){
+//                            System.out.println("vertex data = " + vertex.data);
+//                            System.out.println("vertex = " + vertex);
+//                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+//                        }
                         System.out.println("_----------------------");
 
                         for(Edge edge : graphAnimationState.edges){
-                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                graphWrapper.board.setPaintHighlight();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
+//                                graphWrapper.board.setPaintNormal();
+//                                Vertex vertex = entry.getValue().getVertex();
+//                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                graphWrapper.board.setPaintNormal();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
+                                graphWrapper.board.setPaintDone();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+//                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
                         }
 
                         if(graphAnimationState.graphAnimationStateExtra != null){

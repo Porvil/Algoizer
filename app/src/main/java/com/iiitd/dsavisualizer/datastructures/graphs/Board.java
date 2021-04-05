@@ -69,6 +69,20 @@ public class Board {
     private Paint paintEdgeArrowsAnim;              // Animation Edge Arrows
     private Paint paintEdgeWeightAnim;              // Animation Edge Weight
 
+    private Paint _paintVertex;                      // Vertex
+    private Paint _paintVertexText;                  // Vertex Text
+    private Paint _paintVertexWeight;
+    private Paint _paintEdge;                        // Edge
+    private Paint _paintEdgeArrows;                  // Edge Arrows
+    private Paint _paintEdgeWeight;
+
+    int shade;
+    int light;
+    int base;
+    int medium;
+    int dark;
+    int white;
+
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
         this.customCanvas = customCanvas;
@@ -121,12 +135,12 @@ public class Board {
 
     // Initializes all Paint Variables
     private void initPaints(){
-        int shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
-        int light = UtilUI.getCurrentThemeColor(context, R.attr.light);
-        int base = UtilUI.getCurrentThemeColor(context, R.attr.base);
-        int medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
-        int dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
-        int white = Color.WHITE;
+        shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
+        light = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        base = UtilUI.getCurrentThemeColor(context, R.attr.base);
+        medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
+        dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
+        white = Color.WHITE;
 
         // Grid Lines
         this.paintGrid = new Paint();
@@ -206,6 +220,51 @@ public class Board {
         this.paintEdgeWeightAnim.setColor(dark);
         this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintEdgeWeightAnim.setAntiAlias(ANTI_ALIAS);
+
+
+
+        // Vertex
+        this._paintVertex = new Paint();
+        this._paintVertex.setColor(base);
+        this._paintVertex.setAlpha(192);
+        this._paintVertex.setAntiAlias(ANTI_ALIAS);
+
+        // Vertex Text
+        this._paintVertexText = new Paint();
+        this._paintVertexText.setTextAlign(Paint.Align.CENTER);
+        this._paintVertexText.setTextSize(nodeTextSize);
+        this._paintVertexText.setColor(white);
+        this._paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this._paintVertexText.setAntiAlias(ANTI_ALIAS);
+
+        // Vertex Weight
+        this._paintVertexWeight = new Paint();
+        this._paintVertexWeight.setTextAlign(Paint.Align.CENTER);
+        this._paintVertexWeight.setTextSize(edgeWeightTextSize);
+        this._paintVertexWeight.setColor(medium);
+        this._paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this._paintVertexWeight.setAntiAlias(ANTI_ALIAS);
+
+        // Edge
+        this._paintEdge = new Paint();
+        this._paintEdge.setColor(medium);
+        this._paintEdge.setStrokeWidth(edgeWidth);
+        this._paintEdge.setAntiAlias(ANTI_ALIAS);
+
+        // Edge Arrows
+        this._paintEdgeArrows = new Paint();
+        this._paintEdgeArrows.setColor(medium);
+        this._paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
+        this._paintEdgeArrows.setAntiAlias(ANTI_ALIAS);
+
+        // Edge Weight
+        this._paintEdgeWeight = new Paint();
+        this._paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
+        this._paintEdgeWeight.setTextSize(edgeWeightTextSize);
+        this._paintEdgeWeight.setColor(medium);
+        this._paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this._paintEdgeWeight.setAntiAlias(ANTI_ALIAS);
+
     }
 
     // Draw the complete Grid
@@ -302,7 +361,11 @@ public class Board {
             canvas = customCanvas.canvasGraph;
             pVertex = paintVertex;
             pVertexText = paintVertexText;
+            setPaintNormal();
         }
+
+        pVertex = _paintVertex;
+        pVertexText = _paintVertexText;
 
         Rect rect = getRect(row, col);
         int x = rect.centerX();
@@ -342,7 +405,12 @@ public class Board {
             pEdge = paintEdge;
             pEdgeArrow = paintEdgeArrows;
             pEdgeWeight = paintEdgeWeight;
+            setPaintNormal();
         }
+
+        pEdge = _paintEdge;
+        pEdgeArrow = _paintEdgeArrows;
+        pEdgeWeight = _paintEdgeWeight;
 
         // Math Variables
         Rect srcRect = getRect(edge.src);
@@ -496,6 +564,69 @@ public class Board {
         Paint paint =new Paint();
         paint.setColor(Color.BLACK);
         canvas.drawRect(rectText, paint);
+    }
+
+    public void setPaintNormal() {
+
+        // Vertex
+        this._paintVertex.setColor(base);
+
+        // Vertex Text
+        this._paintVertexText.setColor(white);
+
+        // Vertex Weight
+        this._paintVertexWeight.setColor(base);
+
+        // Edge
+        this._paintEdge.setColor(base);
+
+        // Edge Arrows
+        this._paintEdgeArrows.setColor(base);
+
+        // Edge Weight
+        this._paintEdgeWeight.setColor(base);
+    }
+
+    public void setPaintHighlight() {
+
+        // Vertex
+        this._paintVertex.setColor(medium);
+
+        // Vertex Text
+        this._paintVertexText.setColor(white);
+
+        // Vertex Weight
+        this._paintVertexWeight.setColor(medium);
+
+        // Edge
+        this._paintEdge.setColor(medium);
+
+        // Edge Arrows
+        this._paintEdgeArrows.setColor(medium);
+
+        // Edge Weight
+        this._paintEdgeWeight.setColor(medium);
+    }
+
+    public void setPaintDone() {
+
+        // Vertex
+        this._paintVertex.setColor(dark);
+
+        // Vertex Text
+        this._paintVertexText.setColor(white);
+
+        // Vertex Weight
+        this._paintVertexWeight.setColor(dark);
+
+        // Edge
+        this._paintEdge.setColor(dark);
+
+        // Edge Arrows
+        this._paintEdgeArrows.setColor(dark);
+
+        // Edge Weight
+        this._paintEdgeWeight.setColor(dark);
     }
 
     // Adds a Vertex and calls drawVertex [prevents re-drawing the complete graph]

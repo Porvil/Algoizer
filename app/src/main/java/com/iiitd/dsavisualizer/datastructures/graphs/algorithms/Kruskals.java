@@ -1,10 +1,13 @@
 package com.iiitd.dsavisualizer.datastructures.graphs.algorithms;
 
+import androidx.core.util.Pair;
+
 import com.iiitd.dsavisualizer.datastructures.graphs.Edge;
 import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
@@ -20,10 +23,12 @@ public class Kruskals {
     Graph graph;
     GraphSequence graphSequence;
     HashMap<Integer, VertexCLRS> map;
+    HashMap<Integer, Vertex> verticesState;
 
     public Kruskals(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.KRUSKALS);
+        this.verticesState = new HashMap<>();
     }
 
     public GraphSequence run() {
@@ -39,14 +44,23 @@ public class Kruskals {
 
         ArrayList<Edge> allEdges = graph.getAllEdges();
 
+        DisjointSet ds = new DisjointSet();
+
+        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
+            ds.addSingleSet(entry.getKey());
+            verticesState.put(entry.getKey(), new Vertex(entry.getValue(), GraphAnimationStateType.NONE));
+        }
+
         {
             GraphAnimationState graphAnimationState =
                     GraphAnimationState.create()
                             .setState("start")
                             .setInfo("kruskals()")
                             .addVertices(vertices)
+                            .setVerticesState(verticesState)
                             .addEdges(edges);
 
+            System.out.println(graphAnimationState + "\n------------------------");
             graphSequence.addGraphAnimationState(graphAnimationState);
         }
 
@@ -57,6 +71,7 @@ public class Kruskals {
                             .setInfo("sort all edges")
                             .addVertices(vertices)
                             .addEdges(edges)
+                            .setVerticesState(verticesState)
                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                     .addEdges(allEdges));
 
@@ -74,6 +89,11 @@ public class Kruskals {
             }
         });
 
+        for(Edge edge : allEdges) {
+            edges.add(edge);
+        }
+
+
         {
             GraphAnimationState graphAnimationState =
                     GraphAnimationState.create()
@@ -81,6 +101,7 @@ public class Kruskals {
                             .setInfo("edges sorted")
                             .addVertices(vertices)
                             .addEdges(edges)
+                            .setVerticesState(verticesState)
                             .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                     .addEdges(allEdges));
 
@@ -89,11 +110,12 @@ public class Kruskals {
 
         System.out.println(allEdges);
 
-        DisjointSet ds = new DisjointSet();
-
-        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
-            ds.addSingleSet(entry.getKey());
-        }
+//        DisjointSet ds = new DisjointSet();
+//
+//        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
+//            ds.addSingleSet(entry.getKey());
+//            verticesState.put(entry.getKey(), Pair.create(entry.getValue(), GraphAnimationStateType.NONE));
+//        }
 
         for(Edge edge : allEdges){
             int first = edge.src;
@@ -104,15 +126,28 @@ public class Kruskals {
                 edges.add(edge);
                 ds.union(first, second);
 
+                Vertex vertexPro = verticesState.get(first);
+                vertexPro.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+                Vertex vertexPro1 = verticesState.get(second);
+                vertexPro1.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+
+                edge.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+
                 GraphAnimationState graphAnimationState = GraphAnimationState.create()
                         .setState("Edge(Vertices) not visited in graph")
                         .setInfo("Edge(Vertices) not visited in graph, adding to MST")
                         .addVertices(vertices)
                         .addEdges(edges)
+                        .setVerticesState(verticesState)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                 .addEdges(allEdges));
 
                 graphSequence.addGraphAnimationState(graphAnimationState);
+
+                System.out.println(graphAnimationState);
+                vertexPro.graphAnimationStateType = GraphAnimationStateType.DONE;
+                vertexPro1.graphAnimationStateType = GraphAnimationStateType.DONE;
+                edge.graphAnimationStateType = GraphAnimationStateType.DONE;
             }
             else{
                 GraphAnimationState graphAnimationState = GraphAnimationState.create()
@@ -120,6 +155,7 @@ public class Kruskals {
                         .setInfo("Edge(Vertices) already in graph")
                         .addVertices(vertices)
                         .addEdges(edges)
+                        .setVerticesState(verticesState)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                 .addEdges(allEdges));
 
@@ -136,6 +172,7 @@ public class Kruskals {
                         .setInfo("Done")
                         .addVertices(vertices)
                         .addEdges(edges)
+                        .setVerticesState(verticesState)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
                                 .addMapBellmanford(map));
 

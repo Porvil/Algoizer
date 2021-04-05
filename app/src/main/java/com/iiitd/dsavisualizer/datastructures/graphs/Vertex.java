@@ -7,10 +7,20 @@ public class Vertex implements Comparable<Vertex> {
     public int row;
     public int col;
 
+    public GraphAnimationStateType graphAnimationStateType;
+
     public Vertex(int data, int row, int col) {
         this.data = data;
         this.row = row;
         this.col = col;
+        this.graphAnimationStateType = GraphAnimationStateType.NONE;
+    }
+
+    public Vertex(Vertex vertex, GraphAnimationStateType graphAnimationStateType) {
+        this.data = vertex.data;
+        this.row = vertex.row;
+        this.col = vertex.col;
+        this.graphAnimationStateType = graphAnimationStateType;
     }
 
     @Override
@@ -58,5 +68,12 @@ public class Vertex implements Comparable<Vertex> {
     @Override
     public int hashCode() {
         return Objects.hash(data);
+    }
+
+    public static Vertex getClone(Vertex vertex){
+        Vertex vertex1 = new Vertex(vertex.data, vertex.row, vertex.col);
+        vertex1.graphAnimationStateType = vertex.graphAnimationStateType;
+
+        return vertex1;
     }
 }

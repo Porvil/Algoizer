@@ -1,17 +1,22 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphAnimationState {
     public String state;
     public String info;
     public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
+    public HashMap<Integer, Vertex> verticesState;
     public GraphAnimationStateExtra graphAnimationStateExtra;
 
     public GraphAnimationState() {
         this.vertices = new ArrayList<>();
         this.edges = new ArrayList<>();
+        this.verticesState = new HashMap<>();
         this.graphAnimationStateExtra = null;
     }
 
@@ -32,16 +37,28 @@ public class GraphAnimationState {
                 ", info='" + info + '\'' +
                 ", vertices=" + vertices +
                 ", edges=" + edges +
+                ", verticesState=" + verticesState +
                 ", graphAnimationStateExtra=" + graphAnimationStateExtra +
                 '}';
+    }
+
+    public GraphAnimationState setVerticesState(HashMap<Integer, Vertex> _verticesState){
+        this.verticesState.clear();
+        for (Map.Entry<Integer, Vertex> entry : _verticesState.entrySet()) {
+            this.verticesState.put(entry.getKey(), Vertex.getClone(entry.getValue()));
+        }
+        return this;
     }
 
     public static GraphAnimationState create(){
         return new GraphAnimationState();
     }
 
-    public GraphAnimationState addEdges(ArrayList<Edge> edges){
-        this.edges.addAll(edges);
+    public GraphAnimationState addEdges(ArrayList<Edge> _edges){
+        for(Edge edge : _edges){
+            edges.add(Edge.getClone(edge));
+        }
+//        this.edges.addAll(edges);
         return this;
     }
 
