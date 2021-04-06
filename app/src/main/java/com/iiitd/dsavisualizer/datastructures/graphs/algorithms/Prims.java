@@ -23,7 +23,8 @@ public class Prims {
     GraphSequence graphSequence;
     HashMap<Integer, VertexCLRS> map;
     HashMap<Integer, Vertex> verticesState;
-
+    String infinity = UtilUI.getInfinity();
+    
     public Prims(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.PRIMS);
@@ -33,7 +34,7 @@ public class Prims {
     public GraphSequence run() {
         int size = graph.noOfVertices;
         int source = 0;
-        String infinity = UtilUI.getInfinity();
+
         if (size < 1)
             return graphSequence;
 
@@ -43,10 +44,10 @@ public class Prims {
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
 
-
-        for(Edge edge : graph.getAllEdges()) {
-            edges.add(edge);
-        }
+//
+//        for(Edge edge : graph.getAllEdges()) {
+//            edges.add(edge);
+//        }
 
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dijkstraVertexCLRS(entry.getValue());
@@ -87,6 +88,11 @@ public class Prims {
                             .addMapDijkstra(map));
 
             graphSequence.addGraphAnimationState(graphAnimationState);
+        }
+
+
+        for(Edge edge : graph.getAllEdges()) {
+            edges.add(edge);
         }
 
 
@@ -140,6 +146,8 @@ public class Prims {
                             otherDist = DecimalFormatSymbols.getInstance().getInfinity();
                         }
 
+                        edges.add(edge);
+
                         srcVertex.setToHighlight();
                         desVertex.setToHighlight();
                         edge.setToHighlight();
@@ -166,7 +174,7 @@ public class Prims {
 
                             srcVertex.setToDone();
                             desVertex.setToDone();
-                            edge.setToHighlight();
+                            edge.setToDone();
                         }
                         else{
                             GraphAnimationState graphAnimationState1 =

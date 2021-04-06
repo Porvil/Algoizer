@@ -211,6 +211,15 @@ public class GraphActivity extends BaseActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
+        final Snackbar make = Snackbar.make(v_main, "Graph Algorithms is in Development Stage, There may be some bugs", Snackbar.LENGTH_INDEFINITE);
+        make.setAction("Dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                make.dismiss();
+            }
+        });
+        make.show();
+
         initOnBoarding();
         initViews();
         initNavigation();
@@ -927,6 +936,7 @@ public class GraphActivity extends BaseActivity {
                         graphWrapper.board.clearGraph(true);
                         GraphAnimationState graphAnimationState = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
+                        System.out.println(graphAnimationState.edges.size());
 
                         // MAY BE CHECK IF GRAPH_ANIMATION_STATE_EXTRA != NULL
                         if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
@@ -979,6 +989,7 @@ public class GraphActivity extends BaseActivity {
 //                        }
                         System.out.println("_----------------------");
 
+                        // Edges
                         for(Edge edge : graphAnimationState.edges){
                             if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
                                 graphWrapper.board.setPaintHighlight();

@@ -7,9 +7,12 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.TextPaint;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.Util;
@@ -546,6 +549,8 @@ public class Board {
             pVertexWeightText = paintEdgeWeight;
         }
 
+        pVertexWeightText = _paintVertexWeight;
+
         Rect rect = getRect(vertexValue);
         int x = rect.centerX();
         int y = rect.top - 10;
@@ -554,15 +559,40 @@ public class Board {
         if(vertexWeight == Integer.MAX_VALUE)
             text = DecimalFormatSymbols.getInstance().getInfinity();
 
+
+
         System.out.println(text);
         Rect rectText = new Rect();
         pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
+        pVertexWeightText.setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        Paint paint = new Paint();
+        paint.setColor(shade);
+        canvas.drawRect(rectText, paint);
+        Rect background = getTextBackgroundSize(x, y, text, pVertexWeightText);
+        canvas.drawRect(background, paint);
+
         canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
 
+
+
+//        System.out.println(rectText);
+//        rectText.set
+//        Paint paint = new Paint();
+//        paint.setColor(dark);
+//        canvas.drawRect(rectText, paint);
+
         //Highlighted box
-        Paint paint =new Paint();
-        paint.setColor(Color.BLACK);
-        canvas.drawRect(rectText, paint);
+//        Paint paint =new Paint();
+//        paint.setColor(Color.BLACK);
+//        canvas.drawRect(rectText, paint);
+    }
+
+    private @NonNull
+    Rect getTextBackgroundSize(float x, float y, @NonNull String text, @NonNull Paint paint) {
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        float halfTextLength = paint.measureText(text) / 2 + 5;
+        return new Rect((int) (x - halfTextLength), (int) (y + fontMetrics.top), (int) (x + halfTextLength), (int) (y + fontMetrics.bottom));
     }
 
     public void setPaintNormal() {
