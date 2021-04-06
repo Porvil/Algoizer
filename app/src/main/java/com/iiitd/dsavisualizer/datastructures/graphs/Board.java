@@ -367,8 +367,8 @@ public class Board {
             setPaintNormal();
         }
 
-        pVertex = _paintVertex;
-        pVertexText = _paintVertexText;
+//        pVertex = _paintVertex;
+//        pVertexText = _paintVertexText;
 
         Rect rect = getRect(row, col);
         int x = rect.centerX();
@@ -411,9 +411,9 @@ public class Board {
             setPaintNormal();
         }
 
-        pEdge = _paintEdge;
-        pEdgeArrow = _paintEdgeArrows;
-        pEdgeWeight = _paintEdgeWeight;
+//        pEdge = _paintEdge;
+//        pEdgeArrow = _paintEdgeArrows;
+//        pEdgeWeight = _paintEdgeWeight;
 
         // Math Variables
         Rect srcRect = getRect(edge.src);
@@ -549,7 +549,7 @@ public class Board {
             pVertexWeightText = paintEdgeWeight;
         }
 
-        pVertexWeightText = _paintVertexWeight;
+//        pVertexWeightText = _paintVertexWeight;
 
         Rect rect = getRect(vertexValue);
         int x = rect.centerX();

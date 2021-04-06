@@ -955,61 +955,101 @@ public class GraphActivity extends BaseActivity {
                             graphTreeDSPopUp.show();
                         }
 
+                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
+                            graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.KRUSKALS){
 
-                        for(Map.Entry<Integer, Vertex> entry : graphAnimationState.verticesState.entrySet()){
-                            if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
-                                graphWrapper.board.setPaintHighlight();
-                                Vertex vertex = entry.getValue();
-                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
-                            }
-                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NONE){
+                            // Vertices
+                            for(Map.Entry<Integer, Vertex> entry : graphAnimationState.verticesState.entrySet()){
+                                if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                    graphWrapper.board.setPaintHighlight();
+                                    Vertex vertex = entry.getValue();
+                                    graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                                }
+                                else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NONE){
 //                                graphWrapper.board.setPaintNormal();
 //                                Vertex vertex = entry.getValue().getVertex();
 //                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                                }
+                                else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                    graphWrapper.board.setPaintNormal();
+                                    Vertex vertex = entry.getValue();
+                                    graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                                }
+                                else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.DONE){
+                                    graphWrapper.board.setPaintDone();
+                                    Vertex vertex = entry.getValue();
+                                    graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                                }
                             }
-                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NORMAL){
-                                graphWrapper.board.setPaintNormal();
-                                Vertex vertex = entry.getValue();
-                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
-                            }
-                            else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.DONE){
-                                graphWrapper.board.setPaintDone();
-                                Vertex vertex = entry.getValue();
-                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
-                            }
-                        }
 
-
-
-                        System.out.println("_----------------------");
-//                        for(Vertex vertex : graphAnimationState.vertices){
-//                            System.out.println("vertex data = " + vertex.data);
-//                            System.out.println("vertex = " + vertex);
-//                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
-//                        }
-                        System.out.println("_----------------------");
-
-                        // Edges
-                        for(Edge edge : graphAnimationState.edges){
-                            if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
-                                graphWrapper.board.setPaintHighlight();
-                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                            }
-                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
+                            // Edges
+                            for(Edge edge : graphAnimationState.edges){
+                                if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                    graphWrapper.board.setPaintHighlight();
+                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                                }
+                                else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
 //                                graphWrapper.board.setPaintNormal();
 //                                Vertex vertex = entry.getValue().getVertex();
 //                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
-                            }
-                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
-                                graphWrapper.board.setPaintNormal();
-                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                            }
-                            else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
-                                graphWrapper.board.setPaintDone();
-                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                            }
+                                }
+                                else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                    graphWrapper.board.setPaintNormal();
+                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                                }
+                                else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
+                                    graphWrapper.board.setPaintDone();
+                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                                }
 //                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
                         }
+                        else{
+                            for(Vertex vertex : graphAnimationState.vertices){
+                            System.out.println("vertex data = " + vertex.data);
+                            System.out.println("vertex = " + vertex);
+                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                            }
+
+                            for(Edge edge : graphAnimationState.edges){
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                        }
+
+
+//
+//
+//
+//                        System.out.println("_----------------------");
+////                        for(Vertex vertex : graphAnimationState.vertices){
+////                            System.out.println("vertex data = " + vertex.data);
+////                            System.out.println("vertex = " + vertex);
+////                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+////                        }
+//                        System.out.println("_----------------------");
+//
+//                        // Edges
+//                        for(Edge edge : graphAnimationState.edges){
+//                            if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+//                                graphWrapper.board.setPaintHighlight();
+//                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                            }
+//                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
+////                                graphWrapper.board.setPaintNormal();
+////                                Vertex vertex = entry.getValue().getVertex();
+////                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+//                            }
+//                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
+//                                graphWrapper.board.setPaintNormal();
+//                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                            }
+//                            else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
+//                                graphWrapper.board.setPaintDone();
+//                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                            }
+////                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                        }
+
 
                         if(graphAnimationState.graphAnimationStateExtra != null){
                             if(graphAnimationState.graphAnimationStateExtra.map != null){
