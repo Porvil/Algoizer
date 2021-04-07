@@ -435,7 +435,7 @@ public class GraphActivity extends BaseActivity {
             public void onClick(View v) {
                 graphWrapper.reset();
 //                graphWrapper.board.clearGraph(true);
-                graphAlgorithm.graphSequence = null;
+                graphAlgorithm.reset();
 
                 // Removes the popUpWindows also
 //                graphTreePopUp.dismiss();
@@ -543,7 +543,7 @@ public class GraphActivity extends BaseActivity {
                 // Re-init's everything
                 initCanvasAndGraph();
 
-                graphAlgorithm.graphSequence = null;
+                graphAlgorithm.reset();
                 resetGraphSequence();
 
             }
@@ -563,7 +563,7 @@ public class GraphActivity extends BaseActivity {
                 // Clears everything
                 Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeDirected(directed);
-                graphAlgorithm.graphSequence = null;
+                graphAlgorithm.reset();
                 resetGraphSequence();
 
             }
@@ -583,7 +583,7 @@ public class GraphActivity extends BaseActivity {
                 // Clears everything
                 Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeWeighted(weighted);
-                graphAlgorithm.graphSequence = null;
+                graphAlgorithm.reset();
                 resetGraphSequence();
 
             }
@@ -922,7 +922,7 @@ public class GraphActivity extends BaseActivity {
     }
 
     private void taskStep(final int curSeqNo) {
-        if (graphAlgorithm != null) {
+        if (graphAlgorithm.graphSequence != null) {
             System.out.println("SEQ = "  + curSeqNo);
 
             runOnUiThread(new Runnable() {
@@ -1202,108 +1202,111 @@ public class GraphActivity extends BaseActivity {
         boolean error = false;
         String response = "";
 
-        try {
-            for (String line : ss) {
-                String[] chars = line.split("\\s+");
+        System.out.println(ss.length);
+        if(customGraphString.length() == 0){
+            error = true;
+            response = "Input is Empty";
+        }
+        else {
+            try {
+                for (String line : ss) {
+                    String[] chars = line.split("\\s+");
 
-                switch (chars[0]) {
-                    case "D":
-                        if (!gotDirection) {
-                            directed = chars[1].equals("1");
-                            gotDirection = true;
-                        }
-                        else{
-                            error = true;
-                            response = "Multiple times \"direction\" variable provided";
-                        }
-                        break;
-                    case "W": {
-                        if (!gotWeight) {
-                            weighted = chars[1].equals("1");
-                            gotWeight = true;
-                        }
-                        else {
-                            error = true;
-                            response = "Multiple times \"weight\" variable provided";
-                        }
-                        break;
-                    }
-                    case "VC": {
-                        // USELESS, vertexCount is taken in the end using "vertices.size()"
-                        if (!gotVertexCount) {
-                            noOfVertices = Integer.parseInt(chars[1]);
-                            gotVertexCount = true;
-                        }
-                        else {
-                            error = true;
-                            response = "Multiple times \"vertex count\" variable provided";
-                        }
-                        break;
-                    }
-                    case "VA": {
-                        int data = Integer.parseInt(chars[1]);
-                        int row = Integer.parseInt(chars[2]);
-                        int col = Integer.parseInt(chars[3]);
-
-                        if(row < 0)
-                            row = -1;
-                        if(col < 0)
-                            col = -1;
-
-                        if(data < 0 || data > 999){
-                            error = true;
-                            response = "Node Value should be [0, 999]";
+                    switch (chars[0].toUpperCase()) {
+                        case "D":
+                            if (!gotDirection) {
+                                directed = chars[1].equals("1");
+                                gotDirection = true;
+                            } else {
+                                error = true;
+                                response = "Multiple times \"direction\" variable provided";
+                            }
+                            break;
+                        case "W": {
+                            if (!gotWeight) {
+                                weighted = chars[1].equals("1");
+                                gotWeight = true;
+                            } else {
+                                error = true;
+                                response = "Multiple times \"weight\" variable provided";
+                            }
                             break;
                         }
-
-                        Vertex vertex = new Vertex(data, row, col);
-
-                        if(!vertices.contains(vertex)){
-                            vertices.add(vertex);
+                        case "VC": {
+                            // USELESS, vertexCount is taken in the end using "vertices.size()"
+                            if (!gotVertexCount) {
+                                noOfVertices = Integer.parseInt(chars[1]);
+                                gotVertexCount = true;
+                            } else {
+                                error = true;
+                                response = "Multiple times \"vertex count\" variable provided";
+                            }
+                            break;
                         }
-                        else{
-                            int index = vertices.indexOf(vertex);
-                            vertices.get(index).row = row;
-                            vertices.get(index).col = col;
-                        }
-                        break;
-                    }
-                    case "V": {
-                        for (int c = 1; c < chars.length; c++) {
-                            int data = Integer.parseInt(chars[c]);
+                        case "VA": {
+                            int data = Integer.parseInt(chars[1]);
+                            int row = Integer.parseInt(chars[2]);
+                            int col = Integer.parseInt(chars[3]);
 
-                            if(data < 0 || data > 999){
+                            if (row < 0)
+                                row = -1;
+                            if (col < 0)
+                                col = -1;
+
+                            if (data < 0 || data > 999) {
                                 error = true;
                                 response = "Node Value should be [0, 999]";
                                 break;
                             }
 
-                            Vertex vertex = new Vertex(data, -1, -1);
-                            if(!vertices.contains(vertex)){
-                                vertices.add(vertex);
-                            }
-                        }
-                        break;
-                    }
-                    case "E": {
-                        int src = Integer.parseInt(chars[1]);
-                        int des = Integer.parseInt(chars[2]);
-                        int weight = weighted ? Integer.parseInt(chars[3]) : 1;
+                            Vertex vertex = new Vertex(data, row, col);
 
-                        edges.add(new Edge(src, des, weight, directed));
-                        break;
+                            if (!vertices.contains(vertex)) {
+                                vertices.add(vertex);
+                            } else {
+                                int index = vertices.indexOf(vertex);
+                                vertices.get(index).row = row;
+                                vertices.get(index).col = col;
+                            }
+                            break;
+                        }
+                        case "V": {
+                            for (int c = 1; c < chars.length; c++) {
+                                int data = Integer.parseInt(chars[c]);
+
+                                if (data < 0 || data > 999) {
+                                    error = true;
+                                    response = "Node Value should be [0, 999]";
+                                    break;
+                                }
+
+                                Vertex vertex = new Vertex(data, -1, -1);
+                                if (!vertices.contains(vertex)) {
+                                    vertices.add(vertex);
+                                }
+                            }
+                            break;
+                        }
+                        case "E": {
+                            int src = Integer.parseInt(chars[1]);
+                            int des = Integer.parseInt(chars[2]);
+                            int weight = weighted ? Integer.parseInt(chars[3]) : 1;
+
+                            edges.add(new Edge(src, des, weight, directed));
+                            break;
+                        }
+                        default:
+                            error = true;
+                            response = "Bad Input";
+                            break;
                     }
-                    default:
-                        error = true;
-                        response = "Bad Input";
-                        break;
                 }
             }
-        }
-        catch (Exception e){
-            System.out.println("Exception while parsing graph data");
-            error = true;
-            response = "Bad Input, Exception while parsing graph data";
+            catch (Exception e) {
+                System.out.println("Exception while parsing graph data");
+                error = true;
+                response = "Bad Input, Exception while parsing graph data";
+            }
         }
 
         if(error){
@@ -1360,7 +1363,7 @@ public class GraphActivity extends BaseActivity {
                     rg_directed.check(R.id.rb_undirected);
                 }
 
-                graphAlgorithm.graphSequence = null;
+                graphAlgorithm.reset();
                 resetGraphSequence();
                 graphWrapper.changeDirectedWeighted(directed, weighted);
                 graphWrapper.customInput(vertices, edges);
@@ -1539,7 +1542,7 @@ public class GraphActivity extends BaseActivity {
     @Override
     protected void initViews() {
 
-        graphAlgorithm = null;
+        graphAlgorithm = GraphAlgorithm.getInstance();
 
         graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
         graphControls.updateDrawables();

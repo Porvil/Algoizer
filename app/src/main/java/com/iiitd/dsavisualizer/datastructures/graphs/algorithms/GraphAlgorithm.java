@@ -23,6 +23,12 @@ public class GraphAlgorithm {
         return graphAlgorithm;
     }
 
+    public void reset(){
+       this.graphAlgorithmType = NULL;
+       this.graphSequence = null;
+       this.graphTree = null;
+    }
+
     public static GraphAlgorithm getInstance(Graph graph, GraphAlgorithmType graphAlgorithmType, int vertexNumber){
         GraphAlgorithm graphAlgorithm = new GraphAlgorithm();
         graphAlgorithm.graphAlgorithmType = graphAlgorithmType;
