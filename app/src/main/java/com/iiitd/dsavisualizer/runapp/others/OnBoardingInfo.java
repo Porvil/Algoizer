@@ -5,13 +5,14 @@ import com.iiitd.dsavisualizer.R;
 public class OnBoardingInfo {
 
     public static final int[] sortingOnBoarding = {
-            R.drawable.sorting_left,
-            R.drawable.sorting_right
+            R.drawable.ob_sorting_left,
+            R.drawable.ob_sorting_right1
     };
 
     public static final int[] treeOnBoarding = {
-            R.drawable.ic_avl,
-
+            R.drawable.ob_tree_left,
+            R.drawable.ob_tree_right1,
+            R.drawable.ob_tree_right2
     };
 
     public static final int[] graphOnBoarding = {
