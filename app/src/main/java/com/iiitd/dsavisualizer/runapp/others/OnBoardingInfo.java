@@ -16,9 +16,7 @@ public class OnBoardingInfo {
     };
 
     public static final int[] graphOnBoarding = {
-            R.drawable.ic_avl,
-            R.drawable.ic_bst,
-            R.drawable.ic_graphs
+            R.drawable.ob_graph
     };
 
 }
