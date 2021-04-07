@@ -31,6 +31,9 @@ DSA Visualizer is an android application for learning and visualizing the data s
 
 ### Pre-Release:
 
+- v4.0 Test Release - 4\
+[v4.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v4.0-alpha/v4.0-alpha.apk)
+
 - v3.0 Test Release - 2\
 [v3.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v3.0-alpha/v3.0-alpha.apk)
 
@@ -45,7 +48,7 @@ DSA Visualizer is an android application for learning and visualizing the data s
 
 
 ### Usage:
-- Use menu control button to do operations on respective Data Structure/Algorithms
+- Use menu control and navigation menu buttons to do operations on respective Data Structure/Algorithms.
 
 ### Supported Android Versions:
 - Android 5.0 (API Level-21) and above.
