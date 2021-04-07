@@ -1,7 +1,12 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
@@ -56,6 +61,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setEnterTransition(new Slide());
+        getWindow().setExitTransition(new Fade());
         setContentView(R.layout.layout_base);
 
         context = this;
@@ -145,52 +152,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-//    public void showBackDialog(){
-//        View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
-//
-//        Button btn_cancel = view.findViewById(R.id.btn_cancel);
-//        Button btn_yes = view.findViewById(R.id.btn_yes);
-//
-//        final Dialog dialog = new Dialog(context);
-//        dialog.setContentView(view);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.show();
-//
-//        btn_cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                btn_menu.setEnabled(true);
-//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        btn_yes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//                finish();
-//            }
-//        });
-//
-//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//                System.out.println("Dismissed");
-//                btn_menu.setEnabled(true);
-//                btn_nav.setEnabled(true);
-//                btn_info.setEnabled(true);
-//                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//            }
-//        });
-//    }
-
-
     protected abstract void initPseudoCode();
     protected abstract void initViews();
     protected abstract void initNavigation();
     protected abstract void back();
     protected abstract void disableUI();
     protected abstract void enableUI();
+
+    public void startActivity(Activity start, Class<?> end){
+        Intent intent = new Intent(start, end);
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(start).toBundle();
+        start.finish();
+        start.startActivity(intent, bundle);
+    }
+
+    public void startActivity(Context start, Class<?> end){
+        startActivity((Activity) start, end);
+    }
 
 }

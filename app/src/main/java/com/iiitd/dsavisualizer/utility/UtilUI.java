@@ -1,10 +1,14 @@
 package com.iiitd.dsavisualizer.utility;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -348,5 +352,15 @@ public class UtilUI {
 
     public static String getInfinity(){
         return DecimalFormatSymbols.getInstance().getInfinity();
+    }
+
+    public static void startActivity(Activity start, Class<?> end){
+        Intent intent = new Intent(start, end);
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(start).toBundle();
+        start.startActivity(intent, bundle);
+    }
+
+    public static void startActivity(Context start, Class<?> end){
+        startActivity((Activity) start, end);
     }
 }

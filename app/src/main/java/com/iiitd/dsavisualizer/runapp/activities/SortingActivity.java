@@ -75,8 +75,9 @@ public class SortingActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         Class<?> aClass = Class.forName(activityItemData.activityClassName);
-                        startActivity(new Intent(context, aClass));
-                    } catch (ClassNotFoundException e) {
+                        UtilUI.startActivity(context, aClass);
+                    }
+                    catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }

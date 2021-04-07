@@ -1,8 +1,6 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +15,7 @@ import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
+import com.iiitd.dsavisualizer.utility.UtilUI;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -27,8 +26,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Fade());
-        getWindow().setExitTransition(new Slide());
+        getWindow().setEnterTransition(new Slide());
+        getWindow().setExitTransition(new Fade());
         setContentView(R.layout.activity_splash);
         context = this;
 
@@ -47,9 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(context, HomeActivity.class);
-                                    startActivity(intent,
-                                            ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
+                                    UtilUI.startActivity(context, HomeActivity.class);
                                     finish();
                                 }
                             }, AppSettings.SPLASH_TIME);

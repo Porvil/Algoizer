@@ -82,8 +82,9 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         Class<?> aClass = Class.forName(activityItemData.activityClassName);
-                        startActivity(new Intent(context, aClass));
-                    } catch (ClassNotFoundException e) {
+                        UtilUI.startActivity(context, aClass);
+                    }
+                    catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
@@ -94,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
         btn_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, AboutActivity.class));
+                UtilUI.startActivity(context, AboutActivity.class);
             }
         });
 
