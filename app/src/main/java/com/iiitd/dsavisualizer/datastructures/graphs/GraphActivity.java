@@ -1010,7 +1010,8 @@ public class GraphActivity extends BaseActivity {
 
                                 // Weights
                                 if(graphAnimationState.graphAnimationStateExtra != null){
-                                    if(graphAnimationState.graphAnimationStateExtra.map != null) {
+                                    if(graphAnimationState.graphAnimationStateExtra.map != null &&
+                                    graphAnimationState.graphAnimationStateExtra.map.size() > 0) {
                                         if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
                                             graphWrapper.board.setPaintHighlight();
                                             graphWrapper.board.drawVertexWeight(
