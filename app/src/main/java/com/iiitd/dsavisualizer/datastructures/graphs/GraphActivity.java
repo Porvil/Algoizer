@@ -211,14 +211,14 @@ public class GraphActivity extends BaseActivity {
         et_search = v_menu_right.findViewById(R.id.et_search);
         et_delete = v_menu_right.findViewById(R.id.et_delete);
 
-        final Snackbar make = Snackbar.make(v_main, "Graph Algorithms is in Development Stage, There may be some bugs", Snackbar.LENGTH_INDEFINITE);
-        make.setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                make.dismiss();
-            }
-        });
-        make.show();
+//        final Snackbar make = Snackbar.make(v_main, "Graph Algorithms is in Development Stage, There may be some bugs", Snackbar.LENGTH_INDEFINITE);
+//        make.setAction("Dismiss", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                make.dismiss();
+//            }
+//        });
+//        make.show();
 
         initOnBoarding();
         initViews();
@@ -955,8 +955,32 @@ public class GraphActivity extends BaseActivity {
                             graphTreeDSPopUp.show();
                         }
 
-                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
-                            graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.KRUSKALS){
+//                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
+//                            graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.KRUSKALS){
+
+                        // Edges
+                        for(Edge edge : graphAnimationState.edges){
+                            if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                graphWrapper.board.setPaintHighlight();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
+//                                graphWrapper.board.setPaintNormal();
+//                                Vertex vertex = entry.getValue().getVertex();
+//                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+//                                graphWrapper.board.setPaintNormal();
+//                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                graphWrapper.board.setPaintNormal();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+                            else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
+                                graphWrapper.board.setPaintDone();
+                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                            }
+//                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                        }
 
                             // Vertices
                             for(Map.Entry<Integer, Vertex> entry : graphAnimationState.verticesState.entrySet()){
@@ -969,6 +993,9 @@ public class GraphActivity extends BaseActivity {
 //                                graphWrapper.board.setPaintNormal();
 //                                Vertex vertex = entry.getValue().getVertex();
 //                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+                                    graphWrapper.board.setPaintNormal();
+                                    Vertex vertex = entry.getValue();
+                                    graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
                                 }
                                 else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NORMAL){
                                     graphWrapper.board.setPaintNormal();
@@ -980,41 +1007,56 @@ public class GraphActivity extends BaseActivity {
                                     Vertex vertex = entry.getValue();
                                     graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
                                 }
-                            }
 
-                            // Edges
-                            for(Edge edge : graphAnimationState.edges){
-                                if(edge.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
-                                    graphWrapper.board.setPaintHighlight();
-                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                                }
-                                else if(edge.graphAnimationStateType == GraphAnimationStateType.NONE){
+                                // Weights
+                                if(graphAnimationState.graphAnimationStateExtra != null){
+                                    if(graphAnimationState.graphAnimationStateExtra.map != null) {
+                                        if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
+                                            graphWrapper.board.setPaintHighlight();
+                                            graphWrapper.board.drawVertexWeight(
+                                                    entry.getKey(),
+                                                    graphAnimationState.graphAnimationStateExtra.map.get(entry.getKey()), true);
+                                        }
+                                        else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NONE){
 //                                graphWrapper.board.setPaintNormal();
-//                                Vertex vertex = entry.getValue().getVertex();
-//                                graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+//                                            graphWrapper.board.drawVertexWeight(
+//                                                    entry.getKey(),
+//                                                    graphAnimationState.graphAnimationStateExtra.map.get(entry.getKey()), true);
+                                            graphWrapper.board.setPaintNormal();
+                                            graphWrapper.board.drawVertexWeight(
+                                                    entry.getKey(),
+                                                    graphAnimationState.graphAnimationStateExtra.map.get(entry.getKey()), true);
+                                        }
+                                        else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.NORMAL){
+                                            graphWrapper.board.setPaintNormal();
+                                            graphWrapper.board.drawVertexWeight(
+                                                    entry.getKey(),
+                                                    graphAnimationState.graphAnimationStateExtra.map.get(entry.getKey()), true);
+                                        }
+                                        else if(entry.getValue().graphAnimationStateType == GraphAnimationStateType.DONE){
+                                            graphWrapper.board.setPaintDone();
+                                            graphWrapper.board.drawVertexWeight(
+                                                    entry.getKey(),
+                                                    graphAnimationState.graphAnimationStateExtra.map.get(entry.getKey()), true);
+                                        }
+                                    }
                                 }
-                                else if(edge.graphAnimationStateType == GraphAnimationStateType.NORMAL){
-                                    graphWrapper.board.setPaintNormal();
-                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                                }
-                                else if(edge.graphAnimationStateType == GraphAnimationStateType.DONE){
-                                    graphWrapper.board.setPaintDone();
-                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                                }
-//                            graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                            }
-                        }
-                        else{
-                            for(Vertex vertex : graphAnimationState.vertices){
-                            System.out.println("vertex data = " + vertex.data);
-                            System.out.println("vertex = " + vertex);
-                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+
                             }
 
-                            for(Edge edge : graphAnimationState.edges){
-                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
-                            }
-                        }
+
+//                        }
+//                        else{
+//                            for(Vertex vertex : graphAnimationState.vertices){
+//                            System.out.println("vertex data = " + vertex.data);
+//                            System.out.println("vertex = " + vertex);
+//                            graphWrapper.board.drawVertex(vertex.data, vertex.row, vertex.col,true);
+//                            }
+//
+//                            for(Edge edge : graphAnimationState.edges){
+//                                graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+//                            }
+//                        }
 
 
 //
@@ -1051,15 +1093,15 @@ public class GraphActivity extends BaseActivity {
 //                        }
 
 
-                        if(graphAnimationState.graphAnimationStateExtra != null){
-                            if(graphAnimationState.graphAnimationStateExtra.map != null){
-                                System.out.println(graphAnimationState.graphAnimationStateExtra.map);
-                                for (Map.Entry<Integer, Integer> entry : graphAnimationState.graphAnimationStateExtra.map.entrySet()) {
-                                    graphWrapper.board.drawVertexWeight(
-                                            entry.getKey(), entry.getValue(), true);
-                                }
-                            }
-                        }
+//                        if(graphAnimationState.graphAnimationStateExtra != null){
+//                            if(graphAnimationState.graphAnimationStateExtra.map != null){
+//                                System.out.println(graphAnimationState.graphAnimationStateExtra.map);
+//                                for (Map.Entry<Integer, Integer> entry : graphAnimationState.graphAnimationStateExtra.map.entrySet()) {
+//                                    graphWrapper.board.drawVertexWeight(
+//                                            entry.getKey(), entry.getValue(), true);
+//                                }
+//                            }
+//                        }
 
                         graphWrapper.board.refresh(true);
 

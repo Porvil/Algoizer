@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+import java.util.Objects;
+
 public class Edge {
 
     public int src;
@@ -13,7 +15,7 @@ public class Edge {
         this.src = src;
         this.des = des;
         this.weight = 1;
-        graphAnimationStateType = GraphAnimationStateType.NONE;
+        this.graphAnimationStateType = GraphAnimationStateType.NONE;
     }
 
     public Edge(int src, int des, int weight, boolean isFirstEdge) {
@@ -21,7 +23,15 @@ public class Edge {
         this.des = des;
         this.weight = weight;
         this.isFirstEdge = isFirstEdge;
-        graphAnimationStateType = GraphAnimationStateType.NONE;
+        this.graphAnimationStateType = GraphAnimationStateType.NONE;
+    }
+
+    public Edge(Edge edge,GraphAnimationStateType graphAnimationStateType) {
+        this.src = edge.src;
+        this.des = edge.des;
+        this.weight = edge.weight;
+        this.isFirstEdge = edge.isFirstEdge;
+        this.graphAnimationStateType = graphAnimationStateType;
     }
 
     @Override
@@ -54,6 +64,26 @@ public class Edge {
 
     public void setGAST(GraphAnimationStateType graphAnimationStateType){
         this.graphAnimationStateType = graphAnimationStateType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Edge edge = (Edge) o;
+
+        return src == edge.src &&
+                des == edge.des &&
+                weight == edge.weight &&
+                isFirstEdge == edge.isFirstEdge;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(src, des, weight, isFirstEdge);
     }
 
 }

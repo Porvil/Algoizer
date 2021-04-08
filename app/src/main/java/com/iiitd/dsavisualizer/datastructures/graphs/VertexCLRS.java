@@ -8,6 +8,7 @@ public class VertexCLRS {
     public int data;
     public int row;
     public int col;
+    public GraphAnimationStateType graphAnimationStateType;
 
     // Vertex CLRS Variables
     public GraphAlgorithmType graphAlgorithmType;      // graphAlgorithmType, used in toString()
@@ -100,6 +101,7 @@ public class VertexCLRS {
         this.data = vertex.data;
         this.row = vertex.row;
         this.col = vertex.col;
+        this.graphAlgorithmType = GraphAlgorithmType.NULL;
     }
 
     // toString based on type of GraphAlgorithm is used
@@ -162,6 +164,26 @@ public class VertexCLRS {
     @Override
     public int hashCode() {
         return Objects.hash(data);
+    }
+
+    public void setToNone(){
+        this.graphAnimationStateType = GraphAnimationStateType.NONE;
+    }
+
+    public void setToNormal(){
+        this.graphAnimationStateType = GraphAnimationStateType.NORMAL;
+    }
+
+    public void setToHighlight(){
+        this.graphAnimationStateType = GraphAnimationStateType.HIGHLIGHT;
+    }
+
+    public void setToDone(){
+        this.graphAnimationStateType = GraphAnimationStateType.DONE;
+    }
+
+    public void setGAST(GraphAnimationStateType graphAnimationStateType){
+        this.graphAnimationStateType = graphAnimationStateType;
     }
 
 }

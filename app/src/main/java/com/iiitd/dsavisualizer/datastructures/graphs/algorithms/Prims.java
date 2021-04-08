@@ -7,7 +7,6 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.*;
 
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
@@ -23,12 +22,15 @@ public class Prims {
     GraphSequence graphSequence;
     HashMap<Integer, VertexCLRS> map;
     HashMap<Integer, Vertex> verticesState;
+    ArrayList<Edge> edges;
     String infinity = UtilUI.getInfinity();
     
     public Prims(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.PRIMS);
         this.verticesState = new HashMap<>();
+        this.map = new HashMap<>();
+        this.edges = new ArrayList<>();
     }
 
     public GraphSequence run() {
@@ -38,181 +40,134 @@ public class Prims {
         if (size < 1)
             return graphSequence;
 
-        this.map = new HashMap<>();
-        int count = graph.noOfVertices;
-
-        ArrayList<Vertex> vertices = new ArrayList<>();
-        ArrayList<Edge> edges = new ArrayList<>();
-
-//
-//        for(Edge edge : graph.getAllEdges()) {
-//            edges.add(edge);
-//        }
-
+        // Add all vertices
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dijkstraVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
             verticesState.put(entry.getKey(), new Vertex(entry.getValue(), NONE));
         }
 
+        // Add all edges
+        for(Edge edge : graph.getAllEdges()) {
+            edges.add(new Edge(edge, NONE));
+        }
+
+        // Start Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("prim()")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
+
         // Fixing a Source Vertex
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             map.get(entry.getKey()).dijkstraDist = 0;
             source = entry.getKey();
-            Vertex vertex = verticesState.get(entry.getKey());
-            vertex.setToDone();
             break;
         }
 
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("prims(source = " + source +")")
-                            .addVertices(vertices)
-                            .addEdges(edges)
-                            .setVerticesState(verticesState);
+        // Picking a start Vertex from Graph
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("Source vertex <- " + source + " selected.")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
 
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
+        // Setting initial distances
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("All vertices distance <- "+ infinity + "\n" + "Source vertex (" + source + ") distance <- 0")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                .addMapDijkstra(map)));
 
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("set " + infinity + " to all vertices, and 0 to source vertex")
-                            .addVertices(vertices)
-                            .addEdges(edges)
-                            .setVerticesState(verticesState)
-                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                            .addMapDijkstra(map));
+        // Prim's Algorithm
+        for (int i = 0; i < size; i++) {
+            // Heap Like Operations Simulated
+            int vertexNo = findMinDistanceIndex();
 
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
+            // Vertex Added to MST
+            Vertex srcVertex = verticesState.get(vertexNo);
+            srcVertex.setToDone();
+            VertexCLRS startVertexCLRS = map.get(vertexNo);
 
-
-        for(Edge edge : graph.getAllEdges()) {
-            edges.add(edge);
-        }
-
-
-        for (int i = 0; i < count; i++) {
-            // Update the distance between neighbouring vertex and source vertex
-            int cur = findMinDistanceIndex();
-            if (cur >= 0) {
-                Vertex vertex = graph.vertexMap.get(cur);
-                vertices.add(vertex);
-                VertexCLRS vertexCLRS = map.get(cur);
-                System.out.println(vertexCLRS);
-                int self = map.get(cur).data;
-                int parent = map.get(cur).parent;
-                if(parent >= 0 ) {
-                    System.out.println(parent  + "->" + self);
-                    Edge edge = graph.getEdge(parent, self);
-                    edges.add(edge);
-                    System.out.println("cur Edge = " + edge);
-                }
-
-                Vertex visitVertex = verticesState.get(cur);
-                visitVertex.setToHighlight();
-
-                GraphAnimationState graphAnimationState =
-                        GraphAnimationState.create()
-                                .setState("Visit = " + cur)
-                                .setInfo("Visit = " + cur)
-                                .addVertices(vertices)
-                                .addEdges(edges)
-                                .setVerticesState(verticesState)
-                                .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                        .addMapDijkstra(map));
-
-                graphSequence.addGraphAnimationState(graphAnimationState);
-
-                visitVertex.setToDone();
-
-                map.get(cur).visited = true;
-                for (Edge edge : graph.edgeListMap.get(cur)) {
-                    Vertex srcVertex = verticesState.get(cur);
-                    Vertex desVertex = verticesState.get(edge.des);
-                    GraphAnimationStateType srcGAST = srcVertex.graphAnimationStateType;
-                    GraphAnimationStateType desGAST = desVertex.graphAnimationStateType;
-                    GraphAnimationStateType edgeGAST = edge.graphAnimationStateType;
-
-                    if (!map.get(edge.des).visited) {
-                        int tempDistance = edge.weight;
-                        int otherDistance = map.get(edge.des).dijkstraDist;
-                        String otherDist = String.valueOf(otherDistance);
-                        if(otherDistance == Integer.MAX_VALUE){
-                            otherDist = DecimalFormatSymbols.getInstance().getInfinity();
-                        }
-
-                        edges.add(edge);
-
-                        srcVertex.setToHighlight();
-                        desVertex.setToHighlight();
-                        edge.setToHighlight();
-
-                        System.out.println("!!!!!!!!!!!!!!" + map);
-                        if (tempDistance < otherDistance) {
-
-                            GraphAnimationState graphAnimationState1 =
-                                    GraphAnimationState.create()
-                                            .setState("Visit = " + cur)
-                                            .setInfo("Vertex = " + cur + ", Edge " + cur + " --- " + edge.des + "\n"
-                                                + map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-                                            )
-                                            .addVertices(vertices)
-                                            .addEdges(edges)
-                                            .setVerticesState(verticesState)
-                                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                                    .addMapDijkstra(map));
-
-                            graphSequence.addGraphAnimationState(graphAnimationState1);
-
-                            map.get(edge.des).dijkstraDist = tempDistance;
-                            map.get(edge.des).parent = map.get(cur).data;
-
-                            srcVertex.setToDone();
-                            desVertex.setToDone();
-                            edge.setToDone();
-                        }
-                        else{
-                            GraphAnimationState graphAnimationState1 =
-                                    GraphAnimationState.create()
-                                            .setState("Visit = " + cur)
-                                            .setInfo("Vertex = " + cur + ", Edge " + cur + " --- " + edge.des + "\n"
-                                                    + map.get(cur).dijkstraDist + " + " + edge.weight + " >= " + otherDist
-                                            )
-                                            .addVertices(vertices)
-                                            .addEdges(edges)
-                                            .setVerticesState(verticesState)
-                                            .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                                    .addMapDijkstra(map));
-
-                            graphSequence.addGraphAnimationState(graphAnimationState1);
-
-                            srcVertex.setGAST(srcGAST);
-                            desVertex.setGAST(desGAST);
-                            edge.setGAST(edgeGAST);
-                        }
-                    }
-                }
+            int self = map.get(vertexNo).data;
+            int parent = map.get(vertexNo).parent;
+            // Parent Edge fixed for MST
+            if (parent >= 0 ) {
+                Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
+                edges.add(parentEdge);
+                parentEdge.setToDone();
             }
 
+            // Selecting Min. Value vertex not in MST
+            graphSequence.addGraphAnimationState(
+                    GraphAnimationState.create()
+                            .setInfo("Remove min-key vertex from priority queue" + "\n"
+                                    + "Vertex (" + vertexNo + ") selected to MST.")
+                            .setVerticesState(verticesState)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addMapDijkstra(map)));
+
+            startVertexCLRS.visited = true;
+            for (Edge curEdge : graph.edgeListMap.get(vertexNo)) {
+                Vertex desVertex = verticesState.get(curEdge.des);
+                VertexCLRS endVertexCLRS = map.get(curEdge.des);
+
+                if (!endVertexCLRS.visited) {
+                    int tempDistance = curEdge.weight;
+                    int otherDistance = endVertexCLRS.dijkstraDist;
+                    String otherDist = String.valueOf(otherDistance);
+                    if(otherDistance == Integer.MAX_VALUE){
+                        otherDist = DecimalFormatSymbols.getInstance().getInfinity();
+                    }
+
+                    Edge edge = edges.get(edges.indexOf(curEdge));
+                    edge.setToHighlight();
+                    desVertex.setToHighlight();
+
+                    String updated = "";
+                    if (tempDistance < otherDistance) {
+                        updated = curEdge.weight + " < " + otherDist + ", vertex(" + desVertex.data  + ") distance updated";
+                    }
+                    else {
+                        updated = curEdge.weight + " >= " + otherDist + ", continue";
+                    }
+
+                    // Updating Distance of Edge's des. Vertex
+                    graphSequence.addGraphAnimationState(
+                            GraphAnimationState.create()
+                                    .setInfo("Vertex (" + vertexNo + "), Edge (" + vertexNo + " ── " + curEdge.des + ")"
+                                            + "\n" + updated)
+                                    .setVerticesState(verticesState)
+                                    .addEdges(edges)
+                                    .addGraphAnimationStateExtra(
+                                            GraphAnimationStateExtra.create()
+                                                    .addMapDijkstra(map)));
+
+                    if (tempDistance < otherDistance) {
+                        endVertexCLRS.dijkstraDist = tempDistance;
+                        endVertexCLRS.parent = map.get(vertexNo).data;
+                    }
+
+                    edge.setToNormal();
+                    desVertex.setToNormal();
+                }
+            }
         }
 
-
-        GraphAnimationState graphAnimationState1 =
+        // End Animation
+        graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setState("Done")
-                        .setInfo("Done")
-                        .addVertices(vertices)
-                        .addEdges(edges)
+                        .setInfo("prim() completed")
                         .setVerticesState(verticesState)
+                        .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                .addMapDijkstra(map));
-
-        graphSequence.addGraphAnimationState(graphAnimationState1);
+                                .addMapDijkstra(map)));
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
