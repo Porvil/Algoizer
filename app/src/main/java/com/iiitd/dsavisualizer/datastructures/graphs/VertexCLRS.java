@@ -73,7 +73,7 @@ public class VertexCLRS {
         return vertexCLRS;
     }
 
-    // Used by Dijkstra
+    // Used by Dijkstra, Prims
     public static VertexCLRS dijkstraVertexCLRS(Vertex vertex) {
         VertexCLRS vertexCLRS = new VertexCLRS(vertex);
 

@@ -9,18 +9,26 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.NONE;
 
 public class BellmanFord {
     Graph graph;
     GraphSequence graphSequence;
     HashMap<Integer, VertexCLRS> map;
+    HashMap<Integer, Vertex> verticesState;
+    ArrayList<Edge> edges;
 
     public BellmanFord(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.BELLMAN_FORD);
+        this.map = new HashMap<>();
+        this.verticesState = new HashMap<>();
+        this.edges = new ArrayList<>();
     }
 
     public GraphSequence run() {
@@ -30,26 +38,29 @@ public class BellmanFord {
         if (size < 1)
             return graphSequence;
 
-        this.map = new HashMap<>();
+        ArrayList<Edge> allEdges = graph.getAllEdges();
 
-        ArrayList<Vertex> vertices = new ArrayList<>();
-        ArrayList<Edge> edges = new ArrayList<>();
-
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("start")
-                            .addVertices(vertices)
-                            .addEdges(edges);
-
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
-
+        // Add all vertices
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.bellmanfordVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
+            verticesState.put(entry.getKey(), new Vertex(entry.getValue(), NONE));
         }
+
+        // Add all edges
+        for(Edge edge : graph.getAllEdges()) {
+            // Add all edges in case of directed, add only firstedge in case of undirected graph
+            if(graph.directed || edge.isFirstEdge){
+                edges.add(new Edge(edge, NONE));
+            }
+        }
+
+        // Start Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("bellman ford()")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
 
         // Fixing a Source Vertex
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
@@ -57,91 +68,150 @@ public class BellmanFord {
             source = entry.getKey();
             break;
         }
-//        map.get(source).bellmanFordDist = 0;
 
-        ArrayList<Edge> allEdges = graph.getAllEdges();
+        boolean checkNegativeLoop = true;
 
+        // Bellman Ford Algorithm
         for (int i=0;i<size-1;i++) {
-            for(Edge edge:allEdges){
-                VertexCLRS vertexCLRS = map.get(edge.src);
-                VertexCLRS vertexCLRS1 = map.get(edge.des);
-//                int tempDist = vertexCLRS.bellmanFordDist + edge.weight;
-                int tempDistance = vertexCLRS.bellmanFordDist + edge.weight;
-                int otherDistance = vertexCLRS1.bellmanFordDist;
+            boolean isRelaxed = false;
+            for(Edge curEdge : allEdges) {
+                if (graph.directed || curEdge.isFirstEdge) {
+                    VertexCLRS srcVertexCLRS = map.get(curEdge.src);
+                    VertexCLRS desVertexCLRS = map.get(curEdge.des);
+                    Vertex srcVertex = verticesState.get(curEdge.src);
+                    Vertex desVertex = verticesState.get(curEdge.des);
+                    Edge edge = edges.get(edges.indexOf(curEdge));
 
-                vertices.clear();
-                vertices.add(graph.vertexMap.get(vertexCLRS.data));
-                vertices.add(graph.vertexMap.get(vertexCLRS1.data));
-                edges.clear();
-                edges.add(edge);
+                    int tempDistance = srcVertexCLRS.bellmanFordDist + curEdge.weight;
+                    int otherDistance = desVertexCLRS.bellmanFordDist;
+                    String otherDist = String.valueOf(otherDistance);
+                    if (otherDistance == Integer.MAX_VALUE) {
+                        otherDist = DecimalFormatSymbols.getInstance().getInfinity();
+                    }
 
-                if(tempDistance < otherDistance){
+                    srcVertex.setToHighlight();
+                    desVertex.setToDone();
+                    edge.setToHighlight();
 
-                    GraphAnimationState graphAnimationState1 =
+                    String updated = "";
+                    if (tempDistance < otherDistance) {
+                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " < " + otherDist + ", vertex(" + desVertex.data + ") distance updated";
+                    }
+                    else {
+                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " >= " + otherDist + ", continue";
+                    }
+
+                    // Updating Distance of Edge's des. Vertex
+                    graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-//                                    .setState("Visit = " + cur)
-//                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-//                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
-                                    .addVertices(vertices)
+                                    .setInfo("Vertex (" + curEdge.src + "), Edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                            + "\n" + updated)
+                                    .setVerticesState(verticesState)
                                     .addEdges(edges)
-                                    .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                            .addMapBellmanford(map));
+                                    .addGraphAnimationStateExtra(
+                                            GraphAnimationStateExtra.create()
+                                                    .addMapBellmanford(map)));
 
-                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                    if (tempDistance < otherDistance) {
+                        desVertexCLRS.bellmanFordDist = tempDistance;
+                        desVertexCLRS.parent = srcVertexCLRS.data;
+                        isRelaxed = true;
+                    }
 
-                    vertexCLRS1.bellmanFordDist = tempDistance;
-                    vertexCLRS1.parent = vertexCLRS.data;
+                    edge.setToNormal();
+                    srcVertex.setToNormal();
+                    desVertex.setToNormal();
                 }
-                else{
-                    GraphAnimationState graphAnimationState1 =
+            }
+
+            if(!isRelaxed){
+                // Updating Distance of Edge's des. Vertex
+                graphSequence.addGraphAnimationState(
+                        GraphAnimationState.create()
+                                .setInfo("No Edge Relaxed in this iteration" + "\n" + "Break loop")
+                                .setVerticesState(verticesState)
+                                .addEdges(edges)
+                                .addGraphAnimationStateExtra(
+                                        GraphAnimationStateExtra.create()
+                                                .addMapBellmanford(map)));
+
+                System.out.println("nothing relaxed");
+                checkNegativeLoop = false;
+                break;
+            }
+        }
+
+        if(checkNegativeLoop){
+            for(Edge curEdge : allEdges) {
+                if (graph.directed || curEdge.isFirstEdge) {
+                    VertexCLRS srcVertexCLRS = map.get(curEdge.src);
+                    VertexCLRS desVertexCLRS = map.get(curEdge.des);
+                    Vertex srcVertex = verticesState.get(curEdge.src);
+                    Vertex desVertex = verticesState.get(curEdge.des);
+                    Edge edge = edges.get(edges.indexOf(curEdge));
+
+                    int tempDistance = srcVertexCLRS.bellmanFordDist + curEdge.weight;
+                    int otherDistance = desVertexCLRS.bellmanFordDist;
+                    String otherDist = String.valueOf(otherDistance);
+                    if (otherDistance == Integer.MAX_VALUE) {
+                        otherDist = DecimalFormatSymbols.getInstance().getInfinity();
+                    }
+
+                    srcVertex.setToHighlight();
+                    desVertex.setToDone();
+                    edge.setToHighlight();
+
+                    String updated = "";
+                    if (tempDistance < otherDistance) {
+                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " < " + otherDist + ", vertex(" + desVertex.data + ") distance updated";
+                    }
+                    else {
+                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " >= " + otherDist + ", continue";
+                    }
+
+                    // Updating Distance of Edge's des. Vertex
+                    graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-//                                    .setState("Visit = " + cur)
-//                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-//                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
-                                    .addVertices(vertices)
+                                    .setInfo("Vertex (" + curEdge.src + "), Edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                            + "\n" + updated)
+                                    .setVerticesState(verticesState)
                                     .addEdges(edges)
-                                    .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                            .addMapBellmanford(map));
+                                    .addGraphAnimationStateExtra(
+                                            GraphAnimationStateExtra.create()
+                                                    .addMapBellmanford(map)));
 
-                    graphSequence.addGraphAnimationState(graphAnimationState1);
+                    if (tempDistance < otherDistance) {
+                        // Updating Distance of Edge's des. Vertex
+                        graphSequence.addGraphAnimationState(
+                                GraphAnimationState.create()
+                                        .setInfo("Edge Relaxed in " + size + "th iteration(last)." + "\n" + "Negative Loop in graph!!!")
+                                        .setVerticesState(verticesState)
+                                        .addEdges(edges)
+                                        .addGraphAnimationStateExtra(
+                                                GraphAnimationStateExtra.create()
+                                                        .addMapBellmanford(map)));
+
+                        System.out.println("NEGATIVE LOOP");
+                        break;
+                    }
+
+                    edge.setToNormal();
+                    srcVertex.setToNormal();
+                    desVertex.setToNormal();
                 }
             }
         }
 
-
-        for(Edge edge:allEdges){
-            VertexCLRS vertexCLRS = map.get(edge.src);
-            VertexCLRS vertexCLRS1 = map.get(edge.des);
-            int tempDist = vertexCLRS.bellmanFordDist + edge.weight;
-            if(tempDist < vertexCLRS1.bellmanFordDist){
-                System.out.println("NEGATIVE EDGE CYCLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            }
-        }
-
-        vertices.clear();
-        edges.clear();
-
-        for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
-            System.out.println(entry.getValue());
-            vertices.add(entry.getValue().getVertex());
-            if(entry.getValue().parent != -1){
-                Edge edge = graph.getEdge(entry.getValue().parent, entry.getValue().data);
-                edges.add(edge);
-            }
-        }
-
-
-        GraphAnimationState graphAnimationState1 =
+        // End Animation
+        graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                                    .setState("Done")
-//                                    .setInfo(map.get(cur).dijkstraDist + " + " + edge.weight + " < " + otherDist
-//                                            + "\n" + "Vertex(" + edge.des +").distance = " + tempDistance)
-                        .addVertices(vertices)
+                        .setInfo("bellman ford() completed")
+                        .setVerticesState(verticesState)
                         .addEdges(edges)
-                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                .addMapBellmanford(map));
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                    .addMapBellmanford(map)));
 
-        graphSequence.addGraphAnimationState(graphAnimationState1);
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
