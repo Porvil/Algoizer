@@ -95,10 +95,10 @@ public class BellmanFord {
 
                     String updated = "";
                     if (tempDistance < otherDistance) {
-                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " < " + otherDist + ", vertex(" + desVertex.data + ") distance updated";
+                        updated = srcVertexCLRS.bellmanFordDist + " + " + curEdge.weight + " < " + otherDist + ", vertex(" + desVertex.data + ") distance updated";
                     }
                     else {
-                        updated = map.get(curEdge.src).bellmanFordDist + " + " + curEdge.weight + " >= " + otherDist + ", continue";
+                        updated = srcVertexCLRS.bellmanFordDist + " + " + curEdge.weight + " >= " + otherDist + ", continue";
                     }
 
                     // Updating Distance of Edge's des. Vertex

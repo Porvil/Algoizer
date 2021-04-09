@@ -151,7 +151,7 @@ public class Prims {
 
                     if (tempDistance < otherDistance) {
                         endVertexCLRS.dijkstraDist = tempDistance;
-                        endVertexCLRS.parent = map.get(vertexNo).data;
+                        endVertexCLRS.parent = startVertexCLRS.data;
                     }
 
                     edge.setToNormal();
