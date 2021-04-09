@@ -178,6 +178,36 @@ public class Graph {
         return null;
     }
 
+    public Edge getEdgeFirstEdge(int src, int des){
+        if(!checkContainsVertices(src, des)){
+            return null;
+        }
+
+        // Undirected
+        if(!directed){
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des && edge.isFirstEdge){
+                    return edge;
+                }
+            }
+
+            for(Edge edge : edgeListMap.get(des)){
+                if(edge.des == src && edge.isFirstEdge){
+                    return edge;
+                }
+            }
+        }
+        else{
+            for(Edge edge : edgeListMap.get(src)){
+                if(edge.des == des && edge.isFirstEdge){
+                    return edge;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public boolean hasNegativeEdges(){
         for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
             for(Edge i : entry.getValue()){

@@ -837,6 +837,10 @@ public class GraphActivity extends BaseActivity {
                         error = 1;
                         errorMessage = "Bellman Ford needs weighted graph";
                     }
+                    else if(!graphWrapper.directed && graphWrapper.graph.hasNegativeEdges()){
+                        error = 1;
+                        errorMessage = "Bellman Ford doesnt work for undirected and negative edges[negative edge loops]";
+                    }
                     else if (graphWrapper.getNoOfNodes() <= 0) {
                         error = 1;
                         errorMessage = "Empty Graph";

@@ -128,7 +128,7 @@ public class BellmanFord {
                 // Updating Distance of Edge's des. Vertex
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("No Edge Relaxed in this iteration" + "\n" + "Break loop")
+                                .setInfo("No Edges Relaxed in this iteration" + "\n" + "Break loop")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
@@ -141,6 +141,7 @@ public class BellmanFord {
             }
         }
 
+        boolean hasNegativeEdgeLoop = false;
         if(checkNegativeLoop){
             for(Edge curEdge : allEdges) {
                 if (graph.directed || curEdge.isFirstEdge) {
@@ -192,6 +193,12 @@ public class BellmanFord {
                                                         .addMapBellmanford(map)));
 
                         System.out.println("NEGATIVE LOOP");
+
+                        hasNegativeEdgeLoop = true;
+                        edge.setToNormal();
+                        srcVertex.setToNormal();
+                        desVertex.setToNormal();
+
                         break;
                     }
 
@@ -202,10 +209,39 @@ public class BellmanFord {
             }
         }
 
+        String finalResult = "";
+        if(hasNegativeEdgeLoop){
+            finalResult = "\nGraph contains negative edge cycles";
+        }
+
+        // Set Final Edges
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("Iterating over all vertices and" + "\n"
+                                + "selecting their parent's to select final edges")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addMapBellmanford(map)));
+
+        for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
+            if(entry.getValue().parent >= 0){
+                int src = entry.getValue().parent;
+                int des = entry.getValue().data;
+                Edge edge = edges.get(edges.indexOf(graph.getEdge(src, des)));
+                Vertex srcVertex = verticesState.get(src);
+                Vertex desVertex = verticesState.get(des);
+                srcVertex.setToDone();
+                desVertex.setToDone();
+                edge.setToDone();
+            }
+        }
+
         // End Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("bellman ford() completed")
+                        .setInfo("bellman ford() completed" + finalResult)
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
