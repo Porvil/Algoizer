@@ -519,6 +519,14 @@ public class BubbleSortActivity extends BaseActivity {
             }
         });
 
+        // Initialize with a Randomized Example
+        ll_anim.post(new Runnable() {
+            @Override
+            public void run() {
+                btn_generate.performClick();
+            }
+        });
+
     }
 
     private void onForwardClick(){
