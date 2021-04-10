@@ -28,12 +28,12 @@ public class Prims {
     public Prims(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.PRIMS);
-        this.verticesState = new HashMap<>();
         this.map = new HashMap<>();
+        this.verticesState = new HashMap<>();
         this.edges = new ArrayList<>();
     }
 
-    public GraphSequence run() {
+    public GraphSequence prims() {
         int size = graph.noOfVertices;
         int source = 0;
 
@@ -98,7 +98,6 @@ public class Prims {
             // Parent Edge fixed for MST
             if (parent >= 0 ) {
                 Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
-                edges.add(parentEdge);
                 parentEdge.setToDone();
             }
 

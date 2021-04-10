@@ -49,33 +49,33 @@ public class GraphAlgorithm {
                 break;
             case DFS: {
                 DFS dfs = new DFS(graph, DFS);
-                graphAlgorithm.graphSequence = dfs.run(vertexNumber);
+                graphAlgorithm.graphSequence = dfs.dfs(vertexNumber);
                 graphAlgorithm.graphTree = dfs.graphTree;
             }
                 break;
             case DFS_CC: {
                 DFS dfs = new DFS(graph, DFS_CC);
-                graphAlgorithm.graphSequence = dfs.connectedComponents();
+                graphAlgorithm.graphSequence = dfs.dfsCC();
             }
                 break;
             case DIJKSTRA:{
                 Dijkstra dijkstra = new Dijkstra(graph);
-                graphAlgorithm.graphSequence = dijkstra.run(vertexNumber);
+                graphAlgorithm.graphSequence = dijkstra.dijkstra(vertexNumber);
             }
                 break;
             case BELLMAN_FORD:{
                 BellmanFord bellmanFord = new BellmanFord(graph);
-                graphAlgorithm.graphSequence = bellmanFord.run();
+                graphAlgorithm.graphSequence = bellmanFord.bellmanford();
             }
                 break;
             case KRUSKALS: {
                 Kruskals kruskals = new Kruskals(graph);
-                graphAlgorithm.graphSequence = kruskals.run();
+                graphAlgorithm.graphSequence = kruskals.kruskals();
             }
                 break;
             case PRIMS:{
                 Prims prims = new Prims(graph);
-                graphAlgorithm.graphSequence = prims.run();
+                graphAlgorithm.graphSequence = prims.prims();
             }
                 break;
         }

@@ -33,7 +33,7 @@ public class Dijkstra {
         this.edges = new ArrayList<>();
     }
 
-    public GraphSequence run(int source) {
+    public GraphSequence dijkstra(int source) {
         int size = graph.noOfVertices;
 
         if (size < 1)
@@ -85,7 +85,6 @@ public class Dijkstra {
             // Parent Edge fixed for Dijkstra
             if (parent >= 0 ) {
                 Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
-                edges.add(parentEdge);
                 parentEdge.setToDone();
             }
 

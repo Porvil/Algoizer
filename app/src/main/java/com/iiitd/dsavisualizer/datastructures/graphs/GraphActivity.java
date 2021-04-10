@@ -721,11 +721,11 @@ public class GraphActivity extends BaseActivity {
             case BFS_CC: {
                     if (graphWrapper.weighted) {
                         error = 1;
-                        errorMessage = "BFS needs un-weighted graph";
+                        errorMessage = "BFS connected components needs un-weighted graph";
                     }
                     else if (graphWrapper.directed) {
                         error = 1;
-                        errorMessage = "BFS needs un-directed graph";
+                        errorMessage = "BFS connected components needs un-directed graph";
                     }
                     else if (graphWrapper.getNoOfNodes() <= 0) {
                         error = 1;
@@ -779,11 +779,11 @@ public class GraphActivity extends BaseActivity {
             case DFS_CC: {
                     if (graphWrapper.weighted) {
                         error = 1;
-                        errorMessage = "DFS needs un-weighted graph";
+                        errorMessage = "DFS connected components needs un-weighted graph";
                     }
                     else if (graphWrapper.directed) {
                         error = 1;
-                        errorMessage = "DFS needs un-directed graph";
+                        errorMessage = "DFS connected components needs un-directed graph";
                     }
                     else if (graphWrapper.getNoOfNodes() <= 0) {
                         error = 1;

@@ -6,12 +6,14 @@ import com.iiitd.dsavisualizer.datastructures.graphs.Graph;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationState;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateExtra;
+import com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphSequence;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.Vertex;
 import com.iiitd.dsavisualizer.datastructures.graphs.VertexCLRS;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.EdgeClass.*;
+import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.NONE;
 import static com.iiitd.dsavisualizer.datastructures.graphs.VertexVisitState.*;
 
 import java.util.ArrayList;
@@ -21,86 +23,98 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Stack;
 
 public class DFS {
-
     Graph graph;
     GraphSequence graphSequence;
     int time;
     HashMap<Integer, VertexCLRS> map;
     public GraphTree graphTree;
     Stack<Integer> stack;
-    ArrayList<Vertex> vertices;
+    HashMap<Integer, Vertex> verticesState;
     ArrayList<Edge> edges;
     int currentID;
-
 
     public DFS(Graph graph, GraphAlgorithmType graphAlgorithmType){
         this.graph = graph;
         this.graphSequence = new GraphSequence(graphAlgorithmType);
-        this.time = 0;
         this.graphTree = new GraphTree(graph.directed, graph.weighted);
-        this.stack = new Stack<>();
-        vertices = new ArrayList<>();
-        currentID = 0;
-        edges = new ArrayList<>();
         this.map = new HashMap<>();
+        this.verticesState = new HashMap<>();
+        this.edges = new ArrayList<>();
+        this.stack = new Stack<>();
+        this.time = 0;
+        this.currentID = 0;
     }
 
-    public GraphSequence run(int s){
+    public GraphSequence dfs(int source){
+        int size = graph.noOfVertices;
 
-        this.map = new HashMap<>();
-        this.stack = new Stack<>();
+        if (size < 1)
+            return graphSequence;
 
-        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+        // Add all vertices
+        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dfsVertexCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
+            verticesState.put(entry.getKey(), new Vertex(entry.getValue(), NONE));
+        }
+
+        // Add all edges
+        for(Edge edge : graph.getAllEdges()) {
+            edges.add(new Edge(edge, NONE));
         }
 
         time = 0;
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("start")
-                            .addVertices(vertices)
-                            .addEdges(edges)
-                            .addGraphAnimationStateExtra(
-                                    GraphAnimationStateExtra.create()
-                                            .addStacks(stack));
 
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
+        // Start Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("dfs(" + source + ")")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addStacks(stack)));
 
-        stack.push(s);
-        dfs_visit(s);
+        Vertex vertex = verticesState.get(source);
+        stack.push(source);
+        vertex.setToHighlight();
 
-//        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
-//            VertexCLRS vertexCLRS = map.get(entry.getKey());
-//            Vertex vertex = graph.vertexMap.get(entry.getKey());
-//            if(vertexCLRS.color == WHITE){
-//                stack.push(entry.getKey());
-//                System.out.println("pushes  = " + entry.getKey());
-//                System.out.println("stack  = " + stack);
-//
-//                dfs_visit(entry.getKey());
-//            }
-//        }
+//         Push to stack Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("Source vertex(" + source + ") pushed to stack.")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addStacks(stack)));
+
+        vertex.setToNormal();
+
+        dfsVisit(source);
+
+        // End Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("dfs() completed")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addStacks(stack)));
 
         // ALL DONE
         for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
             System.out.println(entry.getValue());
         }
 
-        System.out.println("______________________________________");
-        System.out.println("______________________________________");
-
-        // TOPOLOGICAL SORT HERE
+        // --------------------- START OF GRAPH TREE ---------------------
         List<Map.Entry<Integer, VertexCLRS> > list = new LinkedList<>(map.entrySet());
 
-        // Sort the list
+        // Sort the list by their finish times
         Collections.sort(list, new Comparator<Map.Entry<Integer, VertexCLRS> >() {
             public int compare(Map.Entry<Integer, VertexCLRS> o1,
                                Map.Entry<Integer, VertexCLRS> o2)
@@ -161,244 +175,240 @@ public class DFS {
         // Rows is 0-indexed, Cols is using 1-indexed, as size() is used
         graphTree.noOfRows = maxRows+1;
         graphTree.noOfCols = maxCols;
-
-//        Random random = new Random();
-//
-//        int size = list.size();
-//
-//        int row = 0;
-//        for(Map.Entry<Integer, VertexCLRS> entry : list){
-//            System.out.println(entry.getValue());
-//            if(entry.getValue().f >= 0) {
-//                graphTree.addVertex(entry.getKey(), row, random.nextInt(size));
-//                row++;
-//            }
-//        }
-//
-//        graphTree.noOfRows = row;
-//        graphTree.noOfCols = size;
-
+        // --------------------- END OF GRAPH TREE ---------------------
 
         return graphSequence;
     }
 
-    private void dfs_visit(int u) {// u = src, v = des
-        VertexCLRS vertexCLRS = map.get(u);
-        Vertex vertex = graph.vertexMap.get(u);
+    private void dfsVisit(int u) {// u = src, v = des
+        VertexCLRS srcVertexCLRS = map.get(u);
+        Vertex srcVertex = verticesState.get(u);
+        srcVertex.setToHighlight();
 
-        vertices.add(vertex);
-        GraphAnimationState graphAnimationState =
+        // Visit Node
+        graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setState("Visit = " + vertexCLRS.data)
-                        .setInfo("Add source = " + vertexCLRS.data + " to stack")
-                        .addVertices(vertices)
+                        .setInfo("Vertex (" + u + ") visit, check all edges.")
+                        .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
                                 GraphAnimationStateExtra.create()
-                                        .addStacks(stack));
+                                        .addStacks(stack)));
 
-        graphSequence.addGraphAnimationState(graphAnimationState);
-
-        System.out.println("dfs_visit called for " + u);
-//        Integer pop = stack.pop();
-//        System.out.println("Popped = " + pop);
-//        System.out.println("stack  = " + stack);
         time++;
+        srcVertexCLRS.startTime = time;
+        srcVertexCLRS.color = GRAY;
 
-        vertexCLRS.startTime = time;
-        vertexCLRS.color = GRAY;
-        if(vertexCLRS.parent != -1){
-            vertexCLRS.dfsDepth = map.get(vertexCLRS.parent).dfsDepth + 1;
+        if(srcVertexCLRS.parent != -1){
+            srcVertexCLRS.dfsDepth = map.get(srcVertexCLRS.parent).dfsDepth + 1;
         }
         else {
-            vertexCLRS.dfsDepth = 0;
+            srcVertexCLRS.dfsDepth = 0;
         }
 
-        for(Edge edge : graph.edgeListMap.get(u)) {
-            int v = edge.des;
+        for(Edge curEdge : graph.edgeListMap.get(u)) {
+            int v = curEdge.des;
+
+            Vertex desVertex = verticesState.get(curEdge.des);
+            VertexCLRS endVertexCLRS = map.get(curEdge.des);
+            Edge edge = edges.get(edges.indexOf(curEdge));
+            GraphAnimationStateType edgeGAST = edge.graphAnimationStateType;
+            GraphAnimationStateType desVertexGAST = desVertex.graphAnimationStateType;
+            edge.setToHighlight();
+            desVertex.setToHighlight();
 
             // Non-White
-            if(map.get(v).color != WHITE) {
-                if (map.get(v).color == BLACK) {
-                    if (map.get(u).startTime < map.get(v).startTime) {
-                        System.out.println("FORWARD EDGE : " + u + " -> " + v);
-                        graphTree.addEdge(new EdgePro(edge, FORWARD));
+            if(endVertexCLRS.color != WHITE) {
+                if (endVertexCLRS.color == BLACK) {
+                    if (srcVertexCLRS.startTime < endVertexCLRS.startTime) {
+                        graphTree.addEdge(new EdgePro(curEdge, FORWARD));
                     }
                     else {
-                        System.out.println("CROSS EDGE : " + u + " -> " + v);
-                        graphTree.addEdge(new EdgePro(edge, CROSS));
+                        graphTree.addEdge(new EdgePro(curEdge, CROSS));
                     }
                 }
-                else if (map.get(v).color == GRAY) {
-                    System.out.println("BACK EDGE : " + u + " -> " + v);
-                    graphTree.addEdge(new EdgePro(edge, BACK));
+                else if (endVertexCLRS.color == GRAY) {
+                    graphTree.addEdge(new EdgePro(curEdge, BACK));
                 }
 
-                GraphAnimationState graphAnimationState2 =
+                graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setState("Vertex = " + v)
-                                .setInfo("Vertex already visited = " + v)
-                                .addVertices(vertices)
+                                .setInfo("Vertex (" + v + ") already visited, continue")
+                                .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
                                         GraphAnimationStateExtra.create()
-                                                .addStacks(stack));
+                                                .addStacks(stack)));
 
-                graphSequence.addGraphAnimationState(graphAnimationState2);
+                edge.setGAST(edgeGAST);
+                desVertex.setGAST(desVertexGAST);
             }
             // White
-            else if (map.get(v).color == WHITE) {
-                System.out.println("TREE EDGE : " + u + " -> " + v);
-                graphTree.addEdge(new EdgePro(edge, TREE));
-
-                map.get(v).parent = u;
-
+            else if (endVertexCLRS.color == WHITE) {
+                graphTree.addEdge(new EdgePro(curEdge, TREE));
+                endVertexCLRS.parent = u;
                 stack.push(v);
-                System.out.println("pushes  = " + v);
-                System.out.println("stack  = " + stack);
 
-                Vertex vertex1 = graph.vertexMap.get(v);
-                vertices.add(vertex1);
-                edges.add(edge);
+                graphSequence.addGraphAnimationState(
+                        GraphAnimationState.create()
+                                .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to stack")
+                                .setVerticesState(verticesState)
+                                .addEdges(edges)
+                                .addGraphAnimationStateExtra(
+                                        GraphAnimationStateExtra.create()
+                                                .addStacks(stack)));
 
-                dfs_visit(v);
+                desVertex.setGAST(desVertexGAST);
+
+                dfsVisit(v);
             }
         }
 
-        vertexCLRS.color = BLACK;
+        srcVertexCLRS.color = BLACK;
         time++;
-        vertexCLRS.finishTime = time;
+        srcVertexCLRS.finishTime = time;
 
-        Integer pop = stack.pop();
-        System.out.println("Popped = " + pop);
-        System.out.println("stack  = " + stack);
+        srcVertex.setToDone();
+        stack.pop();
 
-        GraphAnimationState graphAnimationState1 =
+        int parent = srcVertexCLRS.parent;
+        int self = srcVertexCLRS.data;
+        if(parent != -1){
+            Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
+            parentEdge.setToDone();
+        }
+
+        // Visit Node
+        graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setState("Vertex = " + u)
-                        .setInfo("Vertex popped from stack = " + u)
-                        .addVertices(vertices)
+                        .setInfo("All Edges of Vertex (" + u + ") visited" +
+                                "\n" + "Vertex (" + u + ") popped from stack")
+                        .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
                                 GraphAnimationStateExtra.create()
-                                        .addStacks(stack));
-
-        graphSequence.addGraphAnimationState(graphAnimationState1);
+                                        .addStacks(stack)));
     }
 
-    public GraphSequence connectedComponents(){
-        if(graph == null || graph.vertexMap.size() == 0){
+    public GraphSequence dfsCC(){
+        int size = graph.noOfVertices;
+
+        if (size < 1)
             return graphSequence;
-        }
 
-//        stack = new Stack<>();
-
-        for(Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()){
+        // Add all vertices
+        for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
             VertexCLRS vertexCLRS = VertexCLRS.dfsVertexCCCLRS(entry.getValue());
             map.put(entry.getKey(), vertexCLRS);
+            verticesState.put(entry.getKey(), new Vertex(entry.getValue(), NONE));
+        }
+
+        // Add all edges
+        for(Edge edge : graph.getAllEdges()) {
+            edges.add(new Edge(edge, NONE));
         }
 
         currentID = 0;
 
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("start")
-                            .setInfo("start")
-                            .addVertices(vertices)
-                            .addEdges(edges);
-
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
+        // Start Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("dfsConnectedComponents()")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
 
         for(Map.Entry<Integer, VertexCLRS> entry : map.entrySet()){
-            System.out.println(entry.getValue());
             if(entry.getValue().connectedID == -1) {
-                run3(entry.getValue().data);
+                dfsCCVisit(entry.getValue().data);
                 currentID++;
             }
         }
 
-        {
-            GraphAnimationState graphAnimationState =
-                    GraphAnimationState.create()
-                            .setState("end")
-                            .setInfo("no of connected components = " + currentID)
-                            .addVertices(vertices)
-                            .addEdges(edges);
-
-            graphSequence.addGraphAnimationState(graphAnimationState);
-        }
+        // End Animation
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("dfsConnectedComponents() completed"
+                                + "\n" + "No of connected components = \" + currentID")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
 
         return graphSequence;
     }
 
-    private void run3(int u) {// u = src, v = des
-        VertexCLRS vertexCLRS = map.get(u);
-        System.out.println(vertexCLRS.data +" " + vertexCLRS.connectedID + " | " + currentID);
-        if(vertexCLRS.connectedID != -1)
+    private void dfsCCVisit(int u) {// u = src, v = des
+        VertexCLRS srcVertexCLRS = map.get(u);
+        Vertex srcVertex = verticesState.get(u);
+        srcVertex.setToHighlight();
+
+        if(srcVertexCLRS.connectedID != -1)
             return;
 
-        Vertex vertex = graph.vertexMap.get(u);
-        vertex.data = currentID;
+        srcVertex.data = currentID;
 
-        vertexCLRS.color = BLACK;
-        vertexCLRS.connectedID = currentID;
+        srcVertexCLRS.color = BLACK;
+        srcVertexCLRS.connectedID = currentID;
 
-        vertices.add(vertex);
-        GraphAnimationState graphAnimationState =
+        // Visit Node
+        graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setState("Visit = " + vertexCLRS.data)
-                        .setInfo("Add source = " + vertexCLRS.data + " to stack")
-                        .addVertices(vertices)
-                        .addEdges(edges);
+                        .setInfo("Vertex (" + u + ") visit, check all edges.")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
 
-        graphSequence.addGraphAnimationState(graphAnimationState);
 
-        for (Edge edge : graph.edgeListMap.get(u)) {
-            int v = edge.des;
+        for (Edge curEdge : graph.edgeListMap.get(u)) {
+            int v = curEdge.des;
+            Vertex desVertex = verticesState.get(curEdge.des);
+            VertexCLRS endVertexCLRS = map.get(curEdge.des);
+            Edge edge = edges.get(edges.indexOf(curEdge));
+            GraphAnimationStateType edgeGAST = edge.graphAnimationStateType;
+            GraphAnimationStateType desVertexGAST = desVertex.graphAnimationStateType;
+            edge.setToHighlight();
+            desVertex.setToHighlight();
 
             // Non-White
             if (map.get(v).color != WHITE) {
-
-                GraphAnimationState graphAnimationState2 =
+                graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setState("Vertex = " + v)
-                                .setInfo("Vertex already visited = " + v)
-                                .addVertices(vertices)
-                                .addEdges(edges);
+                                .setInfo("Vertex (" + v + ") already visited, continue")
+                                .setVerticesState(verticesState)
+                                .addEdges(edges));
 
-//                graphSequence.addGraphAnimationState(graphAnimationState2);
+                edge.setGAST(edgeGAST);
+                desVertex.setGAST(desVertexGAST);
             }
             // White
             else if (map.get(v).color == WHITE) {
                 graphTree.addEdge(new EdgePro(edge, TREE));
+                endVertexCLRS.parent = u;
+                graphSequence.addGraphAnimationState(
+                        GraphAnimationState.create()
+                                .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to stack")
+                                .setVerticesState(verticesState)
+                                .addEdges(edges));
 
-//                map.get(v).parent = u;
+                desVertex.setGAST(desVertexGAST);
 
-//                stack.push(v);
-
-                Vertex vertex1 = graph.vertexMap.get(v);
-                vertices.add(vertex1);
-                edges.add(edge);
-
-                run3(v);
+                dfsCCVisit(v);
             }
         }
 
+        int parent = srcVertexCLRS.parent;
+        int self = u;
+        if(parent != -1){
+            Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
+            parentEdge.setToDone();
+        }
 
-//
-//        GraphAnimationState graphAnimationState1 =
-//                GraphAnimationState.create()
-//                        .setState("Vertex = " + u)
-//                        .setInfo("Vertex popped from stack = " + u)
-//                        .addVertices(vertices)
-//                        .addEdges(edges)
-//                        .addGraphAnimationStateExtra(
-//                                GraphAnimationStateExtra.create()
-//                                        .addStacks(stack));
-//
-//        graphSequence.addGraphAnimationState(graphAnimationState1);
+        srcVertex.setToDone();
+
+        // Visit Node
+        graphSequence.addGraphAnimationState(
+                GraphAnimationState.create()
+                        .setInfo("All Edges of Vertex (" + u + ") visited" +
+                                "\n" + "Vertex (" + u + ") popped from stack")
+                        .setVerticesState(verticesState)
+                        .addEdges(edges));
     }
 
 }

@@ -28,12 +28,12 @@ public class Kruskals {
     public Kruskals(Graph graph) {
         this.graph = graph;
         this.graphSequence = new GraphSequence(GraphAlgorithmType.KRUSKALS);
-        this.verticesState = new HashMap<>();
         this.map = new HashMap<>();
+        this.verticesState = new HashMap<>();
         this.edges = new ArrayList<>();
     }
 
-    public GraphSequence run() {
+    public GraphSequence kruskals() {
         int size = graph.noOfVertices;
 
         if (size < 1)

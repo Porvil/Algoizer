@@ -31,7 +31,7 @@ public class BellmanFord {
         this.edges = new ArrayList<>();
     }
 
-    public GraphSequence run() {
+    public GraphSequence bellmanford() {
         int size = graph.noOfVertices;
         int source = 0;
 
