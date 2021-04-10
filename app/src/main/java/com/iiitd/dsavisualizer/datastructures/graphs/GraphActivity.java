@@ -714,7 +714,6 @@ public class GraphActivity extends BaseActivity {
                         graphTreePopUp.show();
 
                         graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
-
                     }
                 }
                 break;
@@ -737,7 +736,6 @@ public class GraphActivity extends BaseActivity {
                         graphWrapper.board.clearGraph(true);
 
                         graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.BFS_CC, -1);
-
                     }
                 }
                 break;
@@ -839,7 +837,7 @@ public class GraphActivity extends BaseActivity {
                     }
                     else if(!graphWrapper.directed && graphWrapper.graph.hasNegativeEdges()){
                         error = 1;
-                        errorMessage = "Bellman Ford doesnt work for undirected and negative edges[negative edge loops]";
+                        errorMessage = "Bellman Ford doesn't work for undirected graphs having negative edges[negative edge loops]";
                     }
                     else if (graphWrapper.getNoOfNodes() <= 0) {
                         error = 1;

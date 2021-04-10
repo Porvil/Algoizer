@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.text.TextPaint;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -31,6 +30,7 @@ public class Board {
 
     // Constants
     private final boolean ANTI_ALIAS = true;        // ANTI-ALIASING is ON
+    private final int ALPHA = 192;                  // Opacity for Vertices
     private final int topAngle = 45;                // in degrees
     private final int bottomAngle = 45;             // in degrees
     private final float coordinatesOffset = 0.95f;  // in ratio [0,1]
@@ -63,28 +63,18 @@ public class Board {
     private Paint paintGridCoordinates;             // Grid Coordinates
     private Paint paintVertex;                      // Vertex
     private Paint paintVertexText;                  // Vertex Text
+    private Paint paintVertexWeight;                // Vertex Weight Text
     private Paint paintEdge;                        // Edge
     private Paint paintEdgeArrows;                  // Edge Arrows
-    private Paint paintEdgeWeight;                  // Edge Weight
-    private Paint paintVertexAnim;                  // Animation Vertex
-    private Paint paintVertexTextAnim;              // Animation Vertex Text
-    private Paint paintEdgeAnim;                    // Animation Edge
-    private Paint paintEdgeArrowsAnim;              // Animation Edge Arrows
-    private Paint paintEdgeWeightAnim;              // Animation Edge Weight
+    private Paint paintEdgeWeight;                  // Edge Weight Text
 
-    private Paint _paintVertex;                      // Vertex
-    private Paint _paintVertexText;                  // Vertex Text
-    private Paint _paintVertexWeight;
-    private Paint _paintEdge;                        // Edge
-    private Paint _paintEdgeArrows;                  // Edge Arrows
-    private Paint _paintEdgeWeight;
-
-    int shade;
-    int light;
-    int base;
-    int medium;
-    int dark;
-    int white;
+    // Colors
+    private int shade;
+    private int light;
+    private int base;
+    private int medium;
+    private int dark;
+    private int white;
 
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
@@ -129,7 +119,7 @@ public class Board {
         this.edgeArrowWidth      = graphData.nodeEdgeArrow;
         this.edgeWeightTextSize  = graphData.nodeEdgeWeight;
 
-        // Initializes all Paint Variables
+        // Initializes all Paint Variables and sets Color Variables also
         initPaints();
 
         // Draw Grid on Grid ImageView
@@ -160,7 +150,7 @@ public class Board {
         // Vertex
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
-        this.paintVertex.setAlpha(192);
+        this.paintVertex.setAlpha(ALPHA);
         this.paintVertex.setAntiAlias(ANTI_ALIAS);
 
         // Vertex Text
@@ -170,6 +160,14 @@ public class Board {
         this.paintVertexText.setColor(white);
         this.paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintVertexText.setAntiAlias(ANTI_ALIAS);
+
+        // Vertex Weight
+        this.paintVertexWeight = new Paint();
+        this.paintVertexWeight.setTextAlign(Paint.Align.CENTER);
+        this.paintVertexWeight.setTextSize(edgeWeightTextSize);
+        this.paintVertexWeight.setColor(medium);
+        this.paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        this.paintVertexWeight.setAntiAlias(ANTI_ALIAS);
 
         // Edge
         this.paintEdge = new Paint();
@@ -190,84 +188,6 @@ public class Board {
         this.paintEdgeWeight.setColor(medium);
         this.paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintEdgeWeight.setAntiAlias(ANTI_ALIAS);
-
-        // Animation Vertex
-        this.paintVertexAnim = new Paint();
-        this.paintVertexAnim.setColor(dark);
-        this.paintVertexAnim.setAntiAlias(ANTI_ALIAS);
-
-        // Animation Vertex Text
-        this.paintVertexTextAnim = new Paint();
-        this.paintVertexTextAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintVertexTextAnim.setTextSize(nodeTextSize);
-        this.paintVertexTextAnim.setColor(white);
-        this.paintVertexTextAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        this.paintVertexTextAnim.setAntiAlias(ANTI_ALIAS);
-
-        // Animation Edge
-        this.paintEdgeAnim = new Paint();
-        this.paintEdgeAnim.setColor(dark);
-        this.paintEdgeAnim.setStrokeWidth(edgeWidth);
-        this.paintEdgeAnim.setAntiAlias(ANTI_ALIAS);
-
-        // Animation Edge Arrows
-        this.paintEdgeArrowsAnim = new Paint();
-        this.paintEdgeArrowsAnim.setColor(dark);
-        this.paintEdgeArrowsAnim.setStrokeWidth(edgeArrowWidth);
-        this.paintEdgeArrowsAnim.setAntiAlias(ANTI_ALIAS);
-
-        // Animation Edge Weight
-        this.paintEdgeWeightAnim = new Paint();
-        this.paintEdgeWeightAnim.setTextAlign(Paint.Align.CENTER);
-        this.paintEdgeWeightAnim.setTextSize(edgeWeightTextSize);
-        this.paintEdgeWeightAnim.setColor(dark);
-        this.paintEdgeWeightAnim.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        this.paintEdgeWeightAnim.setAntiAlias(ANTI_ALIAS);
-
-
-
-        // Vertex
-        this._paintVertex = new Paint();
-        this._paintVertex.setColor(base);
-        this._paintVertex.setAlpha(192);
-        this._paintVertex.setAntiAlias(ANTI_ALIAS);
-
-        // Vertex Text
-        this._paintVertexText = new Paint();
-        this._paintVertexText.setTextAlign(Paint.Align.CENTER);
-        this._paintVertexText.setTextSize(nodeTextSize);
-        this._paintVertexText.setColor(white);
-        this._paintVertexText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        this._paintVertexText.setAntiAlias(ANTI_ALIAS);
-
-        // Vertex Weight
-        this._paintVertexWeight = new Paint();
-        this._paintVertexWeight.setTextAlign(Paint.Align.CENTER);
-        this._paintVertexWeight.setTextSize(edgeWeightTextSize);
-        this._paintVertexWeight.setColor(medium);
-        this._paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        this._paintVertexWeight.setAntiAlias(ANTI_ALIAS);
-
-        // Edge
-        this._paintEdge = new Paint();
-        this._paintEdge.setColor(medium);
-        this._paintEdge.setStrokeWidth(edgeWidth);
-        this._paintEdge.setAntiAlias(ANTI_ALIAS);
-
-        // Edge Arrows
-        this._paintEdgeArrows = new Paint();
-        this._paintEdgeArrows.setColor(medium);
-        this._paintEdgeArrows.setStrokeWidth(edgeArrowWidth);
-        this._paintEdgeArrows.setAntiAlias(ANTI_ALIAS);
-
-        // Edge Weight
-        this._paintEdgeWeight = new Paint();
-        this._paintEdgeWeight.setTextAlign(Paint.Align.CENTER);
-        this._paintEdgeWeight.setTextSize(edgeWeightTextSize);
-        this._paintEdgeWeight.setColor(medium);
-        this._paintEdgeWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        this._paintEdgeWeight.setAntiAlias(ANTI_ALIAS);
-
     }
 
     // Draw the complete Grid
@@ -357,18 +277,14 @@ public class Board {
 
         if(isAnim){
             canvas = customCanvas.canvasAnimation;
-            pVertex = paintVertexAnim;
-            pVertexText = paintVertexTextAnim;
         }
         else{
             canvas = customCanvas.canvasGraph;
-            pVertex = paintVertex;
-            pVertexText = paintVertexText;
             setPaintNormal();
         }
 
-        pVertex = _paintVertex;
-        pVertexText = _paintVertexText;
+        pVertex = paintVertex;
+        pVertexText = paintVertexText;
 
         Rect rect = getRect(row, col);
         int x = rect.centerX();
@@ -389,6 +305,43 @@ public class Board {
         drawVertex(vertexValue, coordinates[0], coordinates[1], isAnim);
     }
 
+    // Draws Vertex Weight(Dijkstra, BellmanFord and Prims Distance)
+    public void drawVertexWeight(int vertexValue, int vertexWeight, boolean isAnim){
+        // Canvas and Paint Variables
+        Canvas canvas;
+        Paint pVertexWeightText;
+
+        if(isAnim){
+            canvas = customCanvas.canvasAnimation;
+        }
+        else{
+            canvas = customCanvas.canvasGraph;
+            setPaintNormal();
+        }
+
+        pVertexWeightText = paintVertexWeight;
+
+        Rect rect = getRect(vertexValue);
+        int x = rect.centerX();
+        int y = rect.top - 10;
+
+        String text = String.valueOf(vertexWeight);
+        if(vertexWeight == Integer.MAX_VALUE)
+            text = DecimalFormatSymbols.getInstance().getInfinity();
+
+        Rect rectText = new Rect();
+        pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
+        pVertexWeightText.setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        Paint paint = new Paint();
+        paint.setColor(shade);
+        canvas.drawRect(rectText, paint);
+        Rect background = getTextBackgroundSize(x, y, text, pVertexWeightText);
+        canvas.drawRect(background, paint);
+
+        canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
+    }
+
     // Draws an Edge
     public void drawEdge(Edge edge, boolean isDirected, boolean isWeighted, boolean isAnim){
         // Canvas and Paint Variables
@@ -399,21 +352,15 @@ public class Board {
 
         if(isAnim){
             canvas = customCanvas.canvasAnimation;
-            pEdge = paintEdgeAnim;
-            pEdgeArrow = paintEdgeArrowsAnim;
-            pEdgeWeight = paintEdgeWeightAnim;
         }
         else{
             canvas = customCanvas.canvasGraph;
-            pEdge = paintEdge;
-            pEdgeArrow = paintEdgeArrows;
-            pEdgeWeight = paintEdgeWeight;
             setPaintNormal();
         }
 
-        pEdge = _paintEdge;
-        pEdgeArrow = _paintEdgeArrows;
-        pEdgeWeight = _paintEdgeWeight;
+        pEdge = paintEdge;
+        pEdgeArrow = paintEdgeArrows;
+        pEdgeWeight = paintEdgeWeight;
 
         // Math Variables
         Rect srcRect = getRect(edge.src);
@@ -429,7 +376,7 @@ public class Board {
         // Directed Graph
         if(isDirected){
             if(isWeighted){
-                drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, false);
+                drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, isDirected, false);
             }
 
             canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
@@ -440,7 +387,7 @@ public class Board {
             // If firstEdge, then do it same as directed, except drawing arrows
             if (edge.isFirstEdge) {
                 if (isWeighted) {
-                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, false);
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, isDirected, false);
                 }
 
                 canvas.drawLine(lx1, ly1, lx2, ly2, pEdge);
@@ -448,7 +395,7 @@ public class Board {
             // If !first edge && is for animation then reverse the edge and recalculate values
             else if(isAnim){
                 if (isWeighted) {
-                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, true);
+                    drawEdgeWeight(canvas, pEdgeWeight, edge.weight, lineCoordinates, isDirected, true);
                 }
 
                 canvas.drawLine(lx2, ly2, lx1, ly1, pEdge);
@@ -457,8 +404,23 @@ public class Board {
 
     }
 
+    // Draws arrow lines for src -> des Edge
+    public void drawEdgeArrow(float x, float y, float x1, float y1, Canvas canvas, Paint paint) {
+        double degree = Util.calculateDegree(x, x1, y, y1);
+
+        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
+        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
+
+        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
+        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
+
+        canvas.drawLine(x1, y1, endX1, endY1, paint);
+        canvas.drawLine(x1, y1, endX2, endY2, paint);
+    }
+
     // Draws Edge Weights
-    public void drawEdgeWeight(Canvas canvas, Paint paint, int weight, double[] lineCoordinates, boolean reverseEdge){
+    public void drawEdgeWeight(Canvas canvas, Paint paint, int weight,
+                               double[] lineCoordinates, boolean isDirected, boolean reverseEdge){
         double lx1 = lineCoordinates[0];
         double ly1 = lineCoordinates[1];
         double lx2 = lineCoordinates[2];
@@ -476,6 +438,12 @@ public class Board {
 
         float x = (float) (lx1 + (lx2 - lx1)/2);
         float y = (float) (ly1 + (ly2 - ly1)/2);
+
+        // Change Edge Weight location in case of directed graphs
+        if(isDirected){
+            x = (float) (lx1/3 + 2*lx2/3);
+            y = (float) (ly1/3 + 2*ly2/3);
+        }
 
         float rotationX = x;
         float rotationY = y;
@@ -520,75 +488,6 @@ public class Board {
         canvas.restore();
     }
 
-    // Draws arrow lines for src -> des Edge
-    public void drawEdgeArrow(float x, float y, float x1, float y1, Canvas canvas, Paint paint) {
-        double degree = Util.calculateDegree(x, x1, y, y1);
-
-        float endX1 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-topAngle)+90))));
-        float endY1 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-topAngle)+90)))));
-
-        float endX2 = (float) (x1 + ((arrowLength) * Math.cos(Math.toRadians((degree-bottomAngle)+180))));
-        float endY2 = (float) (y1 + ((arrowLength) * Math.sin(Math.toRadians(((degree-bottomAngle)+180)))));
-
-        canvas.drawLine(x1, y1, endX1, endY1, paint);
-        canvas.drawLine(x1, y1, endX2, endY2, paint);
-    }
-
-    // Draws Vertex Weight(Dijkstra, BellmanFord Distance)
-    public void drawVertexWeight(int vertexValue, int vertexWeight, boolean isAnim){
-        // Canvas and Paint Variables
-        Canvas canvas;
-        Paint pVertexWeightText;
-
-        if(isAnim){
-            canvas = customCanvas.canvasAnimation;
-            pVertexWeightText = paintEdgeWeightAnim;
-        }
-        else{
-            canvas = customCanvas.canvasGraph;
-            pVertexWeightText = paintEdgeWeight;
-            setPaintNormal();
-        }
-
-        pVertexWeightText = _paintVertexWeight;
-
-        Rect rect = getRect(vertexValue);
-        int x = rect.centerX();
-        int y = rect.top - 10;
-
-        String text = String.valueOf(vertexWeight);
-        if(vertexWeight == Integer.MAX_VALUE)
-            text = DecimalFormatSymbols.getInstance().getInfinity();
-
-
-
-        System.out.println(text);
-        Rect rectText = new Rect();
-        pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
-        pVertexWeightText.setFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        Paint paint = new Paint();
-        paint.setColor(shade);
-        canvas.drawRect(rectText, paint);
-        Rect background = getTextBackgroundSize(x, y, text, pVertexWeightText);
-        canvas.drawRect(background, paint);
-
-        canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
-
-
-
-//        System.out.println(rectText);
-//        rectText.set
-//        Paint paint = new Paint();
-//        paint.setColor(dark);
-//        canvas.drawRect(rectText, paint);
-
-        //Highlighted box
-//        Paint paint =new Paint();
-//        paint.setColor(Color.BLACK);
-//        canvas.drawRect(rectText, paint);
-    }
-
     private @NonNull
     Rect getTextBackgroundSize(float x, float y, @NonNull String text, @NonNull Paint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
@@ -596,67 +495,34 @@ public class Board {
         return new Rect((int) (x - halfTextLength), (int) (y + fontMetrics.top), (int) (x + halfTextLength), (int) (y + fontMetrics.bottom));
     }
 
+    // set all Paint variables to Graph Animation Normal Mode
     public void setPaintNormal() {
-
-        // Vertex
-        this._paintVertex.setColor(base);
-
-        // Vertex Text
-        this._paintVertexText.setColor(white);
-
-        // Vertex Weight
-        this._paintVertexWeight.setColor(base);
-
-        // Edge
-        this._paintEdge.setColor(base);
-
-        // Edge Arrows
-        this._paintEdgeArrows.setColor(base);
-
-        // Edge Weight
-        this._paintEdgeWeight.setColor(base);
+        this.paintVertex.setColor(base);                    // Vertex
+        this.paintVertexText.setColor(white);               // Vertex Text
+        this.paintVertexWeight.setColor(base);              // Vertex Weight
+        this.paintEdge.setColor(base);                      // Edge
+        this.paintEdgeArrows.setColor(base);                // Edge Arrows
+        this.paintEdgeWeight.setColor(base);                // Edge Weight
     }
 
+    // set all Paint variables to Graph Animation Highlight Mode
     public void setPaintHighlight() {
-
-        // Vertex
-        this._paintVertex.setColor(medium);
-
-        // Vertex Text
-        this._paintVertexText.setColor(white);
-
-        // Vertex Weight
-        this._paintVertexWeight.setColor(medium);
-
-        // Edge
-        this._paintEdge.setColor(medium);
-
-        // Edge Arrows
-        this._paintEdgeArrows.setColor(medium);
-
-        // Edge Weight
-        this._paintEdgeWeight.setColor(medium);
+        this.paintVertex.setColor(medium);                  // Vertex
+        this.paintVertexText.setColor(white);               // Vertex Text
+        this.paintVertexWeight.setColor(medium);            // Vertex Weight
+        this.paintEdge.setColor(medium);                    // Edge
+        this.paintEdgeArrows.setColor(medium);              // Edge Arrows
+        this.paintEdgeWeight.setColor(medium);              // Edge Weight
     }
 
+    // set all Paint variables to Graph Animation Final Mode
     public void setPaintDone() {
-
-        // Vertex
-        this._paintVertex.setColor(dark);
-
-        // Vertex Text
-        this._paintVertexText.setColor(white);
-
-        // Vertex Weight
-        this._paintVertexWeight.setColor(dark);
-
-        // Edge
-        this._paintEdge.setColor(dark);
-
-        // Edge Arrows
-        this._paintEdgeArrows.setColor(dark);
-
-        // Edge Weight
-        this._paintEdgeWeight.setColor(dark);
+        this.paintVertex.setColor(dark);                    // Vertex
+        this.paintVertexText.setColor(white);               // Vertex Text
+        this.paintVertexWeight.setColor(dark);              // Vertex Weight
+        this.paintEdge.setColor(dark);                      // Edge
+        this.paintEdgeArrows.setColor(dark);                // Edge Arrows
+        this.paintEdgeWeight.setColor(dark);                // Edge Weight
     }
 
     // Adds a Vertex and calls drawVertex [prevents re-drawing the complete graph]
