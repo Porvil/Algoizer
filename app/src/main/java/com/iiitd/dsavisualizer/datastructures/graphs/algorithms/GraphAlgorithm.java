@@ -38,13 +38,13 @@ public class GraphAlgorithm {
         switch (graphAlgorithmType){
             case BFS: {
                 BFS bfs = new BFS(graph, BFS);
-                graphAlgorithm.graphSequence = bfs.run(vertexNumber);
+                graphAlgorithm.graphSequence = bfs.bfs(vertexNumber);
                 graphAlgorithm.graphTree = bfs.graphTree;
             }
                 break;
             case BFS_CC: {
                 BFS bfs = new BFS(graph, BFS_CC);
-                graphAlgorithm.graphSequence = bfs.connectedComponents();
+                graphAlgorithm.graphSequence = bfs.bfsCC();
             }
                 break;
             case DFS: {
