@@ -55,31 +55,6 @@ public class GraphExamples {
             "E 13 14 1\n" +
             "E 14 13 1\n";
 
-//    public static String example1 = "D 1\n" +
-//            "W 1\n" +
-//            "VC 3\n" +
-//            "VA 0 2 7\n" +
-//            "VA 1 5 4\n" +
-//            "VA 2 5 10\n" +
-//            "E 0 1 2\n" +
-//            "E 0 2 2\n" +
-//            "E 1 0 4\n" +
-//            "E 2 0 4\n";
-
-//public static String example1 = "D 1\n" +
-//            "W 0\n" +
-//            "VC 5\n" +
-//            "VA 0 0 0\n" +
-//            "VA 1 0 3\n" +
-//            "VA 2 2 0\n" +
-//            "VA 3 2 4\n" +
-//            "VA 4 4 3\n" +
-//            "E 0 1 1\n" +
-//            "E 0 2 1\n" +
-//            "E 1 2 1\n" +
-//            "E 2 3 1\n" +
-//            "E 3 4 1\n";
-
     public static String example2 = "D 1\n" +
             "W 0\n" +
             "VC 5\n" +
@@ -198,4 +173,30 @@ public class GraphExamples {
             "E 8 6 6\n" +
             "E 8 7 7\n";
 
+    public static String example7 = "";
+
+    public static String example8 = "D 1\n" +
+            "W 1\n" +
+            "VC 3\n" +
+            "VA 0 2 7\n" +
+            "VA 1 5 4\n" +
+            "VA 2 5 10\n" +
+            "E 0 1 2\n" +
+            "E 0 2 2\n" +
+            "E 1 0 4\n" +
+            "E 2 0 4\n";
+
+    public static String example9 = "D 1\n" +
+            "W 0\n" +
+            "VC 5\n" +
+            "VA 0 0 0\n" +
+            "VA 1 0 3\n" +
+            "VA 2 2 0\n" +
+            "VA 3 2 4\n" +
+            "VA 4 4 3\n" +
+            "E 0 1 1\n" +
+            "E 0 2 1\n" +
+            "E 1 2 1\n" +
+            "E 2 3 1\n" +
+            "E 3 4 1\n";
 }

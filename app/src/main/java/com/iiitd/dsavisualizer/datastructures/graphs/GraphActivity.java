@@ -106,6 +106,9 @@ public class GraphActivity extends BaseActivity {
     Button btn_example4;
     Button btn_example5;
     Button btn_example6;
+    Button btn_example7;
+    Button btn_example8;
+    Button btn_example9;
     EditText et_customgraphinput;
     EditText et_insert;
     EditText et_search;
@@ -206,6 +209,9 @@ public class GraphActivity extends BaseActivity {
         btn_example4 = v_menu_right.findViewById(R.id.btn_example4);
         btn_example5 = v_menu_right.findViewById(R.id.btn_example5);
         btn_example6 = v_menu_right.findViewById(R.id.btn_example6);
+        btn_example7 = v_menu_right.findViewById(R.id.btn_example7);
+        btn_example8 = v_menu_right.findViewById(R.id.btn_example8);
+        btn_example9 = v_menu_right.findViewById(R.id.btn_example9);
         et_customgraphinput = v_menu_right.findViewById(R.id.et_customgraphinput);
         et_insert = v_menu_right.findViewById(R.id.et_insert);
         et_search = v_menu_right.findViewById(R.id.et_search);
@@ -502,6 +508,26 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
+        btn_example7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                example(GraphExamples.example7);
+            }
+        });
+
+        btn_example8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                example(GraphExamples.example8);
+            }
+        });
+
+        btn_example9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                example(GraphExamples.example9);
+            }
+        });
         btn_savecustominput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
