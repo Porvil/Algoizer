@@ -47,4 +47,8 @@
     <string name="themes">Themes</string>
     <string name="close_application">Close Application</string>
     <string name="help">help</string>
+    <string name="tree_edge">Tree</string>
+    <string name="back_edge">Back</string>
+    <string name="forward_edge">Forward</string>
+    <string name="cross_edge">Cross</string>
 </resources>

@@ -147,11 +147,33 @@
     </style>
 
     <style name="S_CheckBox_Graph">
-        <item name="android:drawableTop">?android:attr/listChoiceIndicatorMultiple</item>
         <item name="android:textAlignment">center</item>
         <item name="android:button">@null</item>
         <item name="android:checked">true</item>
-        <item name="android:textColor">?attr/base</item>
+    </style>
+
+    <style name="S_CheckBox_Tree" parent="S_CheckBox_Graph">
+        <item name="android:drawableTop">@drawable/graph_cb_tree</item>
+        <item name="android:textColor">@color/graph_tree</item>
+        <item name="android:text">@string/tree_edge</item>
+    </style>
+
+    <style name="S_CheckBox_Back" parent="S_CheckBox_Graph">
+        <item name="android:drawableTop">@drawable/graph_cb_back</item>
+        <item name="android:textColor">@color/graph_back</item>
+        <item name="android:text">@string/back_edge</item>
+    </style>
+
+    <style name="S_CheckBox_Cross" parent="S_CheckBox_Graph">
+        <item name="android:drawableTop">@drawable/graph_cb_cross</item>
+        <item name="android:textColor">@color/graph_cross</item>
+        <item name="android:text">@string/cross_edge</item>
+    </style>
+
+    <style name="S_CheckBox_Forward" parent="S_CheckBox_Graph">
+        <item name="android:drawableTop">@drawable/graph_cb_forward</item>
+        <item name="android:textColor">@color/graph_forward</item>
+        <item name="android:text">@string/forward_edge</item>
     </style>
 
 </resources>

@@ -163,22 +163,22 @@ public class BoardTree {
         this.paintText.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeTree = new Paint();
-        this.paintEdgeTree.setColor(context.getResources().getColor(R.color.graphEdge1));
+        this.paintEdgeTree.setColor(context.getResources().getColor(R.color.graph_tree));
         this.paintEdgeTree.setStrokeWidth(edgeWidth);
         this.paintEdgeTree.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeBack = new Paint();
-        this.paintEdgeBack.setColor(context.getResources().getColor(R.color.graphEdge2));
+        this.paintEdgeBack.setColor(context.getResources().getColor(R.color.graph_back));
         this.paintEdgeBack.setStrokeWidth(edgeWidth);
         this.paintEdgeBack.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeCross = new Paint();
-        this.paintEdgeCross.setColor(context.getResources().getColor(R.color.graphEdge3));
+        this.paintEdgeCross.setColor(context.getResources().getColor(R.color.graph_cross));
         this.paintEdgeCross.setStrokeWidth(edgeWidth);
         this.paintEdgeCross.setAntiAlias(ANTI_ALIAS);
 
         this.paintEdgeForward = new Paint();
-        this.paintEdgeForward.setColor(context.getResources().getColor(R.color.graphEdge4));
+        this.paintEdgeForward.setColor(context.getResources().getColor(R.color.graph_forward));
         this.paintEdgeForward.setStrokeWidth(edgeWidth);
         this.paintEdgeForward.setAntiAlias(ANTI_ALIAS);
 

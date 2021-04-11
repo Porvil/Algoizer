@@ -4,10 +4,10 @@
     <color name="white">#FFFFFF</color>
 
     // Graph Tree Edges
-    <color name="graphEdge1">#00A2DF</color> // TREE
-    <color name="graphEdge2">#e41234</color> // BACK
-    <color name="graphEdge3">#66a594</color> // CROSS
-    <color name="graphEdge4">#703f27</color> // FORWARD
+    <color name="graph_tree">#00A2DF</color> // TREE
+    <color name="graph_back">#e41234</color> // BACK
+    <color name="graph_cross">#66a594</color> // CROSS
+    <color name="graph_forward">#703f27</color> // FORWARD
 
     // BLUE PALETTE
     <color name = "blue_shade"  > #ecf9fc </color>

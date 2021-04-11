@@ -97,35 +97,35 @@
 
             <CheckBox
                 android:id="@+id/cb_tree"
-                style="@style/S_CheckBox_Graph"
+                style="@style/S_CheckBox_Tree"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Tree Edge" />
+                android:textColor="@color/graph_tree" />
 
             <CheckBox
                 android:id="@+id/cb_back"
-                style="@style/S_CheckBox_Graph"
+                style="@style/S_CheckBox_Back"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Back Edge" />
+                android:textColor="@color/graph_back" />
 
             <CheckBox
                 android:id="@+id/cb_forward"
-                style="@style/S_CheckBox_Graph"
+                style="@style/S_CheckBox_Forward"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Forward Edge" />
+                android:textColor="@color/graph_forward" />
 
             <CheckBox
                 android:id="@+id/cb_cross"
-                style="@style/S_CheckBox_Graph"
+                style="@style/S_CheckBox_Cross"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Cross Edge" />
+                android:textColor="@color/graph_cross" />
 
         </LinearLayout>
 
