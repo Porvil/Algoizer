@@ -51,7 +51,7 @@ public class GraphTreePopUp{
     final int MINIMIZE_ICON = R.drawable.ic_baseline_remove_24;
     final int MAXIMIZE_ICON = R.drawable.ic_baseline_open_in_full_24;
 
-    GraphTreePopUp(Context _context, int _width, int _height, View _parent){
+    public GraphTreePopUp(Context _context, int _width, int _height, View _parent){
         this.context = _context;
         this.width = _width;
         this.height = _height;
@@ -152,7 +152,7 @@ public class GraphTreePopUp{
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
-    void create(String title, GraphTree graphTree){
+    public void create(String title, GraphTree graphTree){
         this.title = title;
         this.graphTree = graphTree;
         this.iv_popupgraphname.setText(title);
@@ -198,14 +198,14 @@ public class GraphTreePopUp{
     }
 
     // Shows the popUpWindow if not already showing
-    void show(){
+    public void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
             popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, parent.getWidth() - width, 0);
         }
     }
 
     // Reset icons and resets the state of popUp checkboxes
-    void dismiss(){
+    public void dismiss(){
         if(popupwindow != null){
             cb_tree.setChecked(true);
             cb_forward.setChecked(true);

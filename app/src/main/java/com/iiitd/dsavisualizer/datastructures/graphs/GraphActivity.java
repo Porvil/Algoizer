@@ -123,8 +123,8 @@ public class GraphActivity extends BaseActivity {
 //    GraphSequence graphSequence;
 //    GraphTree graphTree;
     GraphAlgorithm graphAlgorithm;
-    GraphTreePopUp graphTreePopUp;
-    GraphDSPopUp graphTreeDSPopUp;
+//    GraphTreePopUp graphTreePopUp;
+//    GraphDSPopUp graphTreeDSPopUp;
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
@@ -734,12 +734,12 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.BFS, vertexNumber);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.BFS, vertexNumber);
 
-                        graphTreePopUp.create("BFS Tree", graphAlgorithm.graphTree);
-                        graphTreePopUp.show();
-
-                        graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+//                        graphTreePopUp.create("BFS Tree", graphAlgorithm.graphTree);
+//                        graphTreePopUp.show();
+//
+//                        graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
                     }
                 }
                 break;
@@ -761,7 +761,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.BFS_CC, -1);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.BFS_CC, -1);
                     }
                 }
                 break;
@@ -791,12 +791,12 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.DFS, vertexNumber);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.DFS, vertexNumber);
 
-                        graphTreePopUp.create("DFS Tree", graphAlgorithm.graphTree);
-                        graphTreePopUp.show();
-
-                        graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+//                        graphTreePopUp.create("DFS Tree", graphAlgorithm.graphTree);
+//                        graphTreePopUp.show();
+//
+//                        graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
                     }
                 }
                 break;
@@ -818,7 +818,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.DFS_CC, -1);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.DFS_CC, -1);
                     }
                 }
                 break;
@@ -852,7 +852,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.DIJKSTRA, vertexNumber);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.DIJKSTRA, vertexNumber);
                     }
                 }
                 break;
@@ -874,7 +874,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.BELLMAN_FORD, -1);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.BELLMAN_FORD, -1);
                     }
                 }
                 break;
@@ -896,7 +896,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.KRUSKALS, -1);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.KRUSKALS, -1);
 
                     }
                 }
@@ -919,7 +919,7 @@ public class GraphActivity extends BaseActivity {
                         resetGraphSequence();
                         graphWrapper.board.clearGraph(true);
 
-                        graphAlgorithm = GraphAlgorithm.getInstance(graphWrapper.graph, GraphAlgorithmType.PRIMS, -1);
+                        graphAlgorithm.runAlgo(graphWrapper.graph, GraphAlgorithmType.PRIMS, -1);
                     }
                 }
                 break;
@@ -931,6 +931,12 @@ public class GraphActivity extends BaseActivity {
 
         switch (error){
             case 0: // No Error
+
+                // Changes graph controls to VIEW_STATE
+                graphControls.updateState(rb_graphcontrol_view);
+                graphControls.updateDrawables();
+                System.out.println(graphControls);
+
                 hideControls();
                 closeDrawer(0);
                 System.out.println(graphAlgorithm.graphSequence);
@@ -970,17 +976,17 @@ public class GraphActivity extends BaseActivity {
                         if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
                             System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
 
-                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
-                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
-                            graphTreeDSPopUp.show();
+//                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+//                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
+//                            graphTreeDSPopUp.show();
                         }
 
                         else if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.DFS) {
                             System.out.println(graphAnimationState.graphAnimationStateExtra.stacks);
 
-                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
-                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
-                            graphTreeDSPopUp.show();
+//                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+//                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
+//                            graphTreeDSPopUp.show();
                         }
 
 //                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
@@ -1232,9 +1238,7 @@ public class GraphActivity extends BaseActivity {
     public void onGraphControlsClick(View view) {
         graphControls.updateState(view);
         graphControls.updateDrawables();
-
         System.out.println(graphControls);
-
     }
 
     public void updateGraphViewState(){
@@ -1508,7 +1512,10 @@ public class GraphActivity extends BaseActivity {
         // Reset Animation Graph
         graphWrapper.board.clearGraph(true);
 
-        graphAlgorithm = GraphAlgorithm.getInstance();
+        if(graphAlgorithm != null){
+            graphAlgorithm.reset();
+        }
+//        graphAlgorithm = GraphAlgorithm.getInstance(context, ll_anim);
 
 //        // Reset GraphSequence
 //        if(graphAlgorithm.graphSequence != null){
@@ -1523,13 +1530,13 @@ public class GraphActivity extends BaseActivity {
         UtilUI.setText(tv_seqno, "0");
 
         // Reset PopUps If Any
-        if(graphTreePopUp != null){
-            graphTreePopUp.dismiss();
-        }
-
-        if(graphTreeDSPopUp != null){
-            graphTreeDSPopUp.dismiss();
-        }
+//        if(graphTreePopUp != null){
+//            graphTreePopUp.dismiss();
+//        }
+//
+//        if(graphTreeDSPopUp != null){
+//            graphTreeDSPopUp.dismiss();
+//        }
     }
 
     public void resetGraphSequence(){
@@ -1613,7 +1620,7 @@ public class GraphActivity extends BaseActivity {
     @Override
     protected void initViews() {
 
-        graphAlgorithm = GraphAlgorithm.getInstance();
+//        graphAlgorithm = GraphAlgorithm.getInstance();
 
         graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
         graphControls.updateDrawables();
@@ -1624,8 +1631,9 @@ public class GraphActivity extends BaseActivity {
             public void run() {
                 int treePopUpWidth = (int) UtilUI.dpToPx(context, 200);
                 int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
-                graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, ll_anim.getHeight(), ll_anim);
-                graphTreeDSPopUp = new GraphDSPopUp(context, treeDSPopUpWidth, ll_anim.getHeight(), ll_anim);
+                graphAlgorithm = GraphAlgorithm.getInstance(context, ll_anim);
+//                graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, ll_anim.getHeight(), ll_anim);
+//                graphTreeDSPopUp = new GraphDSPopUp(context, treeDSPopUpWidth, ll_anim.getHeight(), ll_anim);
             }
         });
 

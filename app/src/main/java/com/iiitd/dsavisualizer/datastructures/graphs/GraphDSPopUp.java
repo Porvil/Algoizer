@@ -48,7 +48,7 @@ public class GraphDSPopUp {
     final int MINIMIZE_ICON = R.drawable.ic_baseline_remove_24;
     final int MAXIMIZE_ICON = R.drawable.ic_baseline_open_in_full_24;
 
-    GraphDSPopUp(Context _context, int _width, int _height, View _parent){
+    public GraphDSPopUp(Context _context, int _width, int _height, View _parent){
         this.context = _context;
         this.width = _width;
         this.height = _height;
@@ -118,7 +118,7 @@ public class GraphDSPopUp {
         popupwindow = new PopupWindow(popUpView, width, height, false);
     }
 
-    void create(String title, final GraphAlgorithmType graphAlgorithmType){
+    public void create(String title, final GraphAlgorithmType graphAlgorithmType){
         this.title = title;
         this.graphAlgorithmType = graphAlgorithmType;
         this.iv_popupgraphname.setText(title);
@@ -168,7 +168,7 @@ public class GraphDSPopUp {
     }
 
     // arrayList could represent both BFS(queue) and DFS(stack) as per current DS selected
-    void update(final ArrayList<Integer> arrayList){
+    public void update(final ArrayList<Integer> arrayList){
 
         ll_graphds.post(new Runnable() {
             @Override
@@ -274,14 +274,14 @@ public class GraphDSPopUp {
     }
 
     // Shows the popUpWindow if not already showing
-    void show(){
+    public void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
             popupwindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
         }
     }
 
     // Reset icons and resets the state of popUp checkboxes
-    void dismiss(){
+    public void dismiss(){
         if(popupwindow != null){
             if(isMinimized) {
                 isMinimized = false;
