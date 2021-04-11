@@ -977,16 +977,16 @@ public class GraphActivity extends BaseActivity {
                             System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
 
 //                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
-//                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
-//                            graphTreeDSPopUp.show();
+                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
+                            graphAlgorithm.graphTreeDSPopUp.show();
                         }
 
                         else if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.DFS) {
                             System.out.println(graphAnimationState.graphAnimationStateExtra.stacks);
 
 //                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
-//                            graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
-//                            graphTreeDSPopUp.show();
+                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
+                            graphAlgorithm.graphTreeDSPopUp.show();
                         }
 
 //                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
