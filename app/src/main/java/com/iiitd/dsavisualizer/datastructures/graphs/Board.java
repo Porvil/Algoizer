@@ -333,13 +333,19 @@ public class Board {
         pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
         pVertexWeightText.setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
+        int finalX = x;
+        int finalY = (int) (y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2);
+
         Paint paint = new Paint();
+        paint.setAntiAlias(ANTI_ALIAS);
         paint.setColor(shade);
+//        paint.setColor(Color.RED);
+        paint.setAlpha(128);
         canvas.drawRect(rectText, paint);
-        Rect background = getTextBackgroundSize(x, y, text, pVertexWeightText);
+        Rect background = getTextBackgroundSize(finalX, finalY, text, pVertexWeightText);
         canvas.drawRect(background, paint);
 
-        canvas.drawText(text, x, y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2, pVertexWeightText);
+        canvas.drawText(text, finalX, finalY, pVertexWeightText);
     }
 
     // Draws an Edge
