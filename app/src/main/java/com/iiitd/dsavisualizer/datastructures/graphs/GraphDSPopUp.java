@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -33,6 +34,7 @@ public class GraphDSPopUp {
     TextView iv_popupgraphname;
     ImageButton btn_minimize;
     ConstraintLayout cl_bottom;
+    ScrollView sl_graphds;
     LinearLayout ll_graphds;
     LinearLayout.LayoutParams elementLayoutParams;
     LinearLayout.LayoutParams otherLayoutParams;
@@ -66,6 +68,7 @@ public class GraphDSPopUp {
 
         this.popUpView = inflater.inflate(R.layout.layout_popup_dsgraph, null);
 
+        this.sl_graphds = popUpView.findViewById(R.id.sl_graphds);
         this.ll_graphds = popUpView.findViewById(R.id.ll_graphds);
         this.btn_minimize = popUpView.findViewById(R.id.btn_minimize);
         this.cl_bottom = popUpView.findViewById(R.id.cl_bottom);
@@ -416,6 +419,10 @@ public class GraphDSPopUp {
                         } else {
                             // Stack elements
                             if (graphAnimationStateExtra.edges != null) {
+                                int indexHighlight = 0;
+                                int indexDone = 0;
+                                int index = 0;
+                                int width = (int) UtilUI.dpToPx(context, 30);
                                 for (Edge i : graphAnimationStateExtra.edges) {
                                     int color = UtilUI.getCurrentThemeColor(context, R.attr.base);;
                                     if(i.graphAnimationStateType == GraphAnimationStateType.NONE ||
@@ -424,27 +431,37 @@ public class GraphDSPopUp {
                                     }
                                     else if(i.graphAnimationStateType == GraphAnimationStateType.HIGHLIGHT){
                                         color =  UtilUI.getCurrentThemeColor(context, R.attr.medium);
+                                        indexHighlight = index;
                                     }
                                     else if(i.graphAnimationStateType == GraphAnimationStateType.DONE){
                                         color =  UtilUI.getCurrentThemeColor(context, R.attr.dark);
+                                        indexDone = index;
                                     }
 
                                     System.out.println(i);
                                     View myView = inflater.inflate(R.layout.element_graph_ds, null);
                                     LinearLayout.LayoutParams layoutParams
                                             = new LinearLayout.LayoutParams
-                                            (LinearLayout.LayoutParams.MATCH_PARENT, (int) UtilUI.dpToPx(context, 50));
+                                            (LinearLayout.LayoutParams.MATCH_PARENT, width);
                                     myView.setLayoutParams(layoutParams);
                                     myView.setPadding(5, 5, 5, 5);
                                     TextView tv_queueViewElement = myView.findViewById(R.id.tv_elementvalue);
-                                    tv_queueViewElement.setText(i.src + " -> " + i.des + " " + i.weight);
+                                    tv_queueViewElement.setText(i.src + " ── " + i.des + " ( " + i.weight + " )");
                                     tv_queueViewElement.setTextColor(Color.WHITE);
                                     tv_queueViewElement.setTextSize(16);
                                     Drawable drawable = UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT);
                                     drawable.setTint(color);
                                     tv_queueViewElement.setBackground(drawable);
                                     ll_graphds.addView(myView);
+                                    index++;
                                 }
+
+                                int max = Math.max(indexHighlight, indexDone) - 5;
+                                if(max < 0){
+                                    max = 0;
+                                }
+                                System.out.println(max);
+                                sl_graphds.smoothScrollTo(0, max * width);
                             }
                         }
                     }
