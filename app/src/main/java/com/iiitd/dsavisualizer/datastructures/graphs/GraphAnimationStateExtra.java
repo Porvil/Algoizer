@@ -1,6 +1,8 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -63,6 +65,13 @@ public class GraphAnimationStateExtra {
             this.priorityQueueElementStates.add(
                     new PriorityQueueElementState(entry.getKey(), entry.getValue().visited, entry.getValue().dijkstraDist));
         }
+
+        Collections.sort(priorityQueueElementStates, new Comparator<PriorityQueueElementState>() {
+            @Override
+            public int compare(PriorityQueueElementState o1, PriorityQueueElementState o2) {
+                return Integer.compare(o1.distance, o2.distance);
+            }
+        });
 
         return this;
     }

@@ -18,4 +18,8 @@ public class PriorityQueueElementState {
         String dist = distance == Integer.MAX_VALUE ? UtilUI.getInfinity() : String.valueOf(distance);
         return data + " " + visited + " " + dist;
     }
+
+    public String getDistanceString(){
+        return distance == Integer.MAX_VALUE ? UtilUI.getInfinity() : String.valueOf(distance);
+    }
 }

@@ -136,6 +136,11 @@ public class GraphAlgorithm {
             case PRIMS:{
                 Prims prims = new Prims(graph);
                 this.graphSequence = prims.prims();
+                this.graphTreeDSPopUp.create("Priority Queue", DIJKSTRA);
+                if(graphSequence.graphAnimationStates.size() > 0) {
+                    graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
+                }
+                graphTreeDSPopUp.show();
             }
                 break;
         }

@@ -177,7 +177,7 @@ public class GraphDSPopUp {
                     tv_emptyArray.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
                     ll_graphds.addView(emptyArray);
                 }
-                else if(graphAlgorithmType == GraphAlgorithmType.DIJKSTRA){
+                else if(graphAlgorithmType == GraphAlgorithmType.DIJKSTRA || graphAlgorithmType == GraphAlgorithmType.PRIMS){
                     View emptyArray = inflater.inflate(R.layout.element_graph_ds, null);
                     emptyArray.setLayoutParams(otherLayoutParams);
                     emptyArray.setPadding(5, 5, 5, 5);
@@ -477,7 +477,8 @@ public class GraphDSPopUp {
                             }
                         }
                     }
-                    else if (graphAlgorithmType == GraphAlgorithmType.DIJKSTRA) {
+                    else if (graphAlgorithmType == GraphAlgorithmType.DIJKSTRA
+                            || graphAlgorithmType == GraphAlgorithmType.PRIMS) {
                         if (graphAnimationStateExtra.priorityQueueElementStates == null
                                 || graphAnimationStateExtra.priorityQueueElementStates.size() == 0) {
                             View emptyArray = inflater.inflate(R.layout.element_graph_ds, null);
@@ -502,13 +503,15 @@ public class GraphDSPopUp {
                                     myView.setPadding(5, 5, 5, 5);
                                     TextView tv_queueViewElement = myView.findViewById(R.id.tv_elementvalue);
 //                                    tv_queueViewElement.setText(i.data + " " + i.visited + " " + i.distance);
-                                    tv_queueViewElement.setText(i.toString());
+                                    tv_queueViewElement.setText(i.data + " ( " + i.getDistanceString() +  " )");
                                     tv_queueViewElement.setTextColor(Color.WHITE);
                                     tv_queueViewElement.setTextSize(16);
                                     Drawable drawable = UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT);
 //                                    drawable.setTint(color);
                                     tv_queueViewElement.setBackground(drawable);
-                                    ll_graphds.addView(myView);
+                                    if(!i.visited) {
+                                        ll_graphds.addView(myView);
+                                    }
                                 }
                             }
                         }

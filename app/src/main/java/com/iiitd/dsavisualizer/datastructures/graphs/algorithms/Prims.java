@@ -57,7 +57,10 @@ public class Prims {
                 GraphAnimationState.create()
                         .setInfo("prim()")
                         .setVerticesState(verticesState)
-                        .addEdges(edges));
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addPriorityQueueElementState(map)));
 
         // Fixing a Source Vertex
         for (Map.Entry<Integer, Vertex> entry : graph.vertexMap.entrySet()) {
@@ -71,7 +74,10 @@ public class Prims {
                 GraphAnimationState.create()
                         .setInfo("Source vertex <- " + source + " selected.")
                         .setVerticesState(verticesState)
-                        .addEdges(edges));
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addPriorityQueueElementState(map)));
 
         // Setting initial distances
         graphSequence.addGraphAnimationState(
@@ -81,7 +87,8 @@ public class Prims {
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
                                 GraphAnimationStateExtra.create()
-                                .addMapDijkstra(map)));
+                                .addMapDijkstra(map)
+                                        .addPriorityQueueElementState(map)));
 
         // Prim's Algorithm
         for (int i = 0; i < size; i++) {
@@ -110,7 +117,8 @@ public class Prims {
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
                                     GraphAnimationStateExtra.create()
-                                            .addMapDijkstra(map)));
+                                            .addMapDijkstra(map)
+                                            .addPriorityQueueElementState(map)));
 
             startVertexCLRS.visited = true;
             for (Edge curEdge : graph.edgeListMap.get(vertexNo)) {
@@ -146,7 +154,8 @@ public class Prims {
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
                                             GraphAnimationStateExtra.create()
-                                                    .addMapDijkstra(map)));
+                                                    .addMapDijkstra(map)
+                                                    .addPriorityQueueElementState(map)));
 
                     if (tempDistance < otherDistance) {
                         endVertexCLRS.dijkstraDist = tempDistance;
@@ -166,7 +175,8 @@ public class Prims {
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                .addMapDijkstra(map)));
+                                .addMapDijkstra(map)
+                                .addPriorityQueueElementState(map)));
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
