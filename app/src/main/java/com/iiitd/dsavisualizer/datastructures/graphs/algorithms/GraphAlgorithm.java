@@ -111,6 +111,11 @@ public class GraphAlgorithm {
             case DIJKSTRA:{
                 Dijkstra dijkstra = new Dijkstra(graph);
                 this.graphSequence = dijkstra.dijkstra(vertexNumber);
+                this.graphTreeDSPopUp.create("Priority Queue", DIJKSTRA);
+                if(graphSequence.graphAnimationStates.size() > 0) {
+                    graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
+                }
+                graphTreeDSPopUp.show();
             }
                 break;
             case BELLMAN_FORD:{

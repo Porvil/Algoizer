@@ -21,6 +21,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class GraphDSPopUp {
 
@@ -166,6 +167,17 @@ public class GraphDSPopUp {
                     ll_graphds.addView(emptyStackView);
                 }
                 else if(graphAlgorithmType == GraphAlgorithmType.KRUSKALS){
+                    View emptyArray = inflater.inflate(R.layout.element_graph_ds, null);
+                    emptyArray.setLayoutParams(otherLayoutParams);
+                    emptyArray.setPadding(5, 5, 5, 5);
+                    TextView tv_emptyArray = emptyArray.findViewById(R.id.tv_elementvalue);
+                    tv_emptyArray.setText("Empty");
+                    tv_emptyArray.setTextColor(Color.WHITE);
+                    tv_emptyArray.setTextSize(16);
+                    tv_emptyArray.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                    ll_graphds.addView(emptyArray);
+                }
+                else if(graphAlgorithmType == GraphAlgorithmType.DIJKSTRA){
                     View emptyArray = inflater.inflate(R.layout.element_graph_ds, null);
                     emptyArray.setLayoutParams(otherLayoutParams);
                     emptyArray.setPadding(5, 5, 5, 5);
@@ -462,6 +474,42 @@ public class GraphDSPopUp {
                                 }
                                 System.out.println(max);
                                 sl_graphds.smoothScrollTo(0, max * width);
+                            }
+                        }
+                    }
+                    else if (graphAlgorithmType == GraphAlgorithmType.DIJKSTRA) {
+                        if (graphAnimationStateExtra.priorityQueueElementStates == null
+                                || graphAnimationStateExtra.priorityQueueElementStates.size() == 0) {
+                            View emptyArray = inflater.inflate(R.layout.element_graph_ds, null);
+                            emptyArray.setLayoutParams(otherLayoutParams);
+                            emptyArray.setPadding(5, 5, 5, 5);
+                            TextView tv_emptyArray = emptyArray.findViewById(R.id.tv_elementvalue);
+                            tv_emptyArray.setText("Empty");
+                            tv_emptyArray.setTextColor(Color.WHITE);
+                            tv_emptyArray.setTextSize(16);
+                            tv_emptyArray.setBackground(UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT));
+                            ll_graphds.addView(emptyArray);
+                        } else {
+                            // Stack elements
+                            if (graphAnimationStateExtra.priorityQueueElementStates != null) {
+                                int width = (int) UtilUI.dpToPx(context, 30);
+                                for (PriorityQueueElementState i : graphAnimationStateExtra.priorityQueueElementStates) {
+                                    View myView = inflater.inflate(R.layout.element_graph_ds, null);
+                                    LinearLayout.LayoutParams layoutParams
+                                            = new LinearLayout.LayoutParams
+                                            (LinearLayout.LayoutParams.MATCH_PARENT, width);
+                                    myView.setLayoutParams(layoutParams);
+                                    myView.setPadding(5, 5, 5, 5);
+                                    TextView tv_queueViewElement = myView.findViewById(R.id.tv_elementvalue);
+//                                    tv_queueViewElement.setText(i.data + " " + i.visited + " " + i.distance);
+                                    tv_queueViewElement.setText(i.toString());
+                                    tv_queueViewElement.setTextColor(Color.WHITE);
+                                    tv_queueViewElement.setTextSize(16);
+                                    Drawable drawable = UtilUI.getDrawable(context, AppSettings.ROUNDED_RECT_ELEMENT);
+//                                    drawable.setTint(color);
+                                    tv_queueViewElement.setBackground(drawable);
+                                    ll_graphds.addView(myView);
+                                }
                             }
                         }
                     }

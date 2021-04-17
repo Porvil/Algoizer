@@ -11,11 +11,13 @@ public class GraphAnimationStateExtra {
     public ArrayList<Integer> stacks;
     public HashMap<Integer, Integer> map; // vertex number -> vertex weight
     public ArrayList<Edge> edges; // used by kruskal's
+    public ArrayList<PriorityQueueElementState> priorityQueueElementStates; // Used by dijkstra
 
     public GraphAnimationStateExtra() {
         this.queues = new ArrayList<>();
         this.stacks = new ArrayList<>();
         this.map = new HashMap<>();
+        this.priorityQueueElementStates = new ArrayList<>();
         this.edges = new ArrayList<>();
     }
 
@@ -53,6 +55,15 @@ public class GraphAnimationStateExtra {
         for(Edge edge : _edges){
             edges.add(Edge.getClone(edge));
         }
+        return this;
+    }
+
+    public GraphAnimationStateExtra addPriorityQueueElementState(HashMap<Integer, VertexCLRS> oldMap){
+        for (Map.Entry<Integer, VertexCLRS> entry : oldMap.entrySet()) {
+            this.priorityQueueElementStates.add(
+                    new PriorityQueueElementState(entry.getKey(), entry.getValue().visited, entry.getValue().dijkstraDist));
+        }
+
         return this;
     }
 

@@ -56,7 +56,10 @@ public class Dijkstra {
                 GraphAnimationState.create()
                         .setInfo("dijkstra(" + source + ")")
                         .setVerticesState(verticesState)
-                        .addEdges(edges));
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(
+                                GraphAnimationStateExtra.create()
+                                        .addPriorityQueueElementState(map)));
 
         map.get(source).dijkstraDist = 0;
 
@@ -68,7 +71,8 @@ public class Dijkstra {
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
                                 GraphAnimationStateExtra.create()
-                                        .addMapDijkstra(map)));
+                                        .addMapDijkstra(map)
+                                        .addPriorityQueueElementState(map)));
 
         // Dijkstra
         for (int i = 0; i < size; i++) {
@@ -97,7 +101,8 @@ public class Dijkstra {
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
                                     GraphAnimationStateExtra.create()
-                                            .addMapDijkstra(map)));
+                                            .addMapDijkstra(map)
+                                            .addPriorityQueueElementState(map)));
 
             startVertexCLRS.visited = true;
             for (Edge curEdge : graph.edgeListMap.get(vertexNo)) {
@@ -132,7 +137,8 @@ public class Dijkstra {
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
                                             GraphAnimationStateExtra.create()
-                                                    .addMapDijkstra(map)));
+                                                    .addMapDijkstra(map)
+                                                    .addPriorityQueueElementState(map)));
 
                     if (tempDistance < otherDistance) {
                         endVertexCLRS.dijkstraDist = tempDistance;
@@ -153,7 +159,8 @@ public class Dijkstra {
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
-                                .addMapDijkstra(map)));
+                                .addMapDijkstra(map)
+                                .addPriorityQueueElementState(map)));
 
         // ALL DONE
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {

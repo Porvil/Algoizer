@@ -186,4 +186,28 @@ public class VertexCLRS {
         this.graphAnimationStateType = graphAnimationStateType;
     }
 
+    public static VertexCLRS getClone(VertexCLRS vertexCLRS){
+        VertexCLRS vertexCLRS1 = new VertexCLRS(vertexCLRS.getVertex());
+
+        vertexCLRS1.data = vertexCLRS.data;
+        vertexCLRS1.row = vertexCLRS.row;
+        vertexCLRS1.col = vertexCLRS.col;
+        vertexCLRS1.graphAnimationStateType = vertexCLRS.graphAnimationStateType;
+
+        vertexCLRS1.graphAlgorithmType = vertexCLRS.graphAlgorithmType;
+        vertexCLRS1.color = vertexCLRS.color;
+        vertexCLRS1.parent = vertexCLRS.parent;
+        vertexCLRS1.bfsDist = vertexCLRS.bfsDist;
+        vertexCLRS1.startTime = vertexCLRS.startTime;
+        vertexCLRS1.finishTime = vertexCLRS.finishTime;
+        vertexCLRS1.dfsDepth = vertexCLRS.dfsDepth;
+        vertexCLRS1.dijkstraDist = vertexCLRS.dijkstraDist;
+        vertexCLRS1.bellmanFordDist = vertexCLRS.bellmanFordDist;
+        vertexCLRS1.visited = vertexCLRS.visited;
+        vertexCLRS1.connectedID = vertexCLRS.connectedID;
+
+
+        return vertexCLRS1;
+    }
+
 }
