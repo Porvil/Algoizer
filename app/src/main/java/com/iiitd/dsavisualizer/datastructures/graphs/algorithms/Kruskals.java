@@ -39,7 +39,8 @@ public class Kruskals {
         if (size < 1)
             return graphSequence;
 
-        ArrayList<Edge> allEdges = graph.getAllEdges();
+        ArrayList<Edge> allEdgesBothWays = graph.getAllEdges();
+        ArrayList<Edge> allEdges = new ArrayList<>();
         DisjointSet ds = new DisjointSet();
 
         // Add all vertices
@@ -49,18 +50,23 @@ public class Kruskals {
         }
 
         // Add all edges
-        for(Edge edge : allEdges) {
+        for(Edge edge : allEdgesBothWays) {
             if(edge.isFirstEdge) {
                 edges.add(new Edge(edge, NONE));
+//                allEdges.add(edge);
             }
         }
+
+        allEdges.addAll(edges);
 
         // Start Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
                         .setInfo("kruskal()")
                         .setVerticesState(verticesState)
-                        .addEdges(edges));
+                        .addEdges(edges)
+                        .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
+                        .addEdges(allEdges)));
 
         // Sort Edges Start
         graphSequence.addGraphAnimationState(

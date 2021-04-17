@@ -40,6 +40,8 @@ public class Edge {
                 "src=" + src +
                 ", des=" + des +
                 ", weight=" + weight +
+                ", isFirstEdge=" + isFirstEdge +
+                ", graphAnimationStateType=" + graphAnimationStateType +
                 '}';
     }
 

@@ -49,9 +49,10 @@ public class GraphAnimationStateExtra {
         return this;
     }
 
-    public GraphAnimationStateExtra addEdges(ArrayList<Edge> edges){
-        this.edges.addAll(edges);
-
+    public GraphAnimationStateExtra addEdges(ArrayList<Edge> _edges){
+        for(Edge edge : _edges){
+            edges.add(Edge.getClone(edge));
+        }
         return this;
     }
 

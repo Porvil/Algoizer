@@ -972,22 +972,23 @@ public class GraphActivity extends BaseActivity {
                         System.out.println(graphAnimationState);
                         System.out.println(graphAnimationState.edges.size());
 
+                        graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra);
                         // MAY BE CHECK IF GRAPH_ANIMATION_STATE_EXTRA != NULL
-                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
-                            System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
-
-//                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
-                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
-                            graphAlgorithm.graphTreeDSPopUp.show();
-                        }
-
-                        else if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.DFS) {
-                            System.out.println(graphAnimationState.graphAnimationStateExtra.stacks);
-
-//                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
-                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
-                            graphAlgorithm.graphTreeDSPopUp.show();
-                        }
+//                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.BFS) {
+//                            System.out.println(graphAnimationState.graphAnimationStateExtra.queues);
+//
+////                            graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+//                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.queues);
+//                            graphAlgorithm.graphTreeDSPopUp.show();
+//                        }
+//
+//                        else if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.DFS) {
+//                            System.out.println(graphAnimationState.graphAnimationStateExtra.stacks);
+//
+////                            graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+//                            graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra.stacks);
+//                            graphAlgorithm.graphTreeDSPopUp.show();
+//                        }
 
 //                        if(graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.PRIMS ||
 //                            graphAlgorithm.graphSequence.graphAlgorithmType == GraphAlgorithmType.KRUSKALS){
