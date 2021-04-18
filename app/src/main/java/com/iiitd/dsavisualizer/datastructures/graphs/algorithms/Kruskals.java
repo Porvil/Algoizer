@@ -71,7 +71,7 @@ public class Kruskals {
         // Sort Edges Start
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Sort all edges")
+                        .setInfo("sort all edges")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
@@ -111,8 +111,8 @@ public class Kruskals {
 
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Edge (" + curEdge.src + " ── " + curEdge.des + ")"
-                                            + "\n" + "Edge added to MST.")
+                                    .setInfo("edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                            + "\n" + "edge added to MST.")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
@@ -125,8 +125,8 @@ public class Kruskals {
                 else {
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Edge (" + curEdge.src + " ── " + curEdge.des + ")" + "\n"
-                                            + "Vertices (" + curEdge.src + ", " + curEdge.des + ") already in MST, continue.")
+                                    .setInfo("edge (" + curEdge.src + " ── " + curEdge.des + ")" + "\n"
+                                            + "vertices (" + curEdge.src + ", " + curEdge.des + ") already in MST, continue.")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()

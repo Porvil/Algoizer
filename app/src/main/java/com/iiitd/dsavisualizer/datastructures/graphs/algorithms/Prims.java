@@ -72,7 +72,7 @@ public class Prims {
         // Picking a start Vertex from Graph
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Source vertex <- " + source + " selected.")
+                        .setInfo("source vertex <- " + source + " selected.")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -82,7 +82,7 @@ public class Prims {
         // Setting initial distances
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("All vertices distance <- "+ infinity + "\n" + "Source vertex (" + source + ") distance <- 0")
+                        .setInfo("all vertices distance <─ "+ infinity + "\n" + "source vertex (" + source + ") distance <─ 0")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -111,8 +111,8 @@ public class Prims {
             // Selecting Min. Value vertex not in MST
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("Remove min-key vertex from priority queue" + "\n"
-                                    + "Vertex (" + vertexNo + ") selected to MST.")
+                            .setInfo("remove min-key vertex from priority queue" + "\n"
+                                    + "vertex (" + vertexNo + ") selected to MST.")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -148,7 +148,7 @@ public class Prims {
                     // Updating Distance of Edge's des. Vertex
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + vertexNo + "), Edge (" + vertexNo + " ── " + curEdge.des + ")"
+                                    .setInfo("vertex (" + vertexNo + "), edge (" + vertexNo + " ── " + curEdge.des + ")"
                                             + "\n" + updated)
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)

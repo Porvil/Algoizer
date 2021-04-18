@@ -104,7 +104,7 @@ public class BellmanFord {
                     // Updating Distance of Edge's des. Vertex
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + curEdge.src + "), Edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                    .setInfo("vertex (" + curEdge.src + "), edge (" + curEdge.src + " ── " + curEdge.des + ")"
                                             + "\n" + updated)
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
@@ -128,7 +128,7 @@ public class BellmanFord {
                 // Updating Distance of Edge's des. Vertex
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("No Edges Relaxed in this iteration" + "\n" + "Break loop")
+                                .setInfo("no edges relaxed in this iteration" + "\n" + "break loop")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
@@ -173,7 +173,7 @@ public class BellmanFord {
                     // Updating Distance of Edge's des. Vertex
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + curEdge.src + "), Edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                    .setInfo("vertex (" + curEdge.src + "), edge (" + curEdge.src + " ── " + curEdge.des + ")"
                                             + "\n" + updated)
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
@@ -185,7 +185,7 @@ public class BellmanFord {
                         // Updating Distance of Edge's des. Vertex
                         graphSequence.addGraphAnimationState(
                                 GraphAnimationState.create()
-                                        .setInfo("Edge Relaxed in " + size + "th iteration(last)." + "\n" + "Negative Loop in graph!!!")
+                                        .setInfo("edge relaxed in " + size + "th iteration(last)." + "\n" + "negative loop in graph!!!")
                                         .setVerticesState(verticesState)
                                         .addEdges(edges)
                                         .addGraphAnimationStateExtra(
@@ -211,13 +211,13 @@ public class BellmanFord {
 
         String finalResult = "";
         if(hasNegativeEdgeLoop){
-            finalResult = "\nGraph contains negative edge cycles";
+            finalResult = "\ngraph contains negative edge cycles";
         }
 
         // Set Final Edges
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Iterating over all vertices and" + "\n"
+                        .setInfo("iterating over all vertices and" + "\n"
                                 + "selecting their parent's to select final edges")
                         .setVerticesState(verticesState)
                         .addEdges(edges)

@@ -85,7 +85,7 @@ public class DFS {
         // Push to stack Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Source vertex(" + source + ") pushed to stack.")
+                        .setInfo("source vertex(" + source + ") pushed to stack.")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -188,7 +188,7 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Vertex (" + u + ") popped from stack, check all edges.")
+                        .setInfo("vertex (" + u + ") popped from stack, check all edges.")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -233,7 +233,7 @@ public class DFS {
 
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("Vertex (" + v + ") already visited, continue")
+                                .setInfo("vertex (" + v + ") already visited, continue")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
@@ -251,7 +251,7 @@ public class DFS {
 
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to stack")
+                                .setInfo("vertex (" + v + ") not visited" + "\n" + "added to stack")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
@@ -281,8 +281,8 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("All Edges of Vertex (" + u + ") visited" +
-                                "\n" + "Vertex (" + u + ") popped from stack")
+                        .setInfo("all edges of vertex (" + u + ") visited" +
+                                "\n" + "vertex (" + u + ") popped from stack")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -328,7 +328,7 @@ public class DFS {
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
                         .setInfo("dfsConnectedComponents() completed"
-                                + "\n" + "No of connected components = " + currentID)
+                                + "\n" + "no. of connected components = " + currentID)
                         .setVerticesState(verticesState)
                         .addEdges(edges));
 
@@ -351,7 +351,7 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Vertex (" + u + ") popped from stack, check all edges.")
+                        .setInfo("vertex (" + u + ") popped from stack, check all edges.")
                         .setVerticesState(verticesState)
                         .addEdges(edges));
 
@@ -370,7 +370,7 @@ public class DFS {
             if (map.get(v).color != WHITE) {
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("Vertex (" + v + ") already visited, continue")
+                                .setInfo("vertex (" + v + ") already visited, continue")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges));
 
@@ -383,7 +383,7 @@ public class DFS {
                 endVertexCLRS.parent = u;
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to stack")
+                                .setInfo("vertex (" + v + ") not visited" + "\n" + "added to stack")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges));
 
@@ -405,8 +405,8 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("All Edges of Vertex (" + u + ") visited" +
-                                "\n" + "Vertex (" + u + ") popped from stack")
+                        .setInfo("all edges of vertex (" + u + ") visited" +
+                                "\n" + "vertex (" + u + ") popped from stack")
                         .setVerticesState(verticesState)
                         .addEdges(edges));
     }

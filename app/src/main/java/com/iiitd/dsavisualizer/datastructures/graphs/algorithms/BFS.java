@@ -83,7 +83,7 @@ public class BFS {
         // Push to queue Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("Source vertex(" + source + ") added to queue.")
+                        .setInfo("source vertex(" + source + ") added to queue.")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -99,7 +99,7 @@ public class BFS {
             // Visit Node
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("Vertex (" + u + ") popped from queue, check all edges.")
+                            .setInfo("vertex (" + u + ") popped from queue, check all edges.")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -127,7 +127,7 @@ public class BFS {
 
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to queue")
+                                    .setInfo("vertex (" + v + ") not visited" + "\n" + "added to queue")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
@@ -140,7 +140,7 @@ public class BFS {
                 else{
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + v + ") already visited, continue")
+                                    .setInfo("vertex (" + v + ") already visited, continue")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(
@@ -180,7 +180,7 @@ public class BFS {
 
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("Vertex (" + u + ") all edges visited.")
+                            .setInfo("vertex (" + u + ") all edges visited.")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -301,7 +301,7 @@ public class BFS {
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
                         .setInfo("bfsConnectedComponents() completed"
-                                + "\n" + "No of connected components = " + currentID)
+                                + "\n" + "no. of connected components = " + currentID)
                         .setVerticesState(verticesState)
                         .addEdges(edges));
 
@@ -324,7 +324,7 @@ public class BFS {
             // Visit Node
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("Vertex (" + u + ") popped from queue, check all edges.")
+                            .setInfo("vertex (" + u + ") popped from queue, check all edges.")
                             .setVerticesState(verticesState)
                             .addEdges(edges));
 
@@ -347,7 +347,7 @@ public class BFS {
 
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + v + ") not visited" + "\n" + "Added to queue")
+                                    .setInfo("vertex (" + v + ") not visited" + "\n" + "added to queue")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges));
 
@@ -358,7 +358,7 @@ public class BFS {
                 else{
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("Vertex (" + v + ") already visited, continue")
+                                    .setInfo("vertex (" + v + ") already visited, continue")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges));
 

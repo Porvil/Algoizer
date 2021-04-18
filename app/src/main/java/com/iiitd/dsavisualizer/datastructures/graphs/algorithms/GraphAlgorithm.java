@@ -77,7 +77,7 @@ public class GraphAlgorithm {
 
                 this.graphTreePopUp.create("BFS Tree", graphAlgorithm.graphTree);
                 this.graphTreePopUp.show();
-                this.graphTreeDSPopUp.create("QUEUE", GraphAlgorithmType.BFS);
+                this.graphTreeDSPopUp.create("Queue", GraphAlgorithmType.BFS);
                 if(graphSequence.graphAnimationStates.size() > 0) {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
@@ -96,7 +96,7 @@ public class GraphAlgorithm {
 
                 this.graphTreePopUp.create("DFS Tree", graphAlgorithm.graphTree);
                 this.graphTreePopUp.show();
-                this.graphTreeDSPopUp.create("STACK", GraphAlgorithmType.DFS);
+                this.graphTreeDSPopUp.create("Stack", GraphAlgorithmType.DFS);
                 if(graphSequence.graphAnimationStates.size() > 0) {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
@@ -126,7 +126,7 @@ public class GraphAlgorithm {
             case KRUSKALS: {
                 Kruskals kruskals = new Kruskals(graph);
                 this.graphSequence = kruskals.kruskals();
-                this.graphTreeDSPopUp.create("EDGES", KRUSKALS);
+                this.graphTreeDSPopUp.create("Edges", KRUSKALS);
                 if(graphSequence.graphAnimationStates.size() > 0) {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
