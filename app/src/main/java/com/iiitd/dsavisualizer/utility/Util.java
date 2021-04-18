@@ -116,7 +116,7 @@ public class Util {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
         String currentTimeStamp = dateFormat.format(new Date());
         if(fileName == null)
-            fileName = "graph-" + currentTimeStamp + ".txt";
+            fileName = "graph-" + currentTimeStamp + AppSettings.GRAPH_SAVEFILE_EXTENSION;
         String filePath = path + AppSettings.SEPARATOR + fileName;
 
         PrintWriter out = null;

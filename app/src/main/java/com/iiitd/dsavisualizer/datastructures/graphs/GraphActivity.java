@@ -6,9 +6,11 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -42,6 +44,7 @@ import com.iiitd.dsavisualizer.utility.Util;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +55,7 @@ import java.util.TimerTask;
 
 public class GraphActivity extends BaseActivity {
 
+    private static final int PICKFILE_RESULT_CODE = 1223;
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
@@ -93,6 +97,7 @@ public class GraphActivity extends BaseActivity {
     Button btn_bellmanford;
     Button btn_kruskal;
     Button btn_prim;
+    ImageButton btn_opengraph;
     ImageButton btn_clearcustominput;
     ImageButton btn_copygraph;
     ImageButton btn_pastecustominput;
@@ -195,6 +200,7 @@ public class GraphActivity extends BaseActivity {
         rg_graphsize = v_menu_right.findViewById(R.id.rg_graphsize);
         rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
         rg_directed = v_menu_right.findViewById(R.id.rg_directed);
+        btn_opengraph = v_menu_right.findViewById(R.id.btn_opengraph);
         btn_clearcustominput = v_menu_right.findViewById(R.id.btn_clearcustominput);
         btn_copygraph = v_menu_right.findViewById(R.id.btn_copygraph);
         btn_pastecustominput = v_menu_right.findViewById(R.id.btn_pastecustominput);
@@ -407,6 +413,32 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 algorithm(GraphAlgorithmType.PRIMS);
+            }
+        });
+
+        btn_opengraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+//                chooseFile.setType("*/*");
+//                chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+//                startActivityForResult(chooseFile, PICKFILE_RESULT_CODE);
+
+                boolean hasPermissions = false;
+                int MyVersion = Build.VERSION.SDK_INT;
+                if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    hasPermissions = hasPermissions(AppSettings.PERMISSIONS);
+                    if (!hasPermissions) {
+                        ActivityCompat.requestPermissions(GraphActivity.this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL_IMPORT);
+                    }
+                } else {
+                    hasPermissions = true;
+                }
+
+                // True only if android version API <= 22 OR permissions granted automatically
+                if (hasPermissions) {
+                    openGraphFile();
+                }
             }
         });
 
@@ -685,6 +717,79 @@ public class GraphActivity extends BaseActivity {
         });
 
     }
+
+    private void openGraphFile(){
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+        chooseFile.setType("*/*");
+        startActivityForResult(
+                Intent.createChooser(chooseFile, "Choose a " + AppSettings.GRAPH_SAVEFILE_EXTENSION +" file."),
+                PICKFILE_RESULT_CODE
+        );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+        if (requestCode == PICKFILE_RESULT_CODE && resultCode == RESULT_OK){
+            Uri uri;
+            if (resultData != null) {
+                uri = resultData.getData();
+                System.out.println(uri.getPath());
+
+                String path = uri.getPath();
+                if(path != null && !path.isEmpty()){
+                    if(UtilUI.isValidGraphSaveFile(path)){
+                        try {
+                            String text = UtilUI.readTextFromUri(context, uri);
+                            if(GraphWrapper.isGraphInput(text)){
+                                et_customgraphinput.setText(text);
+                                parseAndShowCustomInput(text);
+                                closeDrawer(0);
+                            }
+                            else{
+                                Toast.makeText(context,
+                                        "The file doesn't contain graph input.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                            System.out.println(text);
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(context,
+                                    "Exception generated while reading the file.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(context,
+                                "Not a valid " + AppSettings.GRAPH_SAVEFILE_EXTENSION + " file",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+//                if(!HelperFunctions.isValidKeyFile(file.getName())){
+//                    Snackbar.make(view, "The Selected File is not Key File", Snackbar.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                KeySerializable keySerializable = HelperFunctions.readKey(path);
+//                if(keySerializable != null) {
+//                    if (keySerializable.getKeyType().equals(Constants.PUBLICKEY)) {
+//                        HelperFunctions.writeKeySerializableOther(keySerializable.getKeyName(), Constants.EXTENSION_KEY, keySerializable);
+//                        Snackbar.make(view, "The Key is successfully added.", Snackbar.LENGTH_SHORT).show();
+//                    }
+//                    else {
+//                        Snackbar.make(view, "The Selected File is not a Public Key File", Snackbar.LENGTH_SHORT).show();
+//                    }
+//                }
+//                else {
+//                    Snackbar.make(view, "The Key is NULL", Snackbar.LENGTH_SHORT).show();
+//                }
+            }
+        }
+    }
+
 
     private void example(String exampleString){
         // Reset Graph
@@ -1200,7 +1305,7 @@ public class GraphActivity extends BaseActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
         String currentTimeStamp = dateFormat.format(new Date());
-        final String fileName = "graph-" + currentTimeStamp + ".txt";
+        final String fileName = "graph-" + currentTimeStamp + AppSettings.GRAPH_SAVEFILE_EXTENSION;
 
         et_graphsavename.setText(fileName);
 
@@ -1493,7 +1598,7 @@ public class GraphActivity extends BaseActivity {
                 if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
                     hasPermissions = hasPermissions(AppSettings.PERMISSIONS);
                     if (!hasPermissions) {
-                        ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+                        ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL_EXPORT);
                     }
                 } else {
                     hasPermissions = true;
@@ -1567,11 +1672,11 @@ public class GraphActivity extends BaseActivity {
         }
     }
 
-    private void checkPermissions(){
+    private void checkPermissions(int permission){
         int MyVersion = Build.VERSION.SDK_INT;
         if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
             if (!hasPermissions(AppSettings.PERMISSIONS)) {
-                ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, AppSettings.PERMISSION_ALL);
+                ActivityCompat.requestPermissions(this, AppSettings.PERMISSIONS, permission);
             }
         }
     }
@@ -1590,7 +1695,7 @@ public class GraphActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == AppSettings.PERMISSION_ALL) {
+        if (requestCode == AppSettings.PERMISSION_ALL_EXPORT) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Snackbar.make(v_main, "Permissions Granted.",
                         Snackbar.LENGTH_SHORT).show();
@@ -1603,7 +1708,27 @@ public class GraphActivity extends BaseActivity {
                 snackbar.setAction("Give Permissions", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        checkPermissions();
+                        checkPermissions(AppSettings.PERMISSION_ALL_EXPORT);
+                        snackbar.dismiss();
+                    }
+                });
+                snackbar.show();
+            }
+        }
+        else if (requestCode == AppSettings.PERMISSION_ALL_IMPORT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(v_main, "Permissions Granted.",
+                        Snackbar.LENGTH_SHORT).show();
+
+                openGraphFile();
+            }
+            else {
+                final Snackbar snackbar = Snackbar.make(v_main, "Couldn't import graph [No read permission granted].",
+                        Snackbar.LENGTH_LONG);
+                snackbar.setAction("Give Permissions", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkPermissions(AppSettings.PERMISSION_ALL_IMPORT);
                         snackbar.dismiss();
                     }
                 });

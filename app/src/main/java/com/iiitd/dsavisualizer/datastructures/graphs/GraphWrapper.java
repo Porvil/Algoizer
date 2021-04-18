@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.content.Context;
 import android.util.Pair;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +24,46 @@ public class GraphWrapper {
         this.isLargeGraph = isLargeGraph;
         graph = new Graph(directed, weighted);
         board = new Board(context, customCanvas, isLargeGraph);
+    }
+
+    public static boolean isGraphInput(String customGraphString) {
+        String[] ss = customGraphString.split("\\n");
+        boolean error = false;
+
+        if(customGraphString.length() == 0){
+            error = true;
+        }
+        else {
+            try {
+                for (String line : ss) {
+                    String[] chars = line.split("\\s+");
+
+                    switch (chars[0].toUpperCase()) {
+                        case "D":
+                        case "W":
+                        case "VC":
+                        case "VA":
+                        case "V":
+                        case "E":
+                            break;
+                        default:
+                            error = true;
+                            break;
+                    }
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Exception while parsing graph data");
+                error = true;
+            }
+        }
+
+        if(error){
+            System.out.println("BAD INPUT or error");
+            return false;
+        }
+
+        return true;
     }
 
     public void changeDirected(boolean directed){

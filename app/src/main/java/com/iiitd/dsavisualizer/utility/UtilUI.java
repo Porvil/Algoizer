@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -26,8 +27,13 @@ import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class UtilUI {
@@ -363,4 +369,31 @@ public class UtilUI {
     public static void startActivity(Context start, Class<?> end){
         startActivity((Activity) start, end);
     }
+
+    public static boolean isValidGraphSaveFile(String name){
+        return isValidFileWithExtension(name, AppSettings.GRAPH_SAVEFILE_EXTENSION);
+    }
+
+    private static boolean isValidFileWithExtension(String name, String extension){
+        if(name.lastIndexOf(".") != -1 && name.lastIndexOf(".") != 0)
+            return name.substring(name.lastIndexOf(".")).equals(extension);
+
+        return false;
+    }
+
+    public static String readTextFromUri(Context context, Uri uri) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (InputStream inputStream =
+                     context.getContentResolver().openInputStream(uri);
+             BufferedReader reader = new BufferedReader(
+                     new InputStreamReader(Objects.requireNonNull(inputStream)))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
 }

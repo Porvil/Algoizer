@@ -328,14 +328,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="180dp">
 
                 <EditText
                     android:id="@+id/et_customgraphinput"
                     style="@style/S_EditText"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="4"
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="Custom Input"
@@ -350,7 +349,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayout2"
                     android:layout_width="50dp"
-                    android:layout_height="150dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -363,6 +362,22 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_opengraph"
+                        style="@style/S_ImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_folder_open_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_savecustominput"
+                        style="@style/S_ImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_save_24" />
 
                     <ImageButton
                         android:id="@+id/btn_copygraph"
@@ -387,14 +402,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_done_24" />
-
-                    <ImageButton
-                        android:id="@+id/btn_savecustominput"
-                        style="@style/S_ImageButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_save_24" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
