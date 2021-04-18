@@ -13,6 +13,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -1069,8 +1072,19 @@ public class GraphActivity extends BaseActivity {
                 public void run() {
 
                     if(curSeqNo < graphAlgorithm.graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
+                        String str_tv_info = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo).info;
+                        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+                        for(char c : str_tv_info.toCharArray()){
+                            if(String.valueOf(c).equals(UtilUI.getInfinity())){
+                                spannableStringBuilder.append(UtilUI.getInfinitySS());
+                            }
+                            else {
+                                spannableStringBuilder.append(c);
+                            }
+                        }
+
                         UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphAlgorithm.graphSequence.size);
-                        UtilUI.setText(tv_info, graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo).info);
+                        UtilUI.setText(tv_info, spannableStringBuilder);
 
                         graphWrapper.board.clearGraph(true);
                         GraphAnimationState graphAnimationState = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo);

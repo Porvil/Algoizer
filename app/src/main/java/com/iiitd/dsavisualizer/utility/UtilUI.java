@@ -10,6 +10,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -43,6 +46,14 @@ public class UtilUI {
     }
 
     public static void setText(TextView textView, String data){
+        textView.setText(data);
+    }
+
+    public static void setText(TextView textView, SpannableString data){
+        textView.setText(data);
+    }
+
+    public static void setText(TextView textView, SpannableStringBuilder data){
         textView.setText(data);
     }
 
@@ -358,6 +369,12 @@ public class UtilUI {
 
     public static String getInfinity(){
         return DecimalFormatSymbols.getInstance().getInfinity();
+    }
+
+    public static SpannableString getInfinitySS(){
+        SpannableString spannableString = new SpannableString(DecimalFormatSymbols.getInstance().getInfinity());
+        spannableString.setSpan(new RelativeSizeSpan(1.4f), 0, 1, 0);
+        return spannableString;
     }
 
     public static void startActivity(Activity start, Class<?> end){
