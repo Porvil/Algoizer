@@ -30,7 +30,8 @@ public class Board {
 
     // Constants
     private final boolean ANTI_ALIAS = true;        // ANTI-ALIASING is ON
-    private final int ALPHA = 192;                  // Opacity for Vertices
+    private final int ALPHA_VERTEX = 192;           // Opacity for Vertices
+    private final int ALPHA_VERTEXWEIGHTBG = 160;   // Opacity for Vertex Weight Background
     private final int topAngle = 45;                // in degrees
     private final int bottomAngle = 45;             // in degrees
     private final float coordinatesOffset = 0.95f;  // in ratio [0,1]
@@ -64,6 +65,7 @@ public class Board {
     private Paint paintVertex;                      // Vertex
     private Paint paintVertexText;                  // Vertex Text
     private Paint paintVertexWeight;                // Vertex Weight Text
+    private Paint paintVertexWeightBG;              // Vertex Weight Text Background
     private Paint paintEdge;                        // Edge
     private Paint paintEdgeArrows;                  // Edge Arrows
     private Paint paintEdgeWeight;                  // Edge Weight Text
@@ -150,7 +152,7 @@ public class Board {
         // Vertex
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
-        this.paintVertex.setAlpha(ALPHA);
+        this.paintVertex.setAlpha(ALPHA_VERTEX);
         this.paintVertex.setAntiAlias(ANTI_ALIAS);
 
         // Vertex Text
@@ -168,6 +170,13 @@ public class Board {
         this.paintVertexWeight.setColor(medium);
         this.paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintVertexWeight.setAntiAlias(ANTI_ALIAS);
+        this.paintVertexWeight.setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        // Vertex Weight Background
+        this.paintVertexWeightBG = new Paint();
+        this.paintVertexWeightBG.setColor(shade);
+        this.paintVertexWeightBG.setAlpha(ALPHA_VERTEXWEIGHTBG);
+        this.paintVertexWeightBG.setAntiAlias(ANTI_ALIAS);
 
         // Edge
         this.paintEdge = new Paint();
@@ -326,25 +335,16 @@ public class Board {
         int y = rect.top - 10;
 
         String text = String.valueOf(vertexWeight);
-        if(vertexWeight == Integer.MAX_VALUE)
+        if(vertexWeight == Integer.MAX_VALUE) {
             text = DecimalFormatSymbols.getInstance().getInfinity();
-
-        Rect rectText = new Rect();
-        pVertexWeightText.getTextBounds(text, 0, text.length(), rectText);
-        pVertexWeightText.setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
 
         int finalX = x;
         int finalY = (int) (y - (pVertexWeightText.descent() + pVertexWeightText.ascent()) / 2);
 
-        Paint paint = new Paint();
-        paint.setAntiAlias(ANTI_ALIAS);
-        paint.setColor(shade);
-//        paint.setColor(Color.RED);
-        paint.setAlpha(128);
-        canvas.drawRect(rectText, paint);
-        Rect background = getTextBackgroundSize(finalX, finalY, text, pVertexWeightText);
-        canvas.drawRect(background, paint);
+        Rect background = getTextBackgroundSize(x, y, text, pVertexWeightText);
 
+        canvas.drawRect(background, paintVertexWeightBG);
         canvas.drawText(text, finalX, finalY, pVertexWeightText);
     }
 
@@ -496,9 +496,15 @@ public class Board {
 
     private @NonNull
     Rect getTextBackgroundSize(float x, float y, @NonNull String text, @NonNull Paint paint) {
-        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
-        float halfTextLength = paint.measureText(text) / 2 + 5;
-        return new Rect((int) (x - halfTextLength), (int) (y + fontMetrics.top), (int) (x + halfTextLength), (int) (y + fontMetrics.bottom));
+        Rect rectText = new Rect();
+        paint.getTextBounds(text, 0, text.length(), rectText);
+        int halfHeight = rectText.height() / 2;
+        int halfWidth = rectText.width() / 2;
+
+        halfHeight += 4;
+        halfWidth  += 4;
+
+        return new Rect((int) (x - halfWidth), (int) (y - halfHeight), (int) (x + halfWidth), (int) (y + halfHeight));
     }
 
     // set all Paint variables to Graph Animation Normal Mode
