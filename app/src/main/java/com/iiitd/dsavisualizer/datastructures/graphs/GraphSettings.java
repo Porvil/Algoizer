@@ -22,6 +22,11 @@ public class GraphSettings{
     public static final int nodeTextCoordinates   = 20;
     public static final float maxX = 2048; // Limit in pixels
 
+    // Zoom Constants
+    public static final float defZoom = 0.75f;
+    public static final float minZoom = 0.5f;
+    public static final float maxZoom = 2.0f;
+
     public static int getNoOfRows(boolean isLargeGraph){
         return isLargeGraph ? LARGE_ROWS : SMALL_ROWS;
     }

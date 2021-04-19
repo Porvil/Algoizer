@@ -19,25 +19,22 @@ import java.util.Collections;
 import java.util.Map;
 
 // Used by GraphActivity Class
-// Used old Board Functions and variables [ MAY NEED TO UPDATE ]
+// Used old Board Functions and variables [ MAY NEED TO UPDATE ] {UPDATED ONLY WHAT WAS NEEDED}
 public class BoardTree {
 
     Context context;
 
     // Constants
-    private final boolean ANTI_ALIAS = true;       // ANTI-ALIASING is ON
-    private final int topAngle = 45;               // in degrees
-    private final int bottomAngle = 45;            // in degrees
-    private final int nodeSize = 5;                // in mm
-    private final float circleRatio = 0.66f;       // in ratio [0,1]
-    private final float edgeArrowRatio = 0.24f;    // in ratio [0,1]
-    private final float nodeRadius;                // in pixels [Radius of one node]
-    private final float coordinatesOffset;         // in ratio [0,1]
-    private final int textSizeCoordinates;         // in sp
-    private final int textSize;                    // in sp
-    private final int edgeWidth;                   // in dp
-    private final int edgeArrowWidth;              // in dp
-    private final int arrowLength;                 // in pixels
+    private final boolean ANTI_ALIAS = true;        // ANTI-ALIASING is ON
+    private final int ALPHA_VERTEX = 192;           // Opacity for Vertices
+    private final int topAngle = 45;                // in degrees
+    private final int bottomAngle = 45;             // in degrees
+    private float nodeRadius;                       // in pixels [ GraphSettings contain all these constants ]
+    private int nodeTextSize;                       // in pixels [ GraphSettings contain all these constants ]
+    private int edgeWidth;                          // in pixels [ GraphSettings contain all these constants ]
+    private int edgeArrowWidth;                     // in pixels [ GraphSettings contain all these constants ]
+    private int arrowLength;                        // in pixels [ GraphSettings contain all these constants ]
+    private int edgeWeightTextSize;                 // in pixels [ GraphSettings contain all these constants ]
 
     // Board Variables
     public float X;                                // Width of Board
@@ -50,7 +47,6 @@ public class BoardTree {
 
     // Paint Variables
     private Paint paintGrid;
-    private Paint paintGridCoordinates;
     private Paint paintVertex;
     private Paint paintText;
 
@@ -58,6 +54,14 @@ public class BoardTree {
     private Paint paintEdgeBack;
     private Paint paintEdgeCross;
     private Paint paintEdgeForward;
+
+    // Colors
+    private int shade;
+    private int light;
+    private int base;
+    private int medium;
+    private int dark;
+    private int white;
 
     boolean showTreeEdge;
     boolean showBackEdge;
@@ -72,24 +76,29 @@ public class BoardTree {
     public BoardTree(Context context, GraphTree graphTree) {
         this.context = context;
         this.graphTree = graphTree;
+        float nodeSize = GraphData.getNodeSize(false);
+        float ratio = nodeSize / GraphSettings.nodeRect;
 
         this.xCount = graphTree.noOfCols;
         this.yCount = graphTree.noOfRows;
-
-        // px = 1mm
-        float px = UtilUI.mmToPx(context, 1);
-        float cm = px * nodeSize;
-
-        xSize = (int) cm;
-        ySize = (int) cm;
-
+        this.xSize = (int) nodeSize;
+        this.ySize = (int) nodeSize;
         this.X = xCount * xSize;
         this.Y = yCount * ySize;
 
-        float minSide = Math.min(xSize, ySize);
-        this.nodeRadius = ( minSide * circleRatio) / 2;
-        this.arrowLength = (int) (( minSide * edgeArrowRatio) / 2);
-        this.coordinatesOffset = 0.95f;
+        this.nodeRadius          = (int) ratio * GraphSettings.nodeCircleRadius;
+        this.arrowLength         = (int) ratio * GraphSettings.nodeEdgeArrowLength;
+        this.nodeTextSize        = (int) ratio * GraphSettings.nodeText;
+        this.edgeWidth           = (int) ratio * GraphSettings.nodeEdge;
+        this.edgeArrowWidth      = (int) ratio * GraphSettings.nodeEdgeArrow;
+        this.edgeWeightTextSize  = (int) ratio * GraphSettings.nodeEdgeWeight;
+
+        System.out.println("----------------------------------------");
+        System.out.println("Board Width(X)     = " + X        + " | " + "Board Height(Y)    = " + Y);
+        System.out.println("No of Cols(xCount) = " + xCount   + " | " + "No of Rows(yCount) = " + yCount);
+        System.out.println("Col width(xSize)   = " + xSize    + " | " + "Row height(ySize)  = " + ySize);
+        System.out.println("Max Count          = " + yCount * xCount );
+        System.out.println("----------------------------------------");
 
         this.boardElements = new BoardElement[yCount][xCount];
         for (int r = 0; r < yCount; r++) {
@@ -102,12 +111,6 @@ public class BoardTree {
             Pair<Integer, Integer> value = entry.getValue();
             addVertex(value.first, value.second, entry.getKey());
         }
-
-        this.textSizeCoordinates = context.getResources().getDimensionPixelSize(R.dimen.coordinatesText);
-        this.textSize = context.getResources().getDimensionPixelSize(R.dimen.nodeText);
-        this.edgeWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeWidth);
-        this.edgeArrowWidth = context.getResources().getDimensionPixelSize(R.dimen.edgeArrowWidth);
-
 
         showTreeEdge = true;
         showBackEdge = true;
@@ -122,42 +125,35 @@ public class BoardTree {
     public void setImageViewAndCreateCanvas(final ImageView imageView) {
         this.iv_graphtree = imageView;
 
+        System.out.println(iv_graphtree.getWidth() + " x " + iv_graphtree.getHeight());
         bitmapGraphTree = Bitmap.createBitmap(iv_graphtree.getWidth(), iv_graphtree.getHeight(), Bitmap.Config.ARGB_8888);
         iv_graphtree.setImageBitmap(bitmapGraphTree);
         canvasGraphTree = new Canvas(bitmapGraphTree);
-
-        drawGrid();
 
         drawGraph();
     }
 
     private void initPaints(){
 
-        int shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
-        int light = UtilUI.getCurrentThemeColor(context, R.attr.light);
-        int base = UtilUI.getCurrentThemeColor(context, R.attr.base);
-        int medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
-        int dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
-        int white = Color.WHITE;
+        shade = UtilUI.getCurrentThemeColor(context, R.attr.shade);
+        light = UtilUI.getCurrentThemeColor(context, R.attr.light);
+        base = UtilUI.getCurrentThemeColor(context, R.attr.base);
+        medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
+        dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
+        white = Color.WHITE;
 
         this.paintGrid = new Paint();
         this.paintGrid.setColor(light);
         this.paintGrid.setAntiAlias(ANTI_ALIAS);
 
-        this.paintGridCoordinates = new Paint();
-        this.paintGridCoordinates.setTextAlign(Paint.Align.RIGHT);
-        this.paintGridCoordinates.setTextSize(textSizeCoordinates);
-        this.paintGridCoordinates.setColor(light);
-        this.paintGridCoordinates.setAntiAlias(ANTI_ALIAS);
-
         this.paintVertex = new Paint();
         this.paintVertex.setColor(base);
-        this.paintVertex.setAlpha(192);
+        this.paintVertex.setAlpha(ALPHA_VERTEX);
         this.paintVertex.setAntiAlias(ANTI_ALIAS);
 
         this.paintText = new Paint();
         this.paintText.setTextAlign(Paint.Align.CENTER);
-        this.paintText.setTextSize(textSize);
+        this.paintText.setTextSize(nodeTextSize);
         this.paintText.setColor(white);
         this.paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintText.setAntiAlias(ANTI_ALIAS);
@@ -181,42 +177,6 @@ public class BoardTree {
         this.paintEdgeForward.setColor(context.getResources().getColor(R.color.graph_forward));
         this.paintEdgeForward.setStrokeWidth(edgeWidth);
         this.paintEdgeForward.setAntiAlias(ANTI_ALIAS);
-
-    }
-
-    private void drawGrid() {
-        Rect rect = new Rect();
-
-        for(int i=0; i<xCount+1; i++){
-            int left = (int) (i*xSize);
-            int right = left + 1;
-            int top = 0;
-            int bottom = (int) Y;
-            rect.set(left, top, right, bottom);
-            canvasGraphTree.drawRect(rect, paintGrid);
-        }
-
-        for(int i=0; i<yCount+1; i++){
-            int top = (int) (i*ySize);
-            int bottom = top + 1;
-            int left = 0;
-            int right = (int) X;
-            rect.set(left, top, right, bottom);
-            canvasGraphTree.drawRect(rect, paintGrid);
-        }
-
-        for (int r = 0; r < yCount; r++) {
-            for (int c = 0; c < xCount; c++) {
-                String text = "(" + r + "," + c + ")";
-                Rect rect1 = getRect(r, c);
-                int x = (int) (rect1.left + (rect1.width() * coordinatesOffset));
-                int y = (int) (rect1.top + (rect1.height() * coordinatesOffset));
-                Rect rectText = new Rect();
-                paintGridCoordinates.getTextBounds(text, 0, text.length(), rectText);
-                canvasGraphTree.drawText(text, x, y , paintGridCoordinates);
-            }
-        }
-
     }
 
     // Re-Draws the complete graph
@@ -250,7 +210,7 @@ public class BoardTree {
                 Rect rect1 = getRect(vertex1[0], vertex1[1]);
                 Rect rect2 = getRect(vertex2[0], vertex2[1]);
 
-                drawEdgeGraph(rect1, rect2, edgePro, graphTree.weighted);
+                drawEdgeGraph(rect1, rect2, edgePro);
             }
         }
 
@@ -283,8 +243,7 @@ public class BoardTree {
     }
 
     // Draws a single EdgeOld
-    public void drawEdgeGraph(Rect rect1, Rect rect2, EdgePro edgePro, boolean weighted) {
-
+    public void drawEdgeGraph(Rect rect1, Rect rect2, EdgePro edgePro) {
         switch(edgePro.edgeClass){
             case TREE:
                 __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeTree, paintEdgeTree);
@@ -299,7 +258,6 @@ public class BoardTree {
                 __drawEdge(canvasGraphTree, rect1, rect2, paintEdgeForward, paintEdgeForward);
                 break;
         }
-
     }
 
     public void __drawEdge(Canvas canvas, Rect rect1, Rect rect2, Paint paintE, Paint paintEA) {
@@ -364,17 +322,6 @@ public class BoardTree {
         return new Rect(left, top, right, bottom);
     }
 
-    // Returns radius for the node
-    private float getRadius(Rect rect){
-        int width = rect.width();
-        int height = rect.height();
-
-        float diameter = Math.min(width, height) * circleRatio;
-        float radius = diameter / 2;
-
-        return radius;
-    }
-
     // Returns double[4] = {startX, startY, endX, endY} for edge Line
     public double[] getLineCoordinates(Rect rect1, Rect rect2){
         double x1 = rect1.centerX();
@@ -383,8 +330,8 @@ public class BoardTree {
         double x2 = rect2.centerX();
         double y2 = rect2.centerY();
 
-        double r1 = getRadius(rect1);
-        double r2 = getRadius(rect2);
+        double r1 = nodeRadius;
+        double r2 = nodeRadius;
 
         double u = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
 

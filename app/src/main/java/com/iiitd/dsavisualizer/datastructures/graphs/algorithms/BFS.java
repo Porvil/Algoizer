@@ -118,6 +118,8 @@ public class BFS {
                 desVertex.setToHighlight();
 
                 if (endVertexCLRS.color == WHITE) {
+                    // TREE EDGE
+                    graphTree.addEdge(new EdgePro(edge, TREE));
 
                     endVertexCLRS.color = GRAY;
                     endVertexCLRS.bfsDist = srcVertexCLRS.bfsDist + 1;
@@ -151,11 +153,7 @@ public class BFS {
                     desVertex.setGAST(desVertexGAST);
                 }
 
-                // EDGE CLASSIFICATION
-                if (map.get(v).bfsDist == map.get(u).bfsDist + 1) {
-                    graphTree.addEdge(new EdgePro(edge, TREE));
-                }
-                else {
+                if (!(map.get(v).bfsDist == map.get(u).bfsDist + 1)){
                     int src = u;
                     int des = v;
 
@@ -166,9 +164,11 @@ public class BFS {
                         des = map.get(des).parent;
                     }
 
+                    // BACK EDGE
                     if (src == des) {
                         graphTree.addEdge(new EdgePro(edge, BACK));
                     }
+                    // CROSS EDGE
                     else {
                         graphTree.addEdge(new EdgePro(edge, CROSS));
                     }

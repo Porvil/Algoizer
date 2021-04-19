@@ -44,6 +44,15 @@ public class GraphData {
         similarly for Y, r, rSize and rEmpty
      */
 
+    public static float getNodeSize(boolean isLargeGraph){
+        int xCount = GraphSettings.getNoOfCols(isLargeGraph);
+
+        float maxX = GraphSettings.maxX;
+        float cSize = (3*maxX) / (4*xCount + 1);
+
+        return cSize;
+    }
+
     public GraphData(boolean isLargeGraph){
         this.xCount = GraphSettings.getNoOfCols(isLargeGraph);
         this.yCount = GraphSettings.getNoOfRows(isLargeGraph);

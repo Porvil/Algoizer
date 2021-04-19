@@ -189,7 +189,7 @@ public class GraphTreePopUp{
                     @Override
                     public void run() {
                         boardTree.setImageViewAndCreateCanvas(iv_graphtree);
-                        zl_graphtree.zoomTo(1, false);
+                        zl_graphtree.zoomTo(GraphSettings.defZoom, false);
                     }
                 });
             }
