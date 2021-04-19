@@ -520,6 +520,7 @@ public class GraphDSPopUp {
             });
         }
     }
+
     // Shows the popUpWindow if not already showing
     public void show(){
         if(popupwindow != null && !popupwindow.isShowing()){
@@ -539,4 +540,13 @@ public class GraphDSPopUp {
             popupwindow.dismiss();
         }
     }
+
+    public void hideWhileDrawerOpen(){
+        popUpView.setVisibility(View.INVISIBLE);
+    }
+
+    public void showWhileDrawerOpen(){
+        popUpView.setVisibility(View.VISIBLE);
+    }
+
 }

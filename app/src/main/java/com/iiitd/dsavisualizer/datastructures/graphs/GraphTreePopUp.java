@@ -222,4 +222,12 @@ public class GraphTreePopUp{
         }
     }
 
+    public void hideWhileDrawerOpen(){
+        popUpView.setVisibility(View.INVISIBLE);
+    }
+
+    public void showWhileDrawerOpen(){
+        popUpView.setVisibility(View.VISIBLE);
+    }
+
 }

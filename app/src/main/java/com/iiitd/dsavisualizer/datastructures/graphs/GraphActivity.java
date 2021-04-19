@@ -32,6 +32,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -326,6 +327,29 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
+        dl_main.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                if(slideOffset >= .05){
+                    graphAlgorithm.graphTreePopUp.hideWhileDrawerOpen();
+                    graphAlgorithm.graphTreeDSPopUp.hideWhileDrawerOpen();
+                }
+                else {
+                    graphAlgorithm.graphTreePopUp.showWhileDrawerOpen();
+                    graphAlgorithm.graphTreeDSPopUp.showWhileDrawerOpen();
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {}
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {}
+
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+
+        });
         btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

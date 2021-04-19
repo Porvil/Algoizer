@@ -145,7 +145,6 @@ public class GraphAlgorithm {
                 break;
         }
 
-
         return true;
     }
 
