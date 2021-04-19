@@ -13,9 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.RelativeSizeSpan;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -1305,7 +1303,7 @@ public class GraphActivity extends BaseActivity {
                 graphWrapper = new GraphWrapper(context, customCanvas, directed, weighted, isLargeGraph);
                 updateGraphViewState();
 
-                zl_graph.panTo(0,0, false);
+//                zl_graph.panTo(0,0, false);
             }
         });
     }
