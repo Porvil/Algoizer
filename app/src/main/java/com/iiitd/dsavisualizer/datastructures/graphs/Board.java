@@ -608,6 +608,7 @@ public class Board {
         touchData.row = y;
         touchData.col = x;
         touchData.isElement = true;
+        touchData.isExtendedElement = false;
         touchData.x = motionEvent.getX();
         touchData.y = motionEvent.getY();
 
@@ -615,6 +616,14 @@ public class Board {
         if( !((motionEvent.getX() >= lowerX && motionEvent.getX() <= upperX)
                 && (motionEvent.getY()>= lowerY && motionEvent.getY()<= upperY))) {
             touchData.isElement = false;
+            touchData.isExtendedElement = true;
+        }
+
+        if(touchData.row >= yCount){
+            touchData.row--;
+        }
+        if(touchData.col >= xCount){
+            touchData.col--;
         }
 
         return touchData;

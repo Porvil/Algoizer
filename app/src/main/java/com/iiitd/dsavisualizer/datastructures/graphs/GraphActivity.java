@@ -1816,7 +1816,7 @@ public class GraphActivity extends BaseActivity {
                 int row = touchData.row;
                 int col = touchData.col;
 
-                if(touchData.isElement) {
+                if(touchData.isElement || touchData.isExtendedElement) {
                     switch (graphControls.getCurrentState()) {
                         case VIEW:
                             break;

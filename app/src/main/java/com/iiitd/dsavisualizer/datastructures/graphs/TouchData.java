@@ -6,6 +6,7 @@ public class TouchData {
     public int row;
     public int col;
     public boolean isElement;
+    public boolean isExtendedElement;
 
     @Override
     public String toString() {
@@ -15,6 +16,7 @@ public class TouchData {
                 ", row=" + row +
                 ", col=" + col +
                 ", isElement=" + isElement +
+                ", isExtendedElement=" + isExtendedElement +
                 '}';
     }
 }

@@ -97,7 +97,7 @@ public class GraphWrapper {
 
     public boolean addVertex(TouchData touchData){
 
-        if(touchData.isElement){
+        if(touchData.isElement || touchData.isExtendedElement){
             int nodeNumber = graph.getNewVertexNumber();
             int row = touchData.row;
             int col = touchData.col;
@@ -120,7 +120,7 @@ public class GraphWrapper {
 
     public boolean addVertex(TouchData touchData, int nodeNumber){
 
-        if(touchData.isElement){
+        if(touchData.isElement || touchData.isExtendedElement){
             int row = touchData.row;
             int col = touchData.col;
 
@@ -153,6 +153,7 @@ public class GraphWrapper {
         touchData.row = row;
         touchData.col = col;
         touchData.isElement = true;
+        touchData.isExtendedElement = false;
         touchData.x = col;
         touchData.y = row;
 
@@ -167,7 +168,7 @@ public class GraphWrapper {
     }
 
     public boolean removeVertex(TouchData touchData) {
-        if(touchData.isElement){
+        if(touchData.isElement || touchData.isExtendedElement){
             int row = touchData.row;
             int col = touchData.col;
             return removeVertex(row, col);
