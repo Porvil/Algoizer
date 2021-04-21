@@ -12,6 +12,9 @@
         android:background="@drawable/roundedrect_sortingelement_normal"
         android:gravity="center"
         android:text="@string/_1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 </FrameLayout>

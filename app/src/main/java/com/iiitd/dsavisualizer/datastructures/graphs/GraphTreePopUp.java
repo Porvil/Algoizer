@@ -217,15 +217,17 @@ public class GraphTreePopUp{
                 btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
                 popupwindow.update(width, height);
             }
-            zl_graphtree.zoomTo(1, false);
+//            zl_graphtree.zoomTo(1, false);
             popupwindow.dismiss();
         }
     }
 
+    // Hides the popUpWindow when drawers opens in drawerLayout
     public void hideWhileDrawerOpen(){
         popUpView.setVisibility(View.INVISIBLE);
     }
 
+    // Shows the popUpWindow when drawers closes in drawerLayout
     public void showWhileDrawerOpen(){
         popUpView.setVisibility(View.VISIBLE);
     }

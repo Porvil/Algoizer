@@ -22,4 +22,9 @@ public class PriorityQueueElementState {
     public String getDistanceString(){
         return distance == Integer.MAX_VALUE ? UtilUI.getInfinity() : String.valueOf(distance);
     }
+
+    public String getStringText(){
+        return data + " ( " + getDistanceString() +  " )";
+    }
+
 }

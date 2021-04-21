@@ -45,6 +45,10 @@ public class Edge {
                 '}';
     }
 
+    public String getStringText(){
+        return src + " ── " + des + " ( " + weight + " )";
+    }
+
     public static Edge getClone(Edge edge){
         Edge edge1 = new Edge(edge.src, edge.des, edge.weight, edge.isFirstEdge);
         edge1.graphAnimationStateType = edge.graphAnimationStateType;

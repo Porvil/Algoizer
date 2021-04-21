@@ -51,6 +51,8 @@
             android:id="@+id/zl_graphtree"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+            android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
             android:scrollbars="vertical|horizontal"
             app:alignment="center"
             app:animationDuration="280"

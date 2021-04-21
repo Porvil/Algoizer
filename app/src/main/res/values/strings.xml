@@ -51,4 +51,8 @@
     <string name="back_edge">Back</string>
     <string name="forward_edge">Forward</string>
     <string name="cross_edge">Cross</string>
+    <string name="empty">Empty</string>
+    <string name="front">Front</string>
+    <string name="end">End</string>
+    <string name="top">TOP</string>
 </resources>
