@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 
 import com.iiitd.dsavisualizer.R;
@@ -14,9 +15,11 @@ import static com.iiitd.dsavisualizer.datastructures.graphs.GraphViewState.*;
 public class GraphControls {
 
     Context context;
-    RadioButton rb_view;
-    RadioButton rb_vertex;
-    RadioButton rb_edge;
+
+    View inc_graphcontrols;
+    FrameLayout fl_graphcontrols_view;
+    FrameLayout fl_graphcontrols_node;
+    FrameLayout fl_graphcontrols_edge;
 
     GraphControlState graphControlState;
     GraphControlState viewState;
@@ -38,11 +41,12 @@ public class GraphControls {
     Drawable edgeRemove_off;
     Drawable edgeRemove_on;
 
-    public GraphControls(Context context, RadioButton rb_view, RadioButton rb_vertex, RadioButton rb_edge) {
+    public GraphControls(Context context, View inc_graphcontrols) {
         this.context = context;
-        this.rb_view = rb_view;
-        this.rb_vertex = rb_vertex;
-        this.rb_edge = rb_edge;
+        this.inc_graphcontrols = inc_graphcontrols;
+        this.fl_graphcontrols_view = inc_graphcontrols.findViewById(R.id.fl_graphcontrols_view);
+        this.fl_graphcontrols_node = inc_graphcontrols.findViewById(R.id.fl_graphcontrols_node);
+        this.fl_graphcontrols_edge = inc_graphcontrols.findViewById(R.id.fl_graphcontrols_edge);
 
         this.graphControlState = VIEW;
         this.viewState = VIEW;
@@ -60,13 +64,12 @@ public class GraphControls {
         return graphControlState;
     }
 
-    public void updateState(View view){
-        int checkedId = view.getId();
-        if (checkedId == R.id.rb_graphcontrol_view) {
+    public void updateStateWithEnum(GraphControlState _graphControlState){
+        if(_graphControlState == VIEW){
             graphControlState = viewState;
             startEdge = -1;
         }
-        else if (checkedId == R.id.rb_graphcontrol_vertex) {
+        else if (_graphControlState == VERTEX_ADD || _graphControlState == VERTEX_REMOVE) {
             if(graphControlState == VERTEX_ADD ||
                     graphControlState == VERTEX_REMOVE) {
                 changeVertexState();
@@ -74,7 +77,32 @@ public class GraphControls {
             graphControlState = vertexState;
             startEdge = -1;
         }
-        else if (checkedId == R.id.rb_graphcontrol_edge) {
+        else if (_graphControlState == EDGE_ADD || _graphControlState == EDGE_REMOVE) {
+            if(graphControlState == EDGE_ADD ||
+                    graphControlState == EDGE_REMOVE) {
+                changeEdgeState();
+                startEdge = -1;
+            }
+            graphControlState = edgeState;
+        }
+
+    }
+
+    public void updateState(View view){
+        int checkedId = view.getId();
+        if (checkedId == R.id.cl_graphcontrols_view) {
+            graphControlState = viewState;
+            startEdge = -1;
+        }
+        else if (checkedId == R.id.cl_graphcontrols_node) {
+            if(graphControlState == VERTEX_ADD ||
+                    graphControlState == VERTEX_REMOVE) {
+                changeVertexState();
+            }
+            graphControlState = vertexState;
+            startEdge = -1;
+        }
+        else if (checkedId == R.id.cl_graphcontrols_edge) {
             if(graphControlState == EDGE_ADD ||
                     graphControlState == EDGE_REMOVE) {
                 changeEdgeState();
@@ -107,9 +135,9 @@ public class GraphControls {
             edge = edgeRemove_on;
         }
 
-        rb_view.setCompoundDrawablesWithIntrinsicBounds(null, view, null, null);
-        rb_vertex.setCompoundDrawablesWithIntrinsicBounds(null, vertex, null, null);
-        rb_edge.setCompoundDrawablesWithIntrinsicBounds(null, edge, null, null);
+        fl_graphcontrols_view.setBackground(view);
+        fl_graphcontrols_node.setBackground(vertex);
+        fl_graphcontrols_edge.setBackground(edge);
     }
 
     private void changeVertexState(){

@@ -287,45 +287,15 @@
             app:layout_constraintEnd_toStartOf="@+id/divider7"
             app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:id="@+id/rg_graphcontrols"
+            <include
+                android:id="@+id/inc_graphcontrols"
+                layout="@layout/layout_graph_controls"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/divider8"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <RadioButton
-                    android:id="@+id/rb_graphcontrol_view"
-                    style="@style/S_RadioButton_Graph"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:drawableTop="@drawable/ic_view_off"
-                    android:onClick="onGraphControlsClick"
-                    android:text="View" />
-
-                <RadioButton
-                    android:id="@+id/rb_graphcontrol_vertex"
-                    style="@style/S_RadioButton_Graph"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:drawableTop="@drawable/ic_vertex_add_off"
-                    android:onClick="onGraphControlsClick"
-                    android:text="Node" />
-
-                <RadioButton
-                    android:id="@+id/rb_graphcontrol_edge"
-                    style="@style/S_RadioButton_Graph"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_edge_add_off"
-                    android:onClick="onGraphControlsClick"
-                    android:text="Edge" />
-
-            </RadioGroup>
+                app:layout_constraintEnd_toStartOf="@+id/btn_grid"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/divider8"

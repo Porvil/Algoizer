@@ -65,10 +65,7 @@ public class GraphActivity extends BaseActivity {
     ImageView iv_anim;
     ImageButton btn_controls;
     ConstraintLayout cl_controls;
-    RadioGroup rg_graphcontrols;
-    RadioButton rb_graphcontrol_view;
-    RadioButton rb_graphcontrol_vertex;
-    RadioButton rb_graphcontrol_edge;
+    View inc_graphcontrols;
     ImageButton btn_play;
     ImageButton btn_nav;
     ImageButton btn_menu;
@@ -161,12 +158,9 @@ public class GraphActivity extends BaseActivity {
         iv_graph = v_main.findViewById(R.id.iv_graph);
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
-        rg_graphcontrols = v_main.findViewById(R.id.rg_graphcontrols);
         cl_controls = v_main.findViewById(R.id.cl_controls);
         btn_controls = v_main.findViewById(R.id.btn_controls);
-        rb_graphcontrol_view = v_main.findViewById(R.id.rb_graphcontrol_view);
-        rb_graphcontrol_vertex = v_main.findViewById(R.id.rb_graphcontrol_vertex);
-        rb_graphcontrol_edge = v_main.findViewById(R.id.rb_graphcontrol_edge);
+        inc_graphcontrols = v_main.findViewById(R.id.inc_graphcontrols);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_play = v_main.findViewById(R.id.btn_play);
         btn_menu = v_main.findViewById(R.id.btn_menu);
@@ -1063,7 +1057,7 @@ public class GraphActivity extends BaseActivity {
             case 0: // No Error
 
                 // Changes graph controls to VIEW_STATE
-                graphControls.updateState(rb_graphcontrol_view);
+                graphControls.updateStateWithEnum(GraphControlState.VIEW);
                 graphControls.updateDrawables();
                 System.out.println(graphControls);
 
@@ -1784,7 +1778,7 @@ public class GraphActivity extends BaseActivity {
 
 //        graphAlgorithm = GraphAlgorithm.getInstance();
 
-        graphControls = new GraphControls(context, rb_graphcontrol_view, rb_graphcontrol_vertex, rb_graphcontrol_edge);
+        graphControls = new GraphControls(context, inc_graphcontrols);
         graphControls.updateDrawables();
 
         // Draws Grid and Graph View After Layouts have been laid out
