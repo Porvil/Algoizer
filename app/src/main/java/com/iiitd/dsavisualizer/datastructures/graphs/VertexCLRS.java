@@ -18,7 +18,7 @@ public class VertexCLRS {
     public int startTime;                              // used as start time in dfs
     public int finishTime;                             // used as end time in dfs
     public int dfsDepth;                               // used as depth in dfs
-    public int dijkstraDist;                           // used as distance in dijkstra
+    public int dijkstraDist;                           // used as distance in dijkstra and prim
     public int bellmanFordDist;                        // used as distance in bellman-ford
     public boolean visited;                            // used by dijkstra
     public int connectedID;                            // used by bfs and dfs connected components
