@@ -78,6 +78,10 @@ public class Dijkstra {
         for (int i = 0; i < size; i++) {
             // Heap Like Operations Simulated
             int vertexNo = findMinDistanceIndex();
+            // if no vertex is returned, skip this iteration
+            if(vertexNo < 0){
+                continue;
+            }
 
             // Vertex Added to Dijkstra
             Vertex srcVertex = verticesState.get(vertexNo);
@@ -172,7 +176,7 @@ public class Dijkstra {
 
     // Finding the minimum distance
     private int findMinDistanceIndex() {
-        int minDistance = Integer.MAX_VALUE;
+        long minDistance = Long.MAX_VALUE;
         int minDistanceVertex = -1;
         for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
             if (!entry.getValue().visited && entry.getValue().dijkstraDist < minDistance) {
