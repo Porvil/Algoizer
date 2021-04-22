@@ -39,7 +39,7 @@
                 app:flingEnabled="true"
                 app:hasClickableChildren="true"
                 app:horizontalPanEnabled="true"
-                app:maxZoom="1.8"
+                app:maxZoom="2.4"
                 app:maxZoomType="zoom"
                 app:minZoom=".6"
                 app:minZoomType="zoom"

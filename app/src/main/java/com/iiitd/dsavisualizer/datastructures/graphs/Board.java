@@ -451,46 +451,55 @@ public class Board {
             y = (float) (ly1/3 + 2*ly2/3);
         }
 
+        String strWeight = String.valueOf(weight);
+        Rect background = new Rect();
+        paint.getTextBounds(strWeight, 0, strWeight.length(), background);
+
         float rotationX = x;
         float rotationY = y;
         float delta = 15;
-        float offsetNormal = 20;
-        float offsetReverse = 40;
+        float offsetNormal = 10;
+        float offsetReverse = offsetNormal + background.height();
 
-        if( (degree > 360-delta && degree <=360) || ( degree >= 0 && degree <= 0+delta)){
-            y = y-offsetNormal;
+        // Set Paint Alignment to center
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        if( (degree > 360-delta && degree <= 360) || ( degree >= 0 && degree <= 0+delta)){
+            y -= offsetNormal;
             degree = 0;
         }
         else if(degree > 90-delta && degree <= 90+delta){
-            x = x+offsetNormal;
+            x += offsetNormal;
+            paint.setTextAlign(Paint.Align.LEFT);
             degree = 0;
         }
         else if(degree > 180-delta && degree <= 180+delta){
-            y= y+offsetReverse;
+            y += offsetReverse;
             degree = 0;
         }
         else if(degree > 270-delta && degree <= 270+delta){
-            x = x-offsetNormal;
+            x -= offsetNormal;
+            paint.setTextAlign(Paint.Align.RIGHT);
             degree = 0;
         }
-        else if(degree >0 && degree<90){
-            y = y-offsetNormal;
+        else if(degree > 0 && degree < 90){
+            y -= offsetNormal;
         }
-        else if(degree >90 && degree<180){
+        else if(degree > 90 && degree < 180){
+            y += offsetReverse;
             degree += 180;
-            y = y+offsetReverse;
         }
-        else if(degree >180 && degree<270){
+        else if(degree > 180 && degree < 270){
+            y += offsetReverse;
             degree -= 180;
-            y = y+offsetReverse;
         }
-        else if(degree >270 && degree<360){
-            y = y-offsetNormal;
+        else if(degree > 270 && degree < 360){
+            y -= offsetNormal;
         }
 
         canvas.save();
         canvas.rotate((float) degree, rotationX, rotationY);
-        canvas.drawText(String.valueOf(weight), x, y, paint);
+        canvas.drawText(strWeight, x, y, paint);
         canvas.restore();
     }
 
