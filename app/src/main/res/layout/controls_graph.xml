@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="?android:colorBackground">
 
     <LinearLayout
@@ -79,9 +81,9 @@
             <RadioGroup
                 android:id="@+id/rg_graphsize"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/customswitch_outline"
                 android:checkedButton="@id/rb_small"
                 android:orientation="horizontal">
@@ -118,9 +120,9 @@
             <RadioGroup
                 android:id="@+id/rg_weighted"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/customswitch_outline"
                 android:checkedButton="@id/rb_unweighted"
                 android:orientation="horizontal">
@@ -157,9 +159,9 @@
             <RadioGroup
                 android:id="@+id/rg_directed"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/customswitch_outline"
                 android:checkedButton="@id/rb_undirected"
                 android:orientation="horizontal">
@@ -192,6 +194,37 @@
                     android:text="Directed"
                     android:textColor="@color/white" />
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cleargraph"
+                    style="@style/S_ButtonTextOnly"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Clear Graph"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_cleargraphanim"
+                    style="@style/S_ButtonTextOnly"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Clear Animation"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider17"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -295,30 +328,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_cleargraph"
-                    style="@style/S_ButtonTextOnly"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Clear Graph"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btn_cleargraphanim"
-                    style="@style/S_ButtonTextOnly"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Clear Animation"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
 
             <View
                 android:id="@+id/horizontalDiv8"

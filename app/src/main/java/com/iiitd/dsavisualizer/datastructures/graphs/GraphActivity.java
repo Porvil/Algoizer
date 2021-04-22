@@ -1826,6 +1826,10 @@ public class GraphActivity extends BaseActivity {
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(graphAlgorithm != null){
+                    graphAlgorithm.graphTreePopUp.dismiss();
+                    graphAlgorithm.graphTreeDSPopUp.dismiss();
+                }
                 dialog.dismiss();
                 finish();
             }
