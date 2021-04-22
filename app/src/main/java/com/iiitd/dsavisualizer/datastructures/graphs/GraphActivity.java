@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+import android.animation.LayoutTransition;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -14,10 +15,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -36,6 +42,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.material.snackbar.Snackbar;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
@@ -64,6 +72,7 @@ public class GraphActivity extends BaseActivity {
     ImageView iv_anim;
     ImageButton btn_controls;
     ConstraintLayout cl_controls;
+    ConstraintLayout cl_bottom;
     View inc_graphcontrols;
     ImageButton btn_play;
     ImageButton btn_nav;
@@ -154,6 +163,7 @@ public class GraphActivity extends BaseActivity {
         iv_anim = v_main.findViewById(R.id.iv_anim);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         cl_controls = v_main.findViewById(R.id.cl_controls);
+        cl_bottom = v_main.findViewById(R.id.cl_bottom);
         btn_controls = v_main.findViewById(R.id.btn_controls);
         inc_graphcontrols = v_main.findViewById(R.id.inc_graphcontrols);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
@@ -469,6 +479,7 @@ public class GraphActivity extends BaseActivity {
                 graphWrapper.reset();
                 graphAlgorithm.reset();
 
+                closeDrawer(0);
                 resetAlgorithm();
             }
         });
@@ -476,6 +487,7 @@ public class GraphActivity extends BaseActivity {
         btn_cleargraphanim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeDrawer(0);
                 resetAlgorithm();
             }
         });
@@ -1467,6 +1479,8 @@ public class GraphActivity extends BaseActivity {
             graphAlgorithm.reset();
         }
 
+        showControls();
+
         UtilUI.setText(tv_info, "-");
         UtilUI.setText(tv_seqno, "0");
 
@@ -1487,7 +1501,12 @@ public class GraphActivity extends BaseActivity {
 
     private void hideControls(){
         if(cl_controls.getVisibility() == View.VISIBLE){
-            cl_controls.setVisibility(View.GONE);
+            ViewAnimator.animate(cl_controls).alpha(1, 0).duration(500).start().onStop(new AnimationListener.Stop() {
+                @Override
+                public void onStop() {
+                    cl_controls.setVisibility(View.GONE);
+                }
+            });
             btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_left_24));
         }
     }
@@ -1495,6 +1514,7 @@ public class GraphActivity extends BaseActivity {
     private void showControls(){
         if(cl_controls.getVisibility() != View.VISIBLE) {
             cl_controls.setVisibility(View.VISIBLE);
+            ViewAnimator.animate(cl_controls).alpha(0, 1).duration(500).start();
             btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_right_24));
         }
     }

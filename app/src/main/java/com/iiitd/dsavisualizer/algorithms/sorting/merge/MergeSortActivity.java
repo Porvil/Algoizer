@@ -24,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.algorithms.sorting.bubble.BubbleSortActivity;
 import com.iiitd.dsavisualizer.algorithms.sorting.insertion.InsertionSortActivity;
@@ -76,7 +78,6 @@ public class MergeSortActivity extends BaseActivity {
     Timer timer = new Timer();
     boolean isAutoPlay = false;
     boolean isRandomArray = true;
-    boolean isPseudocode = true;
     int autoAnimSpeed = AppSettings.DEFAULT_ANIM_SPEED;
     final int LAYOUT_MAIN = R.layout.activity_sorting;
     final int LAYOUT_LEFT = R.layout.navigation_sorting;
@@ -475,46 +476,18 @@ public class MergeSortActivity extends BaseActivity {
         btn_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(isPseudocode) {
-                cl_psuedocode.setVisibility(View.GONE);
-                cl_psuedocode.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(mergeSort != null){
-                            int width = ll_anim.getWidth();
-                            int div = width / mergeSort.arraySize;
-
-                            for(int i=0;i<mergeSort.arraySize;i++){
-                                int position = mergeSort.positions[i];
-                                int x = position*div;
-                                float v1 = x - mergeSort.views[i].getX();
-                                mergeSort.views[i].animate().translationXBy(v1).start();
-                            }
+                if(cl_psuedocode.getVisibility() == View.VISIBLE){
+                    ViewAnimator.animate(cl_psuedocode).alpha(1, 0).duration(500).start().onStop(new AnimationListener.Stop() {
+                        @Override
+                        public void onStop() {
+                            cl_psuedocode.setVisibility(View.GONE);
                         }
-                    }
-                }, 0);
-            }
-            else {
-                cl_psuedocode.setVisibility(View.VISIBLE);
-                cl_psuedocode.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(mergeSort != null){
-                            int width = ll_anim.getWidth();
-                            int div = width / mergeSort.arraySize;
-
-                            for(int i=0;i<mergeSort.arraySize;i++){
-                                int position = mergeSort.positions[i];
-                                int x = position*div;
-                                float v1 = x - mergeSort.views[i].getX();
-                                mergeSort.views[i].animate().translationXBy(v1).start();
-                            }
-                        }
-                    }
-                }, 0);
-
-            }
-            isPseudocode = !isPseudocode;
+                    });
+                }
+                else{
+                    cl_psuedocode.setVisibility(View.VISIBLE);
+                    ViewAnimator.animate(cl_psuedocode).alpha(0, 1).duration(500).start();
+                }
             }
         });
 
