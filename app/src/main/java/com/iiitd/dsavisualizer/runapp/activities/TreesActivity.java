@@ -11,6 +11,7 @@ import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class TreesActivity extends AppCompatActivity {
 
     Context context;
     LinearLayout linearLayout;
+    ImageButton btn_back;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
             new ActivityItemData(BSTActivity.class.getName(), "BST", R.drawable.ic_bst),
@@ -45,6 +47,7 @@ public class TreesActivity extends AppCompatActivity {
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);
+        btn_back = findViewById(R.id.btn_back);
 
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
@@ -78,5 +81,13 @@ public class TreesActivity extends AppCompatActivity {
 
         }
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
+
 }
