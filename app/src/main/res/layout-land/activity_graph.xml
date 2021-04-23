@@ -237,6 +237,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
+                android:clickable="false"
                 android:contentDescription="Forward"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -271,13 +272,24 @@
         <ImageButton
             android:id="@+id/btn_controls"
             style="@style/S_ImageButton"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="0dp"
             android:contentDescription="Show Info"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_error"
             app:layout_constraintEnd_toStartOf="@+id/cl_controls"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_arrow_right_24" />
+
+        <ImageButton
+            android:id="@+id/btn_error"
+            style="@style/S_ImageButton"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:alpha="0.1"
+            android:contentDescription="Show Info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cl_controls"
+            app:srcCompat="@drawable/ic_baseline_error_outline_24" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_controls"

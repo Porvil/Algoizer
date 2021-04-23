@@ -66,6 +66,7 @@ public class GraphActivity extends BaseActivity {
     ImageView iv_graph;
     ImageView iv_anim;
     ImageButton btn_controls;
+    ImageButton btn_error;
     ConstraintLayout cl_controls;
     ConstraintLayout cl_bottom;
     View inc_graphcontrols;
@@ -160,6 +161,7 @@ public class GraphActivity extends BaseActivity {
         cl_controls = v_main.findViewById(R.id.cl_controls);
         cl_bottom = v_main.findViewById(R.id.cl_bottom);
         btn_controls = v_main.findViewById(R.id.btn_controls);
+        btn_error = v_main.findViewById(R.id.btn_error);
         inc_graphcontrols = v_main.findViewById(R.id.inc_graphcontrols);
         sb_animspeed = v_main.findViewById(R.id.sb_animspeed);
         btn_play = v_main.findViewById(R.id.btn_play);
@@ -644,6 +646,13 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
+        btn_error.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Graph Modified, Re-Run the algorithm", Toast.LENGTH_LONG).show();
+            }
+        });
+
         // Auto Animation Play/Pause Button
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1007,6 +1016,7 @@ public class GraphActivity extends BaseActivity {
                 graphControls.updateDrawables();
                 System.out.println(graphControls);
 
+                setGraphChanged(false);
                 hideControls();
                 closeDrawer(0);
                 System.out.println(graphAlgorithm.graphSequence);
@@ -1475,6 +1485,7 @@ public class GraphActivity extends BaseActivity {
             graphAlgorithm.reset();
         }
 
+        setGraphChanged(false);
         showControls();
 
         UtilUI.setText(tv_info, "-");
@@ -1583,6 +1594,19 @@ public class GraphActivity extends BaseActivity {
         }
     }
 
+    private void setGraphChanged(boolean changed){
+        if(changed && graphAlgorithm.graphAlgorithmType != GraphAlgorithmType.NULL){
+            btn_error.setAlpha(1f);
+            btn_error.setClickable(true);
+            btn_error.setEnabled(true);
+        }
+        else{
+            btn_error.setAlpha(0.1f);
+            btn_error.setClickable(false);
+            btn_error.setEnabled(false);
+        }
+    }
+
     @Override
     protected void initPseudoCode() {}
 
@@ -1597,6 +1621,7 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void run() {
                 graphAlgorithm = GraphAlgorithm.getInstance(context, ll_anim);
+                setGraphChanged(false);
             }
         });
 
@@ -1645,12 +1670,14 @@ public class GraphActivity extends BaseActivity {
                             break;
                         case VERTEX_ADD:
                             boolean addVertex = graphWrapper.addVertex(event);
+                            setGraphChanged(addVertex);
                             if (!addVertex) {
                                 Toast.makeText(context, "Vertex already present or too close to another vertex", Toast.LENGTH_SHORT).show();
                             }
                             break;
                         case VERTEX_REMOVE:
-                            graphWrapper.removeVertex(event);
+                            boolean removeVertex = graphWrapper.removeVertex(event);
+                            setGraphChanged(removeVertex);
                             break;
                         case EDGE_ADD:
                             if (graphWrapper.board.getState(row, col)) {
@@ -1729,7 +1756,8 @@ public class GraphActivity extends BaseActivity {
                                                         return;
                                                     }
 
-                                                    graphWrapper.addEdge(src, des, edgeWeight, finalUpdateOldEdge);
+                                                    boolean addEdge = graphWrapper.addEdge(src, des, edgeWeight, finalUpdateOldEdge);
+                                                    setGraphChanged(addEdge);
                                                     graphControls.startEdge = -1;
                                                     Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
                                                     dialog.dismiss();
@@ -1753,7 +1781,8 @@ public class GraphActivity extends BaseActivity {
                                             dialog.setContentView(myView);
                                             dialog.show();
                                         } else {
-                                            graphWrapper.addEdge(src, des);
+                                            boolean addEdge = graphWrapper.addEdge(src, des);
+                                            setGraphChanged(addEdge);
                                             graphControls.startEdge = -1;
                                             Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
                                         }
@@ -1770,7 +1799,8 @@ public class GraphActivity extends BaseActivity {
                                 if (graphControls.startEdge != -1) {//some node already selected
                                     int des = graphWrapper.board.boardElements[row][col].value;
                                     int src = graphControls.startEdge;
-                                    graphWrapper.removeEdge(src, des);
+                                    boolean removeEdge = graphWrapper.removeEdge(src, des);
+                                    setGraphChanged(removeEdge);
                                     graphControls.startEdge = -1;
                                 } else {// first node getting selected now
                                     int data = graphWrapper.board.boardElements[row][col].value;
@@ -1778,12 +1808,10 @@ public class GraphActivity extends BaseActivity {
                                 }
                             }
                             break;
-
                     }
                 }
 
-
-                //Careful about this below line, MUST BE CALLED
+                // Careful about this below line, MUST BE CALLED
                 graphWrapper.board.refresh(false);
 
                 return true;

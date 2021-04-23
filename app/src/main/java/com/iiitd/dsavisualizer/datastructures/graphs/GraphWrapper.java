@@ -163,7 +163,7 @@ public class GraphWrapper {
     public boolean removeVertex(MotionEvent motionEvent){
 
         TouchData touchData = board.getTouchData(motionEvent);
-        return  removeVertex(touchData);
+        return removeVertex(touchData);
 
     }
 
