@@ -1,6 +1,5 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
-import android.animation.LayoutTransition;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -15,15 +14,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionManager;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -227,6 +222,7 @@ public class GraphActivity extends BaseActivity {
         initOnBoarding();
         initViews();
         initNavigation();
+        initToolTipTexts();
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -1872,5 +1868,19 @@ public class GraphActivity extends BaseActivity {
 
     @Override
     protected void enableUI() {}
+
+    @Override
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_info, "Info");
+        TooltipCompat.setTooltipText(btn_grid, "Grid Toggle");
+        TooltipCompat.setTooltipText(btn_menu, "Controls Menu");
+        TooltipCompat.setTooltipText(btn_nav, "Navigation Menu");
+        TooltipCompat.setTooltipText(btn_play, "Play/Pause");
+        TooltipCompat.setTooltipText(btn_forward, "Forward");
+        TooltipCompat.setTooltipText(btn_backward, "Backward");
+        TooltipCompat.setTooltipText(btn_controls, "Show/Hide Controls");
+        TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
+        TooltipCompat.setTooltipText(tv_seqno, "Animation Step Counter");
+    }
 
 }

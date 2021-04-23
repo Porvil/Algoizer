@@ -158,6 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void back();
     protected abstract void disableUI();
     protected abstract void enableUI();
+    protected abstract void initToolTipTexts();
 
     public void startActivity(Activity start, Class<?> end){
         Intent intent = new Intent(start, end);

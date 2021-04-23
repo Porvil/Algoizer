@@ -21,6 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -131,6 +132,7 @@ public class MergeSortActivity extends BaseActivity {
         initPseudoCode();
         initViews();
         initNavigation();
+        initToolTipTexts();
 
         sw_randomarray.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -683,5 +685,18 @@ public class MergeSortActivity extends BaseActivity {
 
     @Override
     protected void enableUI() {}
+
+    @Override
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_info, "Info");
+        TooltipCompat.setTooltipText(btn_code, "Show/Hide Code");
+        TooltipCompat.setTooltipText(btn_menu, "Controls Menu");
+        TooltipCompat.setTooltipText(btn_nav, "Navigation Menu");
+        TooltipCompat.setTooltipText(btn_play, "Play/Pause");
+        TooltipCompat.setTooltipText(btn_forward, "Forward");
+        TooltipCompat.setTooltipText(btn_backward, "Backward");
+        TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
+        TooltipCompat.setTooltipText(tv_seqno, "Animation Step Counter");
+    }
 
 }

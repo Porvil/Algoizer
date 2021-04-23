@@ -23,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -136,6 +137,7 @@ public class BSTActivity extends BaseActivity {
         initOnBoarding();
         initViews();
         initNavigation();
+        initToolTipTexts();
 
         // Auto Animation Speed
         sb_animspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -904,6 +906,14 @@ public class BSTActivity extends BaseActivity {
         btn_nav.setEnabled(true);
         btn_info.setEnabled(true);
         dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    @Override
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_info, "Info");
+        TooltipCompat.setTooltipText(btn_menu, "Controls Menu");
+        TooltipCompat.setTooltipText(btn_nav, "Navigation Menu");
+        TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
     }
 
 }
