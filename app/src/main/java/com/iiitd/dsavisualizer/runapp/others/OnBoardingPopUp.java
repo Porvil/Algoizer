@@ -96,9 +96,14 @@ public class OnBoardingPopUp {
                 public void onClick(View v) {
                     if(mViewPager.getCurrentItem() == finalI){
                         View childAt = mViewPager.getChildAt(mViewPager.getCurrentItem());
-                        GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
-                        GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
-                        gifDrawable.reset();
+                        try {
+                            GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
+                            GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
+                            gifDrawable.reset();
+                        }
+                        catch (ClassCastException classCastException){
+                            classCastException.printStackTrace();
+                        }
                     }
                     else {
                         mViewPager.setCurrentItem(finalI);
@@ -185,9 +190,18 @@ public class OnBoardingPopUp {
 
             View childAt = mViewPager.getChildAt(i);
             GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
-            GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
-            gifDrawable.stop();
-            gifDrawable.reset();
+            try {
+                GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
+                gifDrawable.stop();
+                gifDrawable.reset();
+
+                if(position == i){
+                    gifDrawable.start();
+                }
+            }
+            catch (ClassCastException classCastException){
+                classCastException.printStackTrace();
+            }
 
             off.setVisibility(View.VISIBLE);
             on.setVisibility(View.INVISIBLE);
@@ -195,7 +209,6 @@ public class OnBoardingPopUp {
             if(position == i){
                 off.setVisibility(View.INVISIBLE);
                 on.setVisibility(View.VISIBLE);
-                gifDrawable.start();
             }
         }
 
