@@ -19,6 +19,9 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+
 public class OnBoardingPopUp {
 
     Context context;
@@ -88,7 +91,13 @@ public class OnBoardingPopUp {
             ll_count.addView(inflate, layoutParams);
         }
 
-        updateState(mViewPager.getCurrentItem());
+        mViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                updateState(mViewPager.getCurrentItem());
+            }
+        });
+
         boolean tutorialState = UtilUI.getTutorialState(context, id);
         cb_onboarding_remember.setChecked(tutorialState);
 
@@ -158,14 +167,22 @@ public class OnBoardingPopUp {
             View off = child.findViewById(R.id.iv_onboarding_count_off);
             View on = child.findViewById(R.id.iv_onboarding_count_on);
 
+            View childAt = mViewPager.getChildAt(i);
+            GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
+            GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
+            gifDrawable.stop();
+            gifDrawable.reset();
+
             off.setVisibility(View.VISIBLE);
             on.setVisibility(View.INVISIBLE);
 
             if(position == i){
                 off.setVisibility(View.INVISIBLE);
                 on.setVisibility(View.VISIBLE);
+                gifDrawable.start();
             }
         }
+
     }
 
     // Shows the popUpWindow if not already showing
