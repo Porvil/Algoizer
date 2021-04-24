@@ -2,6 +2,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -351,7 +352,7 @@
                     android:paddingStart="10dp"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -365,20 +366,12 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageButton
-                        android:id="@+id/btn_clearcustominput"
+                        android:id="@+id/btn_custominputhelp"
                         style="@style/S_ImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_clear_24" />
-
-                    <ImageButton
-                        android:id="@+id/btn_opengraph"
-                        style="@style/S_ImageButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_folder_open_24" />
+                        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
 
                     <ImageButton
                         android:id="@+id/btn_savecustominput"
@@ -387,14 +380,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_save_24" />
-
-                    <ImageButton
-                        android:id="@+id/btn_copygraph"
-                        style="@style/S_ImageButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_copy_all_24" />
 
                     <ImageButton
                         android:id="@+id/btn_pastecustominput"
@@ -412,6 +397,45 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_done_24" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="50dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_opengraph"
+                        style="@style/S_ImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_folder_open_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_copygraph"
+                        style="@style/S_ImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_copy_all_24" />
+
+                    <ImageButton
+                        android:id="@+id/btn_clearcustominput"
+                        style="@style/S_ImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_clear_24" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

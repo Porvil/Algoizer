@@ -100,6 +100,7 @@ public class GraphActivity extends BaseActivity {
     Button btn_bellmanford;
     Button btn_kruskal;
     Button btn_prim;
+    ImageButton btn_custominputhelp;
     ImageButton btn_opengraph;
     ImageButton btn_clearcustominput;
     ImageButton btn_copygraph;
@@ -198,6 +199,7 @@ public class GraphActivity extends BaseActivity {
         rg_graphsize = v_menu_right.findViewById(R.id.rg_graphsize);
         rg_weighted = v_menu_right.findViewById(R.id.rg_weighted);
         rg_directed = v_menu_right.findViewById(R.id.rg_directed);
+        btn_custominputhelp = v_menu_right.findViewById(R.id.btn_custominputhelp);
         btn_opengraph = v_menu_right.findViewById(R.id.btn_opengraph);
         btn_clearcustominput = v_menu_right.findViewById(R.id.btn_clearcustominput);
         btn_copygraph = v_menu_right.findViewById(R.id.btn_copygraph);
@@ -332,6 +334,7 @@ public class GraphActivity extends BaseActivity {
             public void onDrawerStateChanged(int newState) {}
 
         });
+
         btn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -468,6 +471,17 @@ public class GraphActivity extends BaseActivity {
             public void onClick(View v) {
                 String customGraphString = et_customgraphinput.getText().toString();
                 parseAndShowCustomInput(customGraphString);
+            }
+        });
+
+        btn_custominputhelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = layoutInflater.inflate(R.layout.layout_graph_custominputhelp, null);
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(view);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
             }
         });
 
@@ -1909,6 +1923,14 @@ public class GraphActivity extends BaseActivity {
         TooltipCompat.setTooltipText(btn_controls, "Show/Hide Controls");
         TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
         TooltipCompat.setTooltipText(tv_seqno, "Animation Step Counter");
+
+        TooltipCompat.setTooltipText(btn_custominputhelp, "Custom Input Help");
+        TooltipCompat.setTooltipText(btn_opengraph, "Load Graph");
+        TooltipCompat.setTooltipText(btn_savecustominput, "Save Graph");
+        TooltipCompat.setTooltipText(btn_copygraph, "Copy Graph");
+        TooltipCompat.setTooltipText(btn_pastecustominput, "Paste Graph");
+        TooltipCompat.setTooltipText(btn_clearcustominput, "Clear Custom Input");
+        TooltipCompat.setTooltipText(btn_custominput, "Run Custom Input");
     }
 
 }
