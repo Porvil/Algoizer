@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -83,12 +84,27 @@ public class OnBoardingPopUp {
         this.btn_onboarding_next = popUpView.findViewById(R.id.btn_onboarding_next);
         this.cb_onboarding_remember = popUpView.findViewById(R.id.cb_onboarding_remember);
 
+        int countItemWidth = (int) UtilUI.dpToPx(context, 25);
         LinearLayout.LayoutParams layoutParams =
-                new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1);
+                new LinearLayout.LayoutParams(countItemWidth, ViewGroup.LayoutParams.MATCH_PARENT);
         for(int i=0;i<size;i++){
             View inflate = inflater.inflate(R.layout.layout_onboarding_count, null);
-
             ll_count.addView(inflate, layoutParams);
+            final int finalI = i;
+            inflate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mViewPager.getCurrentItem() == finalI){
+                        View childAt = mViewPager.getChildAt(mViewPager.getCurrentItem());
+                        GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
+                        GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
+                        gifDrawable.reset();
+                    }
+                    else {
+                        mViewPager.setCurrentItem(finalI);
+                    }
+                }
+            });
         }
 
         mViewPager.post(new Runnable() {
@@ -199,4 +215,5 @@ public class OnBoardingPopUp {
             popupwindow.dismiss();
         }
     }
+
 }
