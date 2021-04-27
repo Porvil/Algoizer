@@ -49,27 +49,23 @@
 
         <ImageButton
             android:id="@+id/btn_about"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
 
-            android:background="?android:selectableItemBackground"
             android:contentDescription="@string/about"
-            android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/btn_themes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_info_24" />
+            app:srcCompat="@drawable/ic_developer" />
 
         <ImageButton
             android:id="@+id/btn_themes"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
 
-            android:background="?android:selectableItemBackground"
             android:contentDescription="@string/themes"
-            android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/btn_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,13 +73,11 @@
 
         <ImageButton
             android:id="@+id/btn_close"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
 
-            android:background="?android:selectableItemBackground"
             android:contentDescription="@string/close_application"
-            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

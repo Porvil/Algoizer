@@ -83,7 +83,7 @@ public class BFS {
         // Push to queue Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("source vertex(" + source + ") added to queue.")
+                        .setInfo("source vertex(" + source + ") added to queue")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -99,7 +99,7 @@ public class BFS {
             // Visit Node
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("vertex (" + u + ") popped from queue, check all edges.")
+                            .setInfo("vertex (" + u + ") popped from queue, check all edges")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -180,7 +180,7 @@ public class BFS {
 
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("vertex (" + u + ") all edges visited.")
+                            .setInfo("vertex (" + u + ") all edges visited")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(
@@ -324,7 +324,7 @@ public class BFS {
             // Visit Node
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("vertex (" + u + ") popped from queue, check all edges.")
+                            .setInfo("vertex (" + u + ") popped from queue, check all edges")
                             .setVerticesState(verticesState)
                             .addEdges(edges));
 

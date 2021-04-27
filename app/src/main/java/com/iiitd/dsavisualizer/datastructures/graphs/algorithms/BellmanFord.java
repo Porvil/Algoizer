@@ -128,7 +128,8 @@ public class BellmanFord {
                 // Updating Distance of Edge's des. Vertex
                 graphSequence.addGraphAnimationState(
                         GraphAnimationState.create()
-                                .setInfo("no edges relaxed in this iteration" + "\n" + "break loop")
+                                .setInfo("no edges relaxed in this iteration"
+                                        + "\n" + "break loop")
                                 .setVerticesState(verticesState)
                                 .addEdges(edges)
                                 .addGraphAnimationStateExtra(
@@ -185,14 +186,13 @@ public class BellmanFord {
                         // Updating Distance of Edge's des. Vertex
                         graphSequence.addGraphAnimationState(
                                 GraphAnimationState.create()
-                                        .setInfo("edge relaxed in " + size + "th iteration(last)." + "\n" + "negative loop in graph!!!")
+                                        .setInfo("edge relaxed in " + size + "th iteration(last)"
+                                                + "\n" + "negative loop in graph !!!")
                                         .setVerticesState(verticesState)
                                         .addEdges(edges)
                                         .addGraphAnimationStateExtra(
                                                 GraphAnimationStateExtra.create()
                                                         .addMapBellmanford(map)));
-
-                        System.out.println("NEGATIVE LOOP");
 
                         hasNegativeEdgeLoop = true;
                         edge.setToNormal();
@@ -217,8 +217,8 @@ public class BellmanFord {
         // Set Final Edges
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("iterating over all vertices and" + "\n"
-                                + "selecting their parent's to select final edges")
+                        .setInfo("iterating over all vertices and"
+                                + "\n" + "selecting their parent's to select final edges")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(

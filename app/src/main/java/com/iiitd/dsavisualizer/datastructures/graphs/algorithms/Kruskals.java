@@ -53,7 +53,6 @@ public class Kruskals {
         for(Edge edge : allEdgesBothWays) {
             if(edge.isFirstEdge) {
                 edges.add(new Edge(edge, NONE));
-//                allEdges.add(edge);
             }
         }
 
@@ -88,7 +87,7 @@ public class Kruskals {
         // Sort Edges Done
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("All edges sorted")
+                        .setInfo("all edges sorted")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
@@ -112,7 +111,7 @@ public class Kruskals {
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
                                     .setInfo("edge (" + curEdge.src + " ── " + curEdge.des + ")"
-                                            + "\n" + "edge added to MST.")
+                                            + "\n" + "edge added to MST")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()
@@ -125,8 +124,8 @@ public class Kruskals {
                 else {
                     graphSequence.addGraphAnimationState(
                             GraphAnimationState.create()
-                                    .setInfo("edge (" + curEdge.src + " ── " + curEdge.des + ")" + "\n"
-                                            + "vertices (" + curEdge.src + ", " + curEdge.des + ") already in MST, continue.")
+                                    .setInfo("edge (" + curEdge.src + " ── " + curEdge.des + ")"
+                                            + "\n" + "vertices (" + curEdge.src + ", " + curEdge.des + ") already in MST, continue")
                                     .setVerticesState(verticesState)
                                     .addEdges(edges)
                                     .addGraphAnimationStateExtra(GraphAnimationStateExtra.create()

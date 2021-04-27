@@ -72,7 +72,7 @@ public class Prims {
         // Picking a start Vertex from Graph
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("source vertex " + UtilUI.getLeftArrow() + " " + source + " selected.")
+                        .setInfo("source vertex " + UtilUI.getLeftArrow() + " " + source + " selected")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -82,7 +82,8 @@ public class Prims {
         // Setting initial distances
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("all vertices distance " + UtilUI.getLeftArrow() + infinity + "\n" + "source vertex (" + source + ") distance " + UtilUI.getLeftArrow() +" 0")
+                        .setInfo("all vertices distance " + UtilUI.getLeftArrow() + infinity
+                                + "\n" + "source vertex (" + source + ") distance " + UtilUI.getLeftArrow() + " 0")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -115,8 +116,8 @@ public class Prims {
             // Selecting Min. Value vertex not in MST
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("remove min-key vertex from priority queue" + "\n"
-                                    + "vertex (" + vertexNo + ") selected to MST.")
+                            .setInfo("remove min-key vertex from priority queue"
+                                    + "\n" + "vertex (" + vertexNo + ") selected to MST")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(

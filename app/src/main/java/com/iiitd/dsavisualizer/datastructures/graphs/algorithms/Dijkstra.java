@@ -66,7 +66,8 @@ public class Dijkstra {
         // Setting initial distances
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("all vertices distance " + UtilUI.getLeftArrow() + infinity + "\n" + "source vertex (" + source + ") distance " + UtilUI.getLeftArrow() +" 0")
+                        .setInfo("all vertices distance " + UtilUI.getLeftArrow() + infinity
+                                + "\n" + "source vertex (" + source + ") distance " + UtilUI.getLeftArrow() + " 0")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -99,8 +100,8 @@ public class Dijkstra {
             // Selecting Min. Value vertex not in Dijkstra
             graphSequence.addGraphAnimationState(
                     GraphAnimationState.create()
-                            .setInfo("remove min-key vertex from priority queue" + "\n"
-                                    + "vertex (" + vertexNo + ") selected.")
+                            .setInfo("remove min-key vertex from priority queue"
+                                    + "\n" + "vertex (" + vertexNo + ") selected")
                             .setVerticesState(verticesState)
                             .addEdges(edges)
                             .addGraphAnimationStateExtra(

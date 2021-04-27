@@ -85,7 +85,7 @@ public class DFS {
         // Push to stack Animation
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("source vertex(" + source + ") pushed to stack.")
+                        .setInfo("source vertex(" + source + ") pushed to stack")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -188,7 +188,7 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("vertex (" + u + ") popped from stack, check all edges.")
+                        .setInfo("vertex (" + u + ") popped from stack, check all edges")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -351,7 +351,7 @@ public class DFS {
         // Visit Node
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("vertex (" + u + ") popped from stack, check all edges.")
+                        .setInfo("vertex (" + u + ") popped from stack, check all edges")
                         .setVerticesState(verticesState)
                         .addEdges(edges));
 
