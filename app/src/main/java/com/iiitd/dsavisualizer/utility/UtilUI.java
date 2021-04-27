@@ -10,9 +10,15 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.style.AlignmentSpan;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
+//import android.text.style.
+import android.text.style.SuperscriptSpan;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -368,13 +374,48 @@ public class UtilUI {
     }
 
     public static String getInfinity(){
-        return DecimalFormatSymbols.getInstance().getInfinity();
+        return "\u221E";
+//        return DecimalFormatSymbols.getInstance().getInfinity();
+    }
+
+    public static String getLeftArrow(){
+        return "\u2190";
     }
 
     public static SpannableString getInfinitySS(){
         SpannableString spannableString = new SpannableString(DecimalFormatSymbols.getInstance().getInfinity());
         spannableString.setSpan(new RelativeSizeSpan(1.4f), 0, 1, 0);
         return spannableString;
+    }
+
+    public static SpannableStringBuilder stringToSpannableStringBuilder(Context context, TextView textView, String string){
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+        for(char c : string.toCharArray()){
+            String cur = String.valueOf(c);
+            if(cur.equals(getInfinity())){
+                SpannableString st = new SpannableString(getInfinity());
+//                st.setSpan(new RelativeSizeSpan(1.4f), 0, 1, 0);
+                spannableStringBuilder.append(st);
+            }
+            else if(cur.equals(getLeftArrow())){
+//                Drawable arrow = ContextCompat.getDrawable(context, R.drawable.graph_leftarrow);
+//                float ascent = textView.getPaint().getFontMetrics().ascent;
+//                int h = (int) -ascent;
+//                arrow.setBounds(0,0, h, h);
+//                SpannableString stringWithImage = new SpannableString("*");
+//                stringWithImage.setSpan(new ImageSpan(arrow, DynamicDrawableSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                spannableStringBuilder.append(stringWithImage);
+
+                SpannableString st = new SpannableString(getLeftArrow());
+//                st.setSpan(new RelativeSizeSpan(2f), 0, 1, 0);
+                spannableStringBuilder.append(st);
+            }
+            else {
+                spannableStringBuilder.append(c);
+            }
+        }
+
+        return spannableStringBuilder;
     }
 
     public static void startActivity(Activity start, Class<?> end){

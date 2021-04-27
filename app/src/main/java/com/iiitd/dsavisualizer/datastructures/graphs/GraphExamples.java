@@ -150,7 +150,7 @@ public class GraphExamples {
             "E 1 7 11\n" +
             "E 1 2 8\n" +
             "E 2 1 8\n" +
-            "E 2 8 2\n" +
+            "E 8 2 2\n" +
             "E 2 3 7\n" +
             "E 2 5 4\n" +
             "E 3 2 7\n" +

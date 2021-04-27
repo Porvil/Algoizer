@@ -72,7 +72,7 @@ public class Prims {
         // Picking a start Vertex from Graph
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("source vertex <- " + source + " selected.")
+                        .setInfo("source vertex " + UtilUI.getLeftArrow() + " " + source + " selected.")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
@@ -82,7 +82,7 @@ public class Prims {
         // Setting initial distances
         graphSequence.addGraphAnimationState(
                 GraphAnimationState.create()
-                        .setInfo("all vertices distance <─ "+ infinity + "\n" + "source vertex (" + source + ") distance <─ 0")
+                        .setInfo("all vertices distance " + UtilUI.getLeftArrow() + infinity + "\n" + "source vertex (" + source + ") distance " + UtilUI.getLeftArrow() +" 0")
                         .setVerticesState(verticesState)
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(

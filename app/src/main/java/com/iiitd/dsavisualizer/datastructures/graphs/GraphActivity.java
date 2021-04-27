@@ -1070,7 +1070,8 @@ public class GraphActivity extends BaseActivity {
                         }
 
                         UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphAlgorithm.graphSequence.size);
-                        UtilUI.setText(tv_info, spannableStringBuilder);
+//                        UtilUI.setText(tv_info, spannableStringBuilder);
+                        UtilUI.setText(tv_info, UtilUI.stringToSpannableStringBuilder(context, tv_info, str_tv_info));
 
                         graphWrapper.board.clearGraph(true);
                         GraphAnimationState graphAnimationState = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo);
