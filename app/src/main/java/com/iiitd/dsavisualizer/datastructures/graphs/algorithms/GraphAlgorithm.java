@@ -31,7 +31,7 @@ public class GraphAlgorithm {
             graphAlgorithm.graphSequence = null;
             graphAlgorithm.graphTree = null;
 
-            int treePopUpWidth = (int) UtilUI.dpToPx(context, 200);
+            int treePopUpWidth = (int) UtilUI.dpToPx(context, 240);
             int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
 
             graphAlgorithm.graphTreePopUp = new GraphTreePopUp(context, treePopUpWidth, parent.getHeight(), parent);

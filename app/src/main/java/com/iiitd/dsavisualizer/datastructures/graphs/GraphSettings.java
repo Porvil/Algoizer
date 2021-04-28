@@ -23,7 +23,7 @@ public class GraphSettings{
     public static final float maxX = 2048; // Limit in pixels
 
     // Zoom Constants
-    public static final float defZoom = 0.75f;
+    public static final float defZoom = 1f;
 
     public static int getNoOfRows(boolean isLargeGraph){
         return isLargeGraph ? LARGE_ROWS : SMALL_ROWS;

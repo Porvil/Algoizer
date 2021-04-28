@@ -1059,18 +1059,8 @@ public class GraphActivity extends BaseActivity {
 
                     if(curSeqNo < graphAlgorithm.graphSequence.graphAnimationStates.size() && curSeqNo >= 0) {
                         String str_tv_info = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo).info;
-                        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                        for(char c : str_tv_info.toCharArray()){
-                            if(String.valueOf(c).equals(UtilUI.getInfinity())){
-                                spannableStringBuilder.append(UtilUI.getInfinitySS());
-                            }
-                            else {
-                                spannableStringBuilder.append(c);
-                            }
-                        }
 
                         UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphAlgorithm.graphSequence.size);
-//                        UtilUI.setText(tv_info, spannableStringBuilder);
                         UtilUI.setText(tv_info, UtilUI.stringToSpannableStringBuilder(context, tv_info, str_tv_info));
 
                         graphWrapper.board.clearGraph(true);

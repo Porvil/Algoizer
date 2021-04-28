@@ -382,10 +382,24 @@ public class UtilUI {
         return "\u2190";
     }
 
-    public static SpannableString getInfinitySS(){
-        SpannableString spannableString = new SpannableString(DecimalFormatSymbols.getInstance().getInfinity());
-        spannableString.setSpan(new RelativeSizeSpan(1.4f), 0, 1, 0);
-        return spannableString;
+    public static SpannableString getInfinitySpannableString(Context context, TextView textView){
+        return getDrawableSpannableString(context, textView, R.drawable.graph_infinity, DynamicDrawableSpan.ALIGN_BOTTOM);
+    }
+
+    public static SpannableString getLeftArrowSpannableString(Context context, TextView textView){
+        return getDrawableSpannableString(context, textView, R.drawable.graph_leftarrow, DynamicDrawableSpan.ALIGN_BASELINE);
+    }
+
+    public static SpannableString getDrawableSpannableString(Context context, TextView textView, int drawable, int alignment){
+        Drawable infinity = ContextCompat.getDrawable(context, drawable);
+        float ascent = textView.getPaint().getFontMetrics().ascent;
+        int h = (int) -ascent;
+        infinity.setBounds(0,0, h, h);
+        SpannableString stringWithImage = new SpannableString("*");
+        stringWithImage.setSpan(new ImageSpan(infinity, alignment),
+                0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return stringWithImage;
     }
 
     public static SpannableStringBuilder stringToSpannableStringBuilder(Context context, TextView textView, String string){
@@ -393,22 +407,12 @@ public class UtilUI {
         for(char c : string.toCharArray()){
             String cur = String.valueOf(c);
             if(cur.equals(getInfinity())){
-                SpannableString st = new SpannableString(getInfinity());
-//                st.setSpan(new RelativeSizeSpan(1.4f), 0, 1, 0);
-                spannableStringBuilder.append(st);
+                spannableStringBuilder.append(" ");
+                spannableStringBuilder.append(getInfinitySpannableString(context, textView));
+                spannableStringBuilder.append(" ");
             }
             else if(cur.equals(getLeftArrow())){
-//                Drawable arrow = ContextCompat.getDrawable(context, R.drawable.graph_leftarrow);
-//                float ascent = textView.getPaint().getFontMetrics().ascent;
-//                int h = (int) -ascent;
-//                arrow.setBounds(0,0, h, h);
-//                SpannableString stringWithImage = new SpannableString("*");
-//                stringWithImage.setSpan(new ImageSpan(arrow, DynamicDrawableSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                spannableStringBuilder.append(stringWithImage);
-
-                SpannableString st = new SpannableString(getLeftArrow());
-//                st.setSpan(new RelativeSizeSpan(2f), 0, 1, 0);
-                spannableStringBuilder.append(st);
+                spannableStringBuilder.append(getLeftArrowSpannableString(context, textView));
             }
             else {
                 spannableStringBuilder.append(c);
