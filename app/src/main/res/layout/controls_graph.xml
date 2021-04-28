@@ -78,6 +78,15 @@
             android:padding="10dp"
             android:showDividers="middle">
 
+            <TextView
+                android:id="@+id/textView18"
+                style="@style/S_TextView_Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="changing these will clear current graph"
+                android:textAllCaps="true"
+                android:textSize="12sp" />
+
             <RadioGroup
                 android:id="@+id/rg_graphsize"
                 android:layout_width="match_parent"
@@ -194,6 +203,12 @@
                     android:text="Directed"
                     android:textColor="@color/white" />
             </RadioGroup>
+
+            <View
+                android:id="@+id/divider19"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"

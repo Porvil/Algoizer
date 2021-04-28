@@ -18,6 +18,7 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -257,45 +258,48 @@ public class GraphActivity extends BaseActivity {
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                View view = getLayoutInflater().inflate(R.layout.layout_trees_info, null);
-//                TextView tv_name = view.findViewById(R.id.tv_name);
-//                TextView tv_worst_insert = view.findViewById(R.id.tv_worst_insert);
-//                TextView tv_best_insert = view.findViewById(R.id.tv_best_insert);
-//                TextView tv_worst_search = view.findViewById(R.id.tv_worst_search);
-//                TextView tv_best_search  = view.findViewById(R.id.tv_best_search);
-//                TextView tv_worst_delete = view.findViewById(R.id.tv_worst_delete);
-//                TextView tv_best_delete = view.findViewById(R.id.tv_best_delete);
-//                TextView tv_traversals = view.findViewById(R.id.tv_traversals);
-//                TextView tv_space = view.findViewById(R.id.tv_space);
-//                ImageButton btn_close = view.findViewById(R.id.btn_close);
-//
-//                if(bst != null) {
-//                    if(timer != null){
-//                        timer.cancel();
-//                        timer = null;
-//                    }
-//                }
-//
-//                tv_name.setText(BSTStats.name);
-//                tv_worst_insert.setText(BSTStats.worst_insert);
-//                tv_best_insert.setText(BSTStats.best_insert);
-//                tv_worst_search.setText(BSTStats.worst_search);
-//                tv_best_search.setText(BSTStats.best_search);
-//                tv_worst_delete.setText(BSTStats.worst_delete);
-//                tv_best_delete.setText(BSTStats.best_delete);
-//                tv_traversals.setText(BSTStats.traversals);
-//                tv_space.setText(BSTStats.space);
-//
-//                final Dialog dialog = new Dialog(context);
-//                dialog.setContentView(view);
-//                dialog.show();
-//
-//                btn_close.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
+
+                if(graphAlgorithm != null && graphAlgorithm.graphAlgorithmType != GraphAlgorithmType.NULL) {
+                    GraphAlgorithmStats graphAlgorithmStats = GraphAlgorithmStats.getInstance(graphAlgorithm.graphAlgorithmType);
+                    System.out.println(graphAlgorithmStats);
+
+
+                    View view = getLayoutInflater().inflate(R.layout.layout_graph_info, null);
+                    TextView tv_name = view.findViewById(R.id.tv_name);
+                    TextView tv_time = view.findViewById(R.id.tv_time);
+                    TextView tv_space = view.findViewById(R.id.tv_space);
+                    ImageButton btn_close = view.findViewById(R.id.btn_close);
+
+                    if(graphAlgorithm != null) {
+                        if(timer != null){
+                            timer.cancel();
+                            timer = null;
+                        }
+                    }
+
+                    tv_name.setText(graphAlgorithmStats.algorithm);
+                    tv_time.setText(graphAlgorithmStats.time);
+                    tv_space.setText(graphAlgorithmStats.space);
+
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(view);
+                    dialog.show();
+//                    WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//                    layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//                    layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                    layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                    btn_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(context, "No Algorithm Selected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
