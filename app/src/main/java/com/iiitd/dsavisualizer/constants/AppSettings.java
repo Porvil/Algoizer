@@ -21,6 +21,8 @@ public class AppSettings {
     public static final String GRAPH_KEY = "Graph";
     public static final String GRAPH_SAVEFILE_EXTENSION = ".graph";
 
+    public static final String REPORT_BUG_EMAIL = "hello@gmail.com";
+
     public static final int PERMISSION_ALL_EXPORT = 1000;
     public static final int PERMISSION_ALL_IMPORT = 1001;
     public static final int LOGO_ANIMATION_TIME = 2000;

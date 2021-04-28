@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btn_about;
     ImageButton btn_themes;
     ImageButton btn_close;
+    ImageButton btn_report;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
             new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_sorting),
@@ -59,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         btn_about = findViewById(R.id.btn_about);
         btn_themes = findViewById(R.id.btn_themes);
         btn_close = findViewById(R.id.btn_close);
+        btn_report = findViewById(R.id.btn_report);
 
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
@@ -111,6 +113,23 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btn_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // REPORT CODE HERE
+
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{AppSettings.REPORT_BUG_EMAIL});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Report Bug");
+                email.putExtra(Intent.EXTRA_TEXT, "");
+
+                //need this to prompts email client only
+                email.setType("message/rfc822");
+
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
             }
         });
 

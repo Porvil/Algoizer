@@ -1647,26 +1647,8 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
+
         final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
-
-            @Override
-            public boolean onDown(MotionEvent event) {
-                System.out.println("On down");
-                return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent event) {
-                System.out.println("long");
-
-                float x1 = event.getX();
-                float y1 = event.getY();
-
-                float x = (x1 / graphWrapper.board.xSize);
-                float y =  (y1 / graphWrapper.board.ySize);
-
-            }
-
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
                 System.out.println("Single touch up");
