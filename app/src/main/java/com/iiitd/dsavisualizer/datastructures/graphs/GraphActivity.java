@@ -133,7 +133,6 @@ public class GraphActivity extends BaseActivity {
 
     Timer timer = null;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
-    int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT_MAIN = R.layout.activity_graph;
     final int LAYOUT_LEFT = R.layout.navigation_graph;
     final int LAYOUT_RIGHT = R.layout.controls_graph;
@@ -234,7 +233,6 @@ public class GraphActivity extends BaseActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 2500ms to 500ms
                 animStepDuration = (2000 - seekBar.getProgress() * 20) + 500;
-                animDuration = animStepDuration/2;
             }
 
             @Override
@@ -481,13 +479,16 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String customGraphString = et_customgraphinput.getText().toString();
-                parseAndShowCustomInput(customGraphString);
+                parseAndShowCustomInput(customGraphString, false);
             }
         });
 
         btn_custominputhelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // NEED TO UPDATE THIS BASED ON IMAGEVIEW
+
                 View view = layoutInflater.inflate(R.layout.layout_graph_custominputhelp, null);
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(view);
@@ -620,9 +621,6 @@ public class GraphActivity extends BaseActivity {
                     isLargeGraph = false;
                 }
 
-                // Clears everything
-                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
-
                 // Re-init's everything
                 initCanvasAndGraph();
 
@@ -643,8 +641,6 @@ public class GraphActivity extends BaseActivity {
                     directed = false;
                 }
 
-                // Clears everything
-                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeDirected(directed);
                 graphAlgorithm.reset();
                 resetGraphSequence();
@@ -663,8 +659,6 @@ public class GraphActivity extends BaseActivity {
                     weighted = false;
                 }
 
-                // Clears everything
-                Toast.makeText(context, "Graphs will be cleared", Toast.LENGTH_SHORT).show();
                 graphWrapper.changeWeighted(weighted);
                 graphAlgorithm.reset();
                 resetGraphSequence();
@@ -779,7 +773,7 @@ public class GraphActivity extends BaseActivity {
                             String text = UtilUI.readTextFromUri(context, uri);
                             if(GraphWrapper.isGraphInput(text)){
                                 et_customgraphinput.setText(text);
-                                parseAndShowCustomInput(text);
+                                parseAndShowCustomInput(text, false);
                                 closeDrawer(0);
                             }
                             else{
@@ -798,7 +792,7 @@ public class GraphActivity extends BaseActivity {
                     }
                     else{
                         Toast.makeText(context,
-                                "Not a valid " + AppSettings.GRAPH_SAVEFILE_EXTENSION + " file",
+                                "Not a valid " + AppSettings.GRAPH_SAVEFILE_EXTENSION + " file.",
                                 Toast.LENGTH_LONG).show();
                     }
                 }
@@ -815,7 +809,7 @@ public class GraphActivity extends BaseActivity {
         resetAlgorithm();
 
         // Parse the Example
-        parseAndShowCustomInput(exampleString);
+        parseAndShowCustomInput(exampleString, true);
 
         // Close drawer
         closeDrawer(2);
@@ -1049,10 +1043,12 @@ public class GraphActivity extends BaseActivity {
                 setGraphChanged(false);
                 hideControls();
                 closeDrawer(0);
-                System.out.println(graphAlgorithm.graphSequence);
-                // COULD CAUSE NPE
-                taskStep(0);
-                UtilUI.setText(tv_info, graphAlgorithm.graphSequence.graphAnimationStates.get(0).info);
+
+                if(graphAlgorithm.graphSequence.graphAnimationStates.size() > 0){
+                    taskStep(0);
+                    UtilUI.setText(tv_info, graphAlgorithm.graphSequence.graphAnimationStates.get(0).info);
+                }
+
                 UtilUI.setText(tv_seqno, "1/" + graphAlgorithm.graphSequence.size);
                 break;
             case 1: // Toast Error
@@ -1079,10 +1075,11 @@ public class GraphActivity extends BaseActivity {
                         UtilUI.setText(tv_seqno, curSeqNo+1 + "/" + graphAlgorithm.graphSequence.size);
                         UtilUI.setText(tv_info, UtilUI.stringToSpannableStringBuilder(context, tv_info, str_tv_info));
 
+                        // Clear Graph
                         graphWrapper.board.clearGraph(true);
+
                         GraphAnimationState graphAnimationState = graphAlgorithm.graphSequence.graphAnimationStates.get(curSeqNo);
                         System.out.println(graphAnimationState);
-                        System.out.println(graphAnimationState.edges.size());
 
                         graphAlgorithm.graphTreeDSPopUp.update(graphAnimationState.graphAnimationStateExtra);
 
@@ -1160,24 +1157,9 @@ public class GraphActivity extends BaseActivity {
                         }
 
                         graphWrapper.board.refresh(true);
-
                     }
                     else{
                         UtilUI.setText(tv_info, "Done");
-                        System.out.println("Canceled");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                btn_menu.setEnabled(true);
-                                btn_nav.setEnabled(true);
-                                btn_info.setEnabled(true);
-                                Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                        timer.cancel();
-//                        timer = null;
                     }
                 }
             });
@@ -1280,7 +1262,7 @@ public class GraphActivity extends BaseActivity {
         }
     }
 
-    public void parseAndShowCustomInput(String customGraphString){
+    public void parseAndShowCustomInput(String customGraphString, boolean isExample){
         String[] ss = customGraphString.split("\\n");
 
         ArrayList<Vertex> vertices = new ArrayList<>();
@@ -1464,14 +1446,16 @@ public class GraphActivity extends BaseActivity {
                 zl_graph.zoomTo(GraphSettings.defZoom, true);
 
                 response = "Custom Graph input successful";
-                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                if(!isExample){
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+
             }
 
         }
     }
 
     public void exportCurrentGraph(){
-
         if (graphWrapper != null) {
             String graphString = graphWrapper.getSerializableGraphString();
             if (graphString != null) {
@@ -1510,8 +1494,7 @@ public class GraphActivity extends BaseActivity {
         showControls();
 
         UtilUI.setText(tv_info, "-");
-        UtilUI.setText(tv_seqno, "0");
-
+        UtilUI.setText(tv_seqno, "-");
     }
 
     public void resetGraphSequence(){
@@ -1523,7 +1506,7 @@ public class GraphActivity extends BaseActivity {
         }
         else{
             UtilUI.setText(tv_info, "-");
-            UtilUI.setText(tv_seqno, "0");
+            UtilUI.setText(tv_seqno, "-");
         }
     }
 
@@ -1633,7 +1616,6 @@ public class GraphActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
         graphControls = new GraphControls(context, inc_graphcontrols);
         graphControls.updateDrawables();
 
@@ -1652,7 +1634,6 @@ public class GraphActivity extends BaseActivity {
                 initCanvasAndGraph();
             }
         });
-
 
         final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
             @Override
@@ -1864,8 +1845,6 @@ public class GraphActivity extends BaseActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_menu.setEnabled(true);
-                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 dialog.dismiss();
             }
         });
@@ -1882,16 +1861,6 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                System.out.println("Dismissed");
-                btn_menu.setEnabled(true);
-                btn_nav.setEnabled(true);
-                btn_info.setEnabled(true);
-                dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            }
-        });
     }
 
     @Override
