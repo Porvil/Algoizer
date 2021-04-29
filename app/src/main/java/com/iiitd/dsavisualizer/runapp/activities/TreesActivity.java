@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
@@ -49,6 +50,8 @@ public class TreesActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.ll_parent);
         btn_back = findViewById(R.id.btn_back);
 
+        initToolTipTexts();
+
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
                 ViewGroup.LayoutParams.MATCH_PARENT);
@@ -88,6 +91,10 @@ public class TreesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_back, "Go Back");
     }
 
 }

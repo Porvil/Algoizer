@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
@@ -61,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
         btn_themes = findViewById(R.id.btn_themes);
         btn_close = findViewById(R.id.btn_close);
         btn_report = findViewById(R.id.btn_report);
+
+        initToolTipTexts();
 
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
@@ -161,6 +164,13 @@ public class HomeActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_about, "About Developers");
+        TooltipCompat.setTooltipText(btn_close, "Close App");
+        TooltipCompat.setTooltipText(btn_report, "Report Bug/Feedback");
+        TooltipCompat.setTooltipText(btn_themes, "Change Theme");
     }
 
 }

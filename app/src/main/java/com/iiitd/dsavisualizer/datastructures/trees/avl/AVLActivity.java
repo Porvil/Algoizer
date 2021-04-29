@@ -971,6 +971,14 @@ public class AVLActivity extends BaseActivity {
         TooltipCompat.setTooltipText(btn_menu, "Controls Menu");
         TooltipCompat.setTooltipText(btn_nav, "Navigation Menu");
         TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
+
+        // Right Menu
+        TooltipCompat.setTooltipText(btn_closemenu, "Close Controls");
+        TooltipCompat.setTooltipText(btn_helpmenu, "Show Help");
+        TooltipCompat.setTooltipText(btn_insertrandom, "Random Number");
+
+        // Left Menu
+        TooltipCompat.setTooltipText(btn_closenav, "Close Navigation");
     }
 
 }

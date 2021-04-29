@@ -1,6 +1,7 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,8 @@ public class AboutActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.btn_back);
 
+        initToolTipTexts();
+
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,4 +34,9 @@ public class AboutActivity extends AppCompatActivity {
         });
 
     }
+
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_back, "Go Back");
+    }
+
 }

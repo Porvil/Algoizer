@@ -1913,6 +1913,9 @@ public class GraphActivity extends BaseActivity {
         TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
         TooltipCompat.setTooltipText(tv_seqno, "Animation Step Counter");
 
+        // Right Menu
+        TooltipCompat.setTooltipText(btn_closemenu, "Close Controls");
+        TooltipCompat.setTooltipText(btn_helpmenu, "Show Help");
         TooltipCompat.setTooltipText(btn_custominputhelp, "Custom Input Help");
         TooltipCompat.setTooltipText(btn_opengraph, "Load Graph");
         TooltipCompat.setTooltipText(btn_savecustominput, "Save Graph");
@@ -1920,6 +1923,9 @@ public class GraphActivity extends BaseActivity {
         TooltipCompat.setTooltipText(btn_pastecustominput, "Paste Graph");
         TooltipCompat.setTooltipText(btn_clearcustominput, "Clear Custom Input");
         TooltipCompat.setTooltipText(btn_custominput, "Run Custom Input");
+
+        // Left Menu
+        TooltipCompat.setTooltipText(btn_closenav, "Close Navigation");
     }
 
 }

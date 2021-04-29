@@ -728,6 +728,13 @@ public class QuickSortActivity extends BaseActivity {
         TooltipCompat.setTooltipText(btn_backward, "Backward");
         TooltipCompat.setTooltipText(tv_info, "Current Animation Info");
         TooltipCompat.setTooltipText(tv_seqno, "Animation Step Counter");
+
+        // Right Menu
+        TooltipCompat.setTooltipText(btn_closemenu, "Close Controls");
+        TooltipCompat.setTooltipText(btn_helpmenu, "Show Help");
+
+        // Left Menu
+        TooltipCompat.setTooltipText(btn_closenav, "Close Navigation");
     }
 
 }

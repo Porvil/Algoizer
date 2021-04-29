@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
@@ -41,7 +42,6 @@ public class SortingActivity extends AppCompatActivity {
             new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort)
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
@@ -56,6 +56,8 @@ public class SortingActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.ll_parent);
         btn_back = findViewById(R.id.btn_back);
+
+        initToolTipTexts();
 
         int width = (int) UtilUI.dpToPx(context, AppSettings.ACTIVITY_ITEM_WIDTH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,
@@ -96,6 +98,10 @@ public class SortingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_back, "Go Back");
     }
 
 }
