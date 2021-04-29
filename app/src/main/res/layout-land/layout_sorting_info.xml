@@ -2,154 +2,180 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="540dp"
-    android:layout_height="300dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/S_TextView_Heading"
         android:layout_width="490dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/info"
-        style="@style/S_TextView_Heading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView7"
-        style="@style/S_TextView_Bold"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:text="@string/time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-
-    <Space
-        android:id="@+id/space"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView11"
-        style="@style/S_TextView_Bold"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:text="@string/space"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space" />
-
-    <TextView
-        android:id="@+id/textView12"
-        style="@style/S_TextView_Bold"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:text="@string/stable"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <TextView
-        android:id="@+id/textView13"
-        style="@style/S_TextView_Bold"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="@string/no_of_comparisions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/tv_avg1"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/average"
-        app:layout_constraintEnd_toStartOf="@+id/tv_worst1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-
-    <TextView
-        android:id="@+id/tv_worst1"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/worst"
-        app:layout_constraintEnd_toStartOf="@+id/tv_best1"
-        app:layout_constraintTop_toTopOf="@+id/tv_avg1" />
-
-    <TextView
-        android:id="@+id/tv_best1"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="@string/best"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-
-    <TextView
-        android:id="@+id/tv_avg"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_worst"
-        app:layout_constraintTop_toBottomOf="@+id/tv_avg1" />
-
-    <TextView
-        android:id="@+id/tv_worst"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_best"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst1" />
-
-    <TextView
-        android:id="@+id/tv_best"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_best1" />
-
-    <TextView
-        android:id="@+id/tv_space"
-        style="@style/S_TextView_Normal"
-        android:layout_width="360dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_stable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst" />
-
-    <TextView
-        android:id="@+id/tv_stable"
-        style="@style/S_TextView_Normal"
-        android:layout_width="360dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_comparisons"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_comparisons"
-        style="@style/S_TextView_Normal"
-        android:layout_width="360dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ImageButton
         android:id="@+id/btn_close"
+        style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        style="@style/S_ImageButton"
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_close_24" />
 
+    <View
+        android:id="@+id/divider20"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider20">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/tv_avg1"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/average"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_avg"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/space"
+                app:layout_constraintTop_toBottomOf="@+id/tv_avg1" />
+
+            <TextView
+                android:id="@+id/tv_best"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst"
+                app:layout_constraintTop_toBottomOf="@+id/tv_best1" />
+
+            <TextView
+                android:id="@+id/tv_space"
+                style="@style/S_TextView_Normal"
+                android:layout_width="360dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst" />
+
+            <TextView
+                android:id="@+id/tv_worst"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_avg"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst1" />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/S_TextView_Bold"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:text="@string/space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/space" />
+
+            <TextView
+                android:id="@+id/tv_comparisons"
+                style="@style/S_TextView_Normal"
+                android:layout_width="360dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/tv_stable" />
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/S_TextView_Bold"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="@string/no_of_comparisions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/tv_worst1"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/worst"
+                app:layout_constraintStart_toEndOf="@+id/tv_avg1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_stable"
+                style="@style/S_TextView_Normal"
+                android:layout_width="360dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/tv_space" />
+
+            <TextView
+                android:id="@+id/tv_best1"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="@string/best"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/S_TextView_Bold"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:text="@string/stable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/S_TextView_Bold"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:text="@string/time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="360dp"
-    android:layout_height="350dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -26,147 +26,175 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_close_24" />
 
-    <TextView
-        android:id="@+id/textView7"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/time"
+    <View
+        android:id="@+id/divider20"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
-    <TextView
-        android:id="@+id/textView14"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:gravity="center|end"
-        android:paddingEnd="25dp"
-        android:text="@string/insert"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView11"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:gravity="center|end"
-        android:paddingEnd="25dp"
-        android:text="@string/delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textView12"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:gravity="center|end"
-        android:paddingEnd="25dp"
-        android:text="@string/search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <TextView
-        android:id="@+id/textView13"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/traversals"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/textView15"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/space"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider20">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_worst1"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/worst"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/traversals"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
-        android:id="@+id/tv_best1"
-        style="@style/S_TextView_Bold"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="@string/best"
-        app:layout_constraintStart_toEndOf="@+id/tv_worst1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            <TextView
+                android:id="@+id/tv_best_delete"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst_delete"
+                app:layout_constraintTop_toBottomOf="@+id/tv_best_insert" />
 
-    <TextView
-        android:id="@+id/tv_worst_insert"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst1" />
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:gravity="center|end"
+                android:paddingEnd="25dp"
+                android:text="@string/insert"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-    <TextView
-        android:id="@+id/tv_best_insert"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_worst_insert"
-        app:layout_constraintTop_toBottomOf="@+id/tv_best1" />
+            <TextView
+                android:id="@+id/tv_traversals"
+                style="@style/S_TextView_Normal"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst_search" />
 
-    <TextView
-        android:id="@+id/tv_worst_delete"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst_insert" />
+            <TextView
+                android:id="@+id/tv_space"
+                style="@style/S_TextView_Normal"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView15"
+                app:layout_constraintTop_toBottomOf="@+id/tv_traversals" />
 
-    <TextView
-        android:id="@+id/tv_best_delete"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_worst_delete"
-        app:layout_constraintTop_toBottomOf="@+id/tv_best_insert" />
+            <TextView
+                android:id="@+id/tv_worst_search"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst_delete" />
 
-    <TextView
-        android:id="@+id/tv_worst_search"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst_delete" />
+            <TextView
+                android:id="@+id/tv_worst_insert"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst1" />
 
-    <TextView
-        android:id="@+id/tv_best_search"
-        style="@style/S_TextView_Normal"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_worst_search"
-        app:layout_constraintTop_toBottomOf="@+id/tv_best_delete" />
+            <TextView
+                android:id="@+id/textView15"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-    <TextView
-        android:id="@+id/tv_traversals"
-        style="@style/S_TextView_Normal"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/tv_worst_search" />
+            <TextView
+                android:id="@+id/tv_worst_delete"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worst_insert" />
 
-    <TextView
-        android:id="@+id/tv_space"
-        style="@style/S_TextView_Normal"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/tv_traversals" />
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_best1"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/best"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_best_search"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst_search"
+                app:layout_constraintTop_toBottomOf="@+id/tv_best_delete" />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:gravity="center|end"
+                android:paddingEnd="25dp"
+                android:text="@string/delete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/tv_best_insert"
+                style="@style/S_TextView_Normal"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_worst_insert"
+                app:layout_constraintTop_toBottomOf="@+id/tv_best1" />
+
+            <TextView
+                android:id="@+id/tv_worst1"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/worst"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/S_TextView_Bold"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:gravity="center|end"
+                android:paddingEnd="25dp"
+                android:text="@string/search"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

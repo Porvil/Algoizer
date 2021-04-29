@@ -13,12 +13,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -61,6 +59,7 @@ import java.util.TimerTask;
 public class GraphActivity extends BaseActivity {
 
     private static final int GRAPH_PICKFILE_RESULT_CODE = 1223;
+
     LinearLayout ll_anim;
     ImageView iv_grid;
     ImageView iv_coordinates;
