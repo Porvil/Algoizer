@@ -242,7 +242,28 @@ public class GraphActivity extends BaseActivity {
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (graphAlgorithm.graphSequence != null && isAutoPlay) {
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (graphAlgorithm.graphSequence.curSeqNo < graphAlgorithm.graphSequence.getSize()-1){
+                                graphAlgorithm.graphSequence.forward();
+                                taskStep(graphAlgorithm.graphSequence.curSeqNo);
+                            }
+                            else {
+                                isAutoPlay = false;
+                                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+                                if(timer != null) {
+                                    timer.cancel();
+                                }
+                            }
+                        }
+                    }, 0, animStepDuration);
+                }
+            }
 
         });
 
@@ -258,11 +279,8 @@ public class GraphActivity extends BaseActivity {
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(graphAlgorithm != null && graphAlgorithm.graphAlgorithmType != GraphAlgorithmType.NULL) {
                     GraphAlgorithmStats graphAlgorithmStats = GraphAlgorithmStats.getInstance(graphAlgorithm.graphAlgorithmType);
-                    System.out.println(graphAlgorithmStats);
-
 
                     View view = getLayoutInflater().inflate(R.layout.layout_graph_info, null);
                     TextView tv_name = view.findViewById(R.id.tv_name);
@@ -270,12 +288,7 @@ public class GraphActivity extends BaseActivity {
                     TextView tv_space = view.findViewById(R.id.tv_space);
                     ImageButton btn_close = view.findViewById(R.id.btn_close);
 
-                    if(graphAlgorithm != null) {
-                        if(timer != null){
-                            timer.cancel();
-                            timer = null;
-                        }
-                    }
+                    pauseAnimation();
 
                     tv_name.setText(graphAlgorithmStats.algorithm);
                     tv_time.setText(graphAlgorithmStats.time);
@@ -284,11 +297,6 @@ public class GraphActivity extends BaseActivity {
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(view);
                     dialog.show();
-//                    WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//                    layoutParams.copyFrom(dialog.getWindow().getAttributes());
-//                    layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                    layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                     btn_close.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -319,6 +327,7 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 if(slideOffset >= .05){
+                    pauseAnimation();
                     graphAlgorithm.graphTreePopUp.hideWhileDrawerOpen();
                     graphAlgorithm.graphTreeDSPopUp.hideWhileDrawerOpen();
                 }
@@ -433,7 +442,6 @@ public class GraphActivity extends BaseActivity {
         btn_opengraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 boolean hasPermissions = false;
                 int MyVersion = Build.VERSION.SDK_INT;
                 if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -577,6 +585,7 @@ public class GraphActivity extends BaseActivity {
                 example(GraphExamples.example9);
             }
         });
+
         btn_savecustominput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -713,10 +722,7 @@ public class GraphActivity extends BaseActivity {
         btn_backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                isAutoPlay = false;
-//                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                timer.cancel();
-//                onBackwardClick();
+                pauseAnimation();
                 if(graphAlgorithm.graphSequence != null){
                     graphAlgorithm.graphSequence.backward();
                     taskStep(graphAlgorithm.graphSequence.curSeqNo);
@@ -729,10 +735,7 @@ public class GraphActivity extends BaseActivity {
         btn_forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                isAutoPlay = false;
-//                btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
-//                timer.cancel();
-//                onForwardClick();
+                pauseAnimation();
                 if(graphAlgorithm.graphSequence != null){
                     graphAlgorithm.graphSequence.forward();
                     taskStep(graphAlgorithm.graphSequence.curSeqNo);
@@ -740,6 +743,16 @@ public class GraphActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void pauseAnimation(){
+        if(graphAlgorithm.graphSequence != null){
+            isAutoPlay = false;
+            btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
+            if(timer != null) {
+                timer.cancel();
+            }
+        }
     }
 
     private void openGraphFile(){
