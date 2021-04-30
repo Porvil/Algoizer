@@ -17,6 +17,7 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -486,14 +487,21 @@ public class GraphActivity extends BaseActivity {
         btn_custominputhelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // NEED TO UPDATE THIS BASED ON IMAGEVIEW
-
                 View view = layoutInflater.inflate(R.layout.layout_graph_custominputhelp, null);
+                ImageButton btn_close = view.findViewById(R.id.btn_close);
+
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(view);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
