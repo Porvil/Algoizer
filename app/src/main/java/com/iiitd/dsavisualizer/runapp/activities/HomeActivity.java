@@ -123,10 +123,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // REPORT CODE HERE
-
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{AppSettings.REPORT_BUG_EMAIL});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Report Bug");
+                email.putExtra(Intent.EXTRA_SUBJECT, "Bug/Feedback");
                 email.putExtra(Intent.EXTRA_TEXT, "");
 
                 //need this to prompts email client only

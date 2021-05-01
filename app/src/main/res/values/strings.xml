@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">DSA Visualizer</string>
+    <string name="app_name">Algoizer</string>
+
     <string name="splash_image">Splash Image</string>
     <string name="array_size">Array Size</string>
     <string name="professors">Dr. Syamantak Das, Dr. Debajyoti Bera</string>
