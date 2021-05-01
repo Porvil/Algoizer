@@ -4,6 +4,9 @@ import com.iiitd.dsavisualizer.R;
 
 public class OnBoardingInfo {
 
+    // if more than MAX_PAGES are passed to viewpager, it will crash
+    public static final int MAX_PAGES = 10;
+
     public static final int[] sortingOnBoarding = {
             R.drawable.ob_sorting_left,
             R.drawable.ob_sorting_right1
@@ -15,8 +18,16 @@ public class OnBoardingInfo {
             R.drawable.ob_tree_right2
     };
 
+//    public static final int[] graphOnBoarding = {
+//            R.drawable.ob_sorting_left,
+//            R.drawable.ob_sorting_right1
+//    };
+//
     public static final int[] graphOnBoarding = {
-            R.drawable.ob_graph
+            R.drawable.ob_graph_input,
+            R.drawable.ob_graph_right,
+            R.drawable.ob_graph_left,
+            R.drawable.ob_graph_example
     };
 
 }

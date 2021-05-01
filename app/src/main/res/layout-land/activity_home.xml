@@ -14,7 +14,7 @@
         android:fadeScrollbars="false"
         android:fadingEdgeLength="50dp"
         android:requiresFadingEdge="horizontal"
-        android:scrollbarSize="10dp"
+        android:scrollbarSize="8dp"
         android:scrollbarStyle="outsideInset"
         android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"

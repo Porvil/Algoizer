@@ -112,6 +112,7 @@ public class OnBoardingPopUp {
         mViewPager.post(new Runnable() {
             @Override
             public void run() {
+                mViewPager.setOffscreenPageLimit(OnBoardingInfo.MAX_PAGES);
                 updateState(mViewPager.getCurrentItem());
             }
         });
@@ -179,26 +180,10 @@ public class OnBoardingPopUp {
             btn_onboarding_back.setVisibility(View.VISIBLE);
         }
 
-
         for(int i=0;i<ll_count.getChildCount();i++){
             FrameLayout child = (FrameLayout) ll_count.getChildAt(i);
             View off = child.findViewById(R.id.iv_onboarding_count_off);
             View on = child.findViewById(R.id.iv_onboarding_count_on);
-
-            View childAt = mViewPager.getChildAt(i);
-            GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
-            try {
-                GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
-                gifDrawable.stop();
-                gifDrawable.reset();
-
-                if(position == i){
-                    gifDrawable.start();
-                }
-            }
-            catch (ClassCastException classCastException){
-                classCastException.printStackTrace();
-            }
 
             off.setVisibility(View.VISIBLE);
             on.setVisibility(View.INVISIBLE);
@@ -206,6 +191,26 @@ public class OnBoardingPopUp {
             if(position == i){
                 off.setVisibility(View.INVISIBLE);
                 on.setVisibility(View.VISIBLE);
+            }
+        }
+
+        // Only Stop the left and right pages of current view, and start the current view
+        for(int i=position-1;i<=position+1;i++){
+            if(i>=0 && i<size){
+                View childAt = mViewPager.getChildAt(i);
+                GifImageView gifImageView = childAt.findViewById(R.id.gifiv_onboarding);
+                try {
+                    GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
+                    gifDrawable.stop();
+                    gifDrawable.reset();
+
+                    if(position == i){
+                        gifDrawable.start();
+                    }
+                }
+                catch (ClassCastException classCastException){
+                    classCastException.printStackTrace();
+                }
             }
         }
 
