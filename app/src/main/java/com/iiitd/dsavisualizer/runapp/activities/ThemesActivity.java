@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
@@ -17,6 +19,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 public class ThemesActivity extends AppCompatActivity {
 
     FrameLayout fl_currenttheme;
+    ImageButton btn_back;            // 1
     Button btn_theme_blue;            // 1
     Button btn_theme_purple;          // 2
     Button btn_theme_green;           // 3
@@ -33,12 +36,15 @@ public class ThemesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_themes);
 
         fl_currenttheme = findViewById(R.id.fl_currenttheme);
+        btn_back = findViewById(R.id.btn_back);
         btn_theme_blue = findViewById(R.id.btn_theme_blue);
         btn_theme_purple = findViewById(R.id.btn_theme_purple);
         btn_theme_green = findViewById(R.id.btn_theme_green);
         btn_theme_orange = findViewById(R.id.btn_theme_orange);
         btn_theme_brown = findViewById(R.id.btn_theme_brown);
         btn_theme_pink = findViewById(R.id.btn_theme_pink);
+
+        initToolTipTexts();
 
         fl_currenttheme.setBackgroundColor(UtilUI.getCurrentThemeColor(this, R.attr.base));
 
@@ -90,6 +96,13 @@ public class ThemesActivity extends AppCompatActivity {
             }
         });
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -97,6 +110,10 @@ public class ThemesActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    protected void initToolTipTexts(){
+        TooltipCompat.setTooltipText(btn_back, "Go Back");
     }
 
 }
