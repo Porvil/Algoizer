@@ -1633,6 +1633,8 @@ public class GraphActivity extends BaseActivity {
             public void run() {
                 graphAlgorithm = GraphAlgorithm.getInstance(context, ll_anim);
                 setGraphChanged(false);
+                UtilUI.setText(tv_info, "-");
+                UtilUI.setText(tv_seqno, "-");
             }
         });
 
@@ -1651,10 +1653,13 @@ public class GraphActivity extends BaseActivity {
                 float x1 = event.getX();
                 float y1 = event.getY();
 
+                final String edgeToast = graphWrapper.directed ? " " + UtilUI.getRightArrow() + " " : " ── ";
+
                 TouchData touchData = graphWrapper.board.getTouchData(event);
                 System.out.println(touchData);
                 int row = touchData.row;
                 int col = touchData.col;
+
 
                 if(touchData.isElement || touchData.isExtendedElement) {
                     switch (graphControls.getCurrentState()) {
@@ -1751,7 +1756,7 @@ public class GraphActivity extends BaseActivity {
                                                     boolean addEdge = graphWrapper.addEdge(src, des, edgeWeight, finalUpdateOldEdge);
                                                     setGraphChanged(addEdge);
                                                     graphControls.startEdge = -1;
-                                                    Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, src + edgeToast + des, Toast.LENGTH_SHORT).show();
                                                     dialog.dismiss();
                                                 }
                                             });
@@ -1776,7 +1781,7 @@ public class GraphActivity extends BaseActivity {
                                             boolean addEdge = graphWrapper.addEdge(src, des);
                                             setGraphChanged(addEdge);
                                             graphControls.startEdge = -1;
-                                            Toast.makeText(context, src + " -> " + des, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, src + edgeToast + des, Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 } else {// first node getting selected now
@@ -1797,6 +1802,7 @@ public class GraphActivity extends BaseActivity {
                                 } else {// first node getting selected now
                                     int data = graphWrapper.board.boardElements[row][col].value;
                                     graphControls.startEdge = data;
+                                    Toast.makeText(context, data + " selected", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             break;

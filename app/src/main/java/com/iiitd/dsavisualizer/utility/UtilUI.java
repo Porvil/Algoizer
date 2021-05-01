@@ -382,6 +382,10 @@ public class UtilUI {
         return "\u2190";
     }
 
+    public static String getRightArrow(){
+        return "\u2192";
+    }
+
     public static SpannableString getInfinitySpannableString(Context context, TextView textView){
         return getDrawableSpannableString(context, textView, R.drawable.graph_infinity, DynamicDrawableSpan.ALIGN_BOTTOM);
     }
