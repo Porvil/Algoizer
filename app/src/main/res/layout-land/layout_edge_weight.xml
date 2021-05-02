@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="Edge Weight"
+        android:text="@string/edge_weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +38,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Confirm"
+        android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_cancel" />
+        app:layout_constraintStart_toEndOf="@+id/btn_edge_cancel" />
 
     <EditText
         android:id="@+id/et_weight"
@@ -49,13 +49,14 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:ems="10"
-        android:hint="Edge Weight"
+        android:hint="@string/enter_weight"
         android:inputType="numberSigned"
-        android:text="1"
+        android:text="@string/_1"
         app:layout_constraintEnd_toStartOf="@+id/btn_increaseweight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btn_decreaseweight"
-        app:layout_constraintTop_toBottomOf="@+id/tv_node_name2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_name2"
+        tools:ignore="Autofill" />
 
     <ImageButton
         android:id="@+id/btn_increaseweight"

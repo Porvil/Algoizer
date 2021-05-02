@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="Save Graph"
+        android:text="@string/save_graph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,10 +29,12 @@
         android:gravity="start"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
-        android:text="Name"
+        android:paddingEnd="20dp"
+        android:text="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_node_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_node_name"
+        tools:ignore="Autofill,LabelFor" />
 
     <Button
         android:id="@+id/btn_yes"

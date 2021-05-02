@@ -53,7 +53,6 @@
             style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
-
             android:contentDescription="@string/about"
             app:layout_constraintBottom_toTopOf="@+id/btn_themes"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +64,6 @@
             style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
-
             android:contentDescription="@string/about"
             app:layout_constraintBottom_toTopOf="@+id/btn_about"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +75,6 @@
             style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
-
             android:contentDescription="@string/themes"
             app:layout_constraintBottom_toTopOf="@+id/btn_close"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +86,6 @@
             style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
-
             android:contentDescription="@string/close_application"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

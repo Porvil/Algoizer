@@ -70,7 +70,9 @@
                     android:showDividers="middle">
 
                 </LinearLayout>
+
             </ScrollView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -100,7 +102,7 @@
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="0dp"
-
+            android:contentDescription="@string/navigation_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -141,9 +143,8 @@
                     android:gravity="start|center_vertical"
                     android:paddingStart="10dp"
                     android:paddingEnd="15dp"
-                    android:text="-"
+                    android:text="@string/dash"
                     android:textSize="18sp" />
-
 
             </LinearLayout>
 
@@ -163,7 +164,7 @@
             style="@style/S_TextView_Normal"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="0"
+            android:text="@string/_0"
             app:layout_constraintEnd_toStartOf="@+id/divider5"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -199,7 +200,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Backward"
+                android:contentDescription="@string/backward"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +212,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Forward"
+                android:contentDescription="@string/forward"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +224,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Play/Pause"
+                android:contentDescription="@string/play_pause"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_forward"
@@ -247,8 +248,7 @@
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-
-            android:contentDescription="Show/Hide Code"
+            android:contentDescription="@string/show_hide_code"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_info"
             app:layout_constraintTop_toTopOf="parent"
@@ -260,8 +260,7 @@
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-
-            android:contentDescription="Show Info"
+            android:contentDescription="@string/show_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/horizontalDiv4"
             app:layout_constraintTop_toTopOf="parent"
@@ -282,8 +281,7 @@
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="0dp"
-
-            android:contentDescription="Menu"
+            android:contentDescription="@string/controls_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

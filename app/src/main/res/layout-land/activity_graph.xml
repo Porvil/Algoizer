@@ -26,7 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <com.otaliastudios.zoom.ZoomLayout
                 android:id="@+id/zl_graph"
                 android:layout_width="match_parent"
@@ -54,7 +53,6 @@
                 app:twoFingersScrollEnabled="true"
                 app:verticalPanEnabled="true">
 
-                <!-- Content here. -->
                 <FrameLayout
                     android:id="@+id/fl_graph"
                     android:layout_width="wrap_content"
@@ -64,16 +62,16 @@
                         android:id="@+id/iv_grid"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:clickable="false"
+                        android:contentDescription="@string/grid"
                         android:longClickable="false" />
 
                     <ImageView
                         android:id="@+id/iv_coordinates"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:clickable="false"
+                        android:contentDescription="@string/coordinates"
                         android:longClickable="false" />
 
                     <ImageView
@@ -81,6 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
+                        android:contentDescription="@string/graph"
+                        android:focusable="true"
                         android:longClickable="true" />
 
                     <ImageView
@@ -88,13 +88,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="false"
+                        android:contentDescription="@string/graph_animation"
                         android:longClickable="false" />
 
                 </FrameLayout>
 
-
             </com.otaliastudios.zoom.ZoomLayout>
-
 
         </LinearLayout>
 
@@ -124,11 +123,11 @@
             style="@style/S_ImageButton"
             android:layout_width="50dp"
             android:layout_height="0dp"
+            android:contentDescription="@string/navigation_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_menu_navigation" />
-
 
         <View
             android:id="@+id/horizontalDiv1"
@@ -165,9 +164,8 @@
                     android:gravity="start|center_vertical"
                     android:paddingStart="10dp"
                     android:paddingEnd="15dp"
-                    android:text="-"
+                    android:text="@string/dash"
                     android:textSize="18sp" />
-
 
             </LinearLayout>
 
@@ -214,7 +212,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Backward"
+                android:contentDescription="@string/backward"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +225,7 @@
                 android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:clickable="false"
-                android:contentDescription="Forward"
+                android:contentDescription="@string/forward"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -239,7 +237,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Play/Pause"
+                android:contentDescription="@string/play_pause"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_forward"
@@ -263,7 +261,7 @@
             style="@style/S_ImageButton"
             android:layout_width="40dp"
             android:layout_height="0dp"
-            android:contentDescription="Show Info"
+            android:contentDescription="@string/hide_show_controls"
             app:layout_constraintBottom_toTopOf="@+id/btn_error"
             app:layout_constraintEnd_toStartOf="@+id/cl_controls"
             app:layout_constraintTop_toTopOf="parent"
@@ -275,7 +273,7 @@
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:alpha="0.1"
-            android:contentDescription="Show Info"
+            android:contentDescription="@string/error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cl_controls"
             app:srcCompat="@drawable/ic_error" />
@@ -312,7 +310,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Show Info"
+                android:contentDescription="@string/grid_toggle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_info"
                 app:layout_constraintTop_toTopOf="parent"
@@ -323,7 +321,7 @@
                 style="@style/S_ImageButton"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:contentDescription="Show Info"
+                android:contentDescription="@string/show_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -347,7 +345,7 @@
             android:layout_height="0dp"
 
             android:background="?android:selectableItemBackground"
-            android:contentDescription="Menu"
+            android:contentDescription="@string/controls_menu"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

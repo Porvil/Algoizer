@@ -11,7 +11,7 @@
         style="@style/S_TextView_Heading"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:text="Graph DS"
+        android:text="@string/graph_ds"
         app:layout_constraintEnd_toStartOf="@+id/btn_minimize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,8 +64,6 @@
                 android:orientation="vertical" />
         </ScrollView>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

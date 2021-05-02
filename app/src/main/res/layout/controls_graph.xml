@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:colorBackground"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:background="?android:colorBackground">
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -35,12 +35,12 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/S_TextView_Heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/S_TextView_Heading"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="Graph"/>
+            android:text="@string/graph" />
     </LinearLayout>
 
     <View
@@ -69,7 +69,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalDiv7">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +82,7 @@
                 style="@style/S_TextView_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="changing these will clear current graph"
+                android:text="@string/graph_warning_string"
                 android:textAllCaps="true"
                 android:textSize="12sp" />
 
@@ -108,7 +107,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Small"
+                    android:text="@string/small"
                     android:textColor="@color/white" />
 
                 <RadioButton
@@ -122,7 +121,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Large"
+                    android:text="@string/large"
                     android:textColor="@color/white" />
             </RadioGroup>
 
@@ -147,7 +146,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Unweighted"
+                    android:text="@string/unweighted"
                     android:textColor="@color/white" />
 
                 <RadioButton
@@ -161,7 +160,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Weighted"
+                    android:text="@string/weighted"
                     android:textColor="@color/white" />
             </RadioGroup>
 
@@ -186,7 +185,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Undirected"
+                    android:text="@string/undirected"
                     android:textColor="@color/white" />
 
                 <RadioButton
@@ -200,7 +199,7 @@
                     android:background="@drawable/customswitch_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="Directed"
+                    android:text="@string/directed"
                     android:textColor="@color/white" />
             </RadioGroup>
 
@@ -221,7 +220,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Clear Graph"
+                    android:text="@string/clear_graph"
                     android:textSize="14sp" />
 
                 <Button
@@ -230,7 +229,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Clear Animation"
+                    android:text="@string/clear_animation"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -286,7 +285,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 4"
+                    android:text="@string/example_4"
                     android:textSize="14sp" />
 
                 <Button
@@ -295,7 +294,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 5"
+                    android:text="@string/example_5"
                     android:textSize="14sp" />
 
                 <Button
@@ -304,7 +303,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 6"
+                    android:text="@string/example_6"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -320,7 +319,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 7"
+                    android:text="@string/example_7"
                     android:textSize="14sp" />
 
                 <Button
@@ -329,7 +328,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 8"
+                    android:text="@string/example_8"
                     android:textSize="14sp" />
 
                 <Button
@@ -338,11 +337,10 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Example 9"
+                    android:text="@string/example_9"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
 
             <View
                 android:id="@+id/horizontalDiv8"
@@ -361,14 +359,16 @@
                     android:layout_height="0dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="Custom Input"
+                    android:hint="@string/custom_input"
                     android:inputType="textMultiLine"
                     android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -385,6 +385,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/help"
                         app:srcCompat="@drawable/ic_help" />
 
                     <ImageButton
@@ -393,6 +394,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/save"
                         app:srcCompat="@drawable/ic_save" />
 
                     <ImageButton
@@ -401,6 +403,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/paste"
                         app:srcCompat="@drawable/ic_paste" />
 
                     <ImageButton
@@ -409,6 +412,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/run_custom_input"
                         app:srcCompat="@drawable/ic_done" />
 
                 </LinearLayout>
@@ -425,7 +429,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <ImageButton
                         android:id="@+id/btn_opengraph"
@@ -433,6 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/open_graph"
                         app:srcCompat="@drawable/ic_open" />
 
                     <ImageButton
@@ -441,6 +446,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/copy_graph"
                         app:srcCompat="@drawable/ic_copy" />
 
                     <ImageButton
@@ -449,17 +455,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/clear_custom_input"
                         app:srcCompat="@drawable/ic_close" />
+
                 </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </LinearLayout>
-
 
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-

@@ -10,7 +10,6 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginRight="5dp"
         android:fadeScrollbars="false"
         android:scrollbarSize="8dp"
         android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
@@ -28,6 +27,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:contentDescription="@string/iiitd_logo"
                 app:srcCompat="@drawable/iiitd_logo" />
 
             <View
@@ -42,8 +42,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingTop="5dp"
                 android:paddingBottom="20dp"
-                android:text="The Team"
+                android:text="@string/the_team"
                 android:textColor="?attr/dark"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -52,6 +53,7 @@
                 android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +78,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Porvil"
+                        android:text="@string/dev_pd"
                         android:textSize="26sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -88,12 +90,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Developer"
-                        android:textSize="20sp"
+                        android:text="@string/app_development"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
+                    <TextView
+                        android:id="@+id/textView24"
+                        style="@style/S_TextView_Normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/ui_design"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,7 +130,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Zubair"
+                        android:text="@string/dev_za"
                         android:textSize="26sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -131,12 +142,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Designer"
-                        android:textSize="20sp"
+                        android:text="@string/graphic_design"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
+                    <TextView
+                        android:id="@+id/textView25"
+                        style="@style/S_TextView_Normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/usability_testing"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,6 +171,7 @@
                 android:id="@+id/linearLayout50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -175,7 +196,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Syamantak Das"
+                        android:text="@string/dev_sd"
                         android:textSize="26sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -187,12 +208,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Advisor"
-                        android:textSize="20sp"
+                        android:text="@string/advisor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView170" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -218,7 +237,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Debajyoti Bera"
+                        android:text="@string/dev_db"
                         android:textSize="26sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -230,17 +249,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Advisor"
-                        android:textSize="20sp"
+                        android:text="@string/advisor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView190" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
         </LinearLayout>
+
     </ScrollView>
 
     <View
@@ -265,7 +289,6 @@
             style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
-
             android:contentDescription="@string/close_application"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
