@@ -1253,17 +1253,17 @@ public class GraphActivity extends BaseActivity {
     public void updateGraphViewState(){
         switch (graphControls.graphViewState){
             case GRAPH_ONLY:
-                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_off_24));
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_grid_off));
                 iv_grid.setVisibility(View.GONE);
                 iv_coordinates.setVisibility(View.GONE);
                 break;
             case GRAPH_GRID:
-                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on_24));
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_grid_on));
                 iv_grid.setVisibility(View.VISIBLE);
                 iv_coordinates.setVisibility(View.GONE);
                 break;
             case GRAPH_GRID_COORDINATES:
-                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_grid_on2_24));
+                btn_grid.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_grid_on_with_coordinates));
                 iv_grid.setVisibility(View.VISIBLE);
                 iv_coordinates.setVisibility(View.VISIBLE);
                 break;
@@ -1526,7 +1526,7 @@ public class GraphActivity extends BaseActivity {
                     cl_controls.setVisibility(View.GONE);
                 }
             });
-            btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_left_24));
+            btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_left_block));
         }
     }
 
@@ -1534,7 +1534,7 @@ public class GraphActivity extends BaseActivity {
         if(cl_controls.getVisibility() != View.VISIBLE) {
             cl_controls.setVisibility(View.VISIBLE);
             ViewAnimator.animate(cl_controls).alpha(0, 1).duration(500).start();
-            btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_baseline_arrow_right_24));
+            btn_controls.setImageDrawable(UtilUI.getDrawable(context, R.drawable.ic_right_block));
         }
     }
 

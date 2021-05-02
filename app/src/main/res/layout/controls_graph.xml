@@ -23,7 +23,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/close"
-            android:src="@drawable/ic_baseline_close_24" />
+            android:src="@drawable/ic_close" />
 
         <ImageButton
             android:id="@+id/btn_helpmenu"
@@ -31,7 +31,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/help"
-            android:src="@drawable/ic_baseline_help_outline_24" />
+            android:src="@drawable/ic_help" />
 
         <TextView
             android:id="@+id/textView4"
@@ -61,7 +61,7 @@
         android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -385,7 +385,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
+                        app:srcCompat="@drawable/ic_help" />
 
                     <ImageButton
                         android:id="@+id/btn_savecustominput"
@@ -393,7 +393,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_save_24" />
+                        app:srcCompat="@drawable/ic_save" />
 
                     <ImageButton
                         android:id="@+id/btn_pastecustominput"
@@ -401,7 +401,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_content_paste_24" />
+                        app:srcCompat="@drawable/ic_paste" />
 
                     <ImageButton
                         android:id="@+id/btn_custominput"
@@ -409,7 +409,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_done_24" />
+                        app:srcCompat="@drawable/ic_done" />
 
                 </LinearLayout>
 
@@ -433,7 +433,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_folder_open_24" />
+                        app:srcCompat="@drawable/ic_open" />
 
                     <ImageButton
                         android:id="@+id/btn_copygraph"
@@ -441,7 +441,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_copy_all_24" />
+                        app:srcCompat="@drawable/ic_copy" />
 
                     <ImageButton
                         android:id="@+id/btn_clearcustominput"
@@ -449,7 +449,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_clear_24" />
+                        app:srcCompat="@drawable/ic_close" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

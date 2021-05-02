@@ -24,7 +24,7 @@
         style="@style/S_ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_baseline_close_24"
+        android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
         android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
         android:verticalScrollbarPosition="right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_home_24" />
+                    app:srcCompat="@drawable/ic_home" />
 
                 <TextView
                     android:id="@+id/textView8"
@@ -108,7 +108,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_bubblesort" />
+                    app:srcCompat="@drawable/dsa_bubblesort" />
 
                 <TextView
                     style="@style/S_TextView_Bold"
@@ -136,7 +136,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_selectionsort" />
+                    app:srcCompat="@drawable/dsa_selectionsort" />
 
                 <TextView
                     style="@style/S_TextView_Bold"
@@ -164,7 +164,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_bubblesort" />
+                    app:srcCompat="@drawable/dsa_bubblesort" />
 
                 <TextView
                     style="@style/S_TextView_Bold"
@@ -192,7 +192,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_mergesort" />
+                    app:srcCompat="@drawable/dsa_mergesort" />
 
                 <TextView
                     style="@style/S_TextView_Bold"
@@ -220,7 +220,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_quicksort" />
+                    app:srcCompat="@drawable/dsa_quicksort" />
 
                 <TextView
                     style="@style/S_TextView_Bold"

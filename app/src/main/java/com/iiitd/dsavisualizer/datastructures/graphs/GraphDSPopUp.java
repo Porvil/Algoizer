@@ -49,8 +49,8 @@ public class GraphDSPopUp {
     final int MIN_WIDTH = 200;
     final int MIN_HEIGHT = 200;
 
-    final int MINIMIZE_ICON = R.drawable.ic_baseline_remove_24;
-    final int MAXIMIZE_ICON = R.drawable.ic_baseline_open_in_full_24;
+    final int MINIMIZE_ICON = R.drawable.ic_minus;
+    final int MAXIMIZE_ICON = R.drawable.ic_maximize;
 
     public GraphDSPopUp(Context _context, int _width, int _height, View _parent){
         this.context = _context;

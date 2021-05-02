@@ -25,7 +25,7 @@
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_close_24" />
+        app:srcCompat="@drawable/ic_close" />
 
     <View
         android:id="@+id/divider20"
@@ -40,8 +40,8 @@
     <com.otaliastudios.zoom.ZoomLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
-        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
+        android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
         android:scrollbars="vertical|horizontal"
         app:alignment="center"
         app:animationDuration="280"
@@ -70,7 +70,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_graph_custominput" />
+            android:src="@drawable/graphs_custom_input" />
 
     </com.otaliastudios.zoom.ZoomLayout>
 

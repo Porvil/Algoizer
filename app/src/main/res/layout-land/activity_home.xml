@@ -16,7 +16,7 @@
         android:requiresFadingEdge="horizontal"
         android:scrollbarSize="8dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+        android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_about"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_bug_report_24" />
+            app:srcCompat="@drawable/ic_bug" />
 
         <ImageButton
             android:id="@+id/btn_themes"
@@ -82,7 +82,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_format_paint_24" />
+            app:srcCompat="@drawable/ic_theme" />
 
         <ImageButton
             android:id="@+id/btn_close"
@@ -94,7 +94,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_close_24" />
+            app:srcCompat="@drawable/ic_close" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

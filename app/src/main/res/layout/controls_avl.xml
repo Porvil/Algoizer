@@ -23,7 +23,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/close"
-            android:src="@drawable/ic_baseline_close_24" />
+            android:src="@drawable/ic_close" />
 
         <ImageButton
             android:id="@+id/btn_helpmenu"
@@ -31,7 +31,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/help"
-            android:src="@drawable/ic_baseline_help_outline_24" />
+            android:src="@drawable/ic_help" />
 
         <TextView
             android:id="@+id/textView4"
@@ -61,7 +61,7 @@
         android:requiresFadingEdge="vertical"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/random"
-                    android:src="@drawable/ic_random_icon" />
+                    android:src="@drawable/ic_random" />
 
                 <View
                     android:layout_width="2dp"

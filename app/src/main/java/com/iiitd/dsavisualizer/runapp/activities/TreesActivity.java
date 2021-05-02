@@ -5,7 +5,6 @@ import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Slide;
@@ -31,8 +30,8 @@ public class TreesActivity extends AppCompatActivity {
     ImageButton btn_back;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(BSTActivity.class.getName(), "BST", R.drawable.ic_bst),
-            new ActivityItemData(AVLActivity.class.getName(), "AVL", R.drawable.ic_avl)
+            new ActivityItemData(BSTActivity.class.getName(), "BST", R.drawable.dsa_bst),
+            new ActivityItemData(AVLActivity.class.getName(), "AVL", R.drawable.dsa_avl)
     };
 
     @Override

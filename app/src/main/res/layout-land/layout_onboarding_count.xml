@@ -12,12 +12,12 @@
         android:id="@+id/iv_onboarding_count_on"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_baseline_circle_on" />
+        app:srcCompat="@drawable/ic_circle_on" />
 
     <ImageView
         android:id="@+id/iv_onboarding_count_off"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_baseline_circle_off" />
+        app:srcCompat="@drawable/ic_circle_off" />
 
 </FrameLayout>

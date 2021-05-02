@@ -31,8 +31,8 @@
                 android:id="@+id/zl_graph"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
-                android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+                android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
+                android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
                 android:scrollbars="vertical|horizontal"
                 app:alignment="none"
                 app:animationDuration="280"
@@ -127,7 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_nav_open_24" />
+            app:srcCompat="@drawable/ic_menu_navigation" />
 
 
         <View
@@ -145,7 +145,7 @@
             android:fadeScrollbars="false"
             android:scrollbarSize="5dp"
             android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+            android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider9"
             app:layout_constraintStart_toEndOf="@+id/horizontalDiv1"
@@ -219,7 +219,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+                app:srcCompat="@drawable/ic_backward_step" />
 
             <ImageButton
                 android:id="@+id/btn_forward"
@@ -232,7 +232,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
-                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+                app:srcCompat="@drawable/ic_forward_step" />
 
             <ImageButton
                 android:id="@+id/btn_play"
@@ -245,7 +245,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_forward"
                 app:layout_constraintStart_toEndOf="@+id/btn_backward"
                 app:layout_constraintTop_toBottomOf="@+id/sb_animspeed"
-                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+                app:srcCompat="@drawable/ic_play" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -267,7 +267,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_error"
             app:layout_constraintEnd_toStartOf="@+id/cl_controls"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_right_24" />
+            app:srcCompat="@drawable/ic_right_block" />
 
         <ImageButton
             android:id="@+id/btn_error"
@@ -278,7 +278,7 @@
             android:contentDescription="Show Info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cl_controls"
-            app:srcCompat="@drawable/ic_baseline_error_outline_24" />
+            app:srcCompat="@drawable/ic_error" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_controls"
@@ -316,7 +316,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_info"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_grid_on_24" />
+                app:srcCompat="@drawable/ic_grid_on" />
 
             <ImageButton
                 android:id="@+id/btn_info"
@@ -327,7 +327,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_info_24" />
+                app:srcCompat="@drawable/ic_info" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -352,7 +352,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_menu_open_24" />
+            app:srcCompat="@drawable/ic_menu_controls" />
 
         <View
             android:id="@+id/divider9"

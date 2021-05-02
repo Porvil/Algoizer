@@ -13,12 +13,9 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.AlignmentSpan;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-import android.text.style.RelativeSizeSpan;
 //import android.text.style.
-import android.text.style.SuperscriptSpan;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -40,7 +37,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -84,12 +80,12 @@ public class UtilUI {
 
     public static void highlightViews(Context context, View[] views, ArrayList<Integer> indexes){
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_normal));
         }
 
         if(indexes != null) {
             for (int i : indexes) {
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_highlighted));
             }
         }
     }
@@ -122,19 +118,19 @@ public class UtilUI {
 
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_normal));
         }
 
         for(Pair<Integer, Integer> pair : sortedIndexes){
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
-                        .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                        .setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
             }
         }
 
@@ -145,25 +141,25 @@ public class UtilUI {
                                          View[] views, int curSeqNo, ArrayList<Integer> indexes){
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_normal));
         }
 
         if(indexes != null) {
             for (int i : indexes) {
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_highlighted));
             }
         }
 
         for(Pair<Integer, Integer> pair : sortedIndexes){
             if(curSeqNo >= pair.first){
                 views[pair.second].findViewById(R.id.tv_elementvalue)
-                        .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                        .setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
             }
         }
 
@@ -174,20 +170,20 @@ public class UtilUI {
                                                          View[] views, int curSeqNo, ArrayList<Integer> indexes){
         if(curSeqNo == -1){
             for(View view : views){
-                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
             }
             return;
         }
 
         for(View view : views){
-            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_normal));
+            view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_normal));
         }
 
         ArrayList<Integer> high = new ArrayList<>();
         if(indexes != null) {
             for (int i : indexes) {
                 high.add(i);
-                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_highlighted));
+                views[i].findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_highlighted));
             }
         }
 
@@ -195,7 +191,7 @@ public class UtilUI {
             if(curSeqNo >= pair.first) {
                 if (!high.contains(pair.second)) {
                     views[pair.second].findViewById(R.id.tv_elementvalue)
-                            .setBackground(getDrawable(context, R.drawable.roundedrect_sortingelement_done));
+                            .setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
                 }
             }
         }
@@ -222,15 +218,15 @@ public class UtilUI {
         myView.setLayoutParams(new TableRow.LayoutParams(0, height, weight));
 
         if(row > 0 && layout == R.layout.element_treenode_arrow){
-            int arrowLayout = R.drawable.arrow_4;
+            int arrowLayout = R.drawable.trees_arrow_height_1;
             if(row == 1){
-                arrowLayout = R.drawable.arrow_4;
+                arrowLayout = R.drawable.trees_arrow_height_1;
             }
             else if(row == 3){
-                arrowLayout = R.drawable.arrow_2;
+                arrowLayout = R.drawable.trees_arrow_height_2;
             }
             else if(row == 5){
-                arrowLayout = R.drawable.arrow_1;
+                arrowLayout = R.drawable.trees_arrow_height_3;
             }
 
             //if last arrow row, then mod is reversed, hence ++
@@ -387,11 +383,11 @@ public class UtilUI {
     }
 
     public static SpannableString getInfinitySpannableString(Context context, TextView textView){
-        return getDrawableSpannableString(context, textView, R.drawable.graph_infinity, DynamicDrawableSpan.ALIGN_BOTTOM);
+        return getDrawableSpannableString(context, textView, R.drawable.graphs_infinity_symbol, DynamicDrawableSpan.ALIGN_BOTTOM);
     }
 
     public static SpannableString getLeftArrowSpannableString(Context context, TextView textView){
-        return getDrawableSpannableString(context, textView, R.drawable.graph_leftarrow, DynamicDrawableSpan.ALIGN_BASELINE);
+        return getDrawableSpannableString(context, textView, R.drawable.graphs_leftarrow_symbol, DynamicDrawableSpan.ALIGN_BASELINE);
     }
 
     public static SpannableString getDrawableSpannableString(Context context, TextView textView, int drawable, int alignment){

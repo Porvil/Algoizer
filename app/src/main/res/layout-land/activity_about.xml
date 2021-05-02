@@ -13,7 +13,7 @@
         android:layout_marginRight="5dp"
         android:fadeScrollbars="false"
         android:scrollbarSize="8dp"
-        android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/divider18"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                         android:id="@+id/circleImageView"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/pd_200"
+                        android:src="@drawable/profile_pd_200p"
                         app:civ_border_color="?attr/medium"
                         app:civ_border_width="3dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
                         android:id="@+id/circleImageView2"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/za_200"
+                        android:src="@drawable/profile_za_200p"
                         app:civ_border_color="?attr/medium"
                         app:civ_border_width="3dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +162,7 @@
                         android:id="@+id/circleImageView0"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/sd_200"
+                        android:src="@drawable/profile_sd_200p"
                         app:civ_border_color="?attr/medium"
                         app:civ_border_width="3dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -205,7 +205,7 @@
                         android:id="@+id/circleImageView20"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/db_200"
+                        android:src="@drawable/profile_db_200p"
                         app:civ_border_color="?attr/medium"
                         app:civ_border_width="3dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -270,7 +270,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+            app:srcCompat="@drawable/ic_left_arrow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

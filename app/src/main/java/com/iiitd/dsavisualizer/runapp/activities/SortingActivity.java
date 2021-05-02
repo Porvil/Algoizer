@@ -1,14 +1,12 @@
 package com.iiitd.dsavisualizer.runapp.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,11 +33,11 @@ public class SortingActivity extends AppCompatActivity {
     ImageButton btn_back;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.ic_bubblesort),
-            new ActivityItemData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.ic_selectionsort),
-            new ActivityItemData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.ic_insertionsort),
-            new ActivityItemData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.ic_mergesort),
-            new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.ic_quicksort)
+            new ActivityItemData(BubbleSortActivity.class.getName(), "BubbleSort", R.drawable.dsa_bubblesort),
+            new ActivityItemData(SelectionSortActivity.class.getName(), "SelectionSort", R.drawable.dsa_selectionsort),
+            new ActivityItemData(InsertionSortActivity.class.getName(), "InsertionSort", R.drawable.dsa_insertionsort),
+            new ActivityItemData(MergeSortActivity.class.getName(), "MergeSort", R.drawable.dsa_mergesort),
+            new ActivityItemData(QuickSortActivity.class.getName(), "QuickSort", R.drawable.dsa_quicksort)
     };
 
     @Override

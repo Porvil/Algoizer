@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="Add Edge"
+        android:text="Edge Weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="@string/close"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_plus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_node_name2" />
 
@@ -73,7 +73,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="@string/close"
-        android:src="@drawable/ic_subtract"
+        android:src="@drawable/ic_minus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_weight" />
 

@@ -2,7 +2,7 @@
     android:id="@+id/fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/roundedrect_treeelement_normal"
+    android:background="@drawable/rounded_rect_tree_element_normal"
     android:gravity="bottom"
     android:orientation="vertical">
 

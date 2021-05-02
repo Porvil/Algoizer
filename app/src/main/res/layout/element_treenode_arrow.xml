@@ -4,5 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/arrow_4"
+    android:background="@drawable/trees_arrow_height_1"
     android:orientation="vertical" />

@@ -35,15 +35,15 @@ public class AppSettings {
     public static final int ACTIVITY_ITEM_WIDTH = 250;
 
     // Drawable ID's
-    public static final int BACK_BUTTON = R.drawable.ic_baseline_arrow_back_24;
-    public static final int STEP_BACK_BUTTON = R.drawable.ic_baseline_arrow_back_ios_24;
-    public static final int STEP_FORWARD_BUTTON = R.drawable.ic_baseline_arrow_forward_ios_24;
-    public static final int PLAY_BUTTON = R.drawable.ic_baseline_play_arrow_24;
-    public static final int PAUSE_BUTTON = R.drawable.ic_baseline_pause_24;
-    public static final int CODE_BUTTON = R.drawable.ic_baseline_code_24;
-    public static final int MENU_BUTTON = R.drawable.ic_baseline_menu_open_24;
-    public static final int ROUNDED_RECT_ELEMENT = R.drawable.roundedrect_sortingelement_normal;
-    public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.roundedrect_sortingelement_highlighted;
+    public static final int BACK_BUTTON = R.drawable.ic_left_arrow;
+    public static final int STEP_BACK_BUTTON = R.drawable.ic_backward_step;
+    public static final int STEP_FORWARD_BUTTON = R.drawable.ic_forward_step;
+    public static final int PLAY_BUTTON = R.drawable.ic_play;
+    public static final int PAUSE_BUTTON = R.drawable.ic_pause;
+    public static final int CODE_BUTTON = R.drawable.ic_code;
+    public static final int MENU_BUTTON = R.drawable.ic_menu_controls;
+    public static final int ROUNDED_RECT_ELEMENT = R.drawable.rounded_rect_sorting_element_normal;
+    public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.rounded_rect_sorting_element_highlighted;
 
     public static String getExternalStoragePath(){
         return Environment.getExternalStorageDirectory().getAbsolutePath();

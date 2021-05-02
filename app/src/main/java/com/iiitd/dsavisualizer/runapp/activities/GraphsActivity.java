@@ -29,12 +29,12 @@ public class GraphsActivity extends AppCompatActivity {
     ImageButton btn_back;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(GraphActivity.class.getName(), "BFS", R.drawable.ic_bfs),
-            new ActivityItemData(GraphActivity.class.getName(), "DFS", R.drawable.ic_dfs),
-            new ActivityItemData(GraphActivity.class.getName(), "Dijkstra", R.drawable.ic_dijkstra),
-            new ActivityItemData(GraphActivity.class.getName(), "Bellman Ford", R.drawable.ic_bellmanford),
-            new ActivityItemData(GraphActivity.class.getName(), "Kruskal's", R.drawable.ic_kruskal),
-            new ActivityItemData(GraphActivity.class.getName(), "Prim's", R.drawable.ic_prim)
+            new ActivityItemData(GraphActivity.class.getName(), "BFS", R.drawable.dsa_bfs),
+            new ActivityItemData(GraphActivity.class.getName(), "DFS", R.drawable.dsa_dfs),
+            new ActivityItemData(GraphActivity.class.getName(), "Dijkstra", R.drawable.dsa_dijkstra),
+            new ActivityItemData(GraphActivity.class.getName(), "Bellman Ford", R.drawable.dsa_bellmanford),
+            new ActivityItemData(GraphActivity.class.getName(), "Kruskal's", R.drawable.dsa_kruskal),
+            new ActivityItemData(GraphActivity.class.getName(), "Prim's", R.drawable.dsa_prim)
     };
 
     @Override

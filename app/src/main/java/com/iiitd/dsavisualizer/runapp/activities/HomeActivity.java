@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
 import com.iiitd.dsavisualizer.runapp.others.ActivityItemData;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
@@ -37,9 +36,9 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btn_report;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
-            new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.ic_sorting),
-            new ActivityItemData(TreesActivity.class.getName(), "Trees", R.drawable.ic_trees),
-            new ActivityItemData(GraphsActivity.class.getName(), "Graphs", R.drawable.ic_graphs)
+            new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.dsa_sorting),
+            new ActivityItemData(TreesActivity.class.getName(), "Trees", R.drawable.dsa_trees),
+            new ActivityItemData(GraphsActivity.class.getName(), "Graphs", R.drawable.dsa_graphs)
     };
 
     boolean doubleBackToExitPressedOnce = false;

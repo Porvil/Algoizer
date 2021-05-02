@@ -6,7 +6,7 @@
 
     <path
         android:name="diagonal_line"
-        android:pathData="M 600, 0 L 75, 600 z"
+        android:pathData="M 600, 0 L 300, 600"
         android:strokeWidth="30"
         android:strokeColor="?attr/medium" />
 

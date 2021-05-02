@@ -63,7 +63,7 @@
         android:fillViewport="true"
         android:scrollbarSize="8dp"
         android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
+        android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
@@ -291,7 +291,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+            app:srcCompat="@drawable/ic_left_arrow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

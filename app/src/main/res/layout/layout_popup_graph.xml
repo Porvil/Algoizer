@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/roundedrect_border_large"
+    android:background="@drawable/rounded_rect_border_large"
     android:padding="5dp">
 
     <TextView
@@ -26,7 +26,7 @@
         android:contentDescription="@string/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_remove_24" />
+        app:srcCompat="@drawable/ic_minus" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_bottom"
@@ -51,8 +51,8 @@
             android:id="@+id/zl_graphtree"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scrollbarThumbHorizontal="@drawable/gradient_scrollbar_horizontal"
-            android:scrollbarThumbVertical="@drawable/gradient_scrollbar_vertical"
+            android:scrollbarThumbHorizontal="@drawable/scrollbar_gradient_horizontal"
+            android:scrollbarThumbVertical="@drawable/scrollbar_gradient_vertical"
             android:scrollbars="vertical|horizontal"
             app:alignment="center"
             app:animationDuration="280"
