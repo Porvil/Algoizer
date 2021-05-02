@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomAttrs">
-        <attr name="shade" format="color"/>
-        <attr name="light" format="color"/>
-        <attr name="base" format="color"/>
-        <attr name="medium" format="color"/>
-        <attr name="dark" format="color"/>
+        <attr name="shade" format="color" />
+        <attr name="light" format="color" />
+        <attr name="base" format="color" />
+        <attr name="medium" format="color" />
+        <attr name="dark" format="color" />
     </declare-styleable>
-
 </resources>

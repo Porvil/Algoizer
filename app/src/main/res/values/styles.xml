@@ -2,10 +2,8 @@
 
     <!-- Base/Parent Application Theme -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
         <item name="android:windowContentTransitions">true</item>
         <item name="fontFamily">@font/open_sans</item>
-
     </style>
 
     <!-- Application Themes -->

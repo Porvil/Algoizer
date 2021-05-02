@@ -3,10 +3,6 @@
 
     <string name="splash_image">Splash Image</string>
     <string name="array_size">Array Size</string>
-    <string name="professors">Dr. Syamantak Das, Dr. Debajyoti Bera</string>
-    <string name="students">Porvil, Zubair Aslam</string>
-    <string name="developed_by">Developed By</string>
-    <string name="guided_by">Guided By</string>
     <string name="node">Node</string>
     <string name="close">close</string>
     <string name="_1">1</string>
