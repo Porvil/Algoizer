@@ -12,7 +12,7 @@ public class AppSettings {
             Manifest.permission.READ_EXTERNAL_STORAGE};
 
     // Constants
-    public static final String DIRECTORY = "/DSA Visualizer";
+    public static final String DIRECTORY = "/Algoizer";
     public static final String SEPARATOR = "/";
     public static final String SHARED_PREFERENCES = "Shared Preferences";
     public static final String CURRENT_THEME_KEY = "Theme";
