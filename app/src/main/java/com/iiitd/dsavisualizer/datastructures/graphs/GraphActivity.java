@@ -241,7 +241,7 @@ public class GraphActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (graphAlgorithm.graphSequence != null && isAutoPlay) {
+                if (graphAlgorithm!= null && graphAlgorithm.graphSequence != null && isAutoPlay) {
                     timer.cancel();
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -268,8 +268,10 @@ public class GraphActivity extends BaseActivity {
         btn_grid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graphControls.changeGraphViewState();
-                updateGraphViewState();
+                if(graphControls != null) {
+                    graphControls.changeGraphViewState();
+                    updateGraphViewState();
+                }
             }
         });
 
@@ -327,12 +329,12 @@ public class GraphActivity extends BaseActivity {
                 if(slideOffset >= .05){
                     pauseAnimation();
                     if(graphAlgorithm != null) {
-                        graphAlgorithm.hideWhileDrawerOpen();
+                        graphAlgorithm.hidePopUpsWhenDrawerIsOpened();
                     }
                 }
                 else {
                     if(graphAlgorithm != null) {
-                        graphAlgorithm.showWhileDrawerOpen();
+                        graphAlgorithm.showPopUpsWhenDrawerIsClosed();
                     }
                 }
             }
@@ -623,7 +625,6 @@ public class GraphActivity extends BaseActivity {
         rg_graphsize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == R.id.rb_large) {
                     isLargeGraph = true;
                 }
@@ -636,14 +637,12 @@ public class GraphActivity extends BaseActivity {
 
                 graphAlgorithm.reset();
                 resetGraphSequence();
-
             }
         });
 
         rg_directed.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == R.id.rb_directed) {
                     directed = true;
                 }
@@ -654,14 +653,12 @@ public class GraphActivity extends BaseActivity {
                 graphWrapper.changeDirected(directed);
                 graphAlgorithm.reset();
                 resetGraphSequence();
-
             }
         });
 
         rg_weighted.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == R.id.rb_weighted) {
                     weighted = true;
                 }
@@ -672,7 +669,6 @@ public class GraphActivity extends BaseActivity {
                 graphWrapper.changeWeighted(weighted);
                 graphAlgorithm.reset();
                 resetGraphSequence();
-
             }
         });
 
@@ -687,7 +683,7 @@ public class GraphActivity extends BaseActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(graphAlgorithm.graphSequence != null){
+                if(graphAlgorithm != null && graphAlgorithm.graphSequence != null){
                     if(isAutoPlay){
                         isAutoPlay = false;
                         btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
@@ -726,7 +722,7 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 pauseAnimation();
-                if(graphAlgorithm.graphSequence != null){
+                if(graphAlgorithm != null && graphAlgorithm.graphSequence != null){
                     graphAlgorithm.graphSequence.backward();
                     taskStep(graphAlgorithm.graphSequence.curSeqNo);
                 }
@@ -739,7 +735,7 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 pauseAnimation();
-                if(graphAlgorithm.graphSequence != null){
+                if(graphAlgorithm != null && graphAlgorithm.graphSequence != null){
                     graphAlgorithm.graphSequence.forward();
                     taskStep(graphAlgorithm.graphSequence.curSeqNo);
                 }
@@ -749,7 +745,7 @@ public class GraphActivity extends BaseActivity {
     }
 
     private void pauseAnimation(){
-        if(graphAlgorithm.graphSequence != null){
+        if(graphAlgorithm != null && graphAlgorithm.graphSequence != null){
             isAutoPlay = false;
             btn_play.setImageDrawable(UtilUI.getDrawable(context, AppSettings.PLAY_BUTTON));
             if(timer != null) {
@@ -1072,7 +1068,7 @@ public class GraphActivity extends BaseActivity {
     }
 
     private void taskStep(final int curSeqNo) {
-        if (graphAlgorithm.graphSequence != null) {
+        if (graphAlgorithm != null && graphAlgorithm.graphSequence != null) {
             System.out.println("SEQ = "  + curSeqNo);
 
             runOnUiThread(new Runnable() {
@@ -1247,9 +1243,11 @@ public class GraphActivity extends BaseActivity {
     }
 
     public void onGraphControlsClick(View view) {
-        graphControls.updateState(view);
-        graphControls.updateDrawables();
-        System.out.println(graphControls);
+        if(graphControls != null) {
+            graphControls.updateState(view);
+            graphControls.updateDrawables();
+            System.out.println(graphControls);
+        }
     }
 
     public void updateGraphViewState(){
@@ -1492,7 +1490,6 @@ public class GraphActivity extends BaseActivity {
     }
 
     public void resetAlgorithm(){
-
         // Reset Animation Graph
         graphWrapper.board.clearGraph(true);
 
@@ -1510,7 +1507,7 @@ public class GraphActivity extends BaseActivity {
     public void resetGraphSequence(){
         graphWrapper.board.clearGraph(true);
 
-        if(graphAlgorithm.graphSequence != null){
+        if(graphAlgorithm != null && graphAlgorithm.graphSequence != null){
             graphAlgorithm.graphSequence.curSeqNo = 0;
             UtilUI.setText(tv_seqno, "1/" + graphAlgorithm.graphSequence.size);
         }
@@ -1609,7 +1606,7 @@ public class GraphActivity extends BaseActivity {
     }
 
     private void setGraphChanged(boolean changed){
-        if(changed && graphAlgorithm.graphAlgorithmType != GraphAlgorithmType.NULL){
+        if(changed && graphAlgorithm != null && graphAlgorithm.graphAlgorithmType != GraphAlgorithmType.NULL){
             btn_error.setAlpha(1f);
             btn_error.setClickable(true);
             btn_error.setEnabled(true);
@@ -1661,7 +1658,6 @@ public class GraphActivity extends BaseActivity {
                 System.out.println(touchData);
                 int row = touchData.row;
                 int col = touchData.col;
-
 
                 if(touchData.isElement || touchData.isExtendedElement) {
                     switch (graphControls.getCurrentState()) {

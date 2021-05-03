@@ -265,8 +265,8 @@
                 style="@style/S_ButtonTextOnly"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textSize="14sp"
-                android:text="@string/clear_tree" />
+                android:text="@string/clear_tree"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

@@ -46,21 +46,21 @@ public class GraphAlgorithm {
     }
 
     // Hides the popUpWindow when drawers opens in drawerLayout
-    public void hideWhileDrawerOpen(){
-        if(isGraphTreeDSPopUpUsed){
+    public void hidePopUpsWhenDrawerIsOpened(){
+        if(graphTreeDSPopUp != null && isGraphTreeDSPopUpUsed){
             graphTreeDSPopUp.hideWhileDrawerOpen();
         }
-        if(isGraphTreePopUpUsed){
+        if(graphTreePopUp != null && isGraphTreePopUpUsed){
             graphTreePopUp.hideWhileDrawerOpen();
         }
     }
 
     // Shows the popUpWindow when drawers closes in drawerLayout
-    public void showWhileDrawerOpen(){
-        if(isGraphTreeDSPopUpUsed){
+    public void showPopUpsWhenDrawerIsClosed(){
+        if(graphTreeDSPopUp != null && isGraphTreeDSPopUpUsed){
             graphTreeDSPopUp.showWhileDrawerOpen();
         }
-        if(isGraphTreePopUpUsed){
+        if(graphTreePopUp != null && isGraphTreePopUpUsed){
             graphTreePopUp.showWhileDrawerOpen();
         }
     }
