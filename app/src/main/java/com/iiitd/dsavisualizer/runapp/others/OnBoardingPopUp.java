@@ -20,6 +20,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+// This class manages OnBoardingPopUp for tutorials
 public class OnBoardingPopUp {
 
     Context context;

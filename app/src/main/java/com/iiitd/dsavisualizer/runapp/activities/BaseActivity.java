@@ -20,6 +20,11 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.runapp.others.OnBoardingPopUp;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+// Base Activity as an abstract class
+// Contains Left drawer, Right drawer and also the main layout view
+// configure() function must be called by each subclass before calling super.onCreate()
+// Also manages FullScreen functionality, drawers open/close, back functionality
+// abstract functions must be overridden  by subclasses
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context context;

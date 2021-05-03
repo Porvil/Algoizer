@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
+// Used by OnBoardingPopUp as adapter for each page data
 class OnBoardingViewPagerAdapter extends PagerAdapter {
 
     Context context;
@@ -53,4 +54,5 @@ class OnBoardingViewPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
 }

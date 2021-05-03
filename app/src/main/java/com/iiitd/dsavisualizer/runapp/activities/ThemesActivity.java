@@ -10,16 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.iiitd.dsavisualizer.R;
-import com.iiitd.dsavisualizer.datastructures.graphs.GraphActivity;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
 public class ThemesActivity extends AppCompatActivity {
 
     FrameLayout fl_currenttheme;
-    ImageButton btn_back;            // 1
+    ImageButton btn_back;
     Button btn_theme_blue;            // 1
     Button btn_theme_purple;          // 2
     Button btn_theme_green;           // 3

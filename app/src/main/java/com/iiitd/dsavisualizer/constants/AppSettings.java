@@ -8,10 +8,12 @@ import com.iiitd.dsavisualizer.R;
 // Constants used in the Application
 public class AppSettings {
 
+    // Permissions used by the Application
     public static String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
 
-    // Constants
+    // String Constants
+    public static final String REPORT_BUG_EMAIL = "algoizeriiitd@gmail.com";
     public static final String DIRECTORY = "/Algoizer";
     public static final String SEPARATOR = "/";
     public static final String SHARED_PREFERENCES = "Shared Preferences";
@@ -21,29 +23,22 @@ public class AppSettings {
     public static final String GRAPH_KEY = "Graph";
     public static final String GRAPH_SAVEFILE_EXTENSION = ".graph";
 
-    public static final String REPORT_BUG_EMAIL = "algoizeriiitd@gmail.com";
-
+    // Int Constants
     public static final int PERMISSION_ALL_EXPORT = 1000;
     public static final int PERMISSION_ALL_IMPORT = 1001;
     public static final int LOGO_ANIMATION_TIME = 2000;
     public static final int SPLASH_TIME = 500;
-    public static final int DEFAULT_ANIM_SPEED = 1500; // Range 500ms to 2500ms
-    public static final int DEFAULT_ANIM_DURATION = 750; // Half of DEFAULT_ANIM_SPEED
+    public static final int DEFAULT_ANIM_SPEED = 1500;    // Range 500ms to 2500ms
+    public static final int DEFAULT_ANIM_DURATION = 750;  // Half of DEFAULT_ANIM_SPEED
     public static final int SORTING_ELEMENT_BOUND = 20;
     public static final int TEXT_SMALL = 12;
     public static final int TEXT_MEDIUM = 14;
     public static final int ACTIVITY_ITEM_WIDTH = 250;
 
-    // Drawable ID's
-    public static final int BACK_BUTTON = R.drawable.ic_left_arrow;
-    public static final int STEP_BACK_BUTTON = R.drawable.ic_backward_step;
-    public static final int STEP_FORWARD_BUTTON = R.drawable.ic_forward_step;
+    // Drawable ID's [ used in whole Application ]
     public static final int PLAY_BUTTON = R.drawable.ic_play;
     public static final int PAUSE_BUTTON = R.drawable.ic_pause;
-    public static final int CODE_BUTTON = R.drawable.ic_code;
-    public static final int MENU_BUTTON = R.drawable.ic_menu_controls;
     public static final int ROUNDED_RECT_ELEMENT = R.drawable.rounded_rect_sorting_element_normal;
-    public static final int ROUNDED_RECT_HIGHLIGHTED_ELEMENT = R.drawable.rounded_rect_sorting_element_highlighted;
 
     public static String getExternalStoragePath(){
         return Environment.getExternalStorageDirectory().getAbsolutePath();

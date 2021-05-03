@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.runapp.others;
 
+// Contains activity class name, display text and drawable [ used by main activities ]
 public class ActivityItemData {
     public String activityClassName;
     public String text;

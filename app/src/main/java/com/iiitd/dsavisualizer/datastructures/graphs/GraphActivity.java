@@ -774,7 +774,7 @@ public class GraphActivity extends BaseActivity {
 
                 String path = uri.getPath();
                 if(path != null && !path.isEmpty()){
-                    if(UtilUI.isValidGraphSaveFile(path)){
+                    if(Util.isValidGraphSaveFile(path)){
                         try {
                             String text = UtilUI.readTextFromUri(context, uri);
                             if(GraphWrapper.isGraphInput(text)){

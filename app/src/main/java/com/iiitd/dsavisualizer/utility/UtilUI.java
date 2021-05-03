@@ -15,7 +15,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-//import android.text.style.
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import androidx.core.content.ContextCompat;
 
 import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.constants.AppSettings;
-import com.iiitd.dsavisualizer.datastructures.trees.NodeType;
 import com.iiitd.dsavisualizer.datastructures.trees.TreeLayoutElement;
 
 import java.io.BufferedReader;
@@ -41,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+// Util class for UI Related helper functions
 public class UtilUI {
 
     public static void setText(TextView textView, String label, String data){
@@ -64,6 +63,7 @@ public class UtilUI {
         return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 
+    // Updates psuedocode in sorting algorithms based on indexes
     public static void changeTextViewsColors(Context context, ScrollView scrollView, TextView[] textViews, Integer[] indexes){
         for(TextView textView : textViews){
             textView.setTextColor(getCurrentThemeColor(context, R.attr.base));
@@ -78,6 +78,7 @@ public class UtilUI {
         }
     }
 
+    // Highlight views in sorting algorithms based on indexes
     public static void highlightViews(Context context, View[] views, ArrayList<Integer> indexes){
         for(View view : views){
             view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_normal));
@@ -94,6 +95,7 @@ public class UtilUI {
         return ContextCompat.getDrawable(context, id);
     }
 
+    // Changes pointers in quicksort algorithm
     public static void changePointers(ArrayList<Pair<Integer, String>> pointers, View[] views){
         for(View view : views){
             TextView viewById = view.findViewById(R.id.tv_pointer);
@@ -114,8 +116,9 @@ public class UtilUI {
         }
     }
 
-    public static void highlightSortedElements(Context context, ArrayList<Pair<Integer, Integer>> sortedIndexes, View[] views, int curSeqNo){
-
+    // Used by Quick Sort
+    public static void highlightSortedElements(Context context, ArrayList<Pair<Integer, Integer>> sortedIndexes,
+                                               View[] views, int curSeqNo){
         if(curSeqNo == -1){
             for(View view : views){
                 view.findViewById(R.id.tv_elementvalue).setBackground(getDrawable(context, R.drawable.rounded_rect_sorting_element_done));
@@ -198,10 +201,11 @@ public class UtilUI {
 
     }
 
-    public static View getTreeNodeView(Context context, LayoutInflater layoutInflater, TreeLayoutElement treeLayoutElement, int height, int row, int col){
+    // Used by BST and AVL for tree nodes
+    public static View getTreeNodeView(Context context, LayoutInflater layoutInflater,
+                                       TreeLayoutElement treeLayoutElement, int height, int row, int col){
         int layout = 0;
         int weight = treeLayoutElement.weight;
-//        int visibility = View.VISIBLE;
         int visibility = View.INVISIBLE;
         switch (treeLayoutElement.type){
             case EMPTY:
@@ -239,7 +243,7 @@ public class UtilUI {
             frameLayout.setBackground(getDrawable(context, arrowLayout));
         }
 
-        // FOR DEBUGGING PURPOSE
+        /* FOR DEBUGGING PURPOSE's ONLY, HARDCODED STUFF< HANDLE WITH CARE
         int in = 0;
         if(row == 0)
             in = 8;
@@ -282,27 +286,29 @@ public class UtilUI {
             TextView viewById = myView.findViewById(R.id.tv_index);
             viewById.setText(in+"");
         }
+        */
+
         myView.setVisibility(visibility);
 
         return myView;
     }
 
+    // Converts pixels to DP
     public static float pxToDp(Context context, int px){
         return px / context.getResources().getDisplayMetrics().density;
     }
 
+    // Converts DP to pixels
     public static float dpToPx(Context context, int dp){
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 
-    public static float spToPx(Context context, float sp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-    }
-
+    // Converts mm to pixels
     public static float mmToPx(Context context, int mm){
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, mm, context.getResources().getDisplayMetrics());
     }
 
+    // Returns current app theme based on SharedPreferences
     public static int getCurrentAppTheme(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         int currentTheme = sharedPreferences.getInt(AppSettings.CURRENT_THEME_KEY, 1);
@@ -335,6 +341,7 @@ public class UtilUI {
         return currentThemeID;
     }
 
+    // Changes current app theme based on themeNumber and also saves to SharedPreferences
     public static void changeCurrentAppTheme(Context context, int themeNumber){
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -343,8 +350,8 @@ public class UtilUI {
         editor.apply();
     }
 
-    @ColorInt
-    public static int getCurrentThemeColor(Context context, int attr){
+    // Returns colorInt based on current app theme
+    @ColorInt public static int getCurrentThemeColor(Context context, int attr){
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(attr, typedValue, true);
@@ -353,6 +360,7 @@ public class UtilUI {
         return color;
     }
 
+    // Returns onBoardingState from SharedPreferences
     // false == show onBoarding, true = don't show
     public static boolean getTutorialState(Context context, String id){
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -361,6 +369,8 @@ public class UtilUI {
         return state;
     }
 
+    // Saves onBoardingState to SharedPreferences
+    // false == show onBoarding, true = don't show
     public static void setTutorialState(Context context, String id, boolean state){
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppSettings.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -369,27 +379,32 @@ public class UtilUI {
         editor.apply();
     }
 
+    // Returns unicode string for infinity symbol
     public static String getInfinity(){
         return "\u221E";
-//        return DecimalFormatSymbols.getInstance().getInfinity();
     }
 
+    // Returns unicode string for left arrow symbol
     public static String getLeftArrow(){
         return "\u2190";
     }
 
+    // Returns unicode string for right arrow symbol
     public static String getRightArrow(){
         return "\u2192";
     }
 
+    // Returns SpannableString for infinity symbol
     public static SpannableString getInfinitySpannableString(Context context, TextView textView){
         return getDrawableSpannableString(context, textView, R.drawable.graphs_infinity_symbol, DynamicDrawableSpan.ALIGN_BOTTOM);
     }
 
+    // Returns SpannableString for left arrow symbol
     public static SpannableString getLeftArrowSpannableString(Context context, TextView textView){
         return getDrawableSpannableString(context, textView, R.drawable.graphs_leftarrow_symbol, DynamicDrawableSpan.ALIGN_BASELINE);
     }
 
+    // Returns SpannableString for passed drawable based on passed textView and alignment
     public static SpannableString getDrawableSpannableString(Context context, TextView textView, int drawable, int alignment){
         Drawable infinity = ContextCompat.getDrawable(context, drawable);
         float ascent = textView.getPaint().getFontMetrics().ascent;
@@ -402,6 +417,7 @@ public class UtilUI {
         return stringWithImage;
     }
 
+    // Returns SpannableStringBuilder for passed string [ used by GraphActivity ]
     public static SpannableStringBuilder stringToSpannableStringBuilder(Context context, TextView textView, String string){
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         for(char c : string.toCharArray()){
@@ -432,17 +448,7 @@ public class UtilUI {
         startActivity((Activity) start, end);
     }
 
-    public static boolean isValidGraphSaveFile(String name){
-        return isValidFileWithExtension(name, AppSettings.GRAPH_SAVEFILE_EXTENSION);
-    }
-
-    private static boolean isValidFileWithExtension(String name, String extension){
-        if(name.lastIndexOf(".") != -1 && name.lastIndexOf(".") != 0)
-            return name.substring(name.lastIndexOf(".")).equals(extension);
-
-        return false;
-    }
-
+    // Reads file from ".graph" file to a string and returns a StringBuilder
     public static String readTextFromUri(Context context, Uri uri) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream inputStream =
