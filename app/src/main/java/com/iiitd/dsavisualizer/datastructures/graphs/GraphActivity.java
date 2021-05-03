@@ -1838,10 +1838,7 @@ public class GraphActivity extends BaseActivity {
 
     @Override
     protected void back(){
-        if(timer != null) {
-            timer.cancel();
-            timer = null;
-        }
+        pauseAnimation();
 
         View view = getLayoutInflater().inflate(R.layout.layout_back_confirmation, null);
 
