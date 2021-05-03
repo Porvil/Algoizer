@@ -1609,6 +1609,7 @@ public class GraphActivity extends BaseActivity {
             btn_error.setAlpha(1f);
             btn_error.setClickable(true);
             btn_error.setEnabled(true);
+            Toast.makeText(context, "Graph Modified, Re-Run the algorithm", Toast.LENGTH_LONG).show();
         }
         else{
             btn_error.setAlpha(0.1f);
