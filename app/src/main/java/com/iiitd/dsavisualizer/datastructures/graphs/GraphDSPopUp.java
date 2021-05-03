@@ -374,12 +374,6 @@ public class GraphDSPopUp {
     // Reset icons and resets the state of popUp checkboxes
     public void dismiss(){
         if(popupwindow != null){
-            if(isMinimized) {
-                isMinimized = false;
-                cl_bottom.setVisibility(View.VISIBLE);
-                btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
-                popupwindow.update(width, height);
-            }
             popupwindow.dismiss();
         }
     }

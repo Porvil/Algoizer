@@ -207,17 +207,6 @@ public class GraphTreePopUp{
     // Reset icons and resets the state of popUp checkboxes
     public void dismiss(){
         if(popupwindow != null){
-            cb_tree.setChecked(true);
-            cb_forward.setChecked(true);
-            cb_back.setChecked(true);
-            cb_cross.setChecked(true);
-            if(isMinimized) {
-                isMinimized = false;
-                cl_bottom.setVisibility(View.VISIBLE);
-                btn_minimize.setImageDrawable(UtilUI.getDrawable(context, MINIMIZE_ICON));
-                popupwindow.update(width, height);
-            }
-
             popupwindow.dismiss();
         }
     }
