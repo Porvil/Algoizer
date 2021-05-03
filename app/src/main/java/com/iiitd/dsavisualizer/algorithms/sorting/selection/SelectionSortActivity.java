@@ -484,12 +484,45 @@ public class SelectionSortActivity extends BaseActivity {
                         @Override
                         public void onStop() {
                             cl_psuedocode.setVisibility(View.GONE);
+                            cl_psuedocode.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(selectionSort != null){
+                                        int width = ll_anim.getWidth();
+                                        int div = width / selectionSort.arraySize;
+
+                                        for(int i = 0; i< selectionSort.arraySize; i++){
+                                            int position = selectionSort.positions[i];
+                                            int x = position*div;
+                                            float v1 = x - selectionSort.views[i].getX();
+                                            selectionSort.views[i].animate().translationXBy(v1).start();
+                                        }
+                                    }
+                                }
+                            }, 0);
                         }
                     });
                 }
                 else{
                     cl_psuedocode.setVisibility(View.VISIBLE);
                     ViewAnimator.animate(cl_psuedocode).alpha(0, 1).duration(500).start();
+                    cl_psuedocode.setVisibility(View.VISIBLE);
+                    cl_psuedocode.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(selectionSort != null){
+                                int width = ll_anim.getWidth();
+                                int div = width / selectionSort.arraySize;
+
+                                for(int i = 0; i< selectionSort.arraySize; i++){
+                                    int position = selectionSort.positions[i];
+                                    int x = position*div;
+                                    float v1 = x - selectionSort.views[i].getX();
+                                    selectionSort.views[i].animate().translationXBy(v1).start();
+                                }
+                            }
+                        }
+                    }, 0);
                 }
             }
         });
