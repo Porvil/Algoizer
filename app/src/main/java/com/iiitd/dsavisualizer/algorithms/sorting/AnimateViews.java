@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
+// AnimateViews class is used to animate views left, right, up and down based on AnimationDirection
+// Used by SortingSequence for sorting algorithms animation
 public class AnimateViews {
 
     private float height;
@@ -51,8 +53,6 @@ public class AnimateViews {
             @Override
             public void run() {
                 switch (animationDirection){
-                    case NULL:
-                        break;
                     case UP:
                         animateUp(view, times);
                         break;
@@ -65,6 +65,7 @@ public class AnimateViews {
                     case LEFT:
                         animateLeft(view, times);
                         break;
+                    case NULL:
                     default:
                         break;
                 }

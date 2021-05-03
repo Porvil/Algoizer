@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.algorithms.sorting.selection;
 import android.text.Html;
 import android.text.Spanned;
 
+// Used for SelectionSort time/space complexities
 public class SelectionSortStats {
     static final String name = "Selection Sort";
     static final Spanned avg = Html.fromHtml("n<sup>2</sup>");

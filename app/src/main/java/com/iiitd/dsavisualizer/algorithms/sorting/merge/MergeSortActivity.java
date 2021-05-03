@@ -39,6 +39,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// MergeSort FrontEnd
 public class MergeSortActivity extends BaseActivity {
 
     LinearLayout ll_anim;

@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.algorithms.sorting.bubble;
 import android.text.Html;
 import android.text.Spanned;
 
+// Used for BubbleSort time/space complexities
 public class BubbleSortStats {
     static final String name = "Bubble Sort";
     static final Spanned avg = Html.fromHtml("n<sup>2</sup>");

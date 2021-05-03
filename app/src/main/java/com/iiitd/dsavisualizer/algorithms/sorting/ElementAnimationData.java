@@ -5,6 +5,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// This class is used to hold animation data for single state of sorting algorithm
 public class ElementAnimationData {
 
     public final int index;
