@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.Objects;
 
+// Vertex Class implements Comparable which is used in case of custom input nodes having no fixed {row, col}
 public class Vertex implements Comparable<Vertex> {
     public int data;
     public int row;
@@ -34,7 +35,6 @@ public class Vertex implements Comparable<Vertex> {
 
     @Override
     public int compareTo(Vertex o2) {
-
         Vertex o1 = this;
 
         if(o1.row == o2.row && o1.col == o2.col){

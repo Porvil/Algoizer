@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// Prim's
 public class Prims {
     Graph graph;
     GraphSequence graphSequence;

@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.NONE;
 
+// BellmanFord
 public class BellmanFord {
     Graph graph;
     GraphSequence graphSequence;

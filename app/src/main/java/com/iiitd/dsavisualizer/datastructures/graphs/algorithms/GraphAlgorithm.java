@@ -13,6 +13,7 @@ import com.iiitd.dsavisualizer.datastructures.graphs.GraphTree;
 import com.iiitd.dsavisualizer.datastructures.graphs.GraphTreePopUp;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+// GraphAlgorithm manages all graph algorithms and their respective popUps, graphSequence and graphTree
 public class GraphAlgorithm {
     public GraphAlgorithmType graphAlgorithmType;
     public Graph graph;

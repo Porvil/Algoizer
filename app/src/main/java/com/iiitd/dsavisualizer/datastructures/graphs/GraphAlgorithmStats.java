@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// Contains Graph algorithm's time/space complexities
 public class GraphAlgorithmStats {
 
     public String algorithm;

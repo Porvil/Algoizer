@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// GraphTree contains data for BFS/DFS Tree
 public class GraphTree {
-
     public int noOfRows;
     public int noOfCols;
 
     public boolean directed;
     public boolean weighted;
     public int noOfVertices;
-    public ArrayList<EdgePro> edgePros;                       // all edges arrayList
-    public Map<Integer, Pair<Integer, Integer>> vertexMap;    // Vertex number -> {row, col} Pair in graph board coordinates
+    public ArrayList<EdgePro> edgePros;                      // all edges arrayList
+    public Map<Integer, Pair<Integer, Integer>> vertexMap;   // Vertex number -> {row, col} Pair in graph board coordinates
 
     public GraphTree(boolean directed, boolean weighted) {
         this.directed = directed;

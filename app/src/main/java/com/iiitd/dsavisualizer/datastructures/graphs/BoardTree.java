@@ -18,8 +18,9 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import java.util.Collections;
 import java.util.Map;
 
-// Used by GraphActivity Class
-// Used old Board Functions and variables [ MAY NEED TO UPDATE ] {UPDATED ONLY WHAT WAS NEEDED}
+// Used by GraphActivity class, maintains Graph Tree board data
+// For Text, doesn't use sp, using pixels, might create some problems
+// Uses old "Board" class naming convention
 public class BoardTree {
 
     Context context;
@@ -32,9 +33,7 @@ public class BoardTree {
     private float nodeRadius;                       // in pixels [ GraphSettings contain all these constants ]
     private int nodeTextSize;                       // in pixels [ GraphSettings contain all these constants ]
     private int edgeWidth;                          // in pixels [ GraphSettings contain all these constants ]
-    private int edgeArrowWidth;                     // in pixels [ GraphSettings contain all these constants ]
     private int arrowLength;                        // in pixels [ GraphSettings contain all these constants ]
-    private int edgeWeightTextSize;                 // in pixels [ GraphSettings contain all these constants ]
 
     // Board Variables
     public float X;                                // Width of Board
@@ -90,8 +89,6 @@ public class BoardTree {
         this.arrowLength         = (int) ratio * GraphSettings.nodeEdgeArrowLength;
         this.nodeTextSize        = (int) ratio * GraphSettings.nodeText;
         this.edgeWidth           = (int) ratio * GraphSettings.nodeEdge;
-        this.edgeArrowWidth      = (int) ratio * GraphSettings.nodeEdgeArrow;
-        this.edgeWeightTextSize  = (int) ratio * GraphSettings.nodeEdgeWeight;
 
         System.out.println("----------------------------------------");
         System.out.println("Board Width(X)     = " + X        + " | " + "Board Height(Y)    = " + Y);

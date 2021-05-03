@@ -11,6 +11,7 @@ import com.iiitd.dsavisualizer.utility.UtilUI;
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphControlState.*;
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphViewState.*;
 
+// This class maintains graph's control states and graph' grid toggle states
 public class GraphControls {
 
     Context context;
@@ -113,7 +114,6 @@ public class GraphControls {
     }
 
     public void updateDrawables(){
-
         Drawable view = view_off;
         Drawable vertex = vertexState == VERTEX_ADD ? vertexAdd_off : vertexRemove_off;
         Drawable edge = edgeState == EDGE_ADD ? edgeAdd_off : edgeRemove_off;

@@ -8,12 +8,13 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
 
+// This class is used to hold extra animation data for an instance of a graph algorithm
 public class GraphAnimationStateExtra {
-    public ArrayList<Integer> queues;
-    public ArrayList<Integer> stacks;
-    public HashMap<Integer, Integer> map; // vertex number -> vertex weight
-    public ArrayList<Edge> edges; // used by kruskal's
-    public ArrayList<PriorityQueueElementState> priorityQueueElementStates; // Used by dijkstra
+    public ArrayList<Integer> queues;                                        // used by BFS
+    public ArrayList<Integer> stacks;                                        // used by DFS
+    public HashMap<Integer, Integer> map;  // vertex number -> vertex weight // used by Dijkstra and Bellmanford
+    public ArrayList<Edge> edges;                                            // used by Kruskal's
+    public ArrayList<PriorityQueueElementState> priorityQueueElementStates;  // used by Dijkstra and Prim's
 
     public GraphAnimationStateExtra() {
         this.queues = new ArrayList<>();

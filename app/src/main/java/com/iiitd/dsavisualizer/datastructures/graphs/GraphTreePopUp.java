@@ -19,6 +19,7 @@ import com.iiitd.dsavisualizer.R;
 import com.iiitd.dsavisualizer.utility.UtilUI;
 import com.otaliastudios.zoom.ZoomLayout;
 
+// GraphTreePopUp maintains popUp for BFS Tree and DFS Tree
 public class GraphTreePopUp{
 
     Context context;
@@ -213,7 +214,9 @@ public class GraphTreePopUp{
 
     // Hides the popUpWindow when drawers opens in drawerLayout
     public void hideWhileDrawerOpen(){
-        popupwindow.dismiss();
+        if(popupwindow != null){
+            popupwindow.dismiss();
+        }
     }
 
     // Shows the popUpWindow when drawers closes in drawerLayout

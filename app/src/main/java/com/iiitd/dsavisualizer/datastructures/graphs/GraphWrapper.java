@@ -3,12 +3,12 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import android.content.Context;
 import android.util.Pair;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 
+// GraphWrapper is the main class which wraps the Board [ frontend ] and Graph [ backend ] together
 public class GraphWrapper {
     public boolean directed;
     public boolean weighted;
@@ -26,6 +26,7 @@ public class GraphWrapper {
         board = new Board(context, customCanvas, isLargeGraph);
     }
 
+    // Returns true if the passed string is a graph input
     public static boolean isGraphInput(String customGraphString) {
         String[] ss = customGraphString.split("\\n");
         boolean error = false;
@@ -91,12 +92,10 @@ public class GraphWrapper {
 
     public boolean addVertex(MotionEvent motionEvent){
         TouchData touchData = board.getTouchData(motionEvent);
-
         return addVertex(touchData);
     }
 
     public boolean addVertex(TouchData touchData){
-
         if(touchData.isElement || touchData.isExtendedElement){
             int nodeNumber = graph.getNewVertexNumber();
             int row = touchData.row;
@@ -119,7 +118,6 @@ public class GraphWrapper {
     }
 
     public boolean addVertex(TouchData touchData, int nodeNumber){
-
         if(touchData.isElement || touchData.isExtendedElement){
             int row = touchData.row;
             int col = touchData.col;
@@ -161,10 +159,8 @@ public class GraphWrapper {
     }
 
     public boolean removeVertex(MotionEvent motionEvent){
-
         TouchData touchData = board.getTouchData(motionEvent);
         return removeVertex(touchData);
-
     }
 
     public boolean removeVertex(TouchData touchData) {
@@ -178,7 +174,6 @@ public class GraphWrapper {
     }
 
     public boolean removeVertex(int row, int col){
-
         if(board.getState(row, col)){
             int nodeNumber = board.boardElements[row][col].value;
             graph.removeVertex(nodeNumber);
@@ -227,7 +222,6 @@ public class GraphWrapper {
     }
 
     public boolean removeEdge(int src, int des){
-
         if(!graph.directed){
             graph.removeEdge(des, src);//reverse edge
         }
@@ -287,7 +281,6 @@ public class GraphWrapper {
 
     // Minimizes the graph
     public void minimizeGraph(ArrayList<Vertex> vertices){
-
         int maxX = -1;
         int maxY = -1;
         int gap = 0;
@@ -349,7 +342,6 @@ public class GraphWrapper {
 
     // Checks if all vertices can be placed on the graph or not
     public boolean checkBounds(ArrayList<Vertex> data){
-
         if(data.size() == 0)
             return true;
 
@@ -379,7 +371,6 @@ public class GraphWrapper {
 
     // Returns false if absolute location of vertices is higher than MAX_BOUNDS
     public boolean checkPerformanceBounds(ArrayList<Vertex> data){
-
         if(data.size() == 0)
             return false;
 
@@ -399,7 +390,6 @@ public class GraphWrapper {
 
     // Checks whether if graph can be minimized or not
     public boolean checkIfMinimizable(ArrayList<Vertex> data) {
-
         if (data.size() == 0)
             return true;
 

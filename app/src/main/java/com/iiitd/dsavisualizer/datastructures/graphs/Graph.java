@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// GraphActivity BackEnd
 public class Graph {
 
     public boolean directed;
@@ -178,6 +179,7 @@ public class Graph {
         return null;
     }
 
+    // Returns edge which is firstEdge in case of undirected graph
     public Edge getEdgeFirstEdge(int src, int des){
         if(!checkContainsVertices(src, des)){
             return null;
@@ -208,6 +210,7 @@ public class Graph {
         return null;
     }
 
+    // Returns true if contain negative edge
     public boolean hasNegativeEdges(){
         for(Map.Entry<Integer, ArrayList<Edge>> entry : edgeListMap.entrySet()){
             for(Edge i : entry.getValue()){

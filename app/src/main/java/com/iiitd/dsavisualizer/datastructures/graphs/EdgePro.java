@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 import java.util.Objects;
 
 // Used by BFS, DFS
+// Contains information about Edge Classes [ used in BFS Tree and DFS Tree ]
 public class EdgePro implements Comparable<EdgePro>{
 
     public int src;
@@ -31,7 +32,7 @@ public class EdgePro implements Comparable<EdgePro>{
     }
 
     // Used by GraphTree
-    // need to complete this function [ currently should only be used in undirected graphs ]
+    // should only be used in undirected graphs
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -64,4 +65,5 @@ public class EdgePro implements Comparable<EdgePro>{
             return 1;
         }
     }
+
 }

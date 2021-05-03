@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// Contains Graph Examples for Graph Algorithms
 public class GraphExamples {
 
     public static String example1 = "D 0\n" +

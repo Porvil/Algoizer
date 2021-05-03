@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+// CustomCanvas class holds different canvases used by Graph Activity
 public class CustomCanvas {
 
     public Context context;

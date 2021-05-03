@@ -1,7 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// Contains GraphSettings
 public class GraphSettings{
-
     // cols = 2 * rows
     // SMALL GRAPH
     private static final int SMALL_ROWS           = 6;

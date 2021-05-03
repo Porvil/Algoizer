@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.*;
 
+// Kruskal's
 public class Kruskals {
     Graph graph;
     GraphSequence graphSequence;

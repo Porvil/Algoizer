@@ -1,20 +1,18 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// This class is used to hold complete animation data for an instance of a graph algorithm
 public class GraphAnimationState {
     public String state;
     public String info;
-    public ArrayList<Vertex> vertices;
     public ArrayList<Edge> edges;
     public HashMap<Integer, Vertex> verticesState;
     public GraphAnimationStateExtra graphAnimationStateExtra;
 
     public GraphAnimationState() {
-        this.vertices = new ArrayList<>();
         this.edges = new ArrayList<>();
         this.verticesState = new HashMap<>();
         this.graphAnimationStateExtra = null;
@@ -35,7 +33,6 @@ public class GraphAnimationState {
         return "GraphAnimationState{" +
                 "state='" + state + '\'' +
                 ", info='" + info + '\'' +
-                ", vertices=" + vertices +
                 ", edges=" + edges +
                 ", verticesState=" + verticesState +
                 ", graphAnimationStateExtra=" + graphAnimationStateExtra +
@@ -58,12 +55,7 @@ public class GraphAnimationState {
         for(Edge edge : _edges){
             edges.add(Edge.getClone(edge));
         }
-//        this.edges.addAll(edges);
-        return this;
-    }
 
-    public GraphAnimationState addVertices(ArrayList<Vertex> vertices){
-        this.vertices.addAll(vertices);
         return this;
     }
 

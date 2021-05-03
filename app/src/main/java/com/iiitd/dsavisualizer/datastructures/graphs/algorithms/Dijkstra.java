@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAnimationStateType.NONE;
 
+// Dijkstra
 public class Dijkstra {
     Graph graph;
     GraphSequence graphSequence;

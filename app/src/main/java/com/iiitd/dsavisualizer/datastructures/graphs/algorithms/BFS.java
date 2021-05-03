@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+// BFS
 public class BFS {
     Graph graph;
     GraphSequence graphSequence;

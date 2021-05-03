@@ -2,6 +2,8 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.Objects;
 
+// VertexCLRS contains Vertex class variables
+// and also maintains extra variables which are used by different graph algorithms
 public class VertexCLRS {
 
     // Vertex Variables
@@ -73,7 +75,7 @@ public class VertexCLRS {
         return vertexCLRS;
     }
 
-    // Used by Dijkstra, Prims
+    // Used by Dijkstra, Prim's
     public static VertexCLRS dijkstraVertexCLRS(Vertex vertex) {
         VertexCLRS vertexCLRS = new VertexCLRS(vertex);
 

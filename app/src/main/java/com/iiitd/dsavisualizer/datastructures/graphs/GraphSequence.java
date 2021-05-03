@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.ArrayList;
 
+// This class is used by Graph Algorithms for maintaining animation sequences
 public class GraphSequence {
 
     public GraphAlgorithmType graphAlgorithmType;
@@ -54,4 +55,3 @@ public class GraphSequence {
     }
 
 }
-

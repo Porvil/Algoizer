@@ -57,9 +57,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// GraphActivity FrontEnd
 public class GraphActivity extends BaseActivity {
-
-    private static final int GRAPH_PICKFILE_RESULT_CODE = 1223;
 
     LinearLayout ll_anim;
     ImageView iv_grid;
@@ -760,14 +759,14 @@ public class GraphActivity extends BaseActivity {
         chooseFile.setType("*/*");
         startActivityForResult(
                 Intent.createChooser(chooseFile, "Choose a " + AppSettings.GRAPH_SAVEFILE_EXTENSION +" file."),
-                GRAPH_PICKFILE_RESULT_CODE
+                AppSettings.GRAPH_PICKFILE_RESULT_CODE
         );
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == GRAPH_PICKFILE_RESULT_CODE && resultCode == RESULT_OK){
+        if (requestCode == AppSettings.GRAPH_PICKFILE_RESULT_CODE && resultCode == RESULT_OK){
             Uri uri;
             if (resultData != null) {
                 uri = resultData.getData();

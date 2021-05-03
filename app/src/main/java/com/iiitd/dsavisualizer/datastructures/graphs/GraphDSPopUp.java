@@ -23,6 +23,7 @@ import java.util.Collections;
 
 import static com.iiitd.dsavisualizer.datastructures.graphs.GraphAlgorithmType.*;
 
+// GraphDSPopUp maintains popUp for various DS used in graph algorithms
 public class GraphDSPopUp {
 
     Context context;
@@ -380,7 +381,9 @@ public class GraphDSPopUp {
 
     // Hides the popUpWindow when drawers opens in drawerLayout
     public void hideWhileDrawerOpen(){
-        popupwindow.dismiss();
+        if(popupwindow != null){
+            popupwindow.dismiss();
+        }
     }
 
     // Shows the popUpWindow when drawers closes in drawerLayout

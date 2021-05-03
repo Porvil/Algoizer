@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// This class is used to return data about graph to determine size of UI elements in Graph Activity
 public class GraphData {
     public int nodeRect;
     public int nodeCircleRadius;
@@ -18,9 +19,10 @@ public class GraphData {
     public int ySize;                            // One Row Height
     public int xEmpty;                           // One Column Width Empty
     public int yEmpty;                           // One Row Height Empty
-    public float xOverall;
-    public float yOverall;
+    public float xOverall;                       // One Entire Column Width
+    public float yOverall;                       // One Entire Row Height
 
+    // Maths behind the below "cSize" variable
     /*
         X = total col. size
         c = no. of columns
@@ -89,4 +91,5 @@ public class GraphData {
         this.nodeText            = (int) f_nodeText;
         this.nodeTextCoordinates = (int) f_nodeTextCoordinates;
     }
+
 }

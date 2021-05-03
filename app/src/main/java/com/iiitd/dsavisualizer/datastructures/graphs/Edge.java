@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import java.util.Objects;
 
+// Edge Class
 public class Edge {
 
     public int src;

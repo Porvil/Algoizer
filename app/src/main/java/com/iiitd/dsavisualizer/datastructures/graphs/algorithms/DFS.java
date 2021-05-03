@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+// DFS
 public class DFS {
     Graph graph;
     GraphSequence graphSequence;

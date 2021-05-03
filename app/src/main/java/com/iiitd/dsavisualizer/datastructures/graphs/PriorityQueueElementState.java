@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.graphs;
 
 import com.iiitd.dsavisualizer.utility.UtilUI;
 
+// PriorityQueueElementState is used to maintain state of priority queue elements
 public class PriorityQueueElementState {
     public int data;
     public boolean visited;

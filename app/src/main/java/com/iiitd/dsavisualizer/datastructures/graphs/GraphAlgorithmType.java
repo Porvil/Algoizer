@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.graphs;
 
+// ENUM Class
+// Contains GraphAlgorithm Type
 public enum GraphAlgorithmType {
     NULL,
     BFS,
