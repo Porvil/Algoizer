@@ -1,5 +1,7 @@
 package com.iiitd.dsavisualizer.datastructures.trees;
 
+// ENUM Class
+// Used in Tree Animation for knowing the type of animation type
 public enum TreeAnimationStateType {
     NO_SPACE,                 // NS
     NOT_FOUND,                // NF

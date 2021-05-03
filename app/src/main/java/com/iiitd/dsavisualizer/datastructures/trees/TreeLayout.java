@@ -11,6 +11,7 @@ import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.ARROW;
 import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.ELEMENT;
 import static com.iiitd.dsavisualizer.datastructures.trees.NodeType.EMPTY;
 
+// Used by Trees
 //HARDCODED INFORMATION, Handle with care
 public class TreeLayout {
 

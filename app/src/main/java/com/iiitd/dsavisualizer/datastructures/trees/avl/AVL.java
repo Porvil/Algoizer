@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// AVL Backend
 public class AVL {
 
     private AVLNode root;
@@ -54,7 +55,6 @@ public class AVL {
 
         if (key < avlNode.key) {
             System.out.println("LESS KEY = " + avlNode.key);
-
             TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, AVLInfo.getSearchString(key, avlNode.key));
             treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
             treeAnimationStates.add(treeAnimationState);
@@ -126,7 +126,6 @@ public class AVL {
         return rotate(avlNode, key, diff, index, level);
     }
 
-
     public void delete(int key){
         treeAnimationStates = new ArrayList<>();
         root = _delete(root, key, baseIndex, baseLevel);
@@ -181,7 +180,6 @@ public class AVL {
             }
             else if(avlNode.left == null && avlNode.right != null){
                 System.out.println("Right copy");
-
                 TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, AVLInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getRightSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getRightSubtreeString());
@@ -223,7 +221,6 @@ public class AVL {
             }
             else if(avlNode.left != null && avlNode.right == null){
                 System.out.println("Left copy");
-
                 TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, AVLInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getLeftSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getLeftSubtreeString());
@@ -265,7 +262,6 @@ public class AVL {
             }
             else if(avlNode.left != null && avlNode.right != null){
                 System.out.println("Right min element");
-
                 AVLNode current = avlNode.right;
                 System.out.println("index == " + index);
                 int curIndex = index+level;
@@ -325,7 +321,6 @@ public class AVL {
         System.out.println("in = " + index + " | lev = " + level);
 
         if(diff == 2 || diff == -2) {
-
             TreeAnimationState treeAnimationState = new TreeAnimationState(NULL, "BF = " + diff + " of " + avlNode.key);
             treeAnimationStates.add(treeAnimationState);
 
@@ -410,7 +405,6 @@ public class AVL {
     }
 
     private AVLNode rightRotate(AVLNode avlNode, int index, int level) {
-
         AVLNode left = avlNode.left;
         AVLNode temp = left.right;
 
@@ -423,16 +417,11 @@ public class AVL {
 
         int index_a = index;
         int index_l = TreeLayout.childs[index_a].first;
-        int index_ls = TreeLayout.childs[index_l].first;
         int index_rs = TreeLayout.childs[index_a].second;
         int index_ts = TreeLayout.childs[index_l].second;
 
         int new_index_a = TreeLayout.childs[index_a].second;
         int new_index_l = TreeLayout.parents[index_l];
-//        int new_index_ls = TreeLayout.parents[index_ls];
-//        int new_index_rs = TreeLayout.childs[index_rs].second;
-//        int new_index_ts = index_ts == 3 ? 5 : index_ts == 6 ? 10 : -1;
-        //remove this hardcoding later
 
         TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getRightRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
@@ -440,9 +429,6 @@ public class AVL {
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_l + " -> " + new_index_l);
-//        System.out.println("ls | " + index_ls + " -> " + new_index_ls);
-//        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
-//        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
         TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getRightRotateString(avlNode.key));
         TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getRightRotateString(avlNode.key));
@@ -451,11 +437,11 @@ public class AVL {
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
         step3.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
 
-        //l
+        // l
         step2.add(new TreeElementAnimationData(left.key, left.count, index_l, new_index_l));
         step3.add(new TreeElementAnimationData(left.key, left.count, index_l, new_index_l));
 
-        //ls
+        // ls
         if(left.left != null) {
             int level1 = level / (2);
             int index1 = index_l;
@@ -490,7 +476,7 @@ public class AVL {
 
         }
 
-        //rs
+        // rs
         if(avlNode.right != null) {
             int level2 = level/2;
             int index2 = index_rs;
@@ -527,7 +513,7 @@ public class AVL {
 
         }
 
-        //ts
+        // ts
         if(temp != null) {
             int level3 = level/(2*2);
             int index3 = index_ts;
@@ -578,7 +564,6 @@ public class AVL {
     }
 
     private AVLNode leftRotate(AVLNode avlNode, int index, int level) {
-
         AVLNode right = avlNode.right;
         AVLNode temp = right.left;
 
@@ -592,15 +577,10 @@ public class AVL {
         int index_a = index;
         int index_r = TreeLayout.childs[index_a].second;
         int index_ls = TreeLayout.childs[index_a].first;
-        int index_rs = TreeLayout.childs[index_r].second;
         int index_ts = TreeLayout.childs[index_r].first;
 
         int new_index_a = TreeLayout.childs[index_a].first;
         int new_index_r = TreeLayout.parents[index_r];
-//        int new_index_ls = TreeLayout.childs[index_ls].first;
-//        int new_index_rs = TreeLayout.parents[index_rs];
-//        int new_index_ts = index_ts == 13 ? 11 : index_ts == 10 ? 6 : -1;
-        //remove this hardcoding later
 
         TreeAnimationState treeAnimationState = new TreeAnimationState(ROTATION, AVLInfo.getLeftRotateString(avlNode.key));
         treeAnimationState.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index));
@@ -608,22 +588,19 @@ public class AVL {
 
         System.out.println("a  | " + index_a + " -> " + new_index_a);
         System.out.println("l  | " + index_r + " -> " + new_index_r);
-//        System.out.println("ls | " + index_ls + " -> " + new_index_ls);
-//        System.out.println("rs | " + index_rs + " -> " + new_index_rs);
-//        System.out.println("ts | " + index_ts + " -> " + new_index_ts);
 
         TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, AVLInfo.getLeftRotateString(avlNode.key));
         TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, AVLInfo.getLeftRotateString(avlNode.key));
 
-        //a
+        // a
         step2.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
         step3.add(new TreeElementAnimationData(avlNode.key, avlNode.count, index_a, new_index_a));
 
-        //r
+        // r
         step2.add(new TreeElementAnimationData(right.key, right.count, index_r, new_index_r));
         step3.add(new TreeElementAnimationData(right.key, right.count, index_r, new_index_r));
 
-        //ls
+        // ls
         if(avlNode.left != null) {
             int level2 = level/2;
             int index2 = index_ls;
@@ -660,7 +637,7 @@ public class AVL {
 
         }
 
-        //rs
+        // rs
         if(right.right != null) {
             int level1 = level / (2);
             int index1 = index_r;
@@ -695,7 +672,7 @@ public class AVL {
 
         }
 
-        //ts
+        // ts
         if(temp != null) {
             int level3 = level/(2*2);
             int index3 = index_ts;

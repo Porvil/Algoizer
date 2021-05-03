@@ -5,7 +5,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-// Abstract Class used by Sorting Algorithms, Sub-classes must provide definition for backward() and forward() methods.
+// Abstract Class used by Sorting Algorithms for maintaining animation sequences
+// Sub-classes must provide definition for backward() and forward() methods.
 public abstract class SortingSequence {
 
     public int size;

@@ -49,6 +49,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// AVL FrontEnd
 public class AVLActivity extends BaseActivity {
 
     LinearLayout ll_anim;
@@ -386,7 +387,8 @@ public class AVLActivity extends BaseActivity {
                             tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
                             treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
                             ViewAnimator.animate(view).bounceIn().duration(animDuration).start();
-                        } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
+                        }
+                        else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
                             System.out.println("Shown");
                             ViewAnimator.animate(view).flash().duration(animDuration).start();
                         }
@@ -399,7 +401,8 @@ public class AVLActivity extends BaseActivity {
                                 tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
                                 treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
                                 ViewAnimator.animate(view1).bounceIn().duration(animDuration).start();
-                            } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
+                            }
+                            else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
                                 System.out.println("Shown");
                                 ViewAnimator.animate(view1).flash().duration(animDuration).start();
                             }
@@ -418,6 +421,7 @@ public class AVLActivity extends BaseActivity {
                 tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
             }
         }
+
         treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
     }
 
@@ -736,7 +740,7 @@ public class AVLActivity extends BaseActivity {
 
     }
 
-    // Not used, Reset All Tree Views to Default Positions
+    // Not used, Resets All Tree Views to Default Positions
     private void reset(){
         int row = 0;
         for(TableRow tableRow : tableRows){
@@ -784,7 +788,6 @@ public class AVLActivity extends BaseActivity {
                 int col = 0;
                 for(List<TreeLayoutElement> treeLayout : treeLayout){
                     final TableRow tableRow = new TableRow(context);
-                    final ArrayList<Pair<Integer, Integer>> tableRowCoordinate = new ArrayList<>();
                     col = 0;
                     for(final TreeLayoutElement layoutElement : treeLayout){
                         final View treeNodeView = UtilUI.getTreeNodeView(context, layoutInflater, layoutElement, height, row, col);
@@ -831,6 +834,7 @@ public class AVLActivity extends BaseActivity {
                                 }
                             }
                         });
+
                         tableRow.addView(treeNodeView);
                         col++;
                     }
@@ -951,6 +955,7 @@ public class AVLActivity extends BaseActivity {
                 dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
+
     }
 
     @Override

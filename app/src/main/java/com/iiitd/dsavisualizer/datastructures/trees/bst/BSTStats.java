@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 import android.text.Html;
 import android.text.Spanned;
 
+// Used for BST time/space complexities
 public class BSTStats {
     static final String name = "Binary Search Tree";
     static final Spanned worst_insert = Html.fromHtml("n");

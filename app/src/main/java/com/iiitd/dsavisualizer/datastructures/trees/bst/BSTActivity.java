@@ -49,6 +49,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// BST FrontEnd
 public class BSTActivity extends BaseActivity {
 
     LinearLayout ll_anim;
@@ -385,7 +386,8 @@ public class BSTActivity extends BaseActivity {
                             tableRows.get(first).getChildAt(second).setVisibility(View.VISIBLE);
                             treeLayout.get(first).get(second).state = NodeState.ELEMENT_SHOWN;
                             ViewAnimator.animate(view).bounceIn().duration(animDuration).start();
-                        } else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
+                        }
+                        else if (layoutElement.state == NodeState.ELEMENT_SHOWN) {
                             System.out.println("Shown");
                             ViewAnimator.animate(view).flash().duration(animDuration).start();
                         }
@@ -398,7 +400,8 @@ public class BSTActivity extends BaseActivity {
                                 tableRows.get(first - 1).getChildAt(second).setVisibility(View.VISIBLE);
                                 treeLayout.get(first - 1).get(second).state = NodeState.ARROW_SHOWN;
                                 ViewAnimator.animate(view1).bounceIn().duration(animDuration).start();
-                            } else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
+                            }
+                            else if (layoutElement1.state == NodeState.ARROW_SHOWN) {
                                 System.out.println("Shown");
                                 ViewAnimator.animate(view1).flash().duration(animDuration).start();
                             }
@@ -417,6 +420,7 @@ public class BSTActivity extends BaseActivity {
                 tableRow.getChildAt(i).setVisibility(View.INVISIBLE);
             }
         }
+
         treeLayoutData = new TreeLayoutData(context, treeLayout, tableRows);
     }
 
@@ -802,6 +806,7 @@ public class BSTActivity extends BaseActivity {
                                 }
                             }
                         });
+
                         tableRow.addView(treeNodeView);
                         col++;
                     }
@@ -895,6 +900,7 @@ public class BSTActivity extends BaseActivity {
                 dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
+
     }
 
     protected void disableUI() {

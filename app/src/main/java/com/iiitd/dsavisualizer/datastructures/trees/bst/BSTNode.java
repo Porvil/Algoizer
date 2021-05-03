@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.trees.bst;
 
+// BSTNode used by BST
 public class BSTNode {
 
     int key;

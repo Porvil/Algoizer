@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.trees;
 
 import android.view.View;
 
+// TreeLayoutElement contains data about single element in tree view
 public class TreeLayoutElement {
     public int weight;
     public NodeType type;
@@ -16,12 +17,6 @@ public class TreeLayoutElement {
             this.state = NodeState.ARROW_HIDDEN;
         else if(this.type == NodeType.ELEMENT)
             this.state = NodeState.ELEMENT_HIDDEN;
-    }
-
-    public TreeLayoutElement(int weight, NodeType type, NodeState state) {
-        this.weight = weight;
-        this.type = type;
-        this.state = state;
     }
 
     public int getVisibility(){
@@ -40,4 +35,5 @@ public class TreeLayoutElement {
 
         return View.INVISIBLE;
     }
+
 }

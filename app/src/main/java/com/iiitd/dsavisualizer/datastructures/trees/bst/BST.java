@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// BST Backend
 public class BST {
 
     private BSTNode root;
@@ -87,7 +88,6 @@ public class BST {
 
         if (key < bstNode.key) {
             System.out.println("LESS KEY = " + bstNode.key);
-
             TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);
@@ -121,7 +121,6 @@ public class BST {
             }
             else if(bstNode.left == null && bstNode.right != null){
                 System.out.println("Right copy");
-
                 TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, BSTInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, BSTInfo.getRightSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, BSTInfo.getRightSubtreeString());
@@ -163,7 +162,6 @@ public class BST {
             }
             else if(bstNode.left != null && bstNode.right == null){
                 System.out.println("Left copy");
-
                 TreeAnimationState step1 = new TreeAnimationState(DELETE_1_CHILD, BSTInfo.getDeleteString(key, 1));
                 TreeAnimationState step2 = new TreeAnimationState(COPY_AND_MOVE, BSTInfo.getLeftSubtreeString());
                 TreeAnimationState step3 = new TreeAnimationState(MOVE_BACK, BSTInfo.getLeftSubtreeString());
@@ -205,7 +203,6 @@ public class BST {
             }
             else if(bstNode.left != null && bstNode.right != null){
                 System.out.println("Right min element");
-
                 BSTNode current = bstNode.right;
                 System.out.println("index == " + index);
                 int curIndex = index+level;
@@ -268,7 +265,6 @@ public class BST {
 
         if (key < bstNode.key) {
             System.out.println("LESS KEY = " + bstNode.key);
-
             TreeAnimationState treeAnimationState = new TreeAnimationState(SEARCH, BSTInfo.getSearchString(key, bstNode.key));
             treeAnimationState.add(new TreeElementAnimationData(bstNode.key, bstNode.count, index));
             treeAnimationStates.add(treeAnimationState);

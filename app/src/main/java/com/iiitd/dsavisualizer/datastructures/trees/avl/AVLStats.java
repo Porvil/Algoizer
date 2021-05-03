@@ -3,6 +3,7 @@ package com.iiitd.dsavisualizer.datastructures.trees.avl;
 import android.text.Html;
 import android.text.Spanned;
 
+// Used for AVL time/space complexities
 public class AVLStats {
     static final String name = "AVL Tree";
     static final Spanned worst_insert = Html.fromHtml("log(n)");

@@ -5,7 +5,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// This class is used to hold complete animation data for an instance of sorting algorithm
+// This class is used to hold complete animation data for an instance of a sorting algorithm
 public class SortingAnimationState {
     public final String state;
     public String info;

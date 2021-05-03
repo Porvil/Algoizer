@@ -2,6 +2,7 @@ package com.iiitd.dsavisualizer.datastructures.trees;
 
 import java.util.ArrayList;
 
+// This class is used by Tree Algorithms for maintaining animation sequences
 public class TreeSequence {
 
     public int size;
@@ -39,4 +40,3 @@ public class TreeSequence {
     }
 
 }
-

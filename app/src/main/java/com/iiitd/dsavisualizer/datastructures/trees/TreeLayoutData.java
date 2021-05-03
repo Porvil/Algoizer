@@ -8,6 +8,7 @@ import android.widget.TableRow;
 import java.util.ArrayList;
 import java.util.List;
 
+// TreeLayoutData contains data about all elements in tree view and also maintains tableRows
 public class TreeLayoutData {
 
     Context context;

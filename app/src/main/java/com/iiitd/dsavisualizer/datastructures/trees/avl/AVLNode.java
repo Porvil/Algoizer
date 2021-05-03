@@ -1,5 +1,6 @@
 package com.iiitd.dsavisualizer.datastructures.trees.avl;
 
+// AVLNode used by AVL
 public class AVLNode {
 
     int key;
