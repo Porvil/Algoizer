@@ -386,12 +386,12 @@ public class GraphDSPopUp {
 
     // Hides the popUpWindow when drawers opens in drawerLayout
     public void hideWhileDrawerOpen(){
-        popUpView.setVisibility(View.INVISIBLE);
+        popupwindow.dismiss();
     }
 
     // Shows the popUpWindow when drawers closes in drawerLayout
     public void showWhileDrawerOpen(){
-        popUpView.setVisibility(View.VISIBLE);
+        show();
     }
 
 }

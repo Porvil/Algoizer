@@ -20,6 +20,8 @@ public class GraphAlgorithm {
     public GraphTree graphTree;
     public GraphTreePopUp graphTreePopUp;
     public GraphDSPopUp graphTreeDSPopUp;
+    public boolean isGraphTreePopUpUsed;
+    public boolean isGraphTreeDSPopUpUsed;
 
     public static GraphAlgorithm graphAlgorithm;
 
@@ -30,6 +32,8 @@ public class GraphAlgorithm {
             graphAlgorithm.graphAlgorithmType = NULL;
             graphAlgorithm.graphSequence = null;
             graphAlgorithm.graphTree = null;
+            graphAlgorithm.isGraphTreePopUpUsed = false;
+            graphAlgorithm.isGraphTreeDSPopUpUsed = false;
 
             int treePopUpWidth = (int) UtilUI.dpToPx(context, 240);
             int treeDSPopUpWidth = (int) UtilUI.dpToPx(context, 150);
@@ -41,10 +45,32 @@ public class GraphAlgorithm {
         return graphAlgorithm;
     }
 
+    // Hides the popUpWindow when drawers opens in drawerLayout
+    public void hideWhileDrawerOpen(){
+        if(isGraphTreeDSPopUpUsed){
+            graphTreeDSPopUp.hideWhileDrawerOpen();
+        }
+        if(isGraphTreePopUpUsed){
+            graphTreePopUp.hideWhileDrawerOpen();
+        }
+    }
+
+    // Shows the popUpWindow when drawers closes in drawerLayout
+    public void showWhileDrawerOpen(){
+        if(isGraphTreeDSPopUpUsed){
+            graphTreeDSPopUp.showWhileDrawerOpen();
+        }
+        if(isGraphTreePopUpUsed){
+            graphTreePopUp.showWhileDrawerOpen();
+        }
+    }
+
     public void reset(){
-       this.graphAlgorithmType = NULL;
-       this.graphSequence = null;
-       this.graphTree = null;
+        this.graphAlgorithmType = NULL;
+        this.graphSequence = null;
+        this.graphTree = null;
+        this.isGraphTreePopUpUsed = false;
+        this.isGraphTreeDSPopUpUsed = false;
 
         if(this.graphTreeDSPopUp != null){
             this.graphTreeDSPopUp.dismiss();
@@ -57,17 +83,9 @@ public class GraphAlgorithm {
     }
 
     public boolean runAlgo(Graph graph, GraphAlgorithmType graphAlgorithmType, int vertexNumber){
+
+        reset();
         this.graphAlgorithmType = graphAlgorithmType;
-        this.graphSequence = null;
-        this.graphTree = null;
-
-        if(this.graphTreeDSPopUp != null){
-            this.graphTreeDSPopUp.dismiss();
-        }
-
-        if(this.graphTreePopUp != null){
-            this.graphTreePopUp.dismiss();
-        }
 
         switch (graphAlgorithmType){
             case BFS: {
@@ -82,6 +100,8 @@ public class GraphAlgorithm {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
                 graphTreeDSPopUp.show();
+                this.isGraphTreePopUpUsed = true;
+                this.isGraphTreeDSPopUpUsed = true;
             }
                 break;
             case BFS_CC: {
@@ -101,6 +121,8 @@ public class GraphAlgorithm {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
                 this.graphTreeDSPopUp.show();
+                this.isGraphTreePopUpUsed = true;
+                this.isGraphTreeDSPopUpUsed = true;
             }
                 break;
             case DFS_CC: {
@@ -116,6 +138,8 @@ public class GraphAlgorithm {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
                 graphTreeDSPopUp.show();
+                this.isGraphTreePopUpUsed = false;
+                this.isGraphTreeDSPopUpUsed = true;
             }
                 break;
             case BELLMAN_FORD:{
@@ -131,6 +155,8 @@ public class GraphAlgorithm {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
                 graphTreeDSPopUp.show();
+                this.isGraphTreePopUpUsed = false;
+                this.isGraphTreeDSPopUpUsed = true;
             }
                 break;
             case PRIMS:{
@@ -141,6 +167,8 @@ public class GraphAlgorithm {
                     graphTreeDSPopUp.update(graphSequence.graphAnimationStates.get(0).graphAnimationStateExtra);
                 }
                 graphTreeDSPopUp.show();
+                this.isGraphTreePopUpUsed = false;
+                this.isGraphTreeDSPopUpUsed = true;
             }
                 break;
         }

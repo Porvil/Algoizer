@@ -49,7 +49,7 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            style="@style/Widget.AppCompat.ImageButton"
+            style="@style/S_ImageButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:contentDescription="@string/close_application"

@@ -326,12 +326,14 @@ public class GraphActivity extends BaseActivity {
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 if(slideOffset >= .05){
                     pauseAnimation();
-                    graphAlgorithm.graphTreePopUp.hideWhileDrawerOpen();
-                    graphAlgorithm.graphTreeDSPopUp.hideWhileDrawerOpen();
+                    if(graphAlgorithm != null) {
+                        graphAlgorithm.hideWhileDrawerOpen();
+                    }
                 }
                 else {
-                    graphAlgorithm.graphTreePopUp.showWhileDrawerOpen();
-                    graphAlgorithm.graphTreeDSPopUp.showWhileDrawerOpen();
+                    if(graphAlgorithm != null) {
+                        graphAlgorithm.showWhileDrawerOpen();
+                    }
                 }
             }
 
@@ -1867,8 +1869,8 @@ public class GraphActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(graphAlgorithm != null){
-                    graphAlgorithm.graphTreePopUp.dismiss();
-                    graphAlgorithm.graphTreeDSPopUp.dismiss();
+                    graphAlgorithm.graphTreePopUp.popupwindow.dismiss();
+                    graphAlgorithm.graphTreeDSPopUp.popupwindow.dismiss();
                 }
                 dialog.dismiss();
                 finish();
