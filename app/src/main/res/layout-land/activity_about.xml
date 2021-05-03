@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:contentDescription="@string/iiitd_logo"
-                app:srcCompat="@drawable/iiitd_logo" />
+                app:srcCompat="@drawable/logo_iiitd" />
 
             <View
                 android:id="@+id/divider21"

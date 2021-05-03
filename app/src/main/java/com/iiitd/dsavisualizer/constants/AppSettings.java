@@ -27,8 +27,8 @@ public class AppSettings {
     public static final int GRAPH_PICKFILE_RESULT_CODE = 1223;
     public static final int PERMISSION_ALL_EXPORT = 1000;
     public static final int PERMISSION_ALL_IMPORT = 1001;
-    public static final int LOGO_ANIMATION_TIME = 2000;
-    public static final int SPLASH_TIME = 500;
+    public static final int SPLASH_TIME = 1800;
+    public static final int SPLASH_TIME_DELAY_START = 200;
     public static final int DEFAULT_ANIM_SPEED = 1500;    // Range 500ms to 2500ms
     public static final int DEFAULT_ANIM_DURATION = 750;  // Half of DEFAULT_ANIM_SPEED
     public static final int SORTING_ELEMENT_BOUND = 20;

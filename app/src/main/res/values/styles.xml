@@ -82,6 +82,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="S_TextView_Splash_Name">
+        <item name="android:textColor">#2e3192</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="S_EditText">
         <item name="android:textColor">?attr/base</item>
         <item name="android:textColorHint">?attr/light</item>

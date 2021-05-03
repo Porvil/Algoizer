@@ -150,4 +150,6 @@
     <string name="prim_s">Prim\'s</string>
     <string name="bst">BST</string>
     <string name="avl">AVL</string>
+    <string name="algorithm">Algorithm</string>
+    <string name="visualizer">Visualizer</string>
 </resources>

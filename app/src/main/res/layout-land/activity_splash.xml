@@ -9,13 +9,52 @@
 
     <ImageView
         android:id="@+id/iv_splashimage"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="@string/splash_image"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fl_splash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logodsa" />
+        app:srcCompat="@drawable/logo_app_splash" />
+
+    <FrameLayout
+        android:id="@+id/fl_splash"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_splash_left"
+            style="@style/S_TextView_Splash_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:text="@string/algorithm" />
+
+        <TextView
+            android:id="@+id/tv_splash_centre"
+            style="@style/S_TextView_Splash_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:alpha="0"
+            android:text="@string/app_name"
+            android:textSize="44sp" />
+
+        <TextView
+            android:id="@+id/tv_splash_right"
+            style="@style/S_TextView_Splash_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:text="@string/visualizer" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
