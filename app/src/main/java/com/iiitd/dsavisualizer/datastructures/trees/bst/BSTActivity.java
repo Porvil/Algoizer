@@ -89,6 +89,7 @@ public class BSTActivity extends BaseActivity {
 
     Random random = new Random();
     Timer timer = null;
+    boolean isAnimating = false;
     int animStepDuration = AppSettings.DEFAULT_ANIM_SPEED;
     int animDuration = AppSettings.DEFAULT_ANIM_DURATION;
     final int LAYOUT_MAIN = R.layout.activity_tree;
@@ -849,6 +850,9 @@ public class BSTActivity extends BaseActivity {
 
     @Override
     protected void back(){
+        if(isAnimating)
+            return;
+
         if(timer != null) {
             timer.cancel();
             timer = null;
@@ -894,6 +898,7 @@ public class BSTActivity extends BaseActivity {
     }
 
     protected void disableUI() {
+        isAnimating = true;
         dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         btn_menu.setEnabled(false);
         btn_nav.setEnabled(false);
@@ -902,6 +907,7 @@ public class BSTActivity extends BaseActivity {
 
     @Override
     protected void enableUI() {
+        isAnimating = false;
         btn_menu.setEnabled(true);
         btn_nav.setEnabled(true);
         btn_info.setEnabled(true);
