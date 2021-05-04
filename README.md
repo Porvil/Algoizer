@@ -1,5 +1,6 @@
 # Algoizer
 ![API](https://img.shields.io/badge/API-21%2B-green.svg)
+![LICENSE](https://img.shields.io/badge/license-Apache%202-blue)
 
 Algoizer is an android application for visualization of data structures and algorithms.\
 The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
@@ -60,7 +61,7 @@ The application helps in learning and visualizing the data structures and algori
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView): A fast circular ImageView perfect for profile images.
 
 # License
-Copyright [2021] [Porvil]
+   Copyright [2021] [IIITD, Porvil]
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
