@@ -1,20 +1,25 @@
-# DSA Visualizer for Android
+# Algoizer
+![API](https://img.shields.io/badge/API-21%2B-green.svg)
 
-### What is DSA Visualizer?
-DSA Visualizer is an android application for learning and visualizing the data structures and algorithms visually step by step.
+Algoizer is android application for visualization of data structures and algorithms.
+The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
 
-### Features:
+# Features
+- Step by step animation
+- Time and space complexities of different data structures and algorithms.
+- Step by step psuedocode walkthrough [in some algorithms]
 
-#### Sorting Algorithms:
+# Includes
+#### Sorting Algorithms
 - Bubble Sort
 - Selection Sort
 - Insertion Sort
 - Merge Sort
 - Quick Sort
-#### Trees:
+#### Trees
 - Binary Search Tree
 - AVL Tree
-#### Graph:
+#### Graph
 - BFS
 - BFS Connected Components
 - DFS
@@ -24,52 +29,37 @@ DSA Visualizer is an android application for learning and visualizing the data s
 - Prim's
 - Kruskal's
 
-### Installation:
+# Installation
 
-- Download the APK from "Pre-Release" Section.
+- Download the latest APK from [Releases](https://github.com/Porvil/Algoizer/releases)
 - Install the APK.
 
-### Pre-Release:
+# Usage
+- In-app tutorials are present which can be followed to learn and use the application.
 
-- v4.0 Test Release - 4\
-[v4.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v4.0-alpha/v4.0-alpha.apk)
-
-- v3.0 Test Release - 2\
-[v3.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v3.0-alpha/v3.0-alpha.apk)
-
-- v2.0 Test Release - 1\
-[v2.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v2.0-alpha/v2.0-alpha.apk)
-
-- v1.1 Binary Search Tree (BST) Test\
-[v1.1-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.1-alpha/v1.1-alpha.apk)
-
-- v1.0 Merge + Quick Test\
-[v1.0-alpha.apk](https://github.com/Porvil/DSA_Visualizer_Android/releases/download/v1.0-alpha/v1.0-alpha.apk)
-
-
-### Usage:
-- Use menu control and navigation menu buttons to do operations on respective Data Structure/Algorithms.
-
-### Supported Android Versions:
+# Supported Android Versions
 - Android 5.0 (API Level-21) and above.
 
-### Developed By:
-- Porvil
-- Zubair Aslam
+# Team
+- **Porvil**
+  - App Developement
+  - UI Design
+- **Zubair Aslam**
+  - Graphic Design
+  - Usability Testing
+- **Dr.** **Syamantak Das**
+  - Advisor
+- **Dr.** **Debajyoti Bera**
+  - Advisor
 
-### Guided By:
-- Dr. Syamantak Das
-- Dr. Debajyoti Bera
-
-### Libraries Used: 
-- [ViewAnimator](https://github.com/florent37/ViewAnimator) A fluent Android animation library !
-- [ZoomLayout](https://github.com/natario1/ZoomLayout) A collection of flexible Android components that support zooming and panning of View hierarchies, images, video streams, and much more - either programmatically or through touch events.
+# Libraries Used
+- [ViewAnimator](https://github.com/florent37/ViewAnimator): A fluent Android animation library !
+- [ZoomLayout](https://github.com/natario1/ZoomLayout): A collection of flexible Android components that support zooming and panning of View hierarchies, images, video streams, and much more - either programmatically or through touch events.
 - [android-gif-drawable](https://github.com/koral--/android-gif-drawable)
-- [CircleImageView](https://github.com/hdodenhof/CircleImageView) A fast circular ImageView perfect for profile images.
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView): A fast circular ImageView perfect for profile images.
 
-
-### License:
-Copyright [2020] [Porvil]
+# License
+Copyright [2021] [Porvil]
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
