@@ -1832,7 +1832,7 @@ public class GraphActivity extends BaseActivity {
         cl_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAfterTransition();
             }
         });
     }
@@ -1866,7 +1866,7 @@ public class GraphActivity extends BaseActivity {
                     graphAlgorithm.graphTreeDSPopUp.popupwindow.dismiss();
                 }
                 dialog.dismiss();
-                finish();
+                finishAfterTransition();
             }
         });
 

@@ -15,10 +15,14 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TableRow;
@@ -462,6 +466,20 @@ public class UtilUI {
             }
         }
         return stringBuilder.toString();
+    }
+
+    public static void setWindowSettings(Window window){
+        setWindowFullScreen(window);
+        setWindowTransitionAnimations(window);
+    }
+
+    public static void setWindowFullScreen(Window window){
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public static void setWindowTransitionAnimations(Window window){
+        window.setEnterTransition(new Fade());
+        window.setExitTransition(new Fade());
     }
 
 }

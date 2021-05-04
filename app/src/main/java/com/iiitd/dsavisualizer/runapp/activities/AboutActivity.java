@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
 
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -23,9 +21,7 @@ public class AboutActivity extends AppCompatActivity {
         setTheme(theme);
 
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setExitTransition(new Fade());
+        UtilUI.setWindowSettings(getWindow());
         setContentView(R.layout.activity_about);
 
         btn_back = findViewById(R.id.btn_back);
@@ -35,7 +31,7 @@ public class AboutActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAfterTransition();
             }
         });
 

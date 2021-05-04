@@ -642,8 +642,8 @@ public class SelectionSortActivity extends BaseActivity {
         cl_bubblesort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, BubbleSortActivity.class));
+                finishAfterTransition();
+                UtilUI.startActivity(context, BubbleSortActivity.class);
             }
         });
 
@@ -657,31 +657,31 @@ public class SelectionSortActivity extends BaseActivity {
         cl_insertionsort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, InsertionSortActivity.class));
+                finishAfterTransition();
+                UtilUI.startActivity(context, InsertionSortActivity.class);
             }
         });
 
         cl_mergesort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, MergeSortActivity.class));
+                finishAfterTransition();
+                UtilUI.startActivity(context, MergeSortActivity.class);
             }
         });
 
         cl_quicksort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, QuickSortActivity.class));
+                finishAfterTransition();
+                UtilUI.startActivity(context, QuickSortActivity.class);
             }
         });
 
         cl_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAfterTransition();
             }
         });
 
@@ -714,7 +714,7 @@ public class SelectionSortActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                finish();
+                finishAfterTransition();
             }
         });
     }

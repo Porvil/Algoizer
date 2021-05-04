@@ -5,12 +5,9 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -65,9 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setExitTransition(new Fade());
+        UtilUI.setWindowSettings(getWindow());
         setContentView(R.layout.layout_base);
 
         context = this;
@@ -164,16 +159,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void disableUI();
     protected abstract void enableUI();
     protected abstract void initToolTipTexts();
-
-    public void startActivity(Activity start, Class<?> end){
-        Intent intent = new Intent(start, end);
-        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(start).toBundle();
-        start.finish();
-        start.startActivity(intent, bundle);
-    }
-
-    public void startActivity(Context start, Class<?> end){
-        startActivity((Activity) start, end);
-    }
 
 }

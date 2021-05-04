@@ -6,8 +6,6 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -40,9 +38,7 @@ public class TreesActivity extends AppCompatActivity {
         setTheme(theme);
 
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setExitTransition(new Fade());
+        UtilUI.setWindowSettings(getWindow());
         setContentView(R.layout.activity_trees);
         context = this;
 
@@ -86,7 +82,7 @@ public class TreesActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAfterTransition();
             }
         });
 

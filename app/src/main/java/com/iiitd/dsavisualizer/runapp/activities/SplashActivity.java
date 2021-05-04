@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,9 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setExitTransition(new Fade());
+        UtilUI.setWindowSettings(getWindow());
         setContentView(R.layout.activity_splash);
         context = this;
 
@@ -95,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Back functionality removed from Splash Activity to prevent exceptions [ Also not needed anyways ]
+        // Back functionality removed from Splash Activity to prevent exceptions
     }
 
 }

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -50,9 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         setTheme(theme);
 
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setExitTransition(new Fade());
+        UtilUI.setWindowSettings(getWindow());
         setContentView(R.layout.activity_home);
         context = this;
 

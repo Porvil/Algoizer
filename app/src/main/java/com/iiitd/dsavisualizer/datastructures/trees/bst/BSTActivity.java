@@ -839,15 +839,15 @@ public class BSTActivity extends BaseActivity {
         cl_avl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(context, AVLActivity.class));
+                finishAfterTransition();
+                UtilUI.startActivity(context, AVLActivity.class);
             }
         });
 
         cl_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAfterTransition();
             }
         });
 
@@ -886,7 +886,7 @@ public class BSTActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                finish();
+                finishAfterTransition();
             }
         });
 
