@@ -1,7 +1,7 @@
 # Algoizer
 ![API](https://img.shields.io/badge/API-21%2B-green.svg)
 
-Algoizer is android application for visualization of data structures and algorithms.
+Algoizer is an android application for visualization of data structures and algorithms.\
 The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
 
 # Features
@@ -10,6 +10,7 @@ The application helps in learning and visualizing the data structures and algori
 - Step by step psuedocode walkthrough [in some algorithms]
 
 # Includes
+
 #### Sorting Algorithms
 - Bubble Sort
 - Selection Sort
@@ -19,7 +20,7 @@ The application helps in learning and visualizing the data structures and algori
 #### Trees
 - Binary Search Tree
 - AVL Tree
-#### Graph
+#### Graphs
 - BFS
 - BFS Connected Components
 - DFS
