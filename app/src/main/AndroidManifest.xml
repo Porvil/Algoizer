@@ -18,7 +18,7 @@
 
         <activity
             android:name=".runapp.activities.SplashActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
 
         <activity
             android:name=".runapp.activities.HomeActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -38,7 +38,7 @@
 
         <activity
             android:name=".runapp.activities.GraphsActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -48,12 +48,12 @@
 
         <activity
             android:name=".runapp.activities.AboutActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape" />
 
         <activity
             android:name=".runapp.activities.ThemesActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -63,7 +63,7 @@
 
         <activity
             android:name=".runapp.activities.SortingActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -73,7 +73,7 @@
 
         <activity
             android:name=".runapp.activities.TreesActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -83,7 +83,7 @@
 
         <activity
             android:name=".datastructures.graphs.GraphActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -93,7 +93,7 @@
 
         <activity
             android:name=".algorithms.sorting.bubble.BubbleSortActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -103,7 +103,7 @@
 
         <activity
             android:name=".algorithms.sorting.selection.SelectionSortActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -113,7 +113,7 @@
 
         <activity
             android:name=".algorithms.sorting.insertion.InsertionSortActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -123,7 +123,7 @@
 
         <activity
             android:name=".algorithms.sorting.merge.MergeSortActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -133,7 +133,7 @@
 
         <activity
             android:name=".algorithms.sorting.quick.QuickSortActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -143,7 +143,7 @@
 
         <activity
             android:name=".datastructures.trees.bst.BSTActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -153,7 +153,7 @@
 
         <activity
             android:name=".datastructures.trees.avl.AVLActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="sensorLandscape">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
