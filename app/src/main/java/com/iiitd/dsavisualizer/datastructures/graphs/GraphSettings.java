@@ -17,8 +17,8 @@ public class GraphSettings{
     public static final int nodeEdge              = 10;
     public static final int nodeEdgeArrow         = 5;
     public static final int nodeEdgeArrowLength   = 15;
-    public static final int nodeEdgeWeight        = 30;
-    public static final int nodeText              = 30;
+    public static final int nodeEdgeWeight        = 40;
+    public static final int nodeText              = 35;
     public static final int nodeTextCoordinates   = 20;
     public static final float maxX = 2048; // Limit in pixels
 

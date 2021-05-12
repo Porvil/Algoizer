@@ -10,11 +10,12 @@ import java.util.Stack;
 
 // This class is used to hold extra animation data for an instance of a graph algorithm
 public class GraphAnimationStateExtra {
-    public ArrayList<Integer> queues;                                        // used by BFS
-    public ArrayList<Integer> stacks;                                        // used by DFS
-    public HashMap<Integer, Integer> map;  // vertex number -> vertex weight // used by Dijkstra and Bellmanford
-    public ArrayList<Edge> edges;                                            // used by Kruskal's
-    public ArrayList<PriorityQueueElementState> priorityQueueElementStates;  // used by Dijkstra and Prim's
+    public ArrayList<Integer> queues;                                       // used by BFS
+    public ArrayList<Integer> stacks;                                       // used by DFS
+    public HashMap<Integer, Integer> map; // vertex number -> vertex weight // used by Dijkstra and Bellmanford
+    public ArrayList<Edge> edges;                                           // used by Kruskal's
+    public ArrayList<Edge> cycles;                                          // used by Bellmanford's negative cycles
+    public ArrayList<PriorityQueueElementState> priorityQueueElementStates; // used by Dijkstra and Prim's
 
     public GraphAnimationStateExtra() {
         this.queues = new ArrayList<>();
@@ -22,6 +23,7 @@ public class GraphAnimationStateExtra {
         this.map = new HashMap<>();
         this.priorityQueueElementStates = new ArrayList<>();
         this.edges = new ArrayList<>();
+        this.cycles = new ArrayList<>();
     }
 
     public static GraphAnimationStateExtra create(){
@@ -57,6 +59,13 @@ public class GraphAnimationStateExtra {
     public GraphAnimationStateExtra addEdges(ArrayList<Edge> _edges){
         for(Edge edge : _edges){
             edges.add(Edge.getClone(edge));
+        }
+        return this;
+    }
+
+    public GraphAnimationStateExtra addCycle(ArrayList<Edge> _edges){
+        for(Edge edge : _edges){
+            cycles.add(Edge.getClone(edge));
         }
         return this;
     }

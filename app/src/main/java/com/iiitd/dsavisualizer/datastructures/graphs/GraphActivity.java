@@ -290,8 +290,8 @@ public class GraphActivity extends BaseActivity {
                     pauseAnimation();
 
                     tv_name.setText(graphAlgorithmStats.algorithm);
-                    tv_time.setText(graphAlgorithmStats.time);
-                    tv_space.setText(graphAlgorithmStats.space);
+                    tv_time.setText("O( " + graphAlgorithmStats.time + " )");
+                    tv_space.setText("O( " + graphAlgorithmStats.space + " )");
 
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(view);
@@ -1104,6 +1104,18 @@ public class GraphActivity extends BaseActivity {
                                 graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
                             }
                         }
+
+                        if(graphAnimationState.graphAnimationStateExtra != null){
+                            if(graphAnimationState.graphAnimationStateExtra.cycles != null){
+                                System.out.println("Vfdvfsvfva");
+                                for(Edge edge : graphAnimationState.graphAnimationStateExtra.cycles) {
+                                    System.out.println("Vfdvfsvfva");
+                                    graphWrapper.board.setPaintHighlight();
+                                    graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
+                                }
+                            }
+                        }
+
 
                         // Vertices
                         for(Map.Entry<Integer, Vertex> entry : graphAnimationState.verticesState.entrySet()){

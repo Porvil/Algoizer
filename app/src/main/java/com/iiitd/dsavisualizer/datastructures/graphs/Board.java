@@ -77,6 +77,7 @@ public class Board {
     private int medium;
     private int dark;
     private int white;
+    private int black;
 
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
@@ -136,6 +137,7 @@ public class Board {
         medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
         dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
         white = Color.WHITE;
+        black = Color.BLACK;
 
         // Grid Lines
         this.paintGrid = new Paint();
@@ -167,7 +169,7 @@ public class Board {
         this.paintVertexWeight = new Paint();
         this.paintVertexWeight.setTextAlign(Paint.Align.CENTER);
         this.paintVertexWeight.setTextSize(edgeWeightTextSize);
-        this.paintVertexWeight.setColor(medium);
+        this.paintVertexWeight.setColor(black);
         this.paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintVertexWeight.setAntiAlias(ANTI_ALIAS);
         this.paintVertexWeight.setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -520,7 +522,7 @@ public class Board {
     public void setPaintNormal() {
         this.paintVertex.setColor(base);                    // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(base);              // Vertex Weight
+        this.paintVertexWeight.setColor(black);             // Vertex Weight
         this.paintEdge.setColor(base);                      // Edge
         this.paintEdgeArrows.setColor(base);                // Edge Arrows
         this.paintEdgeWeight.setColor(base);                // Edge Weight
@@ -530,7 +532,7 @@ public class Board {
     public void setPaintHighlight() {
         this.paintVertex.setColor(medium);                  // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(medium);            // Vertex Weight
+        this.paintVertexWeight.setColor(black);             // Vertex Weight
         this.paintEdge.setColor(medium);                    // Edge
         this.paintEdgeArrows.setColor(medium);              // Edge Arrows
         this.paintEdgeWeight.setColor(medium);              // Edge Weight
@@ -540,7 +542,7 @@ public class Board {
     public void setPaintDone() {
         this.paintVertex.setColor(dark);                    // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(dark);              // Vertex Weight
+        this.paintVertexWeight.setColor(black);             // Vertex Weight
         this.paintEdge.setColor(dark);                      // Edge
         this.paintEdgeArrows.setColor(dark);                // Edge Arrows
         this.paintEdgeWeight.setColor(dark);                // Edge Weight

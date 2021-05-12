@@ -23,6 +23,7 @@ public class BellmanFord {
     HashMap<Integer, VertexCLRS> map;
     HashMap<Integer, Vertex> verticesState;
     ArrayList<Edge> edges;
+    ArrayList<Edge> cycles;
 
     public BellmanFord(Graph graph) {
         this.graph = graph;
@@ -30,6 +31,7 @@ public class BellmanFord {
         this.map = new HashMap<>();
         this.verticesState = new HashMap<>();
         this.edges = new ArrayList<>();
+        this.cycles = new ArrayList<>();
     }
 
     public GraphSequence bellmanford() {
@@ -200,6 +202,29 @@ public class BellmanFord {
                         srcVertex.setToNormal();
                         desVertex.setToNormal();
 
+                        // TRY CODE HERE
+                        int cycleStartVertex = srcVertexCLRS.data;
+                        int self = srcVertexCLRS.data;
+                        int parent = srcVertexCLRS.parent;
+                        // Parent Edge fixed for Dijkstra
+                        while (parent >= 0) {
+                            Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
+//                            parentEdge.setToDone();
+                            System.out.println(parent + " | " + self);
+                            System.out.println(parentEdge);
+
+                            cycles.add(parentEdge);
+
+                            if(parent == cycleStartVertex){
+                                System.out.println("------------------");
+                                break;
+                            }
+                            self = parent;
+                            parent = map.get(self).parent;
+
+                        }
+
+
                         break;
                     }
 
@@ -212,30 +237,31 @@ public class BellmanFord {
 
         String finalResult = "";
         if(hasNegativeEdgeLoop){
-            finalResult = "\ngraph contains negative edge cycles";
+            finalResult = "\ngraph contains negative edge cycle";
         }
+        else{
+            // Set Final Edges
+            graphSequence.addGraphAnimationState(
+                    GraphAnimationState.create()
+                            .setInfo("iterating over all vertices and"
+                                    + "\n" + "selecting their parent's to select final edges")
+                            .setVerticesState(verticesState)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addMapBellmanford(map)));
 
-        // Set Final Edges
-        graphSequence.addGraphAnimationState(
-                GraphAnimationState.create()
-                        .setInfo("iterating over all vertices and"
-                                + "\n" + "selecting their parent's to select final edges")
-                        .setVerticesState(verticesState)
-                        .addEdges(edges)
-                        .addGraphAnimationStateExtra(
-                                GraphAnimationStateExtra.create()
-                                        .addMapBellmanford(map)));
-
-        for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
-            if(entry.getValue().parent >= 0){
-                int src = entry.getValue().parent;
-                int des = entry.getValue().data;
-                Edge edge = edges.get(edges.indexOf(graph.getEdge(src, des)));
-                Vertex srcVertex = verticesState.get(src);
-                Vertex desVertex = verticesState.get(des);
-                srcVertex.setToDone();
-                desVertex.setToDone();
-                edge.setToDone();
+            for (Map.Entry<Integer, VertexCLRS> entry : map.entrySet()) {
+                if(entry.getValue().parent >= 0){
+                    int src = entry.getValue().parent;
+                    int des = entry.getValue().data;
+                    Edge edge = edges.get(edges.indexOf(graph.getEdge(src, des)));
+                    Vertex srcVertex = verticesState.get(src);
+                    Vertex desVertex = verticesState.get(des);
+                    srcVertex.setToDone();
+                    desVertex.setToDone();
+                    edge.setToDone();
+                }
             }
         }
 
@@ -247,7 +273,8 @@ public class BellmanFord {
                         .addEdges(edges)
                         .addGraphAnimationStateExtra(
                                 GraphAnimationStateExtra.create()
-                                    .addMapBellmanford(map)));
+                                        .addMapBellmanford(map)
+                                        .addCycle(cycles)));
 
 
         // ALL DONE
