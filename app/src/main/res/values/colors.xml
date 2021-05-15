@@ -16,6 +16,7 @@
     <color name = "blue_base"   > #48cae4 </color>
     <color name = "blue_medium" > #0096c7 </color>
     <color name = "blue_dark"   > #023e8a </color>
+    <color name = "blue_opp"    > #c73200 </color>
 
     // PURPLE PALETTE
     <color name = "purple_shade"  > #f2ebf9 </color>
@@ -23,6 +24,7 @@
     <color name = "purple_base"   > #a06cd5 </color>
     <color name = "purple_medium" > #815ac0 </color>
     <color name = "purple_dark"   > #6247aa </color>
+    <color name = "purple_opp"    > #597032 </color>
 
     // GREEN PALETTE
     <color name = "green_shade"  > #e8ffdd </color>
@@ -30,6 +32,7 @@
     <color name = "green_base"   > #38b000 </color>
     <color name = "green_medium" > #007200 </color>
     <color name = "green_dark"   > #004b23 </color>
+    <color name = "green_opp"    > #720072 </color>
 
     // ORANGE PALETTE
     <color name = "orange_shade"  > #fff6e5 </color>
@@ -37,6 +40,7 @@
     <color name = "orange_base"   > #ffaa00 </color>
     <color name = "orange_medium" > #ff9500 </color>
     <color name = "orange_dark"   > #ff7b00 </color>
+    <color name = "orange_opp"    > #006aff </color>
 
     // BROWN PALETTE
     <color name = "brown_shade"  > #f9f3f0 </color>
@@ -44,6 +48,7 @@
     <color name = "brown_base"   > #c38e70 </color>
     <color name = "brown_medium" > #9d6b53 </color>
     <color name = "brown_dark"   > #774936 </color>
+    <color name = "brown_opp"    > #53869d </color>
 
     // PINK PALETTE
     <color name = "pink_shade"  > #fff2f5 </color>
@@ -51,5 +56,6 @@
     <color name = "pink_base"   > #ff85a1 </color>
     <color name = "pink_medium" > #ff5c8a </color>
     <color name = "pink_dark"   > #ff0a54 </color>
+    <color name = "pink_opp"    > #5e84ff </color>
 
 </resources>

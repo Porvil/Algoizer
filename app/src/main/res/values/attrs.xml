@@ -6,5 +6,6 @@
         <attr name="base" format="color" />
         <attr name="medium" format="color" />
         <attr name="dark" format="color" />
+        <attr name="opp" format="color" />
     </declare-styleable>
 </resources>

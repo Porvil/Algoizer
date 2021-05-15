@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.merge;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -314,10 +313,10 @@ public class MergeSortActivity extends BaseActivity {
                 }
 
                 tv_name.setText(MergeSortStats.name);
-                tv_avg.setText(MergeSortStats.avg);
-                tv_worst.setText(MergeSortStats.worst);
-                tv_best.setText(MergeSortStats.best);
-                tv_space.setText(MergeSortStats.space);
+                UtilUI.setTextInBigONotation(tv_avg, MergeSortStats.avg);
+                UtilUI.setTextInBigONotation(tv_worst, MergeSortStats.worst);
+                UtilUI.setTextInBigONotation(tv_best, MergeSortStats.best);
+                UtilUI.setTextInBigONotation(tv_space, MergeSortStats.space);
                 tv_stable.setText(MergeSortStats.stable);
                 tv_comparisons.setText(comparisons);
 
@@ -596,7 +595,7 @@ public class MergeSortActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal_Opp);
             textView.setText(MergeSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;

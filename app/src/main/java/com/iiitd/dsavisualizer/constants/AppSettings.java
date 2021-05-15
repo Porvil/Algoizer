@@ -24,6 +24,7 @@ public class AppSettings {
     public static final String GRAPH_SAVEFILE_EXTENSION = ".graph";
 
     // Int Constants
+    public static final int THEMES_REQ_CODE = 264;
     public static final int GRAPH_PICKFILE_RESULT_CODE = 1223;
     public static final int PERMISSION_ALL_EXPORT = 1000;
     public static final int PERMISSION_ALL_IMPORT = 1001;

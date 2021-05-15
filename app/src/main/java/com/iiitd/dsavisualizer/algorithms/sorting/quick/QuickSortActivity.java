@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.quick;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -317,10 +316,10 @@ public class QuickSortActivity extends BaseActivity {
                 }
 
                 tv_name.setText(QuickSortStats.name);
-                tv_avg.setText(QuickSortStats.avg);
-                tv_worst.setText(QuickSortStats.worst);
-                tv_best.setText(QuickSortStats.best);
-                tv_space.setText(QuickSortStats.space);
+                UtilUI.setTextInBigONotation(tv_avg, QuickSortStats.avg);
+                UtilUI.setTextInBigONotation(tv_worst, QuickSortStats.worst);
+                UtilUI.setTextInBigONotation(tv_best, QuickSortStats.best);
+                UtilUI.setTextInBigONotation(tv_space, QuickSortStats.space);
                 tv_stable.setText(QuickSortStats.stable);
                 tv_comparisons.setText(comparisons);
 
@@ -620,7 +619,7 @@ public class QuickSortActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal_Opp);
             textView.setText(QuickSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;

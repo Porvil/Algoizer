@@ -14,6 +14,7 @@
         <item name="base"   >      @color/blue_base       </item>
         <item name="medium" >      @color/blue_medium     </item>
         <item name="dark"   >      @color/blue_dark       </item>
+        <item name="opp"    >      @color/blue_opp        </item>
     </style>
 
     <!-- Theme PURPLE -->
@@ -23,6 +24,7 @@
         <item name="base"   >      @color/purple_base       </item>
         <item name="medium" >      @color/purple_medium     </item>
         <item name="dark"   >      @color/purple_dark       </item>
+        <item name="opp"    >      @color/purple_opp        </item>
     </style>
 
     <!-- Theme GREEN -->
@@ -32,6 +34,7 @@
         <item name="base"   >      @color/green_base       </item>
         <item name="medium" >      @color/green_medium     </item>
         <item name="dark"   >      @color/green_dark       </item>
+        <item name="opp"    >      @color/green_opp        </item>
     </style>
 
     <!-- Theme ORANGE -->
@@ -41,6 +44,7 @@
         <item name="base"   >      @color/orange_base       </item>
         <item name="medium" >      @color/orange_medium     </item>
         <item name="dark"   >      @color/orange_dark       </item>
+        <item name="opp"    >      @color/orange_opp        </item>
     </style>
 
     <!-- Theme BROWN -->
@@ -50,6 +54,7 @@
         <item name="base"   >      @color/brown_base       </item>
         <item name="medium" >      @color/brown_medium     </item>
         <item name="dark"   >      @color/brown_dark       </item>
+        <item name="opp"    >      @color/brown_opp        </item>
     </style>
 
     <!-- Theme PINK -->
@@ -59,11 +64,18 @@
         <item name="base"   >      @color/pink_base       </item>
         <item name="medium" >      @color/pink_medium     </item>
         <item name="dark"   >      @color/pink_dark       </item>
+        <item name="opp"    >      @color/pink_opp        </item>
     </style>
 
     <!-- Custom Styles based on Current Theme -->
     <style name="S_TextView_Normal">
         <item name="android:textColor">?attr/base</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="S_TextView_Normal_Opp">
+        <item name="android:textColor">?attr/opp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">16sp</item>
     </style>

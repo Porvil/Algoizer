@@ -49,6 +49,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:id="@+id/btn_report"
+            style="@style/S_ImageButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/about"
+            app:layout_constraintBottom_toTopOf="@+id/btn_about"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_bug" />
+
+        <ImageButton
             android:id="@+id/btn_about"
             style="@style/S_ImageButton"
             android:layout_width="0dp"
@@ -58,17 +70,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_developer" />
-
-        <ImageButton
-            android:id="@+id/btn_report"
-            style="@style/S_ImageButton"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:contentDescription="@string/about"
-            app:layout_constraintBottom_toTopOf="@+id/btn_about"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_bug" />
 
         <ImageButton
             android:id="@+id/btn_themes"

@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.selection;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -314,10 +313,10 @@ public class SelectionSortActivity extends BaseActivity {
                 }
 
                 tv_name.setText(SelectionSortStats.name);
-                tv_avg.setText(SelectionSortStats.avg);
-                tv_worst.setText(SelectionSortStats.worst);
-                tv_best.setText(SelectionSortStats.best);
-                tv_space.setText(SelectionSortStats.space);
+                UtilUI.setTextInBigONotation(tv_avg, SelectionSortStats.avg);
+                UtilUI.setTextInBigONotation(tv_worst, SelectionSortStats.worst);
+                UtilUI.setTextInBigONotation(tv_best, SelectionSortStats.best);
+                UtilUI.setTextInBigONotation(tv_space, SelectionSortStats.space);
                 tv_stable.setText(SelectionSortStats.stable);
                 tv_comparisons.setText(comparisons);
 
@@ -601,7 +600,7 @@ public class SelectionSortActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal_Opp);
             textView.setText(SelectionSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;

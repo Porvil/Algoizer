@@ -3,7 +3,6 @@ package com.iiitd.dsavisualizer.datastructures.trees.bst;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -182,12 +181,12 @@ public class BSTActivity extends BaseActivity {
                 }
 
                 tv_name.setText(BSTStats.name);
-                tv_worst_insert.setText(BSTStats.worst_insert);
-                tv_best_insert.setText(BSTStats.best_insert);
-                tv_worst_search.setText(BSTStats.worst_search);
-                tv_best_search.setText(BSTStats.best_search);
-                tv_worst_delete.setText(BSTStats.worst_delete);
-                tv_best_delete.setText(BSTStats.best_delete);
+                UtilUI.setTextInBigONotation(tv_worst_insert, BSTStats.worst_insert);
+                UtilUI.setTextInBigONotation(tv_best_insert, BSTStats.best_insert);
+                UtilUI.setTextInBigONotation(tv_worst_search, BSTStats.worst_search);
+                UtilUI.setTextInBigONotation(tv_best_search, BSTStats.best_search);
+                UtilUI.setTextInBigONotation(tv_worst_delete, BSTStats.worst_delete);
+                UtilUI.setTextInBigONotation(tv_best_delete, BSTStats.best_delete);
                 tv_traversals.setText(BSTStats.traversals);
                 tv_space.setText(BSTStats.space);
 

@@ -7,16 +7,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -62,6 +64,18 @@ public class UtilUI {
         textView.setText(data);
     }
 
+    public static void setTextInBigONotation(TextView textView, String data){
+        textView.setText(String.format("O(%s)", data));
+    }
+
+    public static void setTextInBigONotation(TextView textView, Spanned data){
+        SpannableStringBuilder spannableString = new SpannableStringBuilder();
+        spannableString.append("O(");
+        spannableString.append(SpannedString.valueOf(data));
+        spannableString.append(")");
+        textView.setText(spannableString);
+    }
+
     public static int getRandomColor(){
         Random random = new Random();
         return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
@@ -70,14 +84,16 @@ public class UtilUI {
     // Updates psuedocode in sorting algorithms based on indexes
     public static void changeTextViewsColors(Context context, ScrollView scrollView, TextView[] textViews, Integer[] indexes){
         for(TextView textView : textViews){
-            textView.setTextColor(getCurrentThemeColor(context, R.attr.base));
+            textView.setTextColor(getCurrentThemeColor(context, R.attr.opp));
+            textView.setTypeface(null, Typeface.NORMAL);
         }
 
         if(indexes != null) {
             scrollView.smoothScrollTo(0, (int) textViews[indexes[0]].getY());
 
             for (int i : indexes) {
-                textViews[i].setTextColor(getCurrentThemeColor(context, R.attr.dark));
+                textViews[i].setTextColor(getCurrentThemeColor(context, R.attr.opp));
+                textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
             }
         }
     }

@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,10 +27,10 @@ public class HomeActivity extends AppCompatActivity {
 
     Context context;
     LinearLayout linearLayout;
+    ImageButton btn_report;
     ImageButton btn_about;
     ImageButton btn_themes;
     ImageButton btn_close;
-    ImageButton btn_report;
 
     ActivityItemData[] activityItemData = new ActivityItemData[]{
             new ActivityItemData(SortingActivity.class.getName(), "Sorting Algorithms", R.drawable.dsa_sorting),
@@ -40,11 +39,11 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     boolean doubleBackToExitPressedOnce = false;
-    private final int REQ_CODE = 8;
+    int theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int theme = UtilUI.getCurrentAppTheme(getApplicationContext());
+        theme = UtilUI.getCurrentAppTheme(getApplicationContext());
         setTheme(theme);
 
         super.onCreate(savedInstanceState);
@@ -53,10 +52,10 @@ public class HomeActivity extends AppCompatActivity {
         context = this;
 
         linearLayout = findViewById(R.id.ll_parent);
+        btn_report = findViewById(R.id.btn_report);
         btn_about = findViewById(R.id.btn_about);
         btn_themes = findViewById(R.id.btn_themes);
         btn_close = findViewById(R.id.btn_close);
-        btn_report = findViewById(R.id.btn_report);
 
         initToolTipTexts();
 
@@ -103,14 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ThemesActivity.class);
-                startActivityForResult(intent, REQ_CODE);
-            }
-        });
-
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+                startActivityForResult(intent, AppSettings.THEMES_REQ_CODE);
             }
         });
 
@@ -130,16 +122,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_CODE){
-            if(resultCode == RESULT_OK){
-                recreate();
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
-        }
+        });
+
     }
 
     @Override
@@ -160,11 +149,30 @@ public class HomeActivity extends AppCompatActivity {
         }, 2000);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == AppSettings.THEMES_REQ_CODE){
+            if(resultCode == RESULT_OK){
+                recreate();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        int currentAppTheme = UtilUI.getCurrentAppTheme(getApplicationContext());
+        if(theme != currentAppTheme){
+            recreate();
+        }
+        super.onResume();
+    }
+
     protected void initToolTipTexts(){
-        TooltipCompat.setTooltipText(btn_about, "About Developers");
-        TooltipCompat.setTooltipText(btn_close, "Close App");
         TooltipCompat.setTooltipText(btn_report, "Report Bug/Feedback");
+        TooltipCompat.setTooltipText(btn_about, "About Developers");
         TooltipCompat.setTooltipText(btn_themes, "Change Theme");
+        TooltipCompat.setTooltipText(btn_close, "Close App");
     }
 
 }

@@ -3,7 +3,6 @@ package com.iiitd.dsavisualizer.datastructures.trees.avl;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -183,12 +182,12 @@ public class AVLActivity extends BaseActivity {
                 }
 
                 tv_name.setText(AVLStats.name);
-                tv_worst_insert.setText(AVLStats.worst_insert);
-                tv_best_insert.setText(AVLStats.best_insert);
-                tv_worst_search.setText(AVLStats.worst_search);
-                tv_best_search.setText(AVLStats.best_search);
-                tv_worst_delete.setText(AVLStats.worst_delete);
-                tv_best_delete.setText(AVLStats.best_delete);
+                UtilUI.setTextInBigONotation(tv_worst_insert, AVLStats.worst_insert);
+                UtilUI.setTextInBigONotation(tv_best_insert, AVLStats.best_insert);
+                UtilUI.setTextInBigONotation(tv_worst_search, AVLStats.worst_search);
+                UtilUI.setTextInBigONotation(tv_best_search, AVLStats.best_search);
+                UtilUI.setTextInBigONotation(tv_worst_delete, AVLStats.worst_delete);
+                UtilUI.setTextInBigONotation(tv_best_delete, AVLStats.best_delete);
                 tv_traversals.setText(AVLStats.traversals);
                 tv_space.setText(AVLStats.space);
 

@@ -1,7 +1,6 @@
 package com.iiitd.dsavisualizer.algorithms.sorting.bubble;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -315,10 +314,10 @@ public class BubbleSortActivity extends BaseActivity {
                 }
 
                 tv_name.setText(BubbleSortStats.name);
-                tv_avg.setText(BubbleSortStats.avg);
-                tv_worst.setText(BubbleSortStats.worst);
-                tv_best.setText(BubbleSortStats.best);
-                tv_space.setText(BubbleSortStats.space);
+                UtilUI.setTextInBigONotation(tv_avg, BubbleSortStats.avg);
+                UtilUI.setTextInBigONotation(tv_worst, BubbleSortStats.worst);
+                UtilUI.setTextInBigONotation(tv_best, BubbleSortStats.best);
+                UtilUI.setTextInBigONotation(tv_space, BubbleSortStats.space);
                 tv_stable.setText(BubbleSortStats.stable);
                 tv_comparisons.setText(comparisons);
 
@@ -601,7 +600,7 @@ public class BubbleSortActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal_Opp);
             textView.setText(BubbleSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;

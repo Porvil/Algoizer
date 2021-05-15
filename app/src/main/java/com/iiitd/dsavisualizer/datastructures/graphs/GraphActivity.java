@@ -290,8 +290,8 @@ public class GraphActivity extends BaseActivity {
                     pauseAnimation();
 
                     tv_name.setText(graphAlgorithmStats.algorithm);
-                    tv_time.setText("O( " + graphAlgorithmStats.time + " )");
-                    tv_space.setText("O( " + graphAlgorithmStats.space + " )");
+                    UtilUI.setTextInBigONotation(tv_time, graphAlgorithmStats.time);
+                    UtilUI.setTextInBigONotation(tv_space, graphAlgorithmStats.space);
 
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(view);

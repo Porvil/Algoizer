@@ -31,7 +31,6 @@ public class Board {
     // Constants
     private final boolean ANTI_ALIAS = true;        // ANTI-ALIASING is ON
     private final int ALPHA_VERTEX = 192;           // Opacity for Vertices
-    private final int ALPHA_VERTEXWEIGHTBG = 160;   // Opacity for Vertex Weight Background
     private final int topAngle = 45;                // in degrees
     private final int bottomAngle = 45;             // in degrees
     private final float coordinatesOffset = 0.95f;  // in ratio [0,1]
@@ -77,7 +76,7 @@ public class Board {
     private int medium;
     private int dark;
     private int white;
-    private int black;
+    private int opp;
 
     public Board(Context context, CustomCanvas customCanvas, boolean isLargeGraph) {
         this.context = context;
@@ -136,8 +135,8 @@ public class Board {
         base = UtilUI.getCurrentThemeColor(context, R.attr.base);
         medium = UtilUI.getCurrentThemeColor(context, R.attr.medium);
         dark = UtilUI.getCurrentThemeColor(context, R.attr.dark);
+        opp = UtilUI.getCurrentThemeColor(context, R.attr.opp);
         white = Color.WHITE;
-        black = Color.BLACK;
 
         // Grid Lines
         this.paintGrid = new Paint();
@@ -169,7 +168,7 @@ public class Board {
         this.paintVertexWeight = new Paint();
         this.paintVertexWeight.setTextAlign(Paint.Align.CENTER);
         this.paintVertexWeight.setTextSize(edgeWeightTextSize);
-        this.paintVertexWeight.setColor(black);
+        this.paintVertexWeight.setColor(opp);
         this.paintVertexWeight.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         this.paintVertexWeight.setAntiAlias(ANTI_ALIAS);
         this.paintVertexWeight.setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -177,7 +176,6 @@ public class Board {
         // Vertex Weight Background
         this.paintVertexWeightBG = new Paint();
         this.paintVertexWeightBG.setColor(shade);
-        this.paintVertexWeightBG.setAlpha(ALPHA_VERTEXWEIGHTBG);
         this.paintVertexWeightBG.setAntiAlias(ANTI_ALIAS);
 
         // Edge
@@ -522,7 +520,7 @@ public class Board {
     public void setPaintNormal() {
         this.paintVertex.setColor(base);                    // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(black);             // Vertex Weight
+        this.paintVertexWeight.setColor(opp);             // Vertex Weight
         this.paintEdge.setColor(base);                      // Edge
         this.paintEdgeArrows.setColor(base);                // Edge Arrows
         this.paintEdgeWeight.setColor(base);                // Edge Weight
@@ -532,7 +530,7 @@ public class Board {
     public void setPaintHighlight() {
         this.paintVertex.setColor(medium);                  // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(black);             // Vertex Weight
+        this.paintVertexWeight.setColor(opp);             // Vertex Weight
         this.paintEdge.setColor(medium);                    // Edge
         this.paintEdgeArrows.setColor(medium);              // Edge Arrows
         this.paintEdgeWeight.setColor(medium);              // Edge Weight
@@ -542,7 +540,7 @@ public class Board {
     public void setPaintDone() {
         this.paintVertex.setColor(dark);                    // Vertex
         this.paintVertexText.setColor(white);               // Vertex Text
-        this.paintVertexWeight.setColor(black);             // Vertex Weight
+        this.paintVertexWeight.setColor(opp);             // Vertex Weight
         this.paintEdge.setColor(dark);                      // Edge
         this.paintEdgeArrows.setColor(dark);                // Edge Arrows
         this.paintEdgeWeight.setColor(dark);                // Edge Weight
