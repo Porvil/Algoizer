@@ -1107,10 +1107,8 @@ public class GraphActivity extends BaseActivity {
 
                         if(graphAnimationState.graphAnimationStateExtra != null){
                             if(graphAnimationState.graphAnimationStateExtra.cycles != null){
-                                System.out.println("Vfdvfsvfva");
                                 for(Edge edge : graphAnimationState.graphAnimationStateExtra.cycles) {
-                                    System.out.println("Vfdvfsvfva");
-                                    graphWrapper.board.setPaintHighlight();
+                                    graphWrapper.board.setPaintDone();
                                     graphWrapper.board.drawEdge(edge, graphWrapper.directed, graphWrapper.weighted, true);
                                 }
                             }
@@ -1468,6 +1466,8 @@ public class GraphActivity extends BaseActivity {
                 if(!isExample){
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                 }
+
+                closeDrawer(0);
 
             }
 

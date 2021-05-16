@@ -158,7 +158,7 @@
 
                 <TextView
                     android:id="@+id/tv_info"
-                    style="@style/S_TextView_Normal_Opp"
+                    style="@style/S_TextView_Normal_Dark"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"

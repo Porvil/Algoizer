@@ -84,7 +84,6 @@ public class UtilUI {
     // Updates psuedocode in sorting algorithms based on indexes
     public static void changeTextViewsColors(Context context, ScrollView scrollView, TextView[] textViews, Integer[] indexes){
         for(TextView textView : textViews){
-            textView.setTextColor(getCurrentThemeColor(context, R.attr.opp));
             textView.setTypeface(null, Typeface.NORMAL);
         }
 
@@ -92,7 +91,6 @@ public class UtilUI {
             scrollView.smoothScrollTo(0, (int) textViews[indexes[0]].getY());
 
             for (int i : indexes) {
-                textViews[i].setTextColor(getCurrentThemeColor(context, R.attr.opp));
                 textViews[i].setTypeface(textViews[i].getTypeface(), Typeface.BOLD);
             }
         }

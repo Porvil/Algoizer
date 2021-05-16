@@ -202,28 +202,21 @@ public class BellmanFord {
                         srcVertex.setToNormal();
                         desVertex.setToNormal();
 
-                        // TRY CODE HERE
+                        // Negative Cycle Detection Path
                         int cycleStartVertex = srcVertexCLRS.data;
                         int self = srcVertexCLRS.data;
                         int parent = srcVertexCLRS.parent;
-                        // Parent Edge fixed for Dijkstra
                         while (parent >= 0) {
                             Edge parentEdge = edges.get(edges.indexOf(graph.getEdge(parent, self)));
-//                            parentEdge.setToDone();
-                            System.out.println(parent + " | " + self);
-                            System.out.println(parentEdge);
-
                             cycles.add(parentEdge);
 
                             if(parent == cycleStartVertex){
-                                System.out.println("------------------");
                                 break;
                             }
+
                             self = parent;
                             parent = map.get(self).parent;
-
                         }
-
 
                         break;
                     }
@@ -238,6 +231,31 @@ public class BellmanFord {
         String finalResult = "";
         if(hasNegativeEdgeLoop){
             finalResult = "\ngraph contains negative edge cycle";
+
+            StringBuilder cycle = new StringBuilder();
+            int weight = 0;
+            for(Edge edge : cycles){
+                cycle.append(edge.src + " ── ");
+                weight += edge.weight;
+            }
+            cycle.append(cycles.get(0).src);
+            cycle.reverse();
+            cycle.insert(0, "edge cycle (");
+            cycle.append(")");
+            cycle.append("\n");
+            cycle.append("edge cycle weight = ");
+            cycle.append(weight);
+
+            // Negative Edge Cycle Animation
+            graphSequence.addGraphAnimationState(
+                    GraphAnimationState.create()
+                            .setInfo(cycle.toString())
+                            .setVerticesState(verticesState)
+                            .addEdges(edges)
+                            .addGraphAnimationStateExtra(
+                                    GraphAnimationStateExtra.create()
+                                            .addMapBellmanford(map)
+                                            .addCycle(cycles)));
         }
         else{
             // Set Final Edges

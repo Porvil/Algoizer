@@ -600,7 +600,7 @@ public class SelectionSortActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(this);
             textView.setLayoutParams(lparams);
-            textView.setTextAppearance(context, R.style.S_TextView_Normal_Opp);
+            textView.setTextAppearance(context, R.style.S_TextView_Normal_Dark);
             textView.setText(SelectionSortInfo.psuedocode[i]);
             textView.setPadding(5, 0,0,0);
             textViews[i] = textView;
