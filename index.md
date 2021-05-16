@@ -1,37 +1,76 @@
-## Welcome to GitHub Pages
+# Algoizer
+![API](https://img.shields.io/badge/API-21%2B-green.svg)
+![LICENSE](https://img.shields.io/badge/license-Apache%202-blue)
 
-You can use the [editor on GitHub](https://github.com/Porvil/Algoizer/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Algoizer is an android application for visualization of data structures and algorithms.\
+The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Features
+- Step by step animation
+- Time and space complexities of different data structures and algorithms.
+- Step by step psuedocode walkthrough [in some algorithms]
 
-### Markdown
+# Includes
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+#### Sorting Algorithms
+- Bubble Sort
+- Selection Sort
+- Insertion Sort
+- Merge Sort
+- Quick Sort
+#### Trees
+- Binary Search Tree
+- AVL Tree
+#### Graphs
+- BFS
+- BFS Connected Components
+- DFS
+- DFS Connected Components
+- Dijkstra
+- Bellman Ford
+- Prim's
+- Kruskal's
 
-```markdown
-Syntax highlighted code block
+# Installation
 
-# Header 1
-## Header 2
-### Header 3
+- Download the latest APK from [Releases](https://github.com/Porvil/Algoizer/releases)
+- Install the APK.
 
-- Bulleted
-- List
+# Usage
+- In-app tutorials are present which can be followed to learn and use the application.
 
-1. Numbered
-2. List
+# Supported Android Versions
+- Android 5.0 (API Level-21) and above.
 
-**Bold** and _Italic_ and `Code` text
+# Team
+- **Porvil**
+  - App Developement
+  - UI Design
+- **Zubair Aslam**
+  - Graphic Design
+  - Usability Testing
+- **Dr.** **Syamantak Das**
+  - Advisor
+- **Dr.** **Debajyoti Bera**
+  - Advisor
 
-[Link](url) and ![Image](src)
-```
+# Libraries Used
+- [ViewAnimator](https://github.com/florent37/ViewAnimator): A fluent Android animation library !
+- [ZoomLayout](https://github.com/natario1/ZoomLayout): A collection of flexible Android components that support zooming and panning of View hierarchies, images, video streams, and much more - either programmatically or through touch events.
+- [android-gif-drawable](https://github.com/koral--/android-gif-drawable)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView): A fast circular ImageView perfect for profile images.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+# License
+   Copyright [2021] [IIITD, Porvil]
 
-### Jekyll Themes
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Porvil/Algoizer/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+       http://www.apache.org/licenses/LICENSE-2.0
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
