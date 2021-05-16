@@ -22,6 +22,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:fontFamily="@font/open_sans_semibold"
         android:paddingBottom="15dp"
+        android:textColor="?attr/dark"
         android:textSize="24sp" />
 
 </FrameLayout>
