@@ -54,15 +54,11 @@
     <string name="top">TOP</string>
     <string name="iiitd_logo">IIITD LOGO</string>
     <string name="the_team">The Team</string>
-    <string name="dev_pd">Porvil</string>
-    <string name="dev_za">Zubair Aslam</string>
     <string name="graphic_design">Graphic Design</string>
     <string name="ui_design">UI Design</string>
     <string name="app_development">App Development</string>
     <string name="usability_testing">Usability Testing</string>
-    <string name="dev_sd">Syamantak Das</string>
     <string name="advisor">Advisor</string>
-    <string name="dev_db">Debajyoti Bera</string>
     <string name="graph_animation">Graph Animation</string>
     <string name="graph">Graph</string>
     <string name="coordinates">Coordinates</string>
@@ -152,4 +148,12 @@
     <string name="avl">AVL</string>
     <string name="algorithm">Algorithm</string>
     <string name="visualizer">Visualizer</string>
+    <string name="dev_pd">Porvil</string>
+    <string name="dev_za">Zubair Aslam</string>
+    <string name="dev_sd">Syamantak Das</string>
+    <string name="dev_db">Debajyoti Bera</string>
+    <string name="dev_pd_email">porvil17304@iiitd.ac.in</string>
+    <string name="dev_za_email">zubair17323@iiitd.ac.in</string>
+    <string name="dev_sd_email">syamantak@iiitd.ac.in</string>
+    <string name="dev_db_email">dbera@iiitd.ac.in</string>
 </resources>

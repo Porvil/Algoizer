@@ -86,6 +86,18 @@
 
                     <TextView
                         android:id="@+id/textView9"
+                        style="@style/S_TextView_Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/dev_pd_email"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+                    <TextView
+                        android:id="@+id/textView10"
                         style="@style/S_TextView_Normal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -93,7 +105,7 @@
                         android:text="@string/app_development"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                     <TextView
                         android:id="@+id/textView24"
@@ -104,7 +116,7 @@
                         android:text="@string/ui_design"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,6 +149,18 @@
                         app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
 
                     <TextView
+                        android:id="@+id/textView33"
+                        style="@style/S_TextView_Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/dev_za_email"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+                    <TextView
                         android:id="@+id/textView23"
                         style="@style/S_TextView_Normal"
                         android:layout_width="0dp"
@@ -145,7 +169,7 @@
                         android:text="@string/graphic_design"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
                     <TextView
                         android:id="@+id/textView25"
@@ -203,6 +227,18 @@
                         app:layout_constraintTop_toBottomOf="@+id/circleImageView0" />
 
                     <TextView
+                        android:id="@+id/textView91"
+                        style="@style/S_TextView_Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/dev_sd_email"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView170" />
+
+                    <TextView
                         android:id="@+id/textView90"
                         style="@style/S_TextView_Normal"
                         android:layout_width="0dp"
@@ -211,7 +247,7 @@
                         android:text="@string/advisor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView170" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView91" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -244,6 +280,18 @@
                         app:layout_constraintTop_toBottomOf="@+id/circleImageView20" />
 
                     <TextView
+                        android:id="@+id/textView231"
+                        style="@style/S_TextView_Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/dev_db_email"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView190" />
+
+                    <TextView
                         android:id="@+id/textView230"
                         style="@style/S_TextView_Normal"
                         android:layout_width="0dp"
@@ -252,7 +300,7 @@
                         android:text="@string/advisor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView190" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView231" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
