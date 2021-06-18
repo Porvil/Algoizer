@@ -1,6 +1,7 @@
 # Algoizer
 ![API](https://img.shields.io/badge/API-21%2B-green.svg)
-![LICENSE](https://img.shields.io/badge/license-Apache%202-blue)
+![LICENSE](https://img.shields.io/badge/license-%20GPL--3.0%20-blue)
+[![DOCS](https://img.shields.io/badge/Docs-v1.0-orange)](https://porvil.github.io/Algoizer/)
 
 Algoizer is an android application for visualization of data structures and algorithms.\
 The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
@@ -59,18 +60,3 @@ The application helps in learning and visualizing the data structures and algori
 - [ZoomLayout](https://github.com/natario1/ZoomLayout): A collection of flexible Android components that support zooming and panning of View hierarchies, images, video streams, and much more - either programmatically or through touch events.
 - [android-gif-drawable](https://github.com/koral--/android-gif-drawable)
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView): A fast circular ImageView perfect for profile images.
-
-# License
-   Copyright [2021] [IIITD, Porvil]
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
