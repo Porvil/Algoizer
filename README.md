@@ -1,7 +1,14 @@
 # Algoizer
-![API](https://img.shields.io/badge/API-21%2B-green.svg)
-![LICENSE](https://img.shields.io/badge/license-%20GPL--3.0%20-blue)
-[![DOCS](https://img.shields.io/badge/Docs-v1.0-orange)](https://porvil.github.io/Algoizer/)
+![](https://img.shields.io/badge/API-21%2B-orange)
+[![](https://img.shields.io/badge/Docs-v1.0-orange)](https://porvil.github.io/Algoizer/)
+![](https://img.shields.io/github/license/porvil/algoizer)
+\
+![](https://img.shields.io/github/v/release/porvil/algoizer?color=green)
+![](https://img.shields.io/tokei/lines/github/porvil/algoizer?color=green)
+![](https://img.shields.io/github/downloads/porvil/algoizer/total?color=green)
+\
+![](https://img.shields.io/github/repo-size/porvil/algoizer)
+![](https://img.shields.io/github/languages/code-size/porvil/algoizer)
 
 Algoizer is an android application for visualization of data structures and algorithms.\
 The application helps in learning and visualizing the data structures and algorithms visually step by step with animations.
@@ -34,7 +41,7 @@ The application helps in learning and visualizing the data structures and algori
 
 # Installation
 
-- Download the latest APK from [Releases](https://github.com/Porvil/Algoizer/releases)
+- Download the latest APK from [Releases](https://github.com/Porvil/Algoizer/releases) or [Play Store](https://play.google.com/store/apps/details?id=com.iiitd.dsavisualizer)
 - Install the APK.
 
 # Usage
